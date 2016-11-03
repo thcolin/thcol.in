@@ -1,0 +1,18 @@
+body{
+  h1, h2, h3, h4, h5, h6, a{
+    font-family: 'Montserrat';
+  }
+  p{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    &.light{
+      color: lighten(@black, 40%);
+    }
+  }
+  a{
+    &:hover, &:active, &:focus{
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+}

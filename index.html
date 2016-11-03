@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>thcol.in</title>
+    <link href="dist/style/vendor.css" rel="stylesheet">
+    <link href="dist/style/app.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+    <link rel="icon" type="image/png" href="resources/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="resources/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="resources/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="resources/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="resources/favicon-128.png" sizes="128x128" />
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+  <script type="text/javascript" src="dist/script/vendor.js"></script>
+  <script type="text/javascript">
+    function go(hash){
+      window.location.hash = hash;
+      document.title = 'thcol.in - ' + hash;
+
+      fetch('templates/' + hash.substring(1) + '.html')
+      .then(function(response){
+        if(response.ok){
+          return response.text();
+        }
+
+        // 404
+        return fetch('templates/404.html')
+        .then(function(response){
+          return response.text();
+        })
+      })
+      .then(function(template){
+        document.getElementById('container').innerHTML = template;
+      });
+    }
+
+    function hash(){
+      return window.location.hash ? window.location.hash:'#home';
+    }
+
+    // history handle
+    window.onpopstate = function(e){
+      go(hash());
+    }
+
+    // init handle
+    go(hash());
+  </script>
+</html>

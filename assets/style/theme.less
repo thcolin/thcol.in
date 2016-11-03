@@ -1,0 +1,20 @@
+h1, h2, h3, h4, h5, h6, a, p{
+  color: @white;
+}
+
+a{
+  &:hover, &:active, &:focus{
+    color: @_white;
+  }
+}
+
+.colors-reverse{
+  h1, h2, h3, h4, h5, h6, a, p{
+    color: @black;
+  }
+  a{
+    &:hover, &:active, &:focus{
+      color: @_black;
+    }
+  }
+}

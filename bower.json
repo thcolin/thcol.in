@@ -1,0 +1,37 @@
+{
+  "name": "thcolin",
+  "authors": [
+    "thcolin <th.colin3@gmail.com>"
+  ],
+  "description": "Personnal website/blog",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "montserrat-webfont": "^1.0.3",
+    "Ionicons": "ionicons#^2.0.1"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css"
+      ],
+      "dependencies": {}
+    },
+    "montserrat-webfont": {
+      "main": [
+        "./css/montserrat-webfont.css",
+        "./fonts/*"
+      ]
+    }
+  }
+}
