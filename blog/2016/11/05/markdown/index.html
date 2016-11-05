@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>thcol.in</title>
+    <link href="http://localhost/thcolin/dist/style/vendor.css" rel="stylesheet">
+    <link href="http://localhost/thcolin/dist/style/app.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="http://localhost/thcolin/resources/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="http://localhost/thcolin/resources/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="http://localhost/thcolin/resources/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="http://localhost/thcolin/resources/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="http://localhost/thcolin/resources/favicon-128x128.png" sizes="128x128" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="blog">
+        <div class="head">
+          <div class="thcolin">
+            <a href="http://localhost/thcolin#home"><h1>thcol.in</h1></a>
+          </div>
+          <div class="menu">
+            <ul>
+              <li><a href="http://localhost/thcolin/blog">Blog</a></li>
+              <li><a href="http://localhost/thcolin#projects">Projects</a></li>
+              <li><a href="http://localhost/thcolin#about">About</a></li>
+              <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="content colors-reverse">
+          <div class="post">
+  <div id="post-markdown" class="article">
+    
+      <div class="picture">
+        <img src="https://rstudioblog.files.wordpress.com/2014/06/keep-calm-and-markdown.png" itemprop="image">
+      </div>
+    
+    <div class="title">
+      <h1 itemprop="name">Markdown example</h1>
+    </div>
+    <div class="metadata">
+      <div class="date">
+        <p>
+          <time datetime="2016-11-04T23:48:11.000Z" itemprop="published">05 Nov 2016</time>
+        </p>
+      </div>
+    </div>
+    <div class="excerpt">
+      <p>Just a simple personal Markdown test on my - <em>new and beautiful</em> ❤️ - hexo blog, with a full/complete GFM (or GitHub Flavored Markdown) example.</p>
+<a id="more"></a>
+<h1 id="content"><a href="#content" class="headerlink" title="content"></a>content</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec ultrices erat, eget rutrum risus. Nam dui tellus, lobortis condimentum nisl non, tincidunt pharetra velit. Aliquam ut erat ut odio suscipit finibus quis sed velit. Cras cursus elit vel dolor congue, id lacinia justo suscipit. Duis tincidunt sem et sapien ullamcorper, id tincidunt augue pellentesque. Nunc dignissim ornare orci, nec iaculis velit pellentesque vel. Sed eget nisi pretium diam congue fermentum. Nam mollis dui vitae mi scelerisque ultricies. Donec a neque eu lorem placerat sollicitudin. Aenean tristique faucibus nulla, nec feugiat lectus volutpat et. Praesent viverra enim a magna ornare, non vehicula turpis bibendum. Aenean egestas posuere orci, nec vehicula justo euismod at. Nam at lectus erat. In ut quam cursus libero commodo porta quis sit amet leo. Curabitur sodales dolor ut gravida mollis.</p>
+<h1 id="titles"><a href="#titles" class="headerlink" title="titles"></a>titles</h1><h1 id="This-is-head1"><a href="#This-is-head1" class="headerlink" title="This is head1"></a>This is head1</h1><h2 id="This-is-head-2"><a href="#This-is-head-2" class="headerlink" title="This is head 2"></a>This is head 2</h2><h3 id="This-is-head-3"><a href="#This-is-head-3" class="headerlink" title="This is head 3"></a>This is head 3</h3><h4 id="This-is-head-4"><a href="#This-is-head-4" class="headerlink" title="This is head 4"></a>This is head 4</h4><h6 id="This-is-head-5"><a href="#This-is-head-5" class="headerlink" title="This is head 5"></a>This is head 5</h6><h1 id="styles"><a href="#styles" class="headerlink" title="styles"></a>styles</h1><p><em>Italic</em><br><strong>bold</strong><br><code>monospace</code><br><del>strikethrough</del></p>
+<h1 id="code"><a href="#code" class="headerlink" title="code"></a>code</h1><pre><code># Let me re-iterate ...
+for i in 1 .. 10 { do-something(i) }
+</code></pre><pre><code>this is code block
+</code></pre><pre><code class="ruby">get &#39;/&#39; do
+  &quot;Hello world &quot;
+end
+</code></pre>
+<pre><code class="python"># This program adds up integers in the command line
+import sys
+try:
+    total = sum(int(arg) for arg in sys.argv[1:])
+    print &#39;sum =&#39;, total
+except ValueError:
+    print &#39;Please supply integer arguments&#39;
+</code></pre>
+<pre><code class="javascript">// Make a request for a user with a given ID
+axios.get(&#39;/user?ID=12345&#39;)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+// Optionally the request above could also be done as
+axios.get(&#39;/user&#39;, {
+    params: {
+      ID: 12345
+    }
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+</code></pre>
+<pre><code class="java">  public class ScaleFloatingTransition implements FloatingTransition {
+    ...
+    @Override
+    public void applyFloating(final YumFloating yumFloating) {
+      ValueAnimator alphaAnimator = ObjectAnimator.ofFloat(1.0f, 0.0f);
+
+      alphaAnimator.setDuration(duration);
+      alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+          @Override
+          public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            yumFloating.setAlpha((Float) valueAnimator.getAnimatedValue());
+          }
+      });
+
+      alphaAnimator.start();
+
+      SpringHelper.createWidthBouncinessAndSpeed(0.0f, 1.0f,bounciness, speed)
+      .reboundListener(new SimpleReboundListener(){
+          @Override
+          public void onReboundUpdate(double currentValue) {
+            yumFloating.setScaleX((float) currentValue);
+            yumFloating.setScaleY((float) currentValue);
+          }
+      }).start(yumFloating);
+    }
+  }
+</code></pre>
+<pre><code class="php">&lt;?php
+  use thcolin\SensCritiqueAPI\Client;
+
+  $client = new Client();
+
+  $user = $client -&gt; getUser(&#39;Plug_In_Papa&#39;);
+  $collection = $user -&gt; getCollection();
+
+  $movie = $collection[0];
+  echo $movie -&gt; getTitle();
+  print_r($movie -&gt; serialize());
+
+  $tvshow = $client -&gt; getArtwork(438579);
+  echo $tvshow -&gt; getStoryline();
+  print_r($tvshow -&gt; serialize());
+
+  $lists = $user -&gt; getLists();
+  $bestMovies = $lists[&#39;bestMovies&#39;];
+  $movie = $bestMovies[0];
+
+  $list = $client -&gt; getList(455329);
+  $best2016Movie = $list[0];
+?&gt;
+</code></pre>
+<h1 id="blockquote"><a href="#blockquote" class="headerlink" title="blockquote"></a>blockquote</h1><blockquote>
+<p>Block quotes are<br>written like so.</p>
+<p>They can span multiple paragraphs,<br>if you like.</p>
+</blockquote>
+<h1 id="break"><a href="#break" class="headerlink" title="break"></a>break</h1><hr>
+<hr>
+<h1 id="lists"><a href="#lists" class="headerlink" title="lists"></a>lists</h1><ol>
+<li>first item<ul>
+<li>subitem</li>
+</ul>
+</li>
+<li>second item</li>
+<li>third item</li>
+<li>Hello</li>
+</ol>
+<h1 id="link"><a href="#link" class="headerlink" title="link"></a>link</h1><p><a href="http://foo.bar" target="_blank" rel="external">a website</a><br><a href="http://mukaer.com" target="_blank" rel="external">http://mukaer.com</a></p>
+<h1 id="image"><a href="#image" class="headerlink" title="image"></a>image</h1><p><img src="https://cdn.instructables.com/F2A/AXKK/IC37GOCL/F2AAXKKIC37GOCL.MEDIUM.jpg" alt="example image" title="An exemplary image"></p>
+<hr>
+<h1 id="share"><a href="#share" class="headerlink" title="share"></a>share</h1><p>If you want to test it by yourself, here is the code (be careful, I escape code block : ```) :</p>
+<pre><code class="markdown"># content
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec ultrices erat, eget rutrum risus. Nam dui tellus, lobortis condimentum nisl non, tincidunt pharetra velit. Aliquam ut erat ut odio suscipit finibus quis sed velit. Cras cursus elit vel dolor congue, id lacinia justo suscipit. Duis tincidunt sem et sapien ullamcorper, id tincidunt augue pellentesque. Nunc dignissim ornare orci, nec iaculis velit pellentesque vel. Sed eget nisi pretium diam congue fermentum. Nam mollis dui vitae mi scelerisque ultricies. Donec a neque eu lorem placerat sollicitudin. Aenean tristique faucibus nulla, nec feugiat lectus volutpat et. Praesent viverra enim a magna ornare, non vehicula turpis bibendum. Aenean egestas posuere orci, nec vehicula justo euismod at. Nam at lectus erat. In ut quam cursus libero commodo porta quis sit amet leo. Curabitur sodales dolor ut gravida mollis.
+
+# titles
+# This is head1
+## This is head 2
+### This is head 3
+#### This is head 4
+###### This is head 5
+
+# styles
+*Italic*
+**bold**
+`monospace`
+~~strikethrough~~
+
+# code
+    # Let me re-iterate ...
+    for i in 1 .. 10 { do-something(i) }
+
+\`\`\`
+this is code block
+\`\`\`
+
+\`\`\`ruby
+get &#39;/&#39; do
+  &quot;Hello world &quot;
+end
+\`\`\`
+
+\`\`\`python
+# This program adds up integers in the command line
+import sys
+try:
+    total = sum(int(arg) for arg in sys.argv[1:])
+    print &#39;sum =&#39;, total
+except ValueError:
+    print &#39;Please supply integer arguments&#39;
+\`\`\`
+
+\`\`\`javascript
+// Make a request for a user with a given ID
+axios.get(&#39;/user?ID=12345&#39;)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+// Optionally the request above could also be done as
+axios.get(&#39;/user&#39;, {
+    params: {
+      ID: 12345
+    }
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+\`\`\`
+
+\`\`\`java
+  public class ScaleFloatingTransition implements FloatingTransition {
+    ...
+    @Override
+    public void applyFloating(final YumFloating yumFloating) {
+      ValueAnimator alphaAnimator = ObjectAnimator.ofFloat(1.0f, 0.0f);
+
+      alphaAnimator.setDuration(duration);
+      alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+          @Override
+          public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            yumFloating.setAlpha((Float) valueAnimator.getAnimatedValue());
+          }
+      });
+
+      alphaAnimator.start();
+
+      SpringHelper.createWidthBouncinessAndSpeed(0.0f, 1.0f,bounciness, speed)
+      .reboundListener(new SimpleReboundListener(){
+          @Override
+          public void onReboundUpdate(double currentValue) {
+            yumFloating.setScaleX((float) currentValue);
+            yumFloating.setScaleY((float) currentValue);
+          }
+      }).start(yumFloating);
+    }
+  }
+\`\`\`
+
+\`\`\`php
+&lt;?php
+  use thcolin\SensCritiqueAPI\Client;
+
+  $client = new Client();
+
+  $user = $client -&gt; getUser(&#39;Plug_In_Papa&#39;);
+  $collection = $user -&gt; getCollection();
+
+  $movie = $collection[0];
+  echo $movie -&gt; getTitle();
+  print_r($movie -&gt; serialize());
+
+  $tvshow = $client -&gt; getArtwork(438579);
+  echo $tvshow -&gt; getStoryline();
+  print_r($tvshow -&gt; serialize());
+
+  $lists = $user -&gt; getLists();
+  $bestMovies = $lists[&#39;bestMovies&#39;];
+  $movie = $bestMovies[0];
+
+  $list = $client -&gt; getList(455329);
+  $best2016Movie = $list[0];
+?&gt;
+\`\`\`
+
+# blockquote
+&gt; Block quotes are
+&gt; written like so.
+&gt;
+&gt; They can span multiple paragraphs,
+&gt; if you like.
+
+# break
+---
+***
+
+# lists
+  1. first item
+    * subitem
+  2. second item
+  3. third item
+  4. Hello
+
+# link
+[a website](http://foo.bar)
+http://mukaer.com
+
+# image
+![example image](https://cdn.instructables.com/F2A/AXKK/IC37GOCL/F2AAXKKIC37GOCL.MEDIUM.jpg &quot;An exemplary image&quot;)
+</code></pre>
+
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="http://localhost/thcolin/dist/script/vendor.js"></script>
+  <script type="text/javascript">
+    (function() {
+      var highlights = document.querySelectorAll('pre code');
+      for(var i = 0; i < highlights.length; i++){
+        if(highlights[i].className){
+          hljs.highlightBlock(highlights[i]);
+        }
+      }
+    })();
+  </script>
+</html>

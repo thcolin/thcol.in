@@ -1,0 +1,38 @@
+<div class="index">
+  <div class="articles">
+    <% page.posts.each(function(post){ %>
+      <div id="<%= post.layout %>-<%= post.slug %>" class="article">
+        <% if(post.photos && post.photos.length){ %>
+          <div class="picture">
+            <a href="<%- url_for(post.path) %>">
+              <img src="<%- url_for(post.photos[0]) %>" itemprop="image">
+            </a>
+          </div>
+        <% } %>
+        <div class="title">
+          <a href="<%- url_for(post.path) %>">
+            <h1 itemprop="name"><%= post.title %></h1>
+          </a>
+        </div>
+        <div class="metadata">
+          <div class="date">
+            <p>
+              <time datetime="<%= date_xml(post.date) %>" itemprop="published"><%= date(post.date, 'DD MMM YYYY') %></time>
+            </p>
+          </div>
+        </div>
+        <div class="excerpt">
+          <%- post.excerpt %>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  <% if(page.total > 1){ %>
+    <div class="nav">
+      <%- paginator({
+        prev_text: '<i class="ion-arrow-left-b"></i>',
+        next_text: '<i class="ion-arrow-right-b"></i>'
+      }) %>
+    </nav>
+  <% } %>
+</div>

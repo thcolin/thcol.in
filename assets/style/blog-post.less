@@ -1,0 +1,26 @@
+#blog .post{
+  padding: 30px 0 0;
+  .article{
+    .metadata::after{
+      content: '';
+      display: block;
+      width: 100px;
+      padding: 50px 0 0;
+      margin: 50px auto 0;
+      border-top: solid 1px @white;
+    }
+    .excerpt{
+      text-align: left;
+      &::first-letter{
+        // drop-cap
+        float: left;
+        font-weight: bold;
+        font-size: 36px;
+        line-height: 18px;
+        padding-top: 4px;
+        padding-right: 2px;
+        padding-left: 3px;
+      }
+    }
+  }
+}

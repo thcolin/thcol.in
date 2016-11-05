@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>thcol.in</title>
+    <link href="<%- config.uri + '/dist/style/vendor.css' %>" rel="stylesheet">
+    <link href="<%- config.uri + '/dist/style/app.css' %>" rel="stylesheet">
+    <link rel="icon" type="image/png" href="<%- config.uri + '/resources/favicon-196x196.png' %>" sizes="196x196" />
+    <link rel="icon" type="image/png" href="<%- config.uri + '/resources/favicon-96x96.png' %>" sizes="96x96" />
+    <link rel="icon" type="image/png" href="<%- config.uri + '/resources/favicon-32x32.png' %>" sizes="32x32" />
+    <link rel="icon" type="image/png" href="<%- config.uri + '/resources/favicon-16x16.png' %>" sizes="16x16" />
+    <link rel="icon" type="image/png" href="<%- config.uri + '/resources/favicon-128x128.png' %>" sizes="128x128" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="blog">
+        <div class="head">
+          <div class="thcolin">
+            <a href="<%- config.uri + '#home' %>"><h1>thcol.in</h1></a>
+          </div>
+          <div class="menu">
+            <ul>
+              <li><a href="<%- config.url %>">Blog</a></li>
+              <li><a href="<%- config.uri + '#projects' %>">Projects</a></li>
+              <li><a href="<%- config.uri + '#about' %>">About</a></li>
+              <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="content colors-reverse">
+          <%- body %>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="<%- config.uri + '/dist/script/vendor.js' %>"></script>
+  <script type="text/javascript">
+    (function() {
+      var highlights = document.querySelectorAll('pre code');
+      for(var i = 0; i < highlights.length; i++){
+        if(highlights[i].className){
+          hljs.highlightBlock(highlights[i]);
+        }
+      }
+    })();
+  </script>
+</html>

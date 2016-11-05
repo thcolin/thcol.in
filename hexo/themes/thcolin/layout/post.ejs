@@ -1,0 +1,22 @@
+<div class="post">
+  <div id="<%= page.layout %>-<%= page.slug %>" class="article">
+    <% if(page.photos && page.photos.length){ %>
+      <div class="picture">
+        <img src="<%- url_for(page.photos[0]) %>" itemprop="image">
+      </div>
+    <% } %>
+    <div class="title">
+      <h1 itemprop="name"><%= page.title %></h1>
+    </div>
+    <div class="metadata">
+      <div class="date">
+        <p>
+          <time datetime="<%= date_xml(page.date) %>" itemprop="published"><%= date(page.date, 'DD MMM YYYY') %></time>
+        </p>
+      </div>
+    </div>
+    <div class="excerpt">
+      <%- page.content %>
+    </div>
+  </div>
+</div>
