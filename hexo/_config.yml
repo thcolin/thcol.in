@@ -12,9 +12,9 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-uri: http://localhost/thcolin
-url: http://localhost/thcolin/blog
-root: /thcolin/blog/
+uri: http://thcol.in
+url: http://thcol.in/blog
+root: /blog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
