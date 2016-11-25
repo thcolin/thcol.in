@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>thcol.in - #blog</title>
+    <link href="http://thcol.in/dist/style/vendor.css" rel="stylesheet">
+    <link href="http://thcol.in/dist/style/app.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-128x128.png" sizes="128x128" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="blog">
+        <div class="head">
+          <div class="thcolin">
+            <a href="http://thcol.in#home"><h1>thcol.in</h1></a>
+          </div>
+          <div class="menu">
+            <ul>
+              <li><a href="http://thcol.in/blog">Blog</a></li>
+              <li><a href="http://thcol.in#projects">Projects</a></li>
+              <li><a href="http://thcol.in#about">About</a></li>
+              <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="content colors-reverse">
+          <div class="post">
+  <div id="post-customize-bootstrap-bower-install" class="article">
+    
+      <div class="picture">
+        <img src="http://i.imgur.com/os6Aj70.png" itemprop="image">
+      </div>
+    
+    <div class="title">
+      <h1 itemprop="name">Customize a Boostrap 3 installed with Bower</h1>
+    </div>
+    <div class="metadata">
+      <div class="date">
+        <p>
+          <time datetime="2016-11-25T16:51:57.000Z" itemprop="published">25 Nov 2016</time>
+        </p>
+      </div>
+    </div>
+    <div class="excerpt">
+      <p>I got a problematic at work today, how do you customize Boostrap when you installed it with bower ?</p>
+<p>If you look in the Bootstrap repository, you’ll see that the style is built with LESS files. And for his customization, it use a <code>variables.less</code> file which contain all useful variables. Also, the website <a href="http://getbootstrap.com/customize/" target="_blank" rel="external">getbootstrap</a> allow you to easily customize the variables, but directly compile a version of bootstrap and don’t give you the <code>less</code> file likely generated, but a <code>config.json</code> file for their Grunt task. The problem is I don’t use Grunt but Gulp, so how to handle this ?</p>
+<p>Most of blog posts I’ve read, talked about using a <em>quite strange</em> <code>bootstrap-sass</code> dependencie, but why use it and not the default <code>bootstrap</code> dependencie ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my <em>real</em> first blog post.</p>
+<a id="more"></a>
+<h2 id="Bower"><a href="#Bower" class="headerlink" title="Bower"></a>Bower</h2><p>First, imagine a project where we got a <code>bower.json</code> like this :</p>
+<pre><code class="json">{
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;name&quot;: &quot;customize-bootstrap-bower-install&quot;,
+  &quot;dependencies&quot;: {
+    &quot;bootstrap&quot;: &quot;^3.3.6&quot;
+  }
+}
+</code></pre>
+<p>We define as dependencie the version <code>3.x.x</code> of <code>bootstrap</code>. By default, Bootstrap define these main files in his <code>bower.json</code> :</p>
+<pre><code class="json">{
+  &quot;name&quot;: &quot;bootstrap&quot;,
+  &quot;description&quot;: &quot;The most popular front-end framework for developing responsive, mobile first projects on the web.&quot;,
+  [...]
+  &quot;main&quot;: [
+    &quot;less/bootstrap.less&quot;,
+    &quot;dist/js/bootstrap.js&quot;
+  ],
+  [...]
+}
+</code></pre>
+<h2 id="LESS"><a href="#LESS" class="headerlink" title="LESS"></a>LESS</h2><p>If we look closer in the source of the library, we can found a <code>less</code> folder at the root, which contains many <code>less</code> files including the main file of the folder, the <code>bootstrap.less</code> file which merge all other <code>less</code> files :</p>
+<pre><code class="less">// Core variables and mixins
+@import &quot;variables.less&quot;;
+@import &quot;mixins.less&quot;;
+
+// Reset and dependencies
+@import &quot;normalize.less&quot;;
+[...]
+</code></pre>
+<p>I decided to use this file and create a Gulp task which gonna add the content of our <code>variables.less</code> file at the end before the compilation process, so that it will overrides the default variables. <em>I didn’t specify it before, but you should copy the</em> <code>variables.less</code> <em>file from the bower_components folder of Bootstrap into your application assets folder, and edit it as you want.</em></p>
+<p>So for the style, by default, it’s good ! We’ll only need the <code>bootstrap.less</code> file. If you want to override the <code>main</code> key, you’re free, but at least leave the <code>less/bootstrap.less</code> file, we need it ! And don’t add other style files, it would be useless and could break the further Gulp task.</p>
+<h2 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h2><p>So, the goal of the task is to merge our 2 less files and then compile the result to CSS :</p>
+<ul>
+<li><code>bootstrap.less</code> from the bootstrap library</li>
+<li><code>variables.less</code> from our application</li>
+</ul>
+<p>How to handle this in Gulp ? The solution I tought of was to merge the two files and compile them into CSS with a LESS compiler. The problem is that the <code>gulp-less</code> plugin handle each file independently, so it had no effect, the compiled file doesn’t consider my <code>variables.less</code> revisions. So I needed a plugin which can create a temporary less file which handle to import, first the <code>bootstrap.less</code> file, and next my <code>variables.less</code> and <strong>THEN</strong> compile the result to CSS.</p>
+<p>To do this, I found a plugin named <a href="https://www.npmjs.com/package/gulp-plumber" target="_blank" rel="external">gulp-less-import</a>, which do exactly what I need, meaning create a temporary file which import my two file in the order I want, for a theoretical result like this :</p>
+<pre><code class="less">@import &quot;bower_components/bootstrap/less/bootstrap.less&quot;;
+@import &quot;assets/style/variables.less&quot;;
+</code></pre>
+<p>Next, I just had to compile the result of the pipe to CSS with a LESS compiler, and it was done !<br>Here is the final task, use and edit it as you want !</p>
+<pre><code class="js">var gulp      = require(&#39;gulp&#39;);
+
+var bower     = require(&#39;main-bower-files&#39;);
+var merge     = require(&#39;merge2&#39;);
+var filter    = require(&#39;gulp-filter&#39;);
+
+var importify = require(&#39;gulp-less-import&#39;);
+var less      = require(&#39;gulp-less&#39;);
+
+gulp.task(&#39;bootstrap&#39;, function(){
+  return merge(
+      gulp.src(bower())
+        // We filter to only get &#39;bootstrap.less&#39; file defined in our overrides
+        .pipe(filter(&#39;**/bootstrap.less&#39;)),
+      // The path to the variables.less file, depend on your app structure
+      gulp.src(&#39;./assets/style/variables.less&#39;)
+    )
+    .pipe(importify(&#39;bootstrap.css&#39;))
+    .pipe(less())
+    // Set the destination you want !
+    .pipe(gulp.dest(&#39;./dist/style&#39;));
+});
+</code></pre>
+<p>You can use <a href="https://www.npmjs.com/package/gulp-plumber" target="_blank" rel="external">gulp-plumber</a> and <a href="https://www.npmjs.com/package/gulp-print" target="_blank" rel="external">gulp-print</a> to debug the gulp task if you need !</p>
+<h2 id="Issue"><a href="#Issue" class="headerlink" title="Issue"></a>Issue</h2><p>If we look closer, there could be an issue with our solution, imagine if another library has a <code>bootstrap.less</code> and we need to use it ? To be sure that we only use the <code>bootstrap.less</code> from the bootstrap library, we can use the key <code>group</code> in our <code>bower.json</code> file :</p>
+<pre><code class="json">{
+  &quot;name&quot;: &quot;customize-bootstrap-bower-install&quot;,
+  [...]
+  &quot;dependencies&quot;: {
+    &quot;bootstrap&quot;: &quot;^3.3.7&quot;
+  },
+  [...]
+  &quot;group&quot;: {
+    &quot;bootstrap&quot;: [&quot;bootstrap&quot;]
+  }
+}
+</code></pre>
+<p>By this way, we define a <strong>group</strong> with only the <code>bootstrap</code> library, and then, in our Gulp task, we can specify that we want to use only this group, and so the bootstrap library and his <code>bootstrap.less</code> file.</p>
+<pre><code class="js">var gulp      = require(&#39;gulp&#39;);
+
+var bower     = require(&#39;main-bower-files&#39;);
+var merge     = require(&#39;merge2&#39;);
+var filter    = require(&#39;gulp-filter&#39;);
+
+var importify = require(&#39;gulp-less-import&#39;);
+var less      = require(&#39;gulp-less&#39;);
+
+gulp.task(&#39;bootstrap&#39;, function(){
+  return merge(
+      gulp.src(bower({group: &#39;bootstrap&#39;}))
+        // We filter to only get bootstrap less file defined in our overrides
+        .pipe(filter(&#39;**/*.less&#39;)),
+      // The path to the variables.less file, depend on your app structure
+      gulp.src(&#39;./assets/style/variables.less&#39;)
+    )
+    .pipe(importify(&#39;bootstrap.css&#39;))
+    .pipe(less())
+    // Set the destination you want !
+    .pipe(gulp.dest(&#39;./dist/style&#39;));
+});
+</code></pre>
+<p>You no longer need to be afraid of another library with a <code>bootstrap.less</code> file !</p>
+<h2 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a>Repository</h2><p>If you need, I made a repository with a full example <a href="https://github.com/thcolin/customize-bootstrap-bower-install" target="_blank" rel="external">thcolin/customize-bootstrap-bower-install</a></p>
+
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="http://thcol.in/dist/script/vendor.js"></script>
+  <script type="text/javascript">
+    (function() {
+      var highlights = document.querySelectorAll('pre code');
+      for(var i = 0; i < highlights.length; i++){
+        if(highlights[i].className){
+          hljs.highlightBlock(highlights[i]);
+        }
+      }
+    })();
+  </script>
+</html>
