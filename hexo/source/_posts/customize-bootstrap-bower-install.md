@@ -4,16 +4,16 @@ photos:
 - http://i.imgur.com/os6Aj70.png
 ---
 
-I got a problematic at work today, how do you customize Boostrap when you installed it with bower ?
+I had a problem at work today, how do you customize Boostrap when you installed it with bower ?
 
-If you look in the Bootstrap repository, you'll see that the style is built with LESS files. And for his customization, it use a `variables.less` file which contain all useful variables. Also, the website [getbootstrap](http://getbootstrap.com/customize/) allow you to easily customize the variables, but directly compile a version of bootstrap and don't give you the `less` file likely generated, but a `config.json` file for their Grunt task. The problem is I don't use Grunt but Gulp, so how to handle this ?
+If you look in the Bootstrap repository, you'll see that the style is built with LESS. And for its customization, it uses a `variables.less` file which contains every useful variable. Also, the website [getbootstrap](http://getbootstrap.com/customize/) allows you to easily customize the variables, but it directly compiles the version of bootstrap and don't give you the `less` file likely generated, but a `config.json` file for their Grunt task. The problem is I don't use Grunt but Gulp, so how I handle this ?
 
-Most of blog posts I've read, talked about using a *quite strange* `bootstrap-sass` dependencie, but why use it and not the default `bootstrap` dependencie ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my *real* first blog post.
+Most of blog posts I've read, talked about using a *quite strange* `bootstrap-sass` dependency, but why use it and not the default `bootstrap` dependency ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my first *real* blog post.
 
 <!-- more -->
 
 ## Bower
-First, imagine a project where we got a `bower.json` like this :
+First, imagine a project where we have a `bower.json` like this :
 
 ```json
 {
@@ -25,7 +25,7 @@ First, imagine a project where we got a `bower.json` like this :
 }
 ```
 
-We define as dependencie the version `3.x.x` of `bootstrap`. By default, Bootstrap define these main files in his `bower.json` :
+We define as dependency the version `3.x.x` of `bootstrap`. By default, Bootstrap define these main files in its `bower.json` :
 
 ```json
 {
@@ -42,7 +42,7 @@ We define as dependencie the version `3.x.x` of `bootstrap`. By default, Bootstr
 
 ## LESS
 
-If we look closer in the source of the library, we can found a `less` folder at the root, which contains many `less` files including the main file of the folder, the `bootstrap.less` file which merge all other `less` files :
+If we look closer in the source of the library, we can found a `less` folder at the root, which contains many `less` files including the main file of the folder, `bootstrap.less` which merge all other `less` files :
 
 ```less
 // Core variables and mixins
@@ -54,7 +54,7 @@ If we look closer in the source of the library, we can found a `less` folder at 
 [...]
 ```
 
-I decided to use this file and create a Gulp task which gonna add the content of our `variables.less` file at the end before the compilation process, so that it will overrides the default variables. *I didn't specify it before, but you should copy the* `variables.less` *file from the bower_components folder of Bootstrap into your application assets folder, and edit it as you want.*
+I decided to use this file and create a Gulp task which gonna add the content of our `variables.less` at the end before the compilation process, so that it will overrides the default variables. *I didn't specify it before, but you should copy the* `variables.less` *file from the bower_components folder of Bootstrap into your application assets folder, and edit it as you want.*
 
 So for the style, by default, it's good ! We'll only need the `bootstrap.less` file. If you want to override the `main` key, you're free, but at least leave the `less/bootstrap.less` file, we need it ! And don't add other style files, it would be useless and could break the further Gulp task.
 
