@@ -12,9 +12,11 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+# prod
 uri: http://thcol.in
 url: http://thcol.in/blog
 root: /blog/
+# # dev
 # uri: http://localhost/thcolin
 # url: http://localhost/thcolin/blog
 # root: /thcolin/blog/
