@@ -5,6 +5,12 @@
   background: @black;
   width: 100%;
   padding: 30px;
+  @media only screen and (max-width : 768px) {
+    flex-direction: column;
+    .menu{
+      margin-top: 20px;
+    }
+  }
   .thcolin h1{
     border-radius: 15px;
     border: 5px solid #fff;
@@ -88,79 +94,47 @@
   padding: 30px 20px;
   .project{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     border: solid 1px @white;
     border-radius: 10px;
     margin: 20px;
     padding: 20px;
-    .description{
-      h2{
-        display: inline;
-        margin: 0 5px 10px 0;
-        &.deprecated{
-          text-decoration: line-through;
-        }
+    .about{
+      display: flex;
+      justify-content: space-between;
+      @media only screen and (max-width : 768px) {
+        flex-direction: column;
       }
-      .links{
-        display: inline;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        li{
+      .metadata{
+        h2{
           display: inline;
-        }
-        a{
-          color: lighten(@black, 70%);
-          &:hover, &:focus, &:active{
-            color: lighten(@black, 20%);
+          margin: 0 5px 10px 0;
+          &.deprecated{
+            text-decoration: line-through;
           }
         }
+        .links{
+          display: inline;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          li{
+            display: inline;
+          }
+          a{
+            color: lighten(@black, 70%);
+            &:hover, &:focus, &:active{
+              color: lighten(@black, 20%);
+            }
+          }
+        }
+        .tags{
+          margin-bottom: 10px;
+        }
       }
-      .tags{
-        margin-bottom: 10px;
+      .emojis{
+        font-size: 3em;
       }
     }
-    .logo img{
-      max-height: 100px;
-      max-width: 100px;
-    }
-  }
-}
-
-#projects .projects .project.wip{
-  display: none;
-}
-
-#projects .projects .project.silex-simpleuser-jwt{
-  img:first-child{
-    position: absolute;
-    height: 36px;
-    margin: 53px 0 0 0;
-  }
-  img:last-child{
-    position:absolute;
-    height: 36px;
-    margin: -40px 0 0 60px;
-  }
-}
-
-#projects .projects .project.scene-release-parser-php{
-  img:first-child{
-    position: absolute;
-    height: 36px;
-    margin: 30px 0 0 16px;
-  }
-}
-
-#projects .projects .project.silex-gearman-service{
-  img:first-child{
-    position: absolute;
-    height: 36px;
-    margin: 60px 0 0 0;
-  }
-  img:last-child{
-    position:absolute;
-    height: 36px;
-    margin: -55px 0 0 60px;
   }
 }

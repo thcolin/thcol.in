@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>thcol.in - #blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="http://thcol.in/dist/style/vendor.css" rel="stylesheet">
     <link href="http://thcol.in/dist/style/app.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-196x196.png" sizes="196x196" />
@@ -18,11 +19,22 @@
           <div class="thcolin">
             <a href="http://thcol.in#home"><h1>thcol.in</h1></a>
           </div>
-          <div class="menu">
+          <div class="menu mobile-hide">
             <ul>
               <li><a href="http://thcol.in/blog">Blog</a></li>
               <li><a href="http://thcol.in#projects">Projects</a></li>
               <li><a href="http://thcol.in#about">About</a></li>
+              <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
+            </ul>
+          </div>
+          <div class="menu mobile-show">
+            <ul>
+              <li><a href="http://thcol.in/blog">Blog</a></li>
+              <li><a href="http://thcol.in#projects">Projects</a></li>
+              <li><a href="http://thcol.in#about">About</a></li>
+            </ul>
+            <ul>
               <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
               <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
             </ul>
@@ -48,14 +60,14 @@
         <div class="metadata">
           <div class="date">
             <p>
-              <time datetime="2016-11-25T16:51:57.000Z" itemprop="published">25 Nov 2016</time>
+              <time datetime="2016-11-25T17:16:03.000Z" itemprop="published">25 Nov 2016</time>
             </p>
           </div>
         </div>
         <div class="excerpt">
-          <p>I got a problematic at work today, how do you customize Boostrap when you installed it with bower ?</p>
-<p>If you look in the Bootstrap repository, you’ll see that the style is built with LESS files. And for his customization, it use a <code>variables.less</code> file which contain all useful variables. Also, the website <a href="http://getbootstrap.com/customize/">getbootstrap</a> allow you to easily customize the variables, but directly compile a version of bootstrap and don’t give you the <code>less</code> file likely generated, but a <code>config.json</code> file for their Grunt task. The problem is I don’t use Grunt but Gulp, so how to handle this ?</p>
-<p>Most of blog posts I’ve read, talked about using a <em>quite strange</em> <code>bootstrap-sass</code> dependencie, but why use it and not the default <code>bootstrap</code> dependencie ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my <em>real</em> first blog post.</p>
+          <p>I had a problem at work today, how do you customize Boostrap when you installed it with bower ?</p>
+<p>If you look in the Bootstrap repository, you’ll see that the style is built with LESS. And for its customization, it uses a <code>variables.less</code> file which contains every useful variable. Also, the website <a href="http://getbootstrap.com/customize/">getbootstrap</a> allows you to easily customize the variables, but it directly compiles the version of bootstrap and don’t give you the <code>less</code> file likely generated, but a <code>config.json</code> file for their Grunt task. The problem is I don’t use Grunt but Gulp, so how I handle this ?</p>
+<p>Most of blog posts I’ve read, talked about using a <em>quite strange</em> <code>bootstrap-sass</code> dependency, but why use it and not the default <code>bootstrap</code> dependency ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my first <em>real</em> blog post.</p>
         </div>
       </div>
     

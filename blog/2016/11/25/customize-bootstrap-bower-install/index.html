@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>thcol.in - #blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="http://thcol.in/dist/style/vendor.css" rel="stylesheet">
     <link href="http://thcol.in/dist/style/app.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-196x196.png" sizes="196x196" />
@@ -18,11 +19,22 @@
           <div class="thcolin">
             <a href="http://thcol.in#home"><h1>thcol.in</h1></a>
           </div>
-          <div class="menu">
+          <div class="menu mobile-hide">
             <ul>
               <li><a href="http://thcol.in/blog">Blog</a></li>
               <li><a href="http://thcol.in#projects">Projects</a></li>
               <li><a href="http://thcol.in#about">About</a></li>
+              <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
+            </ul>
+          </div>
+          <div class="menu mobile-show">
+            <ul>
+              <li><a href="http://thcol.in/blog">Blog</a></li>
+              <li><a href="http://thcol.in#projects">Projects</a></li>
+              <li><a href="http://thcol.in#about">About</a></li>
+            </ul>
+            <ul>
               <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
               <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
             </ul>
@@ -42,16 +54,16 @@
     <div class="metadata">
       <div class="date">
         <p>
-          <time datetime="2016-11-25T16:51:57.000Z" itemprop="published">25 Nov 2016</time>
+          <time datetime="2016-11-25T17:16:03.000Z" itemprop="published">25 Nov 2016</time>
         </p>
       </div>
     </div>
     <div class="excerpt">
-      <p>I got a problematic at work today, how do you customize Boostrap when you installed it with bower ?</p>
-<p>If you look in the Bootstrap repository, you’ll see that the style is built with LESS files. And for his customization, it use a <code>variables.less</code> file which contain all useful variables. Also, the website <a href="http://getbootstrap.com/customize/" target="_blank" rel="external">getbootstrap</a> allow you to easily customize the variables, but directly compile a version of bootstrap and don’t give you the <code>less</code> file likely generated, but a <code>config.json</code> file for their Grunt task. The problem is I don’t use Grunt but Gulp, so how to handle this ?</p>
-<p>Most of blog posts I’ve read, talked about using a <em>quite strange</em> <code>bootstrap-sass</code> dependencie, but why use it and not the default <code>bootstrap</code> dependencie ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my <em>real</em> first blog post.</p>
+      <p>I had a problem at work today, how do you customize Boostrap when you installed it with bower ?</p>
+<p>If you look in the Bootstrap repository, you’ll see that the style is built with LESS. And for its customization, it uses a <code>variables.less</code> file which contains every useful variable. Also, the website <a href="http://getbootstrap.com/customize/" target="_blank" rel="external">getbootstrap</a> allows you to easily customize the variables, but it directly compiles the version of bootstrap and don’t give you the <code>less</code> file likely generated, but a <code>config.json</code> file for their Grunt task. The problem is I don’t use Grunt but Gulp, so how I handle this ?</p>
+<p>Most of blog posts I’ve read, talked about using a <em>quite strange</em> <code>bootstrap-sass</code> dependency, but why use it and not the default <code>bootstrap</code> dependency ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my first <em>real</em> blog post.</p>
 <a id="more"></a>
-<h2 id="Bower"><a href="#Bower" class="headerlink" title="Bower"></a>Bower</h2><p>First, imagine a project where we got a <code>bower.json</code> like this :</p>
+<h2 id="Bower"><a href="#Bower" class="headerlink" title="Bower"></a>Bower</h2><p>First, imagine a project where we have a <code>bower.json</code> like this :</p>
 <pre><code class="json">{
   &quot;version&quot;: &quot;1.0.0&quot;,
   &quot;name&quot;: &quot;customize-bootstrap-bower-install&quot;,
@@ -60,7 +72,7 @@
   }
 }
 </code></pre>
-<p>We define as dependencie the version <code>3.x.x</code> of <code>bootstrap</code>. By default, Bootstrap define these main files in his <code>bower.json</code> :</p>
+<p>We define as dependency the version <code>3.x.x</code> of <code>bootstrap</code>. By default, Bootstrap define these main files in its <code>bower.json</code> :</p>
 <pre><code class="json">{
   &quot;name&quot;: &quot;bootstrap&quot;,
   &quot;description&quot;: &quot;The most popular front-end framework for developing responsive, mobile first projects on the web.&quot;,
@@ -72,7 +84,7 @@
   [...]
 }
 </code></pre>
-<h2 id="LESS"><a href="#LESS" class="headerlink" title="LESS"></a>LESS</h2><p>If we look closer in the source of the library, we can found a <code>less</code> folder at the root, which contains many <code>less</code> files including the main file of the folder, the <code>bootstrap.less</code> file which merge all other <code>less</code> files :</p>
+<h2 id="LESS"><a href="#LESS" class="headerlink" title="LESS"></a>LESS</h2><p>If we look closer in the source of the library, we can found a <code>less</code> folder at the root, which contains many <code>less</code> files including the main file of the folder, <code>bootstrap.less</code> which merge all other <code>less</code> files :</p>
 <pre><code class="less">// Core variables and mixins
 @import &quot;variables.less&quot;;
 @import &quot;mixins.less&quot;;
@@ -81,7 +93,7 @@
 @import &quot;normalize.less&quot;;
 [...]
 </code></pre>
-<p>I decided to use this file and create a Gulp task which gonna add the content of our <code>variables.less</code> file at the end before the compilation process, so that it will overrides the default variables. <em>I didn’t specify it before, but you should copy the</em> <code>variables.less</code> <em>file from the bower_components folder of Bootstrap into your application assets folder, and edit it as you want.</em></p>
+<p>I decided to use this file and create a Gulp task which gonna add the content of our <code>variables.less</code> at the end before the compilation process, so that it will overrides the default variables. <em>I didn’t specify it before, but you should copy the</em> <code>variables.less</code> <em>file from the bower_components folder of Bootstrap into your application assets folder, and edit it as you want.</em></p>
 <p>So for the style, by default, it’s good ! We’ll only need the <code>bootstrap.less</code> file. If you want to override the <code>main</code> key, you’re free, but at least leave the <code>less/bootstrap.less</code> file, we need it ! And don’t add other style files, it would be useless and could break the further Gulp task.</p>
 <h2 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h2><p>So, the goal of the task is to merge our 2 less files and then compile the result to CSS :</p>
 <ul>

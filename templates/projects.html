@@ -3,11 +3,22 @@
     <div class="thcolin">
       <a onclick="go('#home')"><h1>thcol.in</h1></a>
     </div>
-    <div class="menu">
+    <div class="menu mobile-hide">
       <ul>
         <li><a href="blog/">Blog</a></li>
         <li><a onclick="go('#projects')">Projects</a></li>
         <li><a onclick="go('#about')">About</a></li>
+        <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
+        <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
+      </ul>
+    </div>
+    <div class="menu mobile-show">
+      <ul>
+        <li><a href="blog/">Blog</a></li>
+        <li><a onclick="go('#projects')">Projects</a></li>
+        <li><a onclick="go('#about')">About</a></li>
+      </ul>
+      <ul>
         <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
         <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
       </ul>
@@ -65,211 +76,183 @@
       </div>
     </div>
     <div class="projects">
-      <!--
-      <div class="project nodepad wip">
-        <div class="description">
-          <h2>nodepad</h2>
-          <ul class="links">
-            <li><a onclick="go('#nodepad')"><i class="ion-information-circled"></i></a></li>
-            <li><a href="https://github.com/thcolin/nodepad"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-desktop">#Desktop</span>
-            <span class="label label-separator"></span>
-            <span class="label label-angularjs">AngularJS</span>
-            <span class="label label-electron">Electron</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2>nipper</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/nipper"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-web">#Web</span>
+              <!-- <span class="label label-mobile">#Mobile</span> -->
+              <!-- <span class="label label-desktop">#Desktop</span> -->
+              <span class="label label-separator"></span>
+              <span class="label label-javascript">Javascript</span>
+              <!-- <span class="label label-electron">Electron</span> -->
+              <span class="label label-react">React</span>
+            </div>
           </div>
-          <p class="light">
-            A simple notebook application, available on Windows, OS X and Linux. Live Markdown interpretation, labelize notes with tags and more features.
-          </p>
+          <div class="emojis">🍒🎙️🐶️</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/nodepad.png" />
-        </div>
+        <p class="light">
+          Youtube playlist (& video) ripper, parse Youtube video or playlist link, fix inaccurate tags (cover, artist & song), choose wanted format (mp4, webm, aac, mp3 or ogg), and download on-by-one or zipped (best flux chosen by default) ! Every process are made directly in the browser, like downloading flux or converting them with <a href="https://github.com/Kagami/ffmpeg.js">Kagami/ffmpeg.js</a>
+        </p>
       </div>
-      -->
-      <div class="project nipper">
-        <div class="description">
-          <h2>nipper</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/nipper"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-web">#Web</span>
-            <!-- <span class="label label-mobile">#Mobile</span> -->
-            <!-- <span class="label label-desktop">#Desktop</span> -->
-            <span class="label label-separator"></span>
-            <span class="label label-javascript">Javascript</span>
-            <!-- <span class="label label-electron">Electron</span> -->
-            <span class="label label-react">React</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2>react-virtualist</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/react-virtualist"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-library">#Library</span>
+              <span class="label label-separator"></span>
+              <span class="label label-javascript">Javascript</span>
+              <span class="label label-react">React</span>
+            </div>
           </div>
-          <p class="light">
-            Youtube playlist (& video) ripper, parse Youtube video or playlist link, fix inaccurate tags (cover, artist & song), choose wanted format (mp4, webm, aac, mp3 or ogg), and download on-by-one or zipped (best flux chosen by default) ! Every process are made directly in the browser, like downloading flux or converting them with <a href="https://github.com/Kagami/ffmpeg.js">Kagami/ffmpeg.js</a>
-          </p>
+          <div class="emojis">💀🚟</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/nipper.png" />
-        </div>
+        <p class="light">
+          Just a dead-simple react library to render big list (~1M) by rendering only visible elements (with a few offset of course)
+        </p>
       </div>
-      <div class="project react-virtualist">
-        <div class="description">
-          <h2>react-virtualist</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/react-virtualist"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-library">#Library</span>
-            <span class="label label-separator"></span>
-            <span class="label label-javascript">Javascript</span>
-            <span class="label label-react">React</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2>scene-release-parser-js</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/scene-release-parser-js"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-library">#Library</span>
+              <span class="label label-separator"></span>
+              <span class="label label-javascript">Javascript</span>
+            </div>
           </div>
-          <p class="light">
-            Just a dead-simple react library to render big list (~1M) by rendering only visible elements (with a few offset of course)
-          </p>
+          <div class="emojis">🎟💸☠️</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/react-virtualist.png" />
-        </div>
+        <p class="light">
+          Parse scene release name, return object with title, tags and flags
+        </p>
       </div>
-      <div class="project scene-release-parser-js">
-        <div class="description">
-          <h2>scene-release-parser-js</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/scene-release-parser-js"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-library">#Library</span>
-            <span class="label label-separator"></span>
-            <span class="label label-javascript">Javascript</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2 class="deprecated" title="Deprecated">torrent-djinn</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/torrent-djinn"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-cli">#CLI</span>
+              <span class="label label-separator"></span>
+              <span class="label label-php">PHP</span>
+            </div>
           </div>
-          <p class="light">
-            Parse scene release name, return object with title, tags and flags
-          </p>
+          <div class="emojis">🌊👻</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/scene-release-parser-js.png" />
-        </div>
+        <p class="light">
+          PHP console application allowing you to search torrents on various trackers and filters them easily.
+        </p>
       </div>
-      <div class="project torrent-djinn">
-        <div class="description">
-          <h2 class="deprecated" title="Deprecated">torrent-djinn</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/torrent-djinn"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-cli">#CLI</span>
-            <span class="label label-separator"></span>
-            <span class="label label-php">PHP</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2 class="deprecated">senscritique-api</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/senscritique-api"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-library">#Library</span>
+              <span class="label label-separator"></span>
+              <span class="label label-php">PHP</span>
+            </div>
           </div>
-          <p class="light">
-            PHP console application allowing you to search torrents on various trackers and filters them easily.
-          </p>
+          <div class="emojis">🎥🖲</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/torrent-djinn.png" />
-        </div>
+        <p class="light">
+          PHP Library to call basics usage of SensCritique website by curl and dom parsing.
+        </p>
       </div>
-      <div class="project senscritique-api">
-        <div class="description">
-          <h2>senscritique-api</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/senscritique-api"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-library">#Library</span>
-            <span class="label label-separator"></span>
-            <span class="label label-php">PHP</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2 class="deprecated" title="Deprecated">epyd</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/epyd"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-web">#Web</span>
+              <span class="label label-separator"></span>
+              <span class="label label-php">PHP</span>
+              <span class="label label-javascript">Javascript</span>
+              <span class="label label-angularjs">AngularJS</span>
+            </div>
           </div>
-          <p class="light">
-            PHP Library to call basics usage of SensCritique website by curl and dom parsing.
-          </p>
+          <div class="emojis">🍎️🎻☁️</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/senscritique-api.png" />
-        </div>
+        <p class="light">
+          Epyd (Easy Playlist Youtube Downloadr) allow you to download your Youtube playlists & videos a MP3 files filled with valid ID3 tags.
+        </p>
       </div>
-      <div class="project epyd">
-        <div class="description">
-          <h2 class="deprecated" title="Deprecated">epyd</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/epyd"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-web">#Web</span>
-            <span class="label label-separator"></span>
-            <span class="label label-php">PHP</span>
-            <span class="label label-javascript">Javascript</span>
-            <span class="label label-angularjs">AngularJS</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2>silex-simpleuser-jwt</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/silex-simpleuser-jwt"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-library">#Library</span>
+              <span class="label label-separator"></span>
+              <span class="label label-php">PHP</span>
+            </div>
           </div>
-          <p class="light">
-            Epyd (Easy Playlist Youtube Downloadr) allow you to download your Youtube playlists & videos a MP3 files filled with valid ID3 tags.
-          </p>
+          <div class="emojis">🗿🏷️👨</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/epyd.png" />
-        </div>
+        <p class="light">
+          An implementation of jasongrimes/silex-simpleuser with JSON Web Token (JWT) frequently used in javascript frontend framework (AngularJS, ...)
+        </p>
       </div>
-      <div class="project silex-simpleuser-jwt">
-        <div class="description">
-          <h2>silex-simpleuser-jwt</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/silex-simpleuser-jwt"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-library">#Library</span>
-            <span class="label label-separator"></span>
-            <span class="label label-php">PHP</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2>scene-release-parser-php</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/scene-release-parser-php"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-library">#Library</span>
+              <span class="label label-separator"></span>
+              <span class="label label-php">PHP</span>
+            </div>
           </div>
-          <p class="light">
-            An implementation of jasongrimes/silex-simpleuser with JSON Web Token (JWT) frequently used in javascript frontend framework (AngularJS, ...)
-          </p>
+          <div class="emojis">🎟💸☠️</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/silex.png" />
-          <img src="dist/img/projects/silex-simpleuser-jwt_user.png" />
-          <img src="dist/img/projects/silex-simpleuser-jwt_coin.png" />
-        </div>
+        <p class="light">
+          PHP Library to parse scene release names to get their tags and title (original from majestixx/scene-release-parser-php-lib)
+        </p>
       </div>
-      <div class="project scene-release-parser-php">
-        <div class="description">
-          <h2>scene-release-parser-php</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/scene-release-parser-php"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-library">#Library</span>
-            <span class="label label-separator"></span>
-            <span class="label label-php">PHP</span>
+      <div class="project">
+        <div class="about">
+          <div class="metadata">
+            <h2>silex-gearman-service</h2>
+            <ul class="links">
+              <li><a href="https://github.com/thcolin/silex-gearman-service"><i class="ion-social-github"></i></a></li>
+            </ul>
+            <div class="tags">
+              <span class="label label-library">#Library</span>
+              <span class="label label-separator"></span>
+              <span class="label label-php">PHP</span>
+            </div>
           </div>
-          <p class="light">
-            PHP Library to parse scene release names to get their tags and title (original from majestixx/scene-release-parser-php-lib)
-          </p>
+          <div class="emojis">🗿🏢👷</div>
         </div>
-        <div class="logo">
-          <img src="dist/img/projects/scene-release-parser_dvd.png" />
-          <img src="dist/img/projects/scene-release-parser_edit.png" />
-        </div>
-      </div>
-      <div class="project silex-gearman-service">
-        <div class="description">
-          <h2>silex-gearman-service</h2>
-          <ul class="links">
-            <li><a href="https://github.com/thcolin/silex-gearman-service"><i class="ion-social-github"></i></a></li>
-          </ul>
-          <div class="tags">
-            <span class="label label-library">#Library</span>
-            <span class="label label-separator"></span>
-            <span class="label label-php">PHP</span>
-          </div>
-          <p class="light">
-            PHP library to facilitate the use of Gearman bin. The library use two majors service gearman.jobs to manage jobs, and gearman.workers to manage workers.
-          </p>
-        </div>
-        <div class="logo">
-          <img src="dist/img/projects/silex.png" />
-          <img src="dist/img/projects/silex-gearman-service_worker.png" />
-          <img src="dist/img/projects/silex-gearman-service_gear.png" />
-        </div>
+        <p class="light">
+          PHP library to facilitate the use of Gearman bin. The library use two majors service gearman.jobs to manage jobs, and gearman.workers to manage workers.
+        </p>
       </div>
     </div>
   </div>

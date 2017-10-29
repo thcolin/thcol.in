@@ -15,6 +15,9 @@ timezone:
 uri: http://thcol.in
 url: http://thcol.in/blog
 root: /blog/
+# uri: http://localhost/thcolin
+# url: http://localhost/thcolin/blog
+# root: /thcolin/blog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 

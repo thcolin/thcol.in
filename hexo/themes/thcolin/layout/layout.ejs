@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>thcol.in - #blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="<%- config.uri + '/dist/style/vendor.css' %>" rel="stylesheet">
     <link href="<%- config.uri + '/dist/style/app.css' %>" rel="stylesheet">
     <link rel="icon" type="image/png" href="<%- config.uri + '/resources/favicon-196x196.png' %>" sizes="196x196" />
@@ -18,11 +19,22 @@
           <div class="thcolin">
             <a href="<%- config.uri + '#home' %>"><h1>thcol.in</h1></a>
           </div>
-          <div class="menu">
+          <div class="menu mobile-hide">
             <ul>
               <li><a href="<%- config.url %>">Blog</a></li>
               <li><a href="<%- config.uri + '#projects' %>">Projects</a></li>
               <li><a href="<%- config.uri + '#about' %>">About</a></li>
+              <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
+            </ul>
+          </div>
+          <div class="menu mobile-show">
+            <ul>
+              <li><a href="<%- config.url %>">Blog</a></li>
+              <li><a href="<%- config.uri + '#projects' %>">Projects</a></li>
+              <li><a href="<%- config.uri + '#about' %>">About</a></li>
+            </ul>
+            <ul>
               <li><a href="https://github.com/thcolin/"><i class="ion-social-github"></i></a></li>
               <li><a href="https://twitter.com/thcolin3"><i class="ion-social-twitter"></i></a></li>
             </ul>
