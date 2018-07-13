@@ -19,7 +19,6 @@
     "bootstrap": "^3.3.7",
     "montserrat-webfont": "^1.0.3",
     "playfair-webfont": "^1.0.3",
-    "Ionicons": "ionicons#^2.0.1",
     "fetch": "^1.0.0",
     "es6-promise": "^4.0.5",
     "highlightjs": "^9.8.0"

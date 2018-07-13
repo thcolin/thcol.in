@@ -92,7 +92,6 @@ gulp.task('assets:style', function(){
       './assets/style/animations.less',
       './assets/style/mixins/**/*.less',
       './assets/style/**/*.less',
-      './angular/**/*.less'
     ], {read: false})
     .pipe(unique())
     .pipe(print());
