@@ -1,25 +1,25 @@
 const gulp = require('gulp');
 
-const es        = require('event-stream');
-const sequence  = require('run-sequence');
-const plumber   = require('gulp-plumber');
-const print     = require('gulp-print');
-const bower     = require('main-bower-files');
-const util      = require('gulp-util');
+const es = require('event-stream');
+const sequence = require('run-sequence');
+const plumber = require('gulp-plumber');
+const print = require('gulp-print');
+const bower = require('main-bower-files');
+const util = require('gulp-util');
 
-const merge     = require('merge2');
-const rename    = require('gulp-rename');
-const clean     = require('gulp-clean');
-const filter    = require('gulp-filter');
-const concat    = require('gulp-concat');
-const unique    = require('gulp-unique-files');
-const favicons  = require('gulp-favicons');
-const less      = require('gulp-less');
-const inject    = require('gulp-inject');
-const uglify    = require('gulp-uglify');
+const merge = require('merge2');
+const rename = require('gulp-rename');
+const clean = require('gulp-clean');
+const filter = require('gulp-filter');
+const concat = require('gulp-concat');
+const unique = require('gulp-unique-files');
+const favicons = require('gulp-favicons');
+const less = require('gulp-less');
+const inject = require('gulp-inject');
+const uglify = require('gulp-uglify');
 const minifyCSS = require('gulp-minify-css');
-const flatten   = require('gulp-flatten');
-const install   = require("gulp-install");
+const flatten = require('gulp-flatten');
+const install = require("gulp-install");
 
 // default : watch
 gulp.task('watch', function(){
