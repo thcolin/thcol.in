@@ -4,6 +4,13 @@
   "description": "Personnal website/blog",
   "author": "thcolin <th.colin3@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "dev": "npx gulp",
+    "build": "npx gulp build",
+    "serve": "npx http-server .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "devDependencies": {
     "gulp": "^3.8.8",
     "gulp-clean": "^0.3.2",
@@ -24,6 +31,7 @@
     "gulp-uglify": "^1.2.0",
     "gulp-unique-files": "^0.1.2",
     "gulp-util": "^3.0.7",
+    "http-server": "^0.11.1",
     "main-bower-files": "^2.8.0",
     "merge2": "^0.3.5",
     "run-sequence": "^1.2.1"
