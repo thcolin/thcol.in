@@ -1,16 +1,18 @@
 ---
 title: Customize a Boostrap 3 installed with Bower
+date: 2017-10-25 22:21:39
 photos:
-- http://i.imgur.com/os6Aj70.png
+- https://i.imgur.com/9cH7ZaU.png
 ---
 
 I had a problem at work today, how do you customize Boostrap when you installed it with bower ?
 
 If you look in the Bootstrap repository, you'll see that the style is built with LESS. And for its customization, it uses a `variables.less` file which contains every useful variable. Also, the website [getbootstrap](http://getbootstrap.com/customize/) allows you to easily customize the variables, but it directly compiles the version of bootstrap and don't give you the `less` file likely generated, but a `config.json` file for their Grunt task. The problem is I don't use Grunt but Gulp, so how I handle this ?
 
+<!-- more -->
+
 Most of blog posts I've read, talked about using a *quite strange* `bootstrap-sass` dependency, but why use it and not the default `bootstrap` dependency ? I WANT MY DEFAULT BOOTSTRAP LIBRARY ! So here I am for my first *real* blog post.
 
-<!-- more -->
 
 ## Bower
 First, imagine a project where we have a `bower.json` like this :

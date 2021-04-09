@@ -1,5 +1,6 @@
 ---
 title: Markdown example
+date: 2016-11-04 22:48:11
 photos:
 - https://rstudioblog.files.wordpress.com/2014/06/keep-calm-and-markdown.png
 ---

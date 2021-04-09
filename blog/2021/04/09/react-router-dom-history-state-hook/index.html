@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <title>thcol.in - #blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="http://thcol.in/dist/style/vendor.css" rel="stylesheet">
+    <link href="http://thcol.in/dist/style/app.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-196x196.png" sizes="196x196">
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="http://thcol.in/resources/favicon-128x128.png" sizes="128x128">
+  </head>
+  <body>
+    <div id="container">
+      <div id="blog">
+        <div class="head">
+          <div class="thcolin">
+            <a href="http://thcol.in#home"><h1>thcol.in</h1></a>
+          </div>
+          <div class="menu mobile-hide">
+            <ul>
+              <li><a href="http://thcol.in/blog">Blog</a></li>
+              <li><a href="http://thcol.in#projects">Projects</a></li>
+              <li><a href="http://thcol.in#about">About</a></li>
+              <li><a href="https://github.com/thcolin/"><i class="fab fa-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="fab fa-twitter"></i></a></li>
+            </ul>
+          </div>
+          <div class="menu mobile-show">
+            <ul>
+              <li><a href="http://thcol.in/blog">Blog</a></li>
+              <li><a href="http://thcol.in#projects">Projects</a></li>
+              <li><a href="http://thcol.in#about">About</a></li>
+            </ul>
+            <ul>
+              <li><a href="https://github.com/thcolin/"><i class="fab fa-github"></i></a></li>
+              <li><a href="https://twitter.com/thcolin3"><i class="fab fa-twitter"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="content colors-reverse">
+          <div class="post">
+  <div id="post-react-router-dom-history-state-hook" class="article">
+    
+      <div class="picture">
+        <img src="https://miro.medium.com/max/1024/1*DU5n6M4z1mRlxEl_Co6EGg.jpeg" itemprop="image">
+      </div>
+    
+    <div class="title">
+      <h1 itemprop="name">React Router DOM History state hook</h1>
+    </div>
+    <div class="metadata">
+      <div class="date">
+        <p>
+          <time datetime="2021-04-09T11:59:09.000Z" itemprop="published">09 Apr 2021</time>
+        </p>
+      </div>
+    </div>
+    <div class="excerpt">
+      <p>Hi, it’s been a while !</p>
+<p>Guess what, i’d another issue at work today, share a <code>state</code> between two <strong>React</strong> components not rendered by the same parent</p>
+<a id="more"></a>
+<p>A really simple solution I occasionally use is the not-so-known <a href="https://developer.mozilla.org/en-US/docs/Web/API/History/state" target="_blank" rel="noopener"><code>History.state</code></a></p>
+<p>With <code>react-router-dom</code>, <code>History.state</code> is available through <a href="https://reactrouter.com/web/api/location" target="_blank" rel="noopener"><code>location</code></a> with <a href="https://reactrouter.com/web/api/Hooks/uselocation" target="_blank" rel="noopener"><code>useLocation</code></a> hook for example, and you can set it with a <a href="https://reactrouter.com/web/api/Link/to-object" target="_blank" rel="noopener"><code>&lt;Link /&gt;</code></a> component or with the <a href="https://reactrouter.com/web/api/history" target="_blank" rel="noopener"><code>history.replace</code></a> available through <a href="https://reactrouter.com/web/api/Hooks/usehistory" target="_blank" rel="noopener"><code>useRouter</code></a> hook</p>
+<p>With a few lines we can re-create <code>React.useState</code> behavior with <code>History.state</code> and help from <code>react-router-dom</code> hooks !<br><br></p>
+<pre><code class="js">import { useRef, useCallback, useEffect } from &#39;react&#39;
+import { useHistory, useLocation } from &#39;react-router-dom&#39;
+
+// Use a &quot;creator&quot; with a `key` allow us to have multiple History.state usage in the same page
+export const createHistoryState = (key, initial = {}) =&gt; () =&gt; {
+  const ready = useRef(false)
+  const { replace } = useHistory()
+  const { state = { [key]: initial }, ...location } = useLocation()
+  const setState = useCallback(next =&gt; replace({ ...location, state: { ...state, [key]: next } }), [location])
+
+  useEffect(() =&gt; {
+    ready.current = true
+    setState(initial)
+  }, [])
+
+  return [ready.current ? state[key] : initial, setState]
+}
+</code></pre>
+<p><br></p>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><pre><code class="js">const useHistoryState = createHistoryState(&#39;custom-key&#39;, { loading: false })
+
+const Button = ({ ...props }) =&gt; {
+  const [state, setState] = useHistoryState()
+
+  useEffect(() =&gt; {
+    const cb = async () =&gt; {
+      setState({ loading: true })
+      // await [...]
+      setState({ loading: false })
+    }
+
+    cb()
+  }, [])
+
+  return (
+    &lt;button disabled={state.loading}&gt;
+      Refresh
+    &lt;/button&gt;
+  )
+}
+
+const Content = ({ ...props }) =&gt; {
+  const [state, setState] = useHistoryState()
+
+  return (
+    &lt;div&gt;
+      {state.loading ? &#39;Loading...&#39; : &#39;Hello World !&#39;}
+    &lt;div&gt;
+  )
+}
+</code></pre>
+<p><br></p>
+<p><strong>IMPORTANT:</strong> This solution have some limits</p>
+<ul>
+<li>Remember, <code>state</code> will be <code>JSON.stringify</code>, therefore <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#description" target="_blank" rel="noopener"><em>properties that are not enumerable will be ignored</em></a> (like <code>Function</code>)</li>
+<li><code>location.state</code> is only available for <code>BrowserRouter</code> and <code>MemoryRouter</code>, not for <code>HashRouter</code>, see <a href="https://reactrouter.com/web/api/HashRouter" target="_blank" rel="noopener">note</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="http://thcol.in/dist/script/vendor.js"></script>
+  <script type="text/javascript">
+    (function() {
+      var highlights = document.querySelectorAll('pre code');
+      for(var i = 0; i < highlights.length; i++){
+        if(highlights[i].className){
+          hljs.highlightBlock(highlights[i]);
+        }
+      }
+    })();
+  </script>
+</html>
