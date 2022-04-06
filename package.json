@@ -1,0 +1,18 @@
+{
+  "name": "thcol.in",
+  "version": "1.0.0",
+  "description": "thcolin personnal website",
+  "repository": "https://github.com/thcolin/thcol.in.git",
+  "author": "thcolin <th.colin3@gmail.com>",
+  "license": "MIT",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel -p 8080 --public-url='http://localhost:8080/'",
+    "build": "parcel build --no-source-maps --public-url='https://thcol.in/'",
+    "deploy": "yarn build && echo 'thcol.in' > ./dist/CNAME && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3",
+    "parcel": "^2.4.1"
+  }
+}

@@ -1,0 +1,217 @@
+html {
+  box-sizing: border-box;
+  background-color: #111;
+  scroll-behavior: smooth;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  font-family: inherit;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 400;
+  scroll-behavior: smooth;
+  color: white;
+  margin: 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+header section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
+  max-width: 100%;
+}
+
+header section h1 {
+  margin: 0;
+  font-size: 4em;
+  border: 12px solid white;
+  padding: 12px 24px;
+  border-radius: 36px;
+}
+
+header aside {
+  flex: 1;
+  background-color: #111;
+  color: white;
+}
+
+header aside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 0px;
+}
+
+header aside img {
+  border-radius: 50%;
+}
+
+header aside article {
+  margin: 0px 32px;
+}
+
+header aside article h2 {
+  font-size: 36px;
+  margin: 8px 0px;
+}
+
+header aside article h4 {
+  font-weight: 500;
+  margin: 8px 0px;
+}
+
+header aside article h4 a {
+  font-weight: bold;
+}
+
+header aside article ul {
+  list-style: none;
+  padding: 0;
+}
+
+header aside article ul li {
+  display: flex;
+}
+
+header aside article ul li a {
+  display: flex;
+  align-items: center;
+  margin: 2px 0px;
+}
+
+header aside article ul li a svg {
+  display: flex;
+}
+
+header aside article ul li a span {
+  display: flex;
+  margin: 0px 8px;
+}
+
+header nav {
+  margin: 32px 0px;
+}
+
+header nav a {
+  display: inline-block;
+  font-weight: bold;
+  margin: 0px 12px;
+}
+
+main {
+  flex: 1;
+  background-color: #f4f4f4;
+  color: #111;
+  padding: 32px;
+}
+
+main#projects aside {
+  display: flex;
+  justify-content: center;
+}
+
+main#projects aside ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  overflow: scroll;
+}
+
+main#projects aside ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 12px;
+}
+
+main#projects aside ul li::before {
+  content: '';
+  display: block;
+  height: 1em;
+  width: 1em;
+  margin: 8px;
+  border-radius: 50%;;
+}
+
+main#projects aside ul li[data-language="javascript"]::before {
+  background-color: #f1e05a;
+}
+
+main#projects aside ul li[data-language="html"]::before {
+  background-color: #e34c26;
+}
+
+main#projects aside ul li[data-language="css"]::before {
+  background-color: #563d7c;
+}
+
+main#projects aside ul li[data-language="shell"]::before {
+  background-color: #89e051;
+}
+
+main#projects aside ul li[data-language="docker"]::before {
+  background-color: #384d54;
+}
+
+main#projects aside ul li[data-language="php"]::before {
+  background-color: #4F5D95;
+}
+
+main#projects a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 64px 0px;
+}
+
+main#projects a[disabled=""] {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+main#projects a img {
+  max-width: 600px;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 3em !important;
+    border-width: 8px !important;
+  }
+
+  header aside {
+    flex-direction: column !important;
+  }
+
+  header aside img {
+    margin-bottom: 32px;
+  }
+}
