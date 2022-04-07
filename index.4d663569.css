@@ -151,6 +151,7 @@ main#projects aside ul li:before {
   content: "";
   height: 1em;
   width: 1em;
+  border-radius: 50%;
   margin: 8px;
   display: block;
 }
@@ -163,12 +164,20 @@ main#projects aside ul li[data-language="html"]:before {
   background-color: #e34c26;
 }
 
-main#projects aside ul li[data-language="php"]:before {
-  background-color: #4f5d95;
+main#projects aside ul li[data-language="css"]:before {
+  background-color: #563d7c;
 }
 
 main#projects aside ul li[data-language="shell"]:before {
   background-color: #89e051;
+}
+
+main#projects aside ul li[data-language="docker"]:before {
+  background-color: #384d54;
+}
+
+main#projects aside ul li[data-language="php"]:before {
+  background-color: #4f5d95;
 }
 
 main#projects a {
