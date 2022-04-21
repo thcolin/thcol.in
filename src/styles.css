@@ -140,7 +140,7 @@ main#projects aside ul {
   display: flex;
   list-style: none;
   padding: 0;
-  overflow: scroll;
+  overflow-x: auto;
 }
 
 main#projects aside ul li {
@@ -148,6 +148,7 @@ main#projects aside ul li {
   align-items: center;
   justify-content: center;
   margin: 0px 12px;
+  white-space: nowrap;
 }
 
 main#projects aside ul li::before {
