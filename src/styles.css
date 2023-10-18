@@ -184,11 +184,17 @@ main#projects aside ul li[data-language="php"]::before {
   background-color: #4F5D95;
 }
 
+main#projects section {
+  display: grid;
+  grid-gap: 3em;
+  grid-template-columns: repeat(auto-fit, minmax(30em, 1fr));
+  margin: 3em 0;
+}
+
 main#projects a {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 64px 0px;
 }
 
 main#projects a[disabled=""] {
