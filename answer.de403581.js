@@ -1,0 +1,1 @@
+(0,globalThis.parcelRequiredc51.register)("9Mwpu",function(i,e){i.exports=JSON.parse('{"id":9322,"title":"Nikita","originalTitle":"Nikita","slug":"la-femme-nikita"}')});
