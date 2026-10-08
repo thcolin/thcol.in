@@ -20,7 +20,7 @@ yarn start   # http://localhost:8080
 ## Recette visuelle
 
 - Chantier frontend : tout ce qui touche `src/`.
-- Lancer : `yarn start`, puis ouvrir `http://localhost:8080/#projects` dans le Chrome du MCP `chrome-devtools`.
+- Lancer : un build de prod servi en statique, `npx parcel build src/index.html --public-url ./ --dist-dir <scratchpad>/dist` puis `python3 -m http.server 8082` dans ce dossier, et ouvrir `http://localhost:8082/#projects` dans le Chrome du MCP `chrome-devtools`. `yarn start` affiche en dev l'overlay d'erreur de Parcel sur le warning `defaultProps` de `react-responsive-virtual-grid`, qui masque la page.
 - Tailles : 1440×900 et 390×844.
 - Données : aucune base, tout le contenu est dans `src/`.
 - Jamais depuis une session : `yarn deploy`, qui publie sur `gh-pages` et met le site en ligne.
@@ -40,3 +40,8 @@ GitHub Pages, `https://thcol.in`, gratuit. Le domaine est chez Gandi.
 ## Commits
 
 Conventional Commits, la portée du chantier en scope, en anglais.
+
+## Pièges
+
+- React reste en 18 : `react-responsive-virtual-grid` 0.0.26 pose `defaultProps` sur un composant fonction, que React 19 ignore.
+- `.shots/` est ignoré par git : captures de recette, jamais commitées.

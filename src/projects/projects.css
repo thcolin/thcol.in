@@ -1,0 +1,748 @@
+/* The frame is the header's: #111, white, Montserrat, the wordmark's rounded stroke.
+   Each band then wears its own project's world through --band-bg, --band-ink and --accent. */
+
+main#projects {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: clamp(16px, 4vw, 48px);
+  background-color: #111;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+main#projects ::selection {
+  background-color: var(--accent, #fff);
+  color: var(--on-accent, #111);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: clip;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  padding-top: 96px;
+}
+
+.group__title {
+  align-self: center;
+  margin: 0 var(--gutter) 64px;
+  padding: 4px 18px 6px;
+  border: 6px solid #fff;
+  border-radius: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Band */
+
+.band {
+  --band-bg: #111;
+  --band-ink: #fff;
+  --band-dim: rgb(255 255 255 / 0.65);
+  --band-line: rgb(255 255 255 / 0.18);
+  position: relative;
+  padding: 96px 0;
+  background-color: var(--band-bg);
+  color: var(--band-ink);
+  overflow: clip;
+}
+
+.band__column {
+  width: 100%;
+  max-width: 72em;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.band__split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.band__split--reverse {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.band__split--reverse > .band__text {
+  order: 2;
+}
+
+.band__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 0;
+}
+
+.band__body {
+  margin: 0;
+  max-width: 34em;
+  color: var(--band-dim);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.band__demo {
+  min-width: 0;
+}
+
+.band :focus-visible {
+  outline: 2px solid var(--band-ink);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .band {
+    padding: 64px 0;
+  }
+
+  .band__split,
+  .band__split--reverse {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .band__split--reverse > .band__text {
+    order: 0;
+  }
+}
+
+/* Shared controls, drawn in each band's ink */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 3px 8px;
+  border: 1px solid var(--band-line);
+  border-radius: 4px;
+  color: var(--band-dim);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  display: block;
+  padding: 10px 16px;
+  border: 1px solid var(--band-ink);
+  border-radius: 4px;
+  color: var(--band-ink);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition-property: background-color, color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.links a:hover {
+  background-color: var(--band-ink);
+  color: var(--band-bg);
+  text-decoration: none;
+}
+
+.links a:active {
+  scale: 0.96;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.choices button {
+  padding: 8px 14px;
+  border: 1px solid var(--band-line);
+  border-radius: 999px;
+  background: none;
+  color: var(--band-dim);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition-property: background-color, border-color, color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.choices button:hover {
+  border-color: var(--band-ink);
+  color: var(--band-ink);
+}
+
+.choices button:active {
+  scale: 0.96;
+}
+
+.choices button[aria-checked='true'] {
+  border-color: var(--accent, var(--band-ink));
+  background-color: var(--accent, var(--band-ink));
+  color: var(--on-accent, var(--band-bg));
+}
+
+/* sensorr, its landing's own world: near black, the green of its primary, Raleway over Open Sans */
+
+.sensorr {
+  --band-bg: #050505;
+  --band-ink: #fbfbfb;
+  --band-dim: hsl(0 0% 69%);
+  --band-line: hsl(0 0% 100% / 0.16);
+  --accent: hsl(154 99% 41%);
+  --on-accent: #050505;
+  font-family: 'Open Sans', sans-serif;
+  background-image: radial-gradient(60% 70% at 85% 50%, hsl(154 99% 41% / 0.12), transparent);
+}
+
+.sensorr__title {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.sensorr__tagline {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.sensorr__stage {
+  position: relative;
+  aspect-ratio: 2000 / 1124;
+  border-radius: 10px;
+  overflow: clip;
+  box-shadow: 0 24px 64px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.sensorr__stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.sensorr__stage img.is-shown {
+  opacity: 1;
+}
+
+/* gmca, its site's own world: charcoal, Archivo condensed, one accent per media server */
+
+.gmca {
+  --band-bg: #0d0d10;
+  --band-ink: #f2efe7;
+  --band-dim: #a7a39b;
+  --band-line: rgb(242 239 231 / 0.16);
+  font-family: 'Hanken Grotesk', sans-serif;
+  background-image: radial-gradient(55% 70% at 25% 50%, color-mix(in srgb, var(--accent) 16%, transparent), transparent);
+}
+
+.gmca__brand {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  align-items: center;
+  margin: 0;
+}
+
+.gmca__brand img {
+  grid-row: span 2;
+  width: 64px;
+  height: 64px;
+}
+
+.gmca__brand span {
+  font-family: 'Archivo', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 1;
+}
+
+.gmca__brand small {
+  color: var(--band-dim);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.gmca__headline {
+  margin: 0;
+  font-family: 'Archivo', sans-serif;
+  font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.gmca__headline em {
+  font-style: normal;
+  color: var(--accent);
+  transition: color 400ms ease-out;
+}
+
+.gmca__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gmca__stage {
+  aspect-ratio: 2 / 1;
+}
+
+.gmca__stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: gmca-in 500ms var(--ease) both;
+}
+
+@keyframes gmca-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    scale: 0.98;
+  }
+}
+
+/* oleoo, its README's own world: pure black, Fira Code, the logo's block gradient */
+
+.oleoo {
+  --band-bg: #000;
+  --band-ink: #fff;
+  --band-dim: hsl(0 0% 69%);
+  --band-line: hsl(0 0% 100% / 0.2);
+  padding-top: 0;
+  font-family: 'Fira Code', monospace;
+  line-height: 1.5;
+}
+
+.oleoo__edge {
+  margin-bottom: 96px;
+  overflow: clip;
+  white-space: nowrap;
+  color: hsl(0 0% 20%);
+  font-size: 0.875rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.oleoo__split {
+  align-items: start;
+}
+
+.oleoo__logo {
+  margin: 0;
+  /* 42 columns of Fira Code are about 25em wide: 3.3vw fits a phone, 1.15rem fits the text column */
+  font-size: round(min(3.3vw, 1.15rem), 1px);
+  line-height: 1;
+  white-space: pre;
+}
+
+.oleoo__logo span {
+  display: block;
+  opacity: 0;
+  transform: translateX(-0.75em);
+  transition-property: opacity, transform;
+  transition-duration: 500ms;
+  transition-timing-function: var(--ease);
+}
+
+.oleoo__logo span.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.oleoo__subtitle {
+  margin: 0;
+  padding: 4px 10px;
+  border: 1px solid var(--band-ink);
+  font-size: 0.9375rem;
+}
+
+.oleoo__forum {
+  margin: 0;
+  color: var(--band-dim);
+  font-size: 0.875rem;
+}
+
+.oleoo__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 8px 0;
+}
+
+.oleoo__facts div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.oleoo__facts dt {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.oleoo__facts dd {
+  margin: 0;
+  color: var(--band-dim);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.oleoo .tags li {
+  font-family: 'Fira Code', monospace;
+}
+
+.oleoo__parse {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.oleoo__label {
+  color: var(--band-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.oleoo__prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid hsl(0 0% 40%);
+  border-radius: 4px;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  transition: border-color 150ms ease-out;
+}
+
+.oleoo__prompt:focus-within {
+  border-color: #fff;
+}
+
+.oleoo__caret,
+.oleoo__mirror,
+.oleoo__input {
+  margin: 0;
+  padding: 14px 0;
+  font-family: 'Fira Code', monospace;
+  font-size: inherit;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.oleoo__caret {
+  color: hsl(0 0% 60%);
+  white-space: pre;
+}
+
+.oleoo__release {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.oleoo__mirror {
+  visibility: hidden;
+}
+
+.oleoo__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: clip;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  caret-color: #fff;
+}
+
+.oleoo__input::placeholder {
+  color: hsl(0 0% 50%);
+}
+
+.oleoo__tokens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  row-gap: 1.25em;
+  margin: 0;
+  padding-bottom: 1.25em;
+  font-size: clamp(1.25rem, 2.2vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.1;
+  word-break: break-all;
+}
+
+.oleoo__piece {
+  color: hsl(0 0% 40%);
+}
+
+.oleoo__token {
+  position: relative;
+  color: #fff;
+  text-decoration: underline 2px hsl(0 0% 60%);
+  text-underline-offset: 0.25em;
+}
+
+.oleoo__token[data-field]::after {
+  content: attr(data-field);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5em;
+  color: hsl(0 0% 69%);
+  font-size: max(0.3em, 10px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.oleoo__fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  border: 1px solid hsl(0 0% 20%);
+  border-radius: 4px;
+  background-color: hsl(0 0% 20%);
+  overflow: clip;
+}
+
+.oleoo__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 14px;
+  background-color: #000;
+}
+
+.oleoo__field--wide {
+  grid-column: 1 / -1;
+}
+
+.oleoo__field dt {
+  color: hsl(0 0% 69%);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.oleoo__field dd {
+  margin: 0;
+  font-size: clamp(1rem, 1.6vw, 1.375rem);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.oleoo__field dd.is-missing {
+  color: hsl(0 0% 40%);
+}
+
+@media (max-width: 600px) {
+  .oleoo__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* react-responsive-virtual-grid, its example's own world: a gainsboro page, dark ink */
+
+.grid {
+  --band-bg: hsl(0 0% 89%);
+  --band-ink: hsl(0 0% 10%);
+  --band-dim: hsl(0 0% 28%);
+  --band-line: hsl(0 0% 10% / 0.25);
+  font-family: 'Fira Code', monospace;
+  line-height: 1.5;
+}
+
+.grid__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.grid code {
+  font-family: inherit;
+  color: var(--band-ink);
+}
+
+.grid__snippet {
+  width: 100%;
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid hsl(0 0% 69%);
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.grid .tags li {
+  font-family: 'Fira Code', monospace;
+}
+
+.grid__stage {
+  position: relative;
+  opacity: 0;
+  transform: translateY(1.5em);
+  transition-property: opacity, transform;
+  transition-duration: 600ms;
+  transition-timing-function: var(--ease);
+}
+
+.grid__stage.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+.grid__frame {
+  height: 520px;
+  padding: 4px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid hsl(0 0% 69%);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* Whole columns only, centred: the grid floors its columns and would leave the remainder on the right */
+.grid__track {
+  width: round(down, 100%, 64px);
+  margin: 0 auto;
+}
+
+.grid__cell {
+  box-sizing: border-box;
+  padding: 4px;
+}
+
+.grid__cell span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  color: hsl(0 0% 20%);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  /* Mounted as it scrolls in: the fade shows the virtualization at work */
+  animation: grid-cell 300ms var(--ease) backwards;
+}
+
+@keyframes grid-cell {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+.grid__counter {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 4px;
+  background-color: hsl(0 0% 10%);
+  color: hsl(0 0% 80%);
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
+.grid__count {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .grid__frame {
+    height: 360px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main#projects *,
+  main#projects *::before,
+  main#projects *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .oleoo__logo span,
+  .grid__stage {
+    opacity: 1;
+    transform: none;
+  }
+}
