@@ -1,0 +1,420 @@
+/* Sensorr Wrapped: the band wears the look the phone shows, its ground, its ink and its lettering */
+
+.band.wrapped {
+  --band-bg: #cfc6b4;
+  --band-ink: #16140f;
+  --band-dim: #4a453b;
+  --band-line: rgb(22 20 15 / 0.2);
+  --accent: #e2081c;
+  --wrapped-display: italic 900 1em/0.95 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --wrapped-text: 'Source Serif 4', Georgia, serif;
+  --wrapped-case: uppercase;
+  --wrapped-glow: none;
+  transition-property: background-color, color;
+  transition-duration: 600ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 35mm Lab: the darkroom, its safelight and the film's edge print */
+.band.wrapped[data-look='labo'] {
+  --band-bg: #120c08;
+  --band-ink: #eadcc3;
+  --band-dim: #c0a27f;
+  --band-line: rgb(234 220 195 / 0.18);
+  --accent: #ffb238;
+  --wrapped-display: 900 1em/0.92 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --wrapped-text: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+/* Video Store: the shop at night under its pink neon */
+.band.wrapped[data-look='videoclub'] {
+  --band-bg: #0c0a1a;
+  --band-ink: #efeaff;
+  --band-dim: #cfc6ee;
+  --band-line: rgb(239 234 255 / 0.16);
+  --accent: #ff3fa4;
+  --wrapped-display: 400 1em/1 'Tilt Neon', 'Arial Rounded MT Bold', sans-serif;
+  --wrapped-text: 'Archivo', 'Helvetica Neue', sans-serif;
+  --wrapped-case: none;
+  --wrapped-glow: 0 0 1px #fff, 0 0 6px rgb(255 63 164 / 0.8), 0 0 16px rgb(255 63 164 / 0.35);
+}
+
+/* Screenplay: the desk the script lies on, typed in Courier */
+.band.wrapped[data-look='scenario'] {
+  --band-bg: #2b2622;
+  --band-ink: #efe9dc;
+  --band-dim: #bdb3a3;
+  --band-line: rgb(239 233 220 / 0.16);
+  --accent: #fff06a;
+  --wrapped-display: 700 0.62em/1.05 'Courier Prime', 'Courier New', monospace;
+  --wrapped-text: 'Courier Prime', 'Courier New', monospace;
+}
+
+/* Polish Poster: cheap ochre stock, bruise violet ink, brush lettering */
+.band.wrapped[data-look='affiche'] {
+  --band-bg: #b8955a;
+  --band-ink: #241a2e;
+  --band-dim: #362840;
+  --band-line: rgb(36 26 46 / 0.22);
+  --accent: #b3221a;
+  --wrapped-display: 400 0.9em/1 'Knewave', 'Marker Felt', cursive;
+  --wrapped-text: 'Patrick Hand', 'Segoe Print', cursive;
+  --wrapped-case: none;
+}
+
+.wrapped .band__text {
+  font-family: var(--wrapped-text);
+}
+
+.wrapped__title {
+  margin: 0;
+  font: var(--wrapped-display);
+  font-size: clamp(3rem, 7vw, 5.25rem);
+  letter-spacing: 0.01em;
+  text-transform: var(--wrapped-case);
+  text-shadow: var(--wrapped-glow);
+  text-wrap: balance;
+}
+
+/* The look's own mark under the title: the TV guide's red, the film's edge, the neon, the highlighter, the crimson */
+.wrapped__title::after {
+  content: '';
+  display: block;
+  width: 2.2em;
+  height: 0.14em;
+  margin-top: 0.12em;
+  background-color: var(--accent);
+  transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wrapped__tagline {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.wrapped__sample {
+  margin: 0;
+  max-width: 34em;
+  color: var(--band-dim);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.wrapped .band__body,
+.wrapped .tags,
+.wrapped__sample {
+  transition: color 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wrapped .links a {
+  font-family: inherit;
+}
+
+/* One band, one screen on desktop, where projects.css lays the band in two columns: the phone scales to the height
+   left, see useScale */
+@media (min-width: 901px) {
+  .band.wrapped {
+    height: max(640px, 100svh);
+    padding: 48px 0;
+  }
+
+  .wrapped > .band__column {
+    height: 100%;
+  }
+
+  .wrapped .band__split {
+    grid-template-rows: minmax(0, 1fr);
+    height: 100%;
+  }
+
+  .wrapped__demo {
+    height: 100%;
+    min-height: 0;
+    justify-content: center;
+  }
+
+  .wrapped__title {
+    font-size: clamp(3rem, min(7vw, 10svh), 5.25rem);
+  }
+}
+
+/* The phone: a bezel of fixed size, set by the column's size alone */
+.wrapped__demo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.wrapped__phone {
+  position: relative;
+  padding: 10px;
+  border-radius: 52px;
+  background: #0b0b0c;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.12),
+    0 2px 4px rgb(0 0 0 / 0.25),
+    0 32px 64px -24px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 42px;
+  /* The look's sheet sets its own ground and type here, as on the page body of apps/wrapped */
+  isolation: isolate;
+}
+
+.wrapped__badge {
+  margin: 0;
+  padding: 4px 10px;
+  border: 1px solid var(--band-line);
+  border-radius: 999px;
+  color: var(--band-dim);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* What every look shares, from apps/wrapped/src/styles.css, kept inside the phone */
+.wrapped__look :is(h1, h2, h3, p, ul, ol, dl, dd, figure) {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapped__look :is(ul, ol) {
+  list-style: none;
+}
+
+/* The site's own header rules stop at the phone */
+.wrapped__look header {
+  display: block;
+  flex-direction: row;
+  align-items: normal;
+  justify-content: normal;
+  min-height: auto;
+}
+
+.wrapped__look .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.wrapped__look .theme-switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-right: auto;
+  padding: 0;
+  white-space: nowrap;
+  background: var(--switch-bg, #111);
+  color: var(--switch-fg, #fff);
+  font: var(--switch-font, 600 15px/1 system-ui, sans-serif);
+}
+
+.wrapped__look .theme-switch select {
+  appearance: none;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 12px 22px 10px 2px;
+  margin-right: -22px;
+  cursor: pointer;
+}
+
+.wrapped__look .theme-switch select option {
+  color: initial;
+  background: initial;
+}
+
+.wrapped__look .theme-switch svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.wrapped__look .theme-switch select:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Stories: each sheet a 9:16 page, composed at 396 × 704 and scaled to the phone */
+.wrapped__look .stories {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px 0 64px;
+  overflow: hidden;
+  background: var(--switch-bg, #111);
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.wrapped__look .stories-stage {
+  position: relative;
+  width: calc(var(--story-width) * var(--scale));
+  height: calc(var(--story-height) * var(--scale));
+}
+
+.wrapped__look .stories-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.wrapped__look .stories-page {
+  /* The look's queries and sizes are read against this page, never against the site around it */
+  width: var(--story-width);
+  height: var(--story-height);
+  transform: scale(var(--scale));
+  transform-origin: 0 0;
+}
+
+.wrapped__look .stories-tap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wrapped__look .stories-tap:disabled {
+  cursor: default;
+}
+
+.wrapped__look .stories-frame:focus {
+  outline: none;
+}
+
+.wrapped__look .stories-frame:focus-visible {
+  outline: 2px solid var(--switch-fg, #fff);
+  outline-offset: -2px;
+}
+
+/* Back under the left third, as in every stories app: a thumb crossing the page moves on */
+.wrapped__look .stories-tap-previous {
+  left: 0;
+  width: 33%;
+}
+
+.wrapped__look .stories-tap-next {
+  right: 0;
+  width: 67%;
+}
+
+/* The same steps for a keyboard or a screen reader, shown when they take focus */
+.wrapped__look .stories-step {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  padding: 0;
+  border: 0;
+  background: var(--switch-bg, #111);
+  color: var(--switch-fg, #fff);
+  font: var(--switch-font, 600 15px/1 system-ui, sans-serif);
+  cursor: pointer;
+}
+
+.wrapped__look .stories-step:focus-visible {
+  position: static;
+  width: auto;
+  height: 44px;
+  padding: 0 12px;
+  clip-path: none;
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+
+.wrapped__look .stories-step[aria-disabled='true'] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.wrapped__look .stories-segments,
+.wrapped__look .stories-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin: 0;
+  background: var(--switch-bg, #111);
+  color: var(--switch-fg, #fff);
+}
+
+.wrapped__look .stories-segments {
+  bottom: 100%;
+  display: flex;
+  gap: 4px;
+  height: 24px;
+  padding: 10px 22px;
+}
+
+.wrapped__look .stories-segments li {
+  flex: 1;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.4;
+  transition-property: opacity, transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+}
+
+.wrapped__look .stories-segments li[data-done] {
+  opacity: 0.75;
+}
+
+.wrapped__look .stories-segments li[data-current] {
+  opacity: 1;
+  transform: scaleY(1.5);
+}
+
+.wrapped__look .stories-bar {
+  top: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  height: 64px;
+  padding: 0 28px 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band.wrapped,
+  .wrapped__title::after,
+  .wrapped .band__body,
+  .wrapped .tags,
+  .wrapped__sample,
+  .wrapped__look .stories-segments li {
+    transition: none;
+  }
+}

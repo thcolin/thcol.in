@@ -1,0 +1,255 @@
+/* 3D printing, in the frame's own colours: the models bring their print colours, set in a dark studio */
+
+.band.printing {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding: 0 var(--gutter) 64px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.printing__piece {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.printing__overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.printing__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  border-radius: 8px;
+  overflow: clip;
+  background-color: #141414;
+  background-image: radial-gradient(90% 70% at 50% 28%, #232323 0%, #171717 55%, #0f0f0f 100%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+
+.printing__viewer {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  transition-property: opacity, visibility;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+}
+
+.printing__viewer:active {
+  cursor: grabbing;
+}
+
+.printing__stage:not(.is-ready) .printing__viewer {
+  cursor: default;
+}
+
+.printing .printing__viewer:focus-visible {
+  outline: 2px solid var(--band-ink);
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+.printing__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 800ms var(--ease);
+}
+
+.printing__stage.is-ready .printing__canvas {
+  opacity: 1;
+}
+
+.printing__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  visibility: hidden;
+  transition-property: opacity, visibility;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+}
+
+.printing__stage.is-photo .printing__photo {
+  opacity: 1;
+  visibility: visible;
+}
+
+.printing__stage.is-photo .printing__viewer,
+.printing__stage.is-photo .printing__status {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.printing__status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0 24px;
+  color: var(--band-dim);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.printing__progress {
+  display: block;
+  width: 120px;
+  height: 2px;
+  border-radius: 1px;
+  overflow: clip;
+  background-color: var(--band-line);
+}
+
+.printing__progress span {
+  display: block;
+  height: 100%;
+  background-color: var(--band-ink);
+  transform-origin: left;
+  transition: transform 200ms ease-out;
+}
+
+.printing__title {
+  margin: 8px 0 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.printing__more {
+  margin: 0;
+  color: var(--band-dim);
+  font-size: 0.9375rem;
+  text-wrap: balance;
+}
+
+.printing .choices--bracket {
+  --accent: #fff;
+}
+
+.printing .choices--bracket button:active {
+  scale: 0.96;
+}
+
+/* One screen: the two scenes fill the band edge to edge, the words lie over them */
+@media (min-width: 900px) {
+  .band.printing {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    height: 100svh;
+    min-height: 640px;
+    padding: 0;
+  }
+
+  .printing__piece {
+    min-height: 0;
+    overflow: clip;
+  }
+
+  .printing__piece + .printing__piece {
+    border-left: 1px solid var(--band-line);
+  }
+
+  .printing__stage {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .printing .printing__viewer:focus-visible {
+    border-radius: 0;
+  }
+
+  .printing__overlay {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 48px 48px;
+    pointer-events: none;
+  }
+
+  /* A scrim under the words, so they read over a photo as over a model */
+  .printing__overlay::before {
+    content: '';
+    position: absolute;
+    inset: -160px 0 0;
+    z-index: -1;
+    background-image: linear-gradient(to top, rgb(17 17 17 / 0.96) 0%, rgb(17 17 17 / 0.9) 60%, rgb(17 17 17 / 0));
+  }
+
+  .printing__piece::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    height: 120px;
+    background-image: linear-gradient(to bottom, rgb(17 17 17 / 0.85), rgb(17 17 17 / 0));
+    pointer-events: none;
+  }
+
+  .printing__overlay {
+    z-index: 2;
+  }
+
+  /* Same height on both sides, so the two rows of views line up */
+  .printing .band__body {
+    min-height: calc(3 * 1.55em);
+  }
+
+  .printing__overlay > * {
+    pointer-events: auto;
+  }
+
+  .printing__more {
+    position: absolute;
+    top: 32px;
+    left: 48px;
+    z-index: 2;
+    max-width: calc(50% - 96px);
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 900px) and (max-height: 760px) {
+  .printing__overlay {
+    gap: 12px;
+    padding-bottom: 32px;
+  }
+
+  .printing__title {
+    margin-top: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .printing__viewer,
+  .printing__canvas,
+  .printing__photo,
+  .printing__progress span {
+    transition: none;
+  }
+}

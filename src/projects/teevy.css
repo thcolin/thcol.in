@@ -1,0 +1,967 @@
+/* teevy, its own on-screen display: teletext colours at full saturation, VT323 capitals, flat and sharp */
+
+.band.teevy {
+  --band-bg: #04050d;
+  --band-ink: #fff;
+  --band-dim: hsl(230 15% 72%);
+  --band-line: hsl(230 30% 100% / 0.16);
+  --accent: #f4d000;
+  --osd-white: #fff;
+  --osd-yellow: #f4d000;
+  --osd-cyan: #00e5e5;
+  --osd-green: #28e060;
+  --osd-blue: #1818c4;
+  --osd-red: #ff3030;
+  --osd-amber: #ffb13b;
+  --osd-outline: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 2px 2px #000, -2px 2px #000, 2px -2px #000, -2px -2px #000;
+  --osd-font: 'VT323', monospace;
+}
+
+.teevy ::selection {
+  background-color: var(--osd-yellow);
+  color: #000;
+}
+
+.teevy :focus-visible {
+  outline: 2px solid var(--osd-yellow);
+  outline-offset: 2px;
+}
+
+.teevy kbd {
+  font: inherit;
+}
+
+/* Channel guide: red cursor in a fixed gutter, white items, yellow selection */
+
+.teevy-guide {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--osd-font);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.teevy-guide button {
+  display: grid;
+  grid-template-columns: 1.1em 1.6em minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.3em;
+  width: 100%;
+  padding: 2px 0;
+  border: none;
+  background: none;
+  color: var(--osd-white);
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: inherit;
+  cursor: pointer;
+  transition-property: color, scale;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
+}
+
+.teevy-guide button:active {
+  scale: 0.96;
+}
+
+.teevy-guide__cursor {
+  color: var(--osd-red);
+  visibility: hidden;
+}
+
+.teevy-guide__number {
+  color: var(--osd-cyan);
+  font-variant-numeric: tabular-nums;
+}
+
+.teevy-guide__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.teevy-guide__hint {
+  padding: 0 0.25em;
+  border: 1px solid currentColor;
+  color: var(--osd-green);
+  font-size: 0.75em;
+  line-height: 1.2;
+}
+
+.teevy-guide button:is([data-id='n64'], [data-id='ps2'], [data-id='gamecube'], [data-id='psp']) .teevy-guide__hint {
+  color: var(--osd-cyan);
+}
+
+.teevy-guide button:hover .teevy-guide__cursor,
+.teevy-guide button[aria-checked='true'] .teevy-guide__cursor {
+  visibility: visible;
+}
+
+.teevy-guide button:hover .teevy-guide__cursor {
+  color: var(--osd-white);
+}
+
+.teevy-guide button[aria-checked='true'] .teevy-guide__cursor {
+  color: var(--osd-red);
+}
+
+.teevy-guide button[aria-checked='true'] .teevy-guide__label {
+  color: var(--osd-yellow);
+}
+
+/* Navigation legend: boxed keys */
+
+.teevy-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin: 0;
+  color: var(--osd-cyan);
+  font-family: var(--osd-font);
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.teevy-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.teevy-legend__key {
+  min-width: 1.6em;
+  padding: 0 0.3em;
+  border: 2px solid var(--osd-green);
+  color: var(--osd-green);
+  line-height: 1.1;
+  text-align: center;
+}
+
+
+.teevy-snow {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-color: #444;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.teevy-snow.is-on {
+  opacity: 1;
+  animation: teevy-snow 120ms steps(3) infinite;
+}
+
+@keyframes teevy-snow {
+  to {
+    background-position: 160px 80px;
+  }
+}
+
+
+/* The fake teevy: a 16:9 output, the project's card keyed over the picture */
+
+.band.teevy {
+  --osd-dither: repeating-conic-gradient(rgb(0 0 0 / 0.86) 0% 25%, rgb(0 0 0 / 0.55) 0% 50%);
+}
+
+/* Full bleed: the interface is the band, the project's card is an OSD panel keyed over it */
+
+.band.teevy {
+  --panel-edge: max(var(--gutter), calc((100% - 1152px) / 2 + var(--gutter)));
+  --panel-width: 400px;
+  --guide-left: var(--gutter);
+  --safe-left: calc(var(--guide-left) + var(--panel-width) + 32px);
+  position: relative;
+  height: max(100svh, 640px);
+  padding: 0;
+  overflow: clip;
+  background-color: #000;
+  container-type: inline-size;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.band.teevy:focus-visible {
+  outline: 2px solid var(--osd-yellow);
+  outline-offset: -4px;
+}
+
+/* The screen is the band, edge to edge; the guide is keyed over its left side, so whatever has
+   to be read on a channel sits right of it (--safe-left) */
+.teevy__stage,
+.teevy__screen {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  background-color: #000;
+}
+
+.teevy__screen {
+  container-type: inline-size;
+}
+
+.teevy__channel {
+  position: absolute;
+  inset: 0;
+}
+
+.teevy-entry {
+  position: absolute;
+  top: 4%;
+  left: var(--safe-left);
+  z-index: 3;
+  margin: 0;
+  color: var(--osd-green);
+  font-family: var(--osd-font);
+  font-size: 4rem;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-shadow: var(--osd-outline);
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+.teevy .teevy-hud__channel {
+  padding-right: var(--panel-edge);
+  padding-left: var(--safe-left);
+}
+
+/* The credit and the channel banner say the same thing: the credit steps aside while the banner shows */
+.teevy-credit {
+  transition: opacity 380ms ease;
+}
+
+.teevy:has(.teevy-hud:not(.is-hidden)) .teevy-credit {
+  opacity: 0;
+}
+
+.teevy-boot {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  background-color: #000;
+  isolation: isolate;
+}
+
+.teevy-osd {
+  position: absolute;
+  top: 20px;
+  max-height: calc(100% - 40px);
+  left: var(--guide-left);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  width: var(--panel-width);
+  padding: 22px 24px;
+  border: 2px solid var(--osd-white);
+  background: var(--osd-dither) 0 0 / 4px 4px, rgb(0 0 0 / 0.78);
+  color: var(--osd-white);
+}
+
+.teevy-osd__band {
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  font-weight: 400;
+  font-family: var(--osd-font);
+  font-size: 1.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.teevy-osd__key {
+  padding: 0 0.35em;
+  background-color: var(--osd-cyan);
+  color: #000;
+}
+
+.teevy-osd__value {
+  margin: 0;
+  padding: 0 0.4em;
+  font: inherit;
+  color: var(--osd-yellow);
+  text-shadow: var(--osd-outline);
+}
+
+.teevy-osd__text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  text-shadow: var(--osd-outline);
+  text-wrap: pretty;
+}
+
+.teevy-osd .tags {
+  color: var(--osd-cyan);
+  text-shadow: var(--osd-outline);
+}
+
+.teevy-osd__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.teevy-osd .teevy-guide {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 12px;
+  font-size: 1.1875rem;
+}
+
+.teevy-osd .teevy-guide button {
+  letter-spacing: 0.04em;
+}
+
+.teevy-hud__bug {
+  display: none;
+}
+
+.teevy-osd .teevy-guide button {
+  grid-template-columns: 0.9em 1.4em minmax(0, 1fr);
+}
+
+/* Programmes: what teevy would be showing, dressed the way it dresses each channel */
+
+.teevy-prog {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: clip;
+  container-type: inline-size;
+}
+
+.teevy-prog__still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0% 50%;
+}
+
+.teevy-prog--spotify,
+.teevy-prog--radio {
+  background-color: #000;
+}
+
+.teevy-prog__blur {
+  position: absolute;
+  inset: -10%;
+  background-position: center;
+  background-size: cover;
+  filter: blur(48px) brightness(0.45) saturate(1.2);
+}
+
+.teevy-prog__cover {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--safe-left) + (100% - var(--safe-left)) / 2);
+  width: min(30%, 46vh);
+  height: auto;
+  aspect-ratio: 1;
+  box-shadow: 0 8px 40px rgb(0 0 0 / 0.7);
+  translate: -50% -66%;
+}
+
+.teevy-aurora {
+  position: absolute;
+  inset: 0;
+}
+
+.teevy-aurora__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* teevy's MTV credit: the kicker in the source's colour, artist bold, the track in French quotes */
+.teevy-credit {
+  position: absolute;
+  bottom: 9%;
+  left: var(--safe-left);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 46%;
+  font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
+  color: #fff;
+}
+
+.teevy-credit__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.25em 0.6em;
+  background-color: #1ed760;
+  color: #000;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.teevy-credit__dot {
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: teevy-credit-blink 1s steps(2, start) infinite;
+}
+
+@keyframes teevy-credit-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.teevy-credit__artist {
+  padding-left: 16px;
+  border-left: 4px solid #1ed760;
+  font-size: clamp(2rem, 4cqi, 3.5rem);
+  font-weight: 800;
+  line-height: 1.02;
+  text-shadow: 0 2px 3px rgb(0 0 0 / 0.85);
+}
+
+.teevy-credit__title {
+  margin-top: 0.18em;
+  padding-left: 20px;
+  font-size: clamp(1.5rem, 3cqi, 2.75rem);
+  font-weight: 600;
+  text-shadow: 0 2px 3px rgb(0 0 0 / 0.85);
+}
+
+.teevy-credit__title::before {
+  content: '\AB\202F';
+}
+
+.teevy-credit__title::after {
+  content: '\202F\BB';
+}
+
+.teevy-credit__meta {
+  margin-top: 0.4em;
+  padding-left: 20px;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.85);
+}
+
+.teevy-prog__view {
+  position: absolute;
+  top: 4%;
+  right: 5%;
+  margin: 0;
+  padding: 0.3em 0.7em;
+  background-color: rgb(0 0 0 / 0.42);
+  color: #fff;
+  font-family: var(--osd-font);
+  font-size: 1.125rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.teevy-prog--radio {
+  background: radial-gradient(circle at 62% 45%, #2b1f4a, #000 70%);
+}
+
+.teevy-prog__plate {
+  position: absolute;
+  inset: 0 0 18% var(--safe-left);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Archivo', sans-serif;
+  font-stretch: 75%;
+  font-weight: 800;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.teevy-prog__station {
+  font-size: 15cqi;
+  letter-spacing: -0.02em;
+}
+
+.teevy-prog__station-sub {
+  padding: 0.1em 0.3em;
+  background-color: #e2007a;
+  font-size: 4cqi;
+  letter-spacing: 0.04em;
+}
+
+/* teevy's SOUND OFF flag: a state, not an event, so it stays; dither, hard white edge, pixel speaker */
+.teevy-mute {
+  position: absolute;
+  top: 4%;
+  left: var(--safe-left);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  border: 2px solid #fff;
+  background: var(--osd-dither) 0 0 / 4px 4px;
+  color: #fff;
+  font-family: var(--osd-font);
+  font-size: 1.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: var(--osd-outline);
+  cursor: pointer;
+  transition-property: background-color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.teevy-mute:hover {
+  background-color: rgb(255 255 255 / 0.18);
+}
+
+.teevy-mute:active {
+  scale: 0.96;
+}
+
+.teevy-mute__icon {
+  width: 32px;
+  height: 28px;
+}
+
+.teevy-prog--weather {
+  background: #050510;
+}
+
+.teevy-prog__panel {
+  position: absolute;
+  inset: 14% var(--panel-edge) 30% var(--safe-left);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.4cqi 2cqi;
+  border: 2px solid var(--osd-cyan);
+  background-color: var(--osd-blue);
+  color: var(--osd-white);
+  font-family: var(--osd-font);
+  font-size: 1.6cqi;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.teevy-prog__panel p {
+  margin: 0;
+}
+
+.teevy-prog__panel-head {
+  display: flex;
+  justify-content: space-between;
+  color: var(--osd-cyan);
+}
+
+.teevy-prog__forecast {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.2em 2.2em 2.2em 3.8em;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.teevy-prog__forecast svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.teevy-prog__low {
+  color: var(--osd-cyan);
+  text-align: right;
+}
+
+.teevy-prog__high {
+  color: var(--osd-yellow);
+  text-align: right;
+}
+
+.teevy-prog__wind {
+  color: var(--osd-green);
+  text-align: right;
+}
+
+.teevy-prog__panel-foot {
+  color: var(--osd-amber);
+  font-size: 0.75em;
+}
+
+.teevy-prog__smpte {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.teevy-prog__smpte i {
+  flex: 1;
+}
+
+.teevy-prog__nosignal {
+  position: absolute;
+  top: 38%;
+  left: 52%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6cqi;
+  padding: 1.6cqi 3cqi;
+  border: 2px solid var(--osd-amber);
+  background-color: #000;
+  color: var(--osd-amber);
+  font-family: var(--osd-font);
+  font-size: 2.4cqi;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.teevy-prog__nosignal b {
+  font-size: 1.8em;
+  font-weight: 400;
+  color: var(--osd-white);
+}
+
+/* teevy's channel banner */
+
+.teevy-hud {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  font-family: var(--osd-font);
+  color: var(--osd-white);
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 600ms ease;
+}
+
+.teevy-hud.is-hidden {
+  opacity: 0;
+}
+
+.teevy-hud__bug {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: max(16px, 3cqi);
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  text-shadow: var(--osd-outline);
+}
+
+.teevy-hud__channel {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1.6cqi;
+  height: 46%;
+  padding: 0 5% 6%;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.95), rgb(0 0 0 / 0.8) 40%, rgb(0 0 0 / 0.4) 72%, transparent);
+}
+
+.teevy-hud__main {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.4cqi;
+  min-width: 0;
+}
+
+.teevy-hud__number {
+  flex: none;
+  font-size: max(40px, 8cqi);
+  line-height: 0.8;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.teevy-hud__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3cqi;
+  min-width: 0;
+}
+
+.teevy-hud__name {
+  font-size: max(18px, 3.4cqi);
+  letter-spacing: 0.16em;
+}
+
+.teevy-hud__title,
+.teevy-hud__byline {
+  overflow: hidden;
+  font-size: max(14px, 2.4cqi);
+  letter-spacing: 0.06em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.teevy-hud__byline {
+  font-size: max(13px, 2cqi);
+  letter-spacing: 0.14em;
+}
+
+.teevy-hud__progress {
+  position: relative;
+  align-self: center;
+  width: 56%;
+  height: max(10px, 1.6cqi);
+  font-size: max(13px, 1.9cqi);
+  letter-spacing: 0.12em;
+}
+
+.teevy-hud__track {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--osd-white);
+  background-color: rgb(232 240 232 / 0.16);
+}
+
+.teevy-hud__fill {
+  display: block;
+  height: 100%;
+  background-color: var(--osd-yellow);
+  transition: width 250ms linear;
+}
+
+/* Black gaps over track and fill: a segmented gauge, never a smooth bar */
+.teevy-hud__track::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to right, transparent 0 3.6%, #000 3.6% 5%);
+}
+
+.teevy-hud__elapsed,
+.teevy-hud__total {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.teevy-hud__elapsed {
+  right: calc(100% + 1.2cqi);
+}
+
+.teevy-hud__total {
+  left: calc(100% + 1.2cqi);
+}
+
+.teevy-boot__poster {
+  position: absolute;
+  inset: 24px 24px 24px var(--safe-left);
+  display: block;
+  width: calc(100% - var(--safe-left) - 24px);
+  height: calc(100% - 48px);
+  object-fit: contain;
+}
+
+/* The four prints of the real tube, fanned out under the guide; the one on air lifts */
+.teevy-prints {
+  --print-h: clamp(118px, 19vh, 210px);
+  position: absolute;
+  bottom: 20px;
+  left: var(--gutter);
+  z-index: 2;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.teevy-prints__print {
+  padding: 6px 6px 22px;
+  margin-right: calc(var(--print-h) * -0.12);
+  background-color: #f4f1ea;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.45);
+  rotate: -6deg;
+  transition-property: translate, scale, rotate;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.teevy-prints__print:nth-child(2) { rotate: 3deg; translate: 0 6px; }
+.teevy-prints__print:nth-child(3) { rotate: -2deg; translate: 0 -4px; }
+.teevy-prints__print:nth-child(4) { rotate: 7deg; translate: 0 4px; }
+
+.teevy-prints__print.is-active {
+  position: relative;
+  z-index: 1;
+  rotate: 0deg;
+  scale: 1.12;
+  translate: 0 -14px;
+}
+
+.teevy-prints__print img {
+  display: block;
+  width: auto;
+  height: var(--print-h);
+  aspect-ratio: 1000 / 1778;
+}
+
+/* A short screen: the guide tightens so the prints keep their corner */
+@media (min-width: 901px) and (max-height: 820px) {
+  .teevy-osd {
+    gap: 10px;
+    padding: 16px 20px;
+  }
+
+  .teevy-osd__band {
+    font-size: 1.5rem;
+  }
+
+  .teevy-osd__text {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .teevy-osd .teevy-guide {
+    font-size: 1.0625rem;
+    line-height: 1;
+  }
+
+  .teevy-osd .teevy-legend {
+    font-size: 1.0625rem;
+  }
+
+  .teevy-prints {
+    --print-h: 120px;
+    bottom: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .band.teevy {
+    --panel-width: auto;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+  }
+
+  .teevy-prints {
+    --print-h: 110px;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    order: -1;
+    justify-content: center;
+    padding: 32px var(--gutter) 24px;
+  }
+
+  .band.teevy {
+    --safe-left: 0px;
+  }
+
+  .teevy__stage {
+    position: relative;
+    inset: auto;
+    height: 600px;
+  }
+
+  .teevy .teevy-hud__channel {
+    padding: 0 var(--gutter) 24px;
+  }
+
+  .teevy-prog__panel {
+    inset: 14% var(--gutter) 34%;
+  }
+
+  .teevy-prog__cover {
+    width: 52%;
+  }
+
+  .teevy-credit,
+  .teevy-mute {
+    left: var(--gutter);
+  }
+
+  .teevy-osd {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    max-height: none;
+    margin: 16px var(--gutter) 32px;
+    translate: none;
+  }
+
+  .teevy-osd__text {
+    font-size: 0.875rem;
+  }
+
+  .teevy-credit {
+    max-width: 80%;
+  }
+
+  .teevy-credit__artist {
+    font-size: 1.25rem;
+  }
+
+  .teevy-credit__title {
+    font-size: 1rem;
+  }
+
+  .teevy-prog__view,
+  .teevy-mute {
+    font-size: 0.875rem;
+  }
+
+  .teevy-prog__panel {
+    font-size: 3.4cqi;
+  }
+
+  .teevy-prog__station {
+    font-size: 26cqi;
+  }
+
+  .teevy-prog__station-sub {
+    font-size: 7cqi;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teevy-prints__print {
+    transition: none;
+  }
+
+  .teevy-hud,
+  .teevy-hud__fill,
+  .teevy-guide button,
+  .teevy-mute {
+    transition: none;
+  }
+
+  .teevy-snow.is-on {
+    animation: none;
+    opacity: 0;
+  }
+
+  .teevy-prog__still,
+  .teevy-credit__dot {
+    animation: none;
+  }
+}

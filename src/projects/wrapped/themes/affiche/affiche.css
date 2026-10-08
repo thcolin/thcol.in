@@ -1,0 +1,2088 @@
+/* The Polish poster's faces, declared in sensorr's index.html */
+@font-face {
+  font-family: 'Knewave';
+  src: url('../../../../assets/wrapped/fonts/Knewave.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Knewave';
+  src: url('../../../../assets/wrapped/fonts/Knewave-ext.woff2') format('woff2');
+  font-display: block;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Patrick Hand';
+  src: url('../../../../assets/wrapped/fonts/PatrickHand.woff2') format('woff2');
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Patrick Hand';
+  src: url('../../../../assets/wrapped/fonts/PatrickHand-ext.woff2') format('woff2');
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+.wrapped__look[data-theme='affiche'] {
+  --paper: #b8955a;
+  --wall: #7d5f33;
+  --ink: #241a2e;
+  --mauve: #5c4668;
+  --bone: #e9dcc0;
+  --crimson: #b3221a;
+  --lettering: 'Knewave', 'Marker Felt', cursive;
+  --hand: 'Patrick Hand', 'Segoe Print', cursive;
+  /* A hundredth of a sheet, for the sheet's own box: container units only apply inside it */
+  --u: calc(min(390px, 573.92px) / 100);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .14 0 0 0 0 .1 0 0 0 0 .18 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)'/%3E%3C/svg%3E");
+  --swash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.03 .4' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='9'/%3E%3C/filter%3E%3Cpath filter='url(%23r)' fill='%23e9dcc0' d='M6 12 C 60 4, 140 8, 196 6 L 192 52 C 130 58, 70 54, 4 56 Z'/%3E%3C/svg%3E");
+  --switch-bg: var(--ink);
+  --switch-fg: var(--bone);
+  --switch-font: 1.05rem/1 var(--hand);
+  --switch-radius: 0;
+  color-scheme: light;
+}
+
+.wrapped__look[data-theme='affiche'] {
+  background: var(--wall);
+  scrollbar-color: var(--ink) var(--wall);
+  scrollbar-width: thin;
+}
+
+.wrapped__look[data-theme='affiche'] {
+  color: var(--ink);
+  font-family: var(--hand);
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+
+.wrapped__look[data-theme='affiche'] ::selection {
+  background: var(--crimson);
+  color: var(--bone);
+}
+
+.wrapped__look[data-theme='affiche'] .wall {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: clip;
+}
+
+.wrapped__look[data-theme='affiche'] .sheet {
+  position: relative;
+  width: min(100%, 573.92px);
+  min-height: 844px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 5);
+  padding: calc(var(--u) * 9) calc(var(--u) * 7);
+  container-type: inline-size;
+  background-color: var(--paper);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.wrapped__look[data-theme='affiche'] .sheet::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.wrapped__look[data-theme='affiche'] .track {
+  position: relative;
+  width: 100%;
+  height: calc(844px * (1 + var(--steps)));
+}
+
+.wrapped__look[data-theme='affiche'] .track > .sheet {
+  position: sticky;
+  top: 0;
+  height: 844px;
+  margin-inline: auto;
+}
+
+/* On a wide screen the sheets hang in a zigzag, so each one shows the edges of its neighbours */
+
+/* Lettering */
+.wrapped__look[data-theme='affiche'] .lettering {
+  font-family: var(--lettering);
+  font-weight: 400;
+  font-size: 12cqi;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.34em;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='affiche'] .lettering > span {
+  display: inline-block;
+  max-width: 100%;
+  /* Grown through its size rather than a scale, so the line makes room for it */
+  font-size: calc(var(--grow) * 1em);
+  transform: rotate(var(--lean));
+  transform-origin: 50% 70%;
+}
+
+.wrapped__look[data-theme='affiche'] .lettering-highlight {
+  padding: 0.06em 0.18em 0;
+  color: var(--crimson);
+  background: var(--swash) center / 100% 100% no-repeat;
+}
+
+.wrapped__look[data-theme='affiche'] .brushed svg {
+  display: block;
+  width: calc(100% + calc(var(--u) * 4));
+  margin-inline: calc(var(--u) * -2);
+  overflow: visible;
+}
+
+.wrapped__look[data-theme='affiche'] .brushed text {
+  font-family: var(--lettering);
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+
+.wrapped__look[data-theme='affiche'] .meta {
+  font-size: max(1rem, 4.4cqi);
+}
+
+/* A quantity in a sentence, lettered by hand with its unit */
+.wrapped__look[data-theme='affiche'] .daub {
+  display: inline-block;
+  margin-inline: 0.04em;
+  color: var(--crimson);
+  font-family: var(--lettering);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(var(--lean, -2deg));
+}
+
+.wrapped__look[data-theme='affiche'] .daub-n {
+  font-size: 1.45em;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.wrapped__look[data-theme='affiche'] .daub-unit {
+  font-size: 0.82em;
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-night .daub,
+.wrapped__look[data-theme='affiche'] .sheet-finale .daub {
+  color: var(--bone);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-night .daub-unit,
+.wrapped__look[data-theme='affiche'] .sheet-finale .daub-unit {
+  color: var(--bone);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-night .daub-n,
+.wrapped__look[data-theme='affiche'] .sheet-finale .daub-n {
+  padding: 0.06em 0.16em 0;
+  background: var(--crimson);
+  mask: var(--swash) center / 100% 100% no-repeat;
+  -webkit-mask: var(--swash) center / 100% 100% no-repeat;
+}
+
+/* Figures stacked like a poster's lettering, one leaning left, the next right */
+.wrapped__look[data-theme='affiche'] .stats {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .stats > li {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 2.5cqi;
+  transform: rotate(var(--lean));
+  transform-origin: 0 70%;
+}
+
+.wrapped__look[data-theme='affiche'] .stats > li:nth-child(even) {
+  align-self: flex-end;
+  transform-origin: 100% 70%;
+}
+
+.wrapped__look[data-theme='affiche'] .stats b {
+  font-family: var(--lettering);
+  font-weight: 400;
+  font-size: 22cqi;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  -webkit-text-stroke: 0.06em var(--paper);
+  paint-order: stroke fill;
+}
+
+.wrapped__look[data-theme='affiche'] .stats > li:first-child b {
+  color: var(--crimson);
+}
+
+.wrapped__look[data-theme='affiche'] .stats span {
+  font-family: var(--lettering);
+  font-size: 7cqi;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='affiche'] .stats-small b {
+  font-size: 12cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .stats-small span {
+  font-size: 4.6cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .stats-small > li:nth-child(even) {
+  align-self: flex-start;
+}
+
+/* Painted posters */
+.wrapped__look[data-theme='affiche'] .painted {
+  position: relative;
+  aspect-ratio: 2 / 3;
+}
+
+.wrapped__look[data-theme='affiche'] .painted > canvas,
+.wrapped__look[data-theme='affiche'] .painted > .painted-missing {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapped__look[data-theme='affiche'] .painted-missing {
+  display: flex;
+  align-items: flex-end;
+  padding: 8%;
+  background: var(--mauve);
+  color: var(--bone);
+  font-family: var(--lettering);
+  font-size: 6cqi;
+  line-height: 1;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* Opening */
+.wrapped__look[data-theme='affiche'] .sheet-opening {
+  justify-content: flex-end;
+  padding-top: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .collage {
+  position: relative;
+  flex: 1;
+  min-height: min(422px, 110cqi);
+  margin-inline: calc(var(--u) * -7);
+}
+
+.wrapped__look[data-theme='affiche'] .collage > .painted {
+  position: absolute;
+}
+
+.wrapped__look[data-theme='affiche'] .collage-0 { width: 56cqi; top: -6%; left: -8%; transform: rotate(-8deg); }
+.wrapped__look[data-theme='affiche'] .collage-1 { width: 50cqi; top: -9%; right: -9%; transform: rotate(7deg); }
+.wrapped__look[data-theme='affiche'] .collage-2 { width: 54cqi; top: 30%; left: 23%; transform: rotate(-2deg); z-index: 3; }
+.wrapped__look[data-theme='affiche'] .collage-3 { width: 40cqi; top: 56%; left: -10%; transform: rotate(11deg); z-index: 2; }
+.wrapped__look[data-theme='affiche'] .collage-4 { width: 42cqi; top: 52%; right: -11%; transform: rotate(-9deg); z-index: 2; }
+
+.wrapped__look[data-theme='affiche'] .collage[data-count='4'] .collage-3 { top: 54%; left: auto; right: -11%; transform: rotate(-9deg); }
+.wrapped__look[data-theme='affiche'] .collage[data-count='3'] .collage-2 { top: 38%; }
+
+/* The title overlaps the foot of the collage: a paper outline keeps it readable over paint */
+.wrapped__look[data-theme='affiche'] .opening-title {
+  position: relative;
+  z-index: 5;
+  margin-top: -18cqi;
+  font-size: 13cqi;
+  -webkit-text-stroke: 0.09em var(--paper);
+  paint-order: stroke fill;
+}
+
+.wrapped__look[data-theme='affiche'] .opening-title .lettering-highlight {
+  -webkit-text-stroke: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .lede {
+  max-width: 34ch;
+  font-size: max(1.0625rem, 4.8cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .opening-figures {
+  display: flex;
+  flex-direction: column;
+  gap: 1cqi;
+  font-size: max(1.125rem, 5.4cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .scroll-hint {
+  position: absolute;
+  right: 7cqi;
+  bottom: 6cqi;
+  width: 7cqi;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+/* Figures */
+.wrapped__look[data-theme='affiche'] .sheet-figures {
+  justify-content: flex-end;
+}
+
+.wrapped__look[data-theme='affiche'] .figures-poster {
+  position: absolute;
+  top: calc(var(--u) * 4);
+  right: calc(var(--u) * -8);
+  /* A wide sheet is shorter for its width, the poster would reach its lettering */
+  width: min(86cqi, 371.36px);
+  transform: rotate(4deg);
+}
+
+.wrapped__look[data-theme='affiche'] .figure-intro {
+  position: relative;
+  z-index: 2;
+  align-self: flex-start;
+  max-width: 24ch;
+  padding: 2cqi 4cqi 1.5cqi;
+  font-size: max(1.125rem, 5.4cqi);
+  background: var(--swash) center / 100% 100% no-repeat;
+  transform: rotate(-1.5deg);
+}
+
+/* One stroke per evening, five struck through */
+.wrapped__look[data-theme='affiche'] .tally {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3cqi 5cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .tally-group {
+  position: relative;
+  display: flex;
+  gap: 1.6cqi;
+  padding-inline: 0.6cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .tally-group > i {
+  width: 2cqi;
+  height: 12cqi;
+  background: var(--ink);
+  transform: rotate(var(--lean));
+}
+
+.wrapped__look[data-theme='affiche'] .tally-group > .tally-lead {
+  background: var(--crimson);
+}
+
+.wrapped__look[data-theme='affiche'] .tally-full::after {
+  content: '';
+  position: absolute;
+  left: -1.5cqi;
+  right: -1.5cqi;
+  top: 45%;
+  height: 1.6cqi;
+  background: var(--ink);
+  transform: rotate(-22deg);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-streak .figure-details {
+  margin-top: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .figure {
+  position: relative;
+  z-index: 2;
+  font-family: var(--lettering);
+  font-size: min(44cqi, calc(132cqi / var(--digits, 3)));
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  transform: rotate(-4deg);
+  -webkit-text-stroke: 0.07em var(--paper);
+  paint-order: stroke fill;
+}
+
+.wrapped__look[data-theme='affiche'] .figure::before {
+  content: '';
+  position: absolute;
+  left: -4cqi;
+  right: 8cqi;
+  bottom: 4%;
+  height: 22%;
+  background: var(--crimson);
+  mask: var(--swash) center / 100% 100% no-repeat;
+  -webkit-mask: var(--swash) center / 100% 100% no-repeat;
+  z-index: -1;
+}
+
+.wrapped__look[data-theme='affiche'] .figure-unit {
+  position: relative;
+  z-index: 2;
+  font-size: 10cqi;
+  -webkit-text-stroke: 0.1em var(--paper);
+  paint-order: stroke fill;
+}
+
+.wrapped__look[data-theme='affiche'] .figure-unit .lettering-highlight {
+  -webkit-text-stroke: 0;
+}
+
+/* The run's poster hangs at the top, its foot under the figure */
+.wrapped__look[data-theme='affiche'] .sheet-streak {
+  justify-content: flex-start;
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-streak .figures-poster {
+  position: relative;
+  top: auto;
+  right: auto;
+  align-self: flex-end;
+  width: min(78cqi, 388.24px);
+  margin: calc(var(--u) * -4) calc(var(--u) * -8) -52cqi 0;
+}
+
+.wrapped__look[data-theme='affiche'] .figure-details {
+  margin-top: 3cqi;
+  font-size: max(1.25rem, 6.2cqi);
+}
+
+/* Series */
+.wrapped__look[data-theme='affiche'] .show-lead {
+  position: relative;
+  margin-inline: calc(var(--u) * -7);
+}
+
+.wrapped__look[data-theme='affiche'] .show-lead-still {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+
+/* The show's own poster pasted over a corner of its still */
+.wrapped__look[data-theme='affiche'] .show-lead-poster {
+  position: absolute;
+  right: 6cqi;
+  bottom: -18cqi;
+  width: 26cqi;
+  transform: rotate(5deg);
+  z-index: 2;
+}
+
+.wrapped__look[data-theme='affiche'] .show-lead-text {
+  padding-right: 30cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .show-lead-title {
+  font-size: 10cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .show-lead-text {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqi;
+}
+
+/* The pace's own show, pinned beside its figures */
+.wrapped__look[data-theme='affiche'] .show-pace {
+  display: grid;
+  grid-template-columns: 30cqi 1fr;
+  align-items: center;
+  gap: 5cqi;
+  margin-top: 3cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .show-pace-poster {
+  transform: rotate(-4deg);
+}
+
+.wrapped__look[data-theme='affiche'] .show-pace-title {
+  font-size: 8cqi;
+  margin-bottom: 2cqi;
+}
+
+/* Year */
+.wrapped__look[data-theme='affiche'] .year-strips {
+  flex: 1;
+  aspect-ratio: auto;
+  /* The sheet is pinned at the screen's height: the strips take what the words leave */
+  min-height: min(80cqi, 202.56px);
+  margin-inline: calc(var(--u) * -7);
+}
+
+.wrapped__look[data-theme='affiche'] .year-months {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  margin: -2cqi calc(var(--u) * -7) 0;
+  padding: 0 0.4cqi;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: max(0.875rem, 4cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .year-month-future {
+  color: var(--mauve);
+}
+
+.wrapped__look[data-theme='affiche'] .year-peak {
+  font-size: max(1.125rem, 5.4cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .year-peak-month {
+  font-family: var(--lettering);
+  text-transform: uppercase;
+}
+
+/* Night */
+.wrapped__look[data-theme='affiche'] .sheet-night {
+  justify-content: flex-start;
+  background-color: var(--ink);
+  color: var(--bone);
+  padding-top: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-night::after {
+  mix-blend-mode: screen;
+  opacity: 0.25;
+}
+
+.wrapped__look[data-theme='affiche'] .night-poster {
+  flex: none;
+  height: min(540.16px, 150cqi);
+  aspect-ratio: auto;
+  margin-inline: calc(var(--u) * -7);
+  margin-bottom: -40cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .night-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3cqi;
+  margin-inline: calc(var(--u) * -7);
+  padding: 6cqi 7cqi 0;
+  background: linear-gradient(to bottom, transparent, var(--ink) 30cqi);
+}
+
+/* The night's programme, as it was played */
+.wrapped__look[data-theme='affiche'] .night-schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 3cqi;
+  margin-top: 2cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule > li {
+  display: grid;
+  grid-template-columns: 17cqi 11cqi 1fr;
+  align-items: center;
+  gap: 4cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule-time b {
+  font-family: var(--lettering);
+  font-weight: 400;
+  font-size: 7cqi;
+  line-height: 1;
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule-time span {
+  font-size: max(0.9375rem, 4cqi);
+  color: #c9b99c;
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule-last .night-schedule-time b {
+  padding: 0.08em 0.18em 0;
+  background: var(--crimson);
+  mask: var(--swash) center / 100% 100% no-repeat;
+  -webkit-mask: var(--swash) center / 100% 100% no-repeat;
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule-poster {
+  transform: rotate(-3deg);
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule > li:nth-child(even) .night-schedule-poster {
+  transform: rotate(2.5deg);
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6cqi;
+  font-size: max(1rem, 4.6cqi);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='affiche'] .night-schedule-title > span {
+  font-family: var(--lettering);
+  font-size: 0.9em;
+  text-transform: uppercase;
+  color: #c9b99c;
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-night .brushed text {
+  fill: var(--bone);
+  paint-order: stroke fill;
+  stroke: var(--ink);
+  stroke-width: 6px;
+}
+
+.wrapped__look[data-theme='affiche'] .night-date {
+  font-family: var(--lettering);
+  font-size: 10cqi;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='affiche'] .night-figures {
+  font-size: max(1.25rem, 6cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .night-figures strong {
+  font-weight: 400;
+  padding: 0.1em 0.3em 0;
+  background: var(--crimson);
+  mask: var(--swash) center / 100% 100% no-repeat;
+  -webkit-mask: var(--swash) center / 100% 100% no-repeat;
+}
+
+.wrapped__look[data-theme='affiche'] .night-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqi;
+  font-size: max(1.0625rem, 5cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .night-titles > li::before {
+  content: '– ';
+}
+
+/* Server */
+.wrapped__look[data-theme='affiche'] .sheet-server {
+  justify-content: center;
+}
+
+.wrapped__look[data-theme='affiche'] .server-poster {
+  position: relative;
+  z-index: 2;
+  width: 56cqi;
+  align-self: center;
+  transform: rotate(-2.5deg);
+}
+
+/* Pasted on a sheet of bone paper, so it stands off the still */
+.wrapped__look[data-theme='affiche'] .sheet-server-still .server-poster::before {
+  content: '';
+  position: absolute;
+  inset: -2.4cqi;
+  background: var(--bone);
+  transform: rotate(4deg);
+  z-index: -1;
+}
+
+/* The still as a band of paint across the sheet, behind its poster */
+.wrapped__look[data-theme='affiche'] .server-still {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30%;
+  height: 36%;
+  aspect-ratio: auto;
+  transform: rotate(-4deg) scale(1.15);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-server-still .brushed,
+.wrapped__look[data-theme='affiche'] .sheet-server-still .server-title,
+.wrapped__look[data-theme='affiche'] .sheet-server-still .lede {
+  position: relative;
+  z-index: 2;
+}
+
+.wrapped__look[data-theme='affiche'] .server-title {
+  font-size: 9cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-server .lede {
+  font-size: max(1.125rem, 5.6cqi);
+}
+
+/* Twin: two daubs of paint crossing on the shared titles */
+.wrapped__look[data-theme='affiche'] .twins {
+  position: relative;
+  z-index: 2;
+  margin-inline: calc(var(--u) * -3);
+  color: var(--bone);
+}
+
+.wrapped__look[data-theme='affiche'] .twins svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.wrapped__look[data-theme='affiche'] .twins circle {
+  mix-blend-mode: multiply;
+}
+
+.wrapped__look[data-theme='affiche'] .twins-you {
+  fill: var(--crimson);
+}
+
+.wrapped__look[data-theme='affiche'] .twins-them {
+  fill: var(--mauve);
+}
+
+.wrapped__look[data-theme='affiche'] .twins-side {
+  position: absolute;
+  top: 50%;
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.wrapped__look[data-theme='affiche'] .twins-side-you {
+  left: 9%;
+}
+
+.wrapped__look[data-theme='affiche'] .twins-side-them {
+  right: 9%;
+}
+
+.wrapped__look[data-theme='affiche'] .twins-side span {
+  font-family: var(--lettering);
+  text-transform: uppercase;
+  font-size: max(1rem, 4.6cqi);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='affiche'] .twins-side b {
+  font-family: var(--lettering);
+  font-weight: 400;
+  font-size: 11cqi;
+  line-height: 1;
+}
+
+.wrapped__look[data-theme='affiche'] .twins-shared {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-family: var(--lettering);
+  font-size: min(20cqi, calc(56cqi / var(--digits, 2)));
+  line-height: 1;
+  transform: translate(-50%, -50%) rotate(-4deg);
+}
+
+/* Strips of posters */
+.wrapped__look[data-theme='affiche'] .strip {
+  display: grid;
+  gap: 4cqi 3cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .strip[data-layout='row'] {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.wrapped__look[data-theme='affiche'] .strip[data-layout='grid'] {
+  flex: 1;
+  grid-template-columns: repeat(2, 36cqi);
+  justify-content: center;
+  align-content: center;
+}
+
+.wrapped__look[data-theme='affiche'] .strip-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .strip-entry:nth-child(odd) .strip-poster {
+  transform: rotate(-2.5deg);
+}
+
+.wrapped__look[data-theme='affiche'] .strip-entry:nth-child(even) .strip-poster {
+  transform: rotate(2deg);
+}
+
+.wrapped__look[data-theme='affiche'] .strip-title {
+  font-size: max(0.875rem, 3.8cqi);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='affiche'] .strip-caption {
+  font-size: max(0.875rem, 3.8cqi);
+  color: var(--mauve);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-strip {
+  justify-content: space-between;
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-duo {
+  justify-content: flex-start;
+}
+
+/* Rank */
+.wrapped__look[data-theme='affiche'] .sheet-rank {
+  justify-content: center;
+}
+
+.wrapped__look[data-theme='affiche'] .rank {
+  font-family: var(--lettering);
+  font-size: 50cqi;
+  line-height: 0.85;
+  transform: rotate(-3deg);
+}
+
+.wrapped__look[data-theme='affiche'] .rank-unit {
+  font-size: 9cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .rank sup {
+  font-size: 0.4em;
+  vertical-align: 1.1em;
+  margin-left: 0.04em;
+}
+
+.wrapped__look[data-theme='affiche'] .crowd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6cqi 1.3cqi;
+  margin-block: 2cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .crowd > li {
+  width: 1.3cqi;
+  height: 7cqi;
+  background: var(--ink);
+  transform: rotate(-6deg);
+}
+
+.wrapped__look[data-theme='affiche'] .crowd > .crowd-you {
+  background: var(--crimson);
+  transform: rotate(-6deg) scaleY(1.7);
+}
+
+.wrapped__look[data-theme='affiche'] .rank-detail {
+  max-width: 34ch;
+  font-size: max(1.125rem, 5.2cqi);
+}
+
+/* The hours of the first viewer, the reader and the median, each as large as its share */
+.wrapped__look[data-theme='affiche'] .rank-hours {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .rank-hours > li {
+  display: flex;
+  align-items: baseline;
+  gap: 3cqi;
+  transform: rotate(var(--lean));
+  transform-origin: 0 70%;
+}
+
+.wrapped__look[data-theme='affiche'] .rank-hours b {
+  font-family: var(--lettering);
+  font-weight: 400;
+  font-size: calc(7cqi + var(--share) * 19cqi);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.wrapped__look[data-theme='affiche'] .rank-hours small {
+  margin-left: 0.08em;
+  font-size: 0.5em;
+}
+
+.wrapped__look[data-theme='affiche'] .rank-hours span {
+  font-family: var(--lettering);
+  font-size: 6cqi;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='affiche'] .rank-hours-you b,
+.wrapped__look[data-theme='affiche'] .rank-hours-you span {
+  color: var(--crimson);
+}
+
+/* Posters, one per figure */
+.wrapped__look[data-theme='affiche'] .posters {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: center;
+  gap: 6cqi 5cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .posters[data-count='1'] {
+  grid-template-columns: 62cqi;
+  justify-content: center;
+}
+
+.wrapped__look[data-theme='affiche'] .posters[data-count='3'] {
+  grid-template-columns: 1fr;
+  gap: 5cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .posters[data-count='3'] > .posters-entry {
+  display: grid;
+  grid-template-columns: 30cqi 1fr;
+  grid-template-rows: auto auto auto auto 1fr;
+  column-gap: 5cqi;
+  align-items: start;
+}
+
+.wrapped__look[data-theme='affiche'] .posters[data-count='3'] .posters-poster {
+  grid-row: span 5;
+  margin-bottom: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .posters-poster {
+  margin-bottom: 3cqi;
+  transform: rotate(-2.5deg);
+}
+
+.wrapped__look[data-theme='affiche'] .posters-entry:nth-child(2) .posters-poster {
+  transform: rotate(2deg);
+}
+
+.wrapped__look[data-theme='affiche'] .posters-label {
+  font-family: var(--lettering);
+  font-weight: 400;
+  font-size: 7cqi;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='affiche'] .posters-title {
+  font-size: max(1.125rem, 5.2cqi);
+  line-height: 1.1;
+}
+
+.wrapped__look[data-theme='affiche'] .posters-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 3cqi;
+  margin-top: 1.5cqi;
+  font-size: 6.5cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .posters[data-count='3'] .posters-detail {
+  font-size: 8cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .posters-when {
+  margin-top: 1cqi;
+  font-size: max(0.9375rem, 4cqi);
+}
+
+/* Genre */
+.wrapped__look[data-theme='affiche'] .sheet-genre {
+  justify-content: center;
+}
+
+.wrapped__look[data-theme='affiche'] .genre-poster {
+  width: 60cqi;
+  align-self: flex-end;
+  margin-right: -4cqi;
+  transform: rotate(3deg);
+}
+
+.wrapped__look[data-theme='affiche'] .genre-name {
+  font-size: min(24cqi, calc(95cqi / var(--letters, 6)));
+}
+
+.wrapped__look[data-theme='affiche'] .genre-count {
+  font-size: max(1.125rem, 5.4cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .genre-lead {
+  font-size: max(1.25rem, 6.2cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .genre-lead-single {
+  display: grid;
+  grid-template-columns: 1fr 34cqi;
+  align-items: center;
+  gap: 5cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .genre-lead-poster {
+  transform: rotate(4deg);
+}
+
+.wrapped__look[data-theme='affiche'] .genre-lead-name {
+  font-family: var(--lettering);
+  font-size: 9cqi;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='affiche'] .stamp {
+  position: absolute;
+  top: 34cqi;
+  right: 4cqi;
+  padding: 1cqi 3cqi 0.4cqi;
+  border: 3px solid var(--crimson);
+  background: var(--bone);
+  color: var(--crimson);
+  font-family: var(--lettering);
+  font-size: 6.5cqi;
+  text-transform: uppercase;
+  transform: rotate(9deg);
+  z-index: 5;
+}
+
+/* Finale */
+.wrapped__look[data-theme='affiche'] .sheet-finale {
+  justify-content: flex-end;
+  padding-top: 0;
+  background-color: var(--ink);
+  color: var(--bone);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-finale::after {
+  mix-blend-mode: screen;
+  opacity: 0.25;
+}
+
+.wrapped__look[data-theme='affiche'] .finale-poster {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='affiche'] .finale-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2cqi;
+  margin-inline: calc(var(--u) * -7);
+  padding: 8cqi 7cqi 0;
+  background: linear-gradient(to bottom, transparent, var(--ink) 30%);
+}
+
+.wrapped__look[data-theme='affiche'] .sheet-finale .brushed text {
+  fill: var(--bone);
+}
+
+.wrapped__look[data-theme='affiche'] .finale-title {
+  font-size: 9cqi;
+}
+
+.wrapped__look[data-theme='affiche'] .stamp-finale {
+  position: static;
+  align-self: flex-end;
+}
+
+.wrapped__look[data-theme='affiche'] .finale-end {
+  font-family: var(--lettering);
+  font-size: 22cqi;
+  line-height: 1;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+}
+
+.wrapped__look[data-theme='affiche'] .finale-next {
+  font-size: max(1.125rem, 5.4cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .colophon {
+  width: min(100%, 573.92px);
+  padding: calc(var(--u) * 8) calc(var(--u) * 7) calc(var(--u) * 8 + env(safe-area-inset-bottom));
+  background: var(--ink);
+  color: var(--bone);
+  font-size: 1.0625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.wrapped__look[data-theme='affiche'] .colophon-short {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+/* States */
+.wrapped__look[data-theme='affiche'] .sheet-loading,
+.wrapped__look[data-theme='affiche'] .sheet-notice {
+  justify-content: center;
+  height: 844px;
+}
+
+.wrapped__look[data-theme='affiche'] .loading-stroke {
+  width: 60cqi;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 260;
+  animation: stroke 1.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes stroke {
+  from { stroke-dashoffset: 260; }
+  to { stroke-dashoffset: -260; }
+}
+
+.wrapped__look[data-theme='affiche'] .notice {
+  max-width: 30ch;
+  font-size: max(1.125rem, 5.4cqi);
+}
+
+.wrapped__look[data-theme='affiche'] .retry {
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 3cqi 6cqi 2cqi;
+  border: none;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--lettering);
+  font-size: 7cqi;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  cursor: pointer;
+  transition-property: background-color, transform;
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+}
+
+.wrapped__look[data-theme='affiche'] .retry:hover {
+  background: var(--crimson);
+}
+
+.wrapped__look[data-theme='affiche'] .retry:active {
+  transform: rotate(-2deg) scale(0.96);
+}
+
+.wrapped__look[data-theme='affiche'] .retry:focus-visible {
+  outline: 3px solid var(--crimson);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='affiche'] .loading-stroke {
+    animation: none;
+    stroke-dasharray: none;
+  }
+
+  .wrapped__look[data-theme='affiche'] .retry {
+    transition: none;
+  }
+}
+
+/* Stories: each sheet as one poster of 396 × 704, scaled to the phone and shared as the image.
+   The top 28 px and the bottom 72 px stay free of words, Safari lays the stories' chrome over them */
+.wrapped__look[data-theme='affiche'] .affiche-story {
+  --u: 3.96px;
+  position: relative;
+  width: 396px;
+  height: 704px;
+  overflow: hidden;
+  background: var(--wall);
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet {
+  width: 396px;
+  height: 704px;
+  min-height: 0;
+  gap: 12px;
+  padding: 28px 24px 80px;
+  animation: affiche-hang 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Each piece pasted on a beat after the last */
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > * {
+  animation: affiche-paste 0.5s calc(0.3s + var(--at, 0) * 100ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > :nth-child(2) { --at: 1; }
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > :nth-child(3) { --at: 2; }
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > :nth-child(4) { --at: 3; }
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > :nth-child(5) { --at: 4; }
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > :nth-child(6) { --at: 5; }
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > :nth-child(7) { --at: 6; }
+
+/* A brushed heading is painted on from its left */
+.wrapped__look[data-theme='affiche'] .affiche-story .brushed {
+  margin-top: 14px;
+  animation-name: affiche-brush;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .brushed svg {
+  width: 100%;
+  margin-inline: 0;
+}
+
+/* Opening and summary: the collage takes what the words leave; a story is tapped, not scrolled */
+.wrapped__look[data-theme='affiche'] .affiche-story .collage {
+  min-height: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .scroll-hint {
+  display: none;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .opening-title {
+  font-size: 46px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-opening .lede {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .opening-figures {
+  gap: 2px;
+  font-size: 18px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-summary > .sheet {
+  padding-bottom: 150px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-summary .lede {
+  display: none;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-place {
+  top: 64px;
+  right: 18px;
+  z-index: 11;
+  font-size: 20px;
+  animation: affiche-stamp 0.4s 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-place b {
+  font-weight: 400;
+  font-size: 1.6em;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-place sup {
+  font-size: 0.5em;
+  vertical-align: top;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-colophon {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 72px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+  line-height: 1.3;
+  animation: affiche-paste 0.5s 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-colophon .colophon-short {
+  font-size: 18px;
+}
+
+/* Rank */
+.wrapped__look[data-theme='affiche'] .affiche-story .rank {
+  font-size: 140px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .crowd {
+  gap: 8px 3px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .crowd > li {
+  width: 4px;
+  height: 26px;
+}
+
+/* The reader's own stroke in the crowd is struck last */
+.wrapped__look[data-theme='affiche'] .affiche-story .crowd-you {
+  animation: affiche-strike 0.3s 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Evenings in a row: the run's poster at the top, the figure over its foot */
+.wrapped__look[data-theme='affiche'] .affiche-story-streak .figures-poster {
+  width: 220px;
+  margin: -4px -24px -180px 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-streak .figure-intro {
+  font-size: 18px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-streak .figure {
+  font-size: min(120px, calc(360px / var(--digits, 3)));
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-streak .figure-unit {
+  font-size: 34px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .tally {
+  gap: 10px 16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group {
+  gap: 5px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group > i {
+  width: 6px;
+  height: 30px;
+  animation: affiche-strike 0.2s calc(0.7s + (var(--g, 0) * 5 + var(--s, 0)) * 18ms) ease-out both;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(2) { --g: 1; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(3) { --g: 2; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(4) { --g: 3; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(5) { --g: 4; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(6) { --g: 5; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(7) { --g: 6; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(8) { --g: 7; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(9) { --g: 8; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(10) { --g: 9; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(11) { --g: 10; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group:nth-child(12) { --g: 11; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group > i:nth-child(2) { --s: 1; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group > i:nth-child(3) { --s: 2; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group > i:nth-child(4) { --s: 3; }
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group > i:nth-child(5) { --s: 4; }
+
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-full::after {
+  height: 5px;
+  animation: affiche-strike 0.25s calc(0.8s + var(--g, 0) * 90ms) ease-out both;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-streak .figure-details {
+  font-size: 18px;
+}
+
+/* Months: one painted strip per month, as tall as its episodes */
+.wrapped__look[data-theme='affiche'] .affiche-story-strips {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: end;
+  gap: 4px;
+  margin-inline: -16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-strips > li {
+  height: calc(var(--share) * 100%);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-strips .painted {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .year-months {
+  margin: -6px -16px 0;
+  font-size: 15px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .year-peak {
+  font-size: 19px;
+}
+
+/* Binge */
+.wrapped__look[data-theme='affiche'] .affiche-story-binge .brushed svg,
+.wrapped__look[data-theme='affiche'] .affiche-story-night .brushed svg {
+  width: 80%;
+  margin-inline: auto;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .show-lead {
+  margin-inline: -24px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .show-lead-still {
+  height: 170px;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .show-lead-poster {
+  width: 84px;
+  bottom: -64px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .show-lead-text {
+  padding-right: 110px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .show-lead-title {
+  font-size: 34px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .meta {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .stats {
+  gap: 6px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .stats b {
+  font-size: 50px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .stats span {
+  font-size: 22px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .show-pace {
+  grid-template-columns: 76px 1fr;
+  gap: 16px;
+  margin-top: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .show-pace-title {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .stats-small {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 14px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .stats-small b {
+  font-size: 34px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .stats-small span {
+  font-size: 15px;
+}
+
+/* Night: the last poster of the night behind it, the programme over its foot */
+.wrapped__look[data-theme='affiche'] .affiche-story-night > .sheet {
+  justify-content: flex-end;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  margin: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-text {
+  gap: 8px;
+  margin-inline: -24px;
+  padding: 40px 24px 0;
+  background: linear-gradient(to bottom, transparent, var(--ink) 90px);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-date {
+  font-size: 28px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-figures {
+  font-size: 20px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-listing {
+  font-size: 15px;
+  color: #c9b99c;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-schedule {
+  gap: 8px;
+  margin-top: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-schedule > li {
+  grid-template-columns: 56px 30px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-schedule-time b {
+  font-size: 24px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .night-schedule-time span,
+.wrapped__look[data-theme='affiche'] .affiche-story .night-schedule-title {
+  font-size: 15px;
+}
+
+/* Server */
+.wrapped__look[data-theme='affiche'] .affiche-story .server-poster {
+  width: 168px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .server-title {
+  font-size: 34px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-server .lede {
+  font-size: 19px;
+}
+
+/* Figures and their strip of posters */
+.wrapped__look[data-theme='affiche'] .affiche-story-only_you .figure {
+  margin-top: 40px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-figure .figure {
+  font-size: min(150px, calc(440px / var(--digits, 3)));
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .figure-unit {
+  font-size: 28px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .figure-details {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-twins {
+  align-self: center;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins {
+  width: 290px;
+  margin-inline: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins-side {
+  width: 32%;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins-side-you {
+  left: 4%;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins-side-them {
+  right: 4%;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins-side span {
+  font-size: 14px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins-side-them span {
+  font-size: min(14px, calc(150px / var(--letters, 8)));
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins-side b {
+  font-size: 32px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .twins-shared {
+  font-size: min(60px, calc(160px / var(--digits, 2)));
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .strip {
+  gap: 10px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .strip-title,
+.wrapped__look[data-theme='affiche'] .affiche-story .strip-caption {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 14px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .strip-caption {
+  color: var(--ink);
+  -webkit-line-clamp: 3;
+}
+
+/* Duo: the posters one under the other, each with its title and the other viewer beside it */
+.wrapped__look[data-theme='affiche'] .affiche-story .strip[data-layout='grid'] {
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 10px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .strip[data-layout='grid'] > .strip-entry {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  column-gap: 10px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .strip[data-layout='grid']:not(:has(> :nth-child(3))) > .strip-entry {
+  grid-template-columns: 120px minmax(0, 1fr);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .strip[data-layout='grid'] .strip-poster {
+  grid-row: span 2;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .strip[data-layout='grid'] .strip-title,
+.wrapped__look[data-theme='affiche'] .affiche-story .strip[data-layout='grid'] .strip-caption {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-duo .lede {
+  font-size: 17px;
+}
+
+/* Posters, one per figure */
+.wrapped__look[data-theme='affiche'] .affiche-story .posters {
+  gap: 16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .posters[data-count='1'] {
+  grid-template-columns: 190px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .posters[data-count='3'] > .posters-entry {
+  grid-template-columns: 84px 1fr;
+  column-gap: 16px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .posters-label {
+  font-size: 24px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .posters-title {
+  font-size: 18px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .posters-detail,
+.wrapped__look[data-theme='affiche'] .affiche-story .posters[data-count='3'] .posters-detail {
+  font-size: 26px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .posters-when {
+  font-size: 15px;
+}
+
+/* Genre */
+.wrapped__look[data-theme='affiche'] .affiche-story .genre-name {
+  font-size: min(80px, calc(360px / var(--letters, 6)));
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .genre-count,
+.wrapped__look[data-theme='affiche'] .affiche-story .genre-lead {
+  font-size: 18px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .genre-lead-name {
+  font-size: 30px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story-genre .strip {
+  grid-template-columns: repeat(4, 66px);
+  justify-content: space-between;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .genre-lead-single {
+  grid-template-columns: 1fr 120px;
+}
+
+/* Finale */
+.wrapped__look[data-theme='affiche'] .affiche-story-finale > .sheet {
+  padding-bottom: 88px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .finale-text {
+  margin-inline: -24px;
+  padding: 40px 24px 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .finale-title {
+  font-size: 34px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .finale-next {
+  font-size: 19px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .stamp {
+  font-size: 22px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-story .finale-end {
+  font-size: 64px;
+}
+
+@keyframes affiche-hang {
+  from { clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes affiche-paste {
+  from { opacity: 0; translate: 0 -10px; scale: 1.04; }
+}
+
+@keyframes affiche-brush {
+  from { clip-path: inset(0 100% 0 0); }
+}
+
+@keyframes affiche-strike {
+  from { scale: 1 0; }
+}
+
+@keyframes affiche-stamp {
+  from { opacity: 0; scale: 1.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='affiche'] .affiche-story > .sheet,
+.wrapped__look[data-theme='affiche'] .affiche-story > .sheet > *,
+.wrapped__look[data-theme='affiche'] .affiche-story-place,
+.wrapped__look[data-theme='affiche'] .affiche-story-colophon,
+.wrapped__look[data-theme='affiche'] .affiche-story .crowd-you,
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-group > i,
+.wrapped__look[data-theme='affiche'] .affiche-story .tally-full::after {
+    animation: none;
+  }
+}
+
+/* The hoarding on the street, the size of the frame Keep in touch opens it in: the year's posters, inked in violet,
+   slide past in torn bands behind the reader's own sheet, pasted fresh over their foot */
+.wrapped__look[data-theme='affiche'] .affiche-cover {
+  --torn-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.12 .02' numOctaves='3' seed='9'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='14'/%3E%3C/filter%3E%3Crect filter='url(%23t)' x='-20' y='10' width='440' height='60'/%3E%3C/svg%3E");
+  --torn-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.12 .02' numOctaves='3' seed='3'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='14'/%3E%3C/filter%3E%3Crect filter='url(%23t)' x='-20' y='-46' width='440' height='60'/%3E%3C/svg%3E");
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 844px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--wall);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background-image: var(--grain);
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-hoarding {
+  position: absolute;
+  inset: -16.88px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Each band a strip of poster stock torn along both edges, its posters printed in two inks: violet on ochre */
+.wrapped__look[data-theme='affiche'] .affiche-cover-band {
+  position: relative;
+  flex: none;
+  height: max(150px, 219.44px);
+  margin-bottom: -25.32px;
+  overflow: hidden;
+  background: var(--paper);
+  mask: var(--torn-top) top / 100% 18px no-repeat, linear-gradient(#000 0 0) center / 100% calc(100% - 34px) no-repeat, var(--torn-bottom) bottom / 100% 18px no-repeat;
+  -webkit-mask: var(--torn-top) top / 100% 18px no-repeat, linear-gradient(#000 0 0) center / 100% calc(100% - 34px) no-repeat, var(--torn-bottom) bottom / 100% 18px no-repeat;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-band:nth-child(odd) {
+  transform: rotate(-1.2deg) scaleX(1.04);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-band:nth-child(even) {
+  transform: rotate(0.9deg) scaleX(1.04);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-run {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  padding-block: 12px;
+  /* The roll is its own layer: the stock goes with it, so the posters multiply onto it */
+  background: var(--paper);
+  animation: affiche-cover-roll 110s linear infinite;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-band:nth-child(even) .affiche-cover-run {
+  animation-direction: reverse;
+  animation-duration: 130s;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-run > img {
+  display: block;
+  height: 100%;
+  aspect-ratio: 2 / 3;
+  margin-right: -4px;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.35) brightness(1.08);
+  mix-blend-mode: multiply;
+  transform: rotate(var(--lean));
+}
+
+@keyframes affiche-cover-roll {
+  to { transform: translateX(-50%); }
+}
+
+/* The reader's own sheet, pasted over the foot of the hoarding, its top torn as it was slapped on */
+.wrapped__look[data-theme='affiche'] .affiche-cover-sheet {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-inline: -8px;
+  padding: 0 calc(24px + 8px) calc(24px + env(safe-area-inset-bottom));
+  background: var(--paper);
+  transform: rotate(-0.6deg);
+  transform-origin: 50% 100%;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-sheet::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 22px;
+  background: var(--paper);
+  mask: var(--torn-top) center / 100% 100% no-repeat;
+  -webkit-mask: var(--torn-top) center / 100% 100% no-repeat;
+}
+
+/* The title rides the tear: a paper outline keeps it readable where it overlaps the violet */
+.wrapped__look[data-theme='affiche'] .affiche-cover-title {
+  margin-top: calc(-1 * min(9cqi, 59.08px));
+  font-size: min(10.5cqi, 67.52px);
+  -webkit-text-stroke: 0.09em var(--paper);
+  paint-order: stroke fill;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-title .lettering-highlight {
+  -webkit-text-stroke: 0;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-lede {
+  max-width: 40ch;
+  font-size: clamp(1rem, 3.2cqi, 1.25rem);
+  line-height: 1.25;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-figures {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: clamp(1rem, 3cqi, 1.2rem);
+  line-height: 1.3;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-bill h2 {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 6px 14px 3px;
+  background: var(--swash) center / 100% 100% no-repeat;
+  font: 400 clamp(1.05rem, 3.4cqi, 1.3rem)/1 var(--hand);
+  transform: rotate(-2deg);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-bill ol {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-bill a {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45em;
+  min-height: 32px;
+  padding: 4px 6px 2px;
+  color: var(--ink);
+  font-family: var(--lettering);
+  font-size: clamp(1rem, 3.3cqi, 1.3rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* The bone stroke a brush lays under the bill in focus, from its left */
+.wrapped__look[data-theme='affiche'] .affiche-cover-bill a::before {
+  content: '';
+  position: absolute;
+  inset: 0 -4px;
+  z-index: -1;
+  background: var(--swash) center / 100% 100% no-repeat;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-bill b {
+  flex: none;
+  font-size: 0.8em;
+  color: var(--mauve);
+  transition: color 0.2s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste {
+  position: relative;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 10px 28px 6px;
+  color: var(--bone);
+  font-family: var(--lettering);
+  font-size: clamp(1.35rem, 4.4cqi, 1.9rem);
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: rotate(-2deg);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* An ink daub under the words, and the crimson coat a brush lays over it */
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste::before,
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ink);
+  mask: var(--swash) center / 100% 100% no-repeat;
+  -webkit-mask: var(--swash) center / 100% 100% no-repeat;
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste::after {
+  background: var(--crimson);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste > span::after {
+  content: '→' / '';
+  display: inline-block;
+  margin-left: 0.35em;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wrapped__look[data-theme='affiche'] .affiche-cover-bill a:focus-visible,
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste:focus-visible {
+  outline: 3px solid var(--crimson);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) {
+  .wrapped__look[data-theme='affiche'] .affiche-cover-bill a:hover::before {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .wrapped__look[data-theme='affiche'] .affiche-cover-bill a:hover b {
+    color: var(--crimson);
+    transform: rotate(-8deg) scale(1.25);
+  }
+
+  /* Smoothed flat on the hoarding as the crimson goes over */
+  .wrapped__look[data-theme='affiche'] .affiche-cover-paste:hover {
+    transform: rotate(0deg) scale(1.04);
+  }
+
+  .wrapped__look[data-theme='affiche'] .affiche-cover-paste:hover::after {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .wrapped__look[data-theme='affiche'] .affiche-cover-paste:hover > span::after {
+    transform: translateX(6px);
+  }
+}
+
+/* A phone keeps the lead figure: the hoarding needs the height */
+@container (max-width: 560px) {
+  .wrapped__look[data-theme='affiche'] .affiche-cover-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .wrapped__look[data-theme='affiche'] .affiche-cover-figures > li:not(:first-child) {
+    display: none;
+  }
+
+  .wrapped__look[data-theme='affiche'] .affiche-cover-sheet {
+    gap: 10px;
+    padding-inline: calc(20px + 8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='affiche'] .affiche-cover-run {
+    animation: none;
+  }
+
+  .wrapped__look[data-theme='affiche'] .affiche-cover-bill a::before,
+.wrapped__look[data-theme='affiche'] .affiche-cover-bill b,
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste,
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste::after,
+.wrapped__look[data-theme='affiche'] .affiche-cover-paste > span::after {
+    transition: none;
+  }
+}

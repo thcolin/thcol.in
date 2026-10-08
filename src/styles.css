@@ -124,6 +124,22 @@ header nav a {
   margin: 0px 12px;
 }
 
+/* The wordmark's rounded stroke, scaled down, on the link to the projects */
+header nav a.projects-link {
+  padding: 4px 18px 6px;
+  border: 6px solid #fff;
+  border-radius: 20px;
+  font-size: 2rem;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 150ms ease-out, color 150ms ease-out;
+}
+
+header nav a.projects-link:hover {
+  background-color: #fff;
+  color: #111;
+}
+
 @media (max-width: 480px) {
   header h1 {
     font-size: 3em !important;

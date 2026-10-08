@@ -1,0 +1,344 @@
+/* Archived: each project's own interface, rebuilt edge to edge and switched off until looked at,
+   its card laid over it on alternate sides */
+
+.archived {
+  --band-bg: #161616;
+  --band-ink: hsl(0 0% 88%);
+  --band-dim: hsl(0 0% 70%);
+  --band-line: hsl(0 0% 100% / 0.14);
+  --panel-width: 360px;
+  /* The page column's edge, measured on the band for the card and on the stage (cqw) for the demos */
+  --panel-edge: max(var(--gutter), calc((100% - 1152px) / 2 + var(--gutter)));
+  --demo-edge: max(var(--gutter), calc((100cqw - 1152px) / 2 + var(--gutter)));
+  /* What the demos keep clear of on the card's side */
+  --inset-left: 0px;
+  --inset-right: 0px;
+  position: relative;
+  height: max(640px, 100svh);
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.archived--left {
+  --inset-left: calc(var(--demo-edge) + var(--panel-width) + 32px);
+}
+
+.archived--right {
+  --inset-right: calc(var(--demo-edge) + var(--panel-width) + 32px);
+}
+
+.archived--nipper { --accent: hsl(348 100% 66%); --sample-inset: auto 12px 12px auto; }
+.archived--boaty { --accent: #71bef2; --sample-inset: 8px 12px auto auto; --panel-top: 47%; }
+.archived--chrome-download-quicklook-extension { --accent: #7ea6f4; --sample-inset: auto auto 12px 12px; }
+.archived--scene-release-parser-php { --accent: #9ea6d1; }
+.archived--senscritique-api { --accent: #74d336; }
+
+.archived + .archived {
+  border-top: 1px solid var(--band-line);
+}
+
+.archived__stage {
+  position: absolute;
+  inset: 0;
+  container: archived / inline-size;
+  overflow: clip;
+  background-color: #0c0c0c;
+}
+
+.archived__panel {
+  position: absolute;
+  top: var(--panel-top, 50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: var(--panel-width);
+  padding: 28px;
+  border: 1px solid var(--band-line);
+  border-radius: 10px;
+  background-color: rgb(20 20 20 / 0.94);
+  color: var(--band-ink);
+  box-shadow: 0 24px 64px -16px rgb(0 0 0 / 0.7), 0 2px 8px rgb(0 0 0 / 0.4);
+  translate: 0 -50%;
+}
+
+.archived--left .archived__panel {
+  left: var(--panel-edge);
+}
+
+.archived--right .archived__panel {
+  right: var(--panel-edge);
+}
+
+.archived__panel .band__body {
+  font-size: 1rem;
+}
+
+.archived__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  transition: color 500ms var(--ease);
+}
+
+.archived[data-awake='true'] .archived__title {
+  color: var(--accent);
+}
+
+.archived__years {
+  margin: 0;
+  color: var(--band-dim);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8125rem;
+}
+
+/* Each card wears its project's world, never a generic one */
+
+.archived--nipper .archived__panel {
+  --band-ink: hsl(225 25% 2%);
+  --band-dim: #5c5c5c;
+  --band-line: #e5e5e5;
+  border: none;
+  border-radius: 0.25em;
+  background-color: #fff;
+  box-shadow: 0 0.0625em 0.125em 0 hsl(348 100% 25% / 0.6), 0 24px 48px -16px hsl(348 100% 20% / 0.5);
+  font-family: 'Open Sans', sans-serif;
+}
+
+.archived--nipper .archived__title {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.archived--nipper[data-awake='true'] .archived__title {
+  color: hsl(348 100% 45%);
+}
+
+.archived--nipper .links a {
+  border: none;
+  border-radius: 1.5em;
+  box-shadow: inset 0 0 0 0.175em hsl(348 100% 45%);
+  color: hsl(348 100% 40%);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.archived--nipper .links a:hover {
+  background-color: hsl(348 100% 45%);
+  color: #fff;
+}
+
+/* A blessed box, its label on the border */
+.archived--boaty .archived__panel {
+  --band-ink: #d4d9e1;
+  --band-dim: #b9c0cb;
+  --band-line: #71bef2;
+  border: 1px solid #71bef2;
+  border-radius: 0;
+  background-color: #282d35;
+  box-shadow: 0 0 0 6px #282d35;
+  font-family: Menlo, Monaco, 'Fira Code', monospace;
+}
+
+.archived--boaty .archived__panel .band__body {
+  font-size: 0.875rem;
+}
+
+.archived--boaty .archived__title {
+  font-family: Menlo, Monaco, 'Fira Code', monospace;
+  font-size: 1.5rem;
+}
+
+.archived--boaty .links a {
+  border: none;
+  border-radius: 0;
+  background-color: #b9c0cb;
+  color: #282d35;
+  font-family: inherit;
+}
+
+.archived--boaty .links a:hover {
+  background-color: #71bef2;
+  color: #282d35;
+}
+
+/* A Material card, as the popup draws them */
+.archived--chrome-download-quicklook-extension .archived__panel {
+  --band-ink: #333;
+  --band-dim: #595959;
+  --band-line: hsl(0 0% 90%);
+  border: none;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px hsl(0 0% 70%), 0 16px 40px -12px rgb(0 0 0 / 0.35);
+  font-family: Roboto, sans-serif;
+}
+
+.archived--chrome-download-quicklook-extension .archived__title {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+}
+
+.archived--chrome-download-quicklook-extension[data-awake='true'] .archived__title {
+  color: #3367d6;
+}
+
+.archived--chrome-download-quicklook-extension .links a {
+  border: none;
+  border-radius: 2px;
+  background-color: #3367d6;
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.archived--chrome-download-quicklook-extension .links a:hover {
+  background-color: #2a56b3;
+  color: #fff;
+}
+
+/* A php.net box, its purple and its plain text */
+.archived--scene-release-parser-php .archived__panel {
+  --band-ink: #333;
+  --band-dim: #4d4d4d;
+  --band-line: #ccc;
+  padding-top: 0;
+  overflow: hidden;
+  border: 1px solid #c4c9df;
+  border-radius: 2px;
+  background-color: #f2f2f2;
+  box-shadow: 0 16px 40px -12px rgb(0 0 0 / 0.3);
+  font-family: 'Fira Sans', 'Source Sans Pro', Helvetica, Arial, sans-serif;
+}
+
+.archived--scene-release-parser-php .archived__title {
+  align-self: stretch;
+  margin: 0 -28px;
+  padding: 18px 28px;
+  background-color: #4f5b93;
+  color: #fff;
+}
+
+.archived--scene-release-parser-php[data-awake='true'] .archived__title {
+  color: #fff;
+}
+
+.archived--scene-release-parser-php .links a {
+  border-color: #4f5b93;
+  border-radius: 2px;
+  color: #4f5b93;
+}
+
+.archived--scene-release-parser-php .links a:hover {
+  background-color: #4f5b93;
+  color: #fff;
+}
+
+/* A SensCritique block of 2016: white, Helvetica, its green button */
+.archived--senscritique-api .archived__panel {
+  --band-ink: #222;
+  --band-dim: #555;
+  --band-line: #ddd;
+  border: none;
+  border-top: 4px solid #74d336;
+  border-radius: 0;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15), 0 16px 40px -12px rgb(0 0 0 / 0.4);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.archived--senscritique-api .archived__title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+.archived--senscritique-api[data-awake='true'] .archived__title {
+  color: #111;
+}
+
+.archived--senscritique-api .links a {
+  border: none;
+  border-radius: 3px;
+  background-color: #74d336;
+  color: #111;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+.archived--senscritique-api .links a:hover {
+  background-color: #5fb82a;
+  color: #111;
+}
+
+.archived__panel .links a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Switched off: the interface keeps its shapes, loses its colors and stops moving until it is looked at */
+.archived__stage > * {
+  filter: saturate(0.12) brightness(0.55) contrast(0.92);
+  transition: filter 700ms var(--ease);
+}
+
+.archived[data-awake='true'] .archived__stage > * {
+  filter: none;
+}
+
+.archived[data-awake='false'] .archived__stage * {
+  animation-play-state: paused !important;
+}
+
+.archived__sample {
+  position: absolute;
+  inset: var(--sample-inset, 12px 12px auto auto);
+  z-index: 5;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: rgb(0 0 0 / 0.72);
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+/* Small screens: the demo stays the band's background, the card follows it */
+@media (max-width: 900px) {
+  .archived {
+    --inset-left: 0px;
+    --inset-right: 0px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .archived__stage {
+    position: relative;
+    order: -1;
+    height: 600px;
+  }
+
+  .archived__panel {
+    position: relative;
+    top: auto;
+    width: auto;
+    margin: 16px var(--gutter) 32px;
+    padding: 24px;
+    translate: none;
+  }
+
+  .archived--left .archived__panel,
+  .archived--right .archived__panel {
+    right: auto;
+    left: auto;
+  }
+
+}

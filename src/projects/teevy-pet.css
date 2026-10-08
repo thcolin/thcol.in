@@ -1,0 +1,149 @@
+/* Channel 0: teevy's mire edge to edge, the white face on it, the status line in the black band */
+
+.teevy-pet {
+  --mire-footer-h: 18%;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  font-family: 'VT323', monospace;
+}
+
+.teevy-pet__mire {
+  position: relative;
+  display: flex;
+  flex: 1;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.teevy-pet__mire:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -6px;
+}
+
+.teevy-pet__reel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.teevy-pet__reel span {
+  display: block;
+  flex: none;
+}
+
+/* Bars still to come sit in the shade; the one being aimed at never does */
+.teevy-pet__reel[data-todo] {
+  filter: brightness(0.55);
+}
+
+.teevy-pet__face {
+  position: absolute;
+  /* teevy's picture window: between the OSD band at the top and the black band at the bottom */
+  inset: 16% 0 0 var(--safe-left);
+  width: calc(100% - var(--safe-left));
+  height: 84%;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+.teevy-pet__band {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  height: var(--mire-footer-h);
+  /* The black band runs edge to edge; its instruments start right of the guide and the prints */
+  padding: 0 4vw 0 var(--safe-left);
+  background-color: #101010;
+}
+
+.teevy-pet__status {
+  display: block;
+  width: 100%;
+  height: 58%;
+}
+
+.teevy-pet__labels {
+  position: relative;
+  height: 1.2em;
+  font-size: clamp(12px, 1.3vw, 18px);
+}
+
+.teevy-pet__label {
+  position: absolute;
+  top: 0;
+  color: #6e6e6e;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+  translate: -50% 0;
+}
+
+/* teevy's line: the OSD band at the top, dithered, the green TEEVY key and the sentence */
+.teevy-line {
+  position: absolute;
+  top: 6%;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  border-block: 2px solid #fff;
+  background: rgb(0 0 0 / 0.5) var(--osd-dither) 0 0 / 10px 10px;
+  font-size: clamp(16px, 2.2vw, 28px);
+  letter-spacing: 0.02em;
+}
+
+.teevy-line__key {
+  display: flex;
+  align-items: center;
+  margin-left: 3%;
+  padding: 0.25em 0.8em;
+  background-color: #28e060;
+  color: #000;
+  letter-spacing: 0.18em;
+}
+
+.teevy-line__val {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  margin-right: 5%;
+  padding: 0.25em 0.9em;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: var(--osd-outline);
+}
+
+.teevy-line__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .teevy-pet__band {
+    padding: 0 16px;
+  }
+
+  .teevy-pet__labels {
+    font-size: 11px;
+  }
+
+  .teevy-line {
+    font-size: 16px;
+  }
+}
+
+/* Channel 0 mounts no broadcast banner on teevy */
+.teevy[data-kind='pet'] .teevy-hud {
+  display: none;
+}

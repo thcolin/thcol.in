@@ -1,0 +1,230 @@
+/* scene-release-parser-php: a bare PHP page, highlight_string() colors and Xdebug 2's var_dump and error table */
+
+.srp {
+  --php-default: #0000bb;
+  --php-keyword: #007700;
+  --php-string: #dd0000;
+  --php-comment: #ff8000;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff;
+  color: #000;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  line-height: normal;
+}
+
+.srp ::selection {
+  background-color: #b4d5fe;
+  color: #000;
+}
+
+.srp :focus-visible {
+  outline: 2px solid var(--php-default);
+  outline-offset: 1px;
+}
+
+.srp__bar {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  overflow: hidden;
+  border-bottom: 1px solid #c8c8c8;
+  background: linear-gradient(#f7f7f7, #e9e9e9);
+  color: #444;
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.srp__page {
+  flex-grow: 1;
+  min-height: 0;
+  padding: 12px calc(12px + var(--inset-right, 0px)) 12px calc(12px + var(--inset-left, 0px));
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.srp .php {
+  display: block;
+  color: #000;
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.php-default { color: var(--php-default); }
+.php-keyword { color: var(--php-keyword); }
+.php-string { color: var(--php-string); }
+.php-comment { color: var(--php-comment); }
+
+.php-input {
+  max-width: calc(100% - 4ch);
+  padding: 0;
+  border: none;
+  border-bottom: 1px dashed var(--php-string);
+  border-radius: 0;
+  outline: none;
+  background: none;
+  color: var(--php-string);
+  font: inherit;
+  caret-color: #000;
+}
+
+.php-input:hover,
+.php-input:focus {
+  background-color: #fff6d5;
+}
+
+.php-input:focus-visible {
+  outline: none;
+  border-bottom-style: solid;
+}
+
+.php-toggle {
+  padding: 0;
+  border: none;
+  border-bottom: 1px dashed var(--php-default);
+  background: none;
+  color: var(--php-default);
+  font: inherit;
+  cursor: pointer;
+}
+
+.php-toggle:hover {
+  background-color: #eef0ff;
+}
+
+.php-toggle:active {
+  scale: 0.96;
+}
+
+/* Xdebug's var_dump */
+
+.xd-dump {
+  margin: 12px 0 0;
+  padding: 8px 0 0;
+  border-top: 1px solid #ddd;
+  color: #000;
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.xd-dump i,
+.xd-dump b {
+  font-style: italic;
+}
+
+.xd-dump b {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.xd-dump small {
+  font-size: 0.85em;
+}
+
+.xd-arrow { color: #888a85; }
+.xd-string { color: #cc0000; }
+.xd-int { color: #4e9a06; }
+.xd-bool { color: #75507b; }
+.xd-null { color: #3465a4; }
+
+.xd-property.is-changed {
+  animation: xd-flash 1.2s ease-out;
+}
+
+@keyframes xd-flash {
+  from { background-color: #fce94f; }
+  to { background-color: transparent; }
+}
+
+/* Xdebug's uncaught exception table */
+
+.xd-error {
+  width: 100%;
+  margin: 12px 0 0;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+}
+
+.xd-error th,
+.xd-error td {
+  padding: 1px 3px;
+  border: 1px solid #000;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.xd-error__title {
+  background-color: #f57900;
+  font-weight: 700;
+}
+
+.xd-error__bang {
+  background-color: #cc0000;
+  color: #fce94f;
+  font-size: x-large;
+}
+
+.xd-error__stack {
+  background-color: #e9b96e;
+}
+
+.xd-error__head th {
+  background-color: #eeeeec;
+  text-align: center;
+}
+
+.xd-error td {
+  background-color: #eeeeec;
+}
+
+.xd-error td:first-child {
+  text-align: center;
+}
+
+/* Wide enough: the output sits beside the code, so the page never needs to scroll */
+@container archived (min-width: 900px) {
+  .srp__page {
+    display: grid;
+    grid-template-columns: minmax(0, 48ch) minmax(0, 1fr);
+    align-items: start;
+    gap: 0 28px;
+  }
+
+  .xd-dump,
+  .xd-error {
+    margin: 0;
+    padding: 0 0 0 20px;
+    border-top: none;
+    border-left: 1px solid #ddd;
+    font-size: 12px;
+  }
+
+  .xd-error {
+    padding: 0;
+    border: 1px solid #000;
+  }
+}
+
+@container archived (min-width: 1400px) {
+  .srp__page {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+}
+
+@container archived (max-width: 480px) {
+  .srp .php,
+  .xd-dump {
+    font-size: 10.5px;
+  }
+}

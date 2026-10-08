@@ -1,0 +1,813 @@
+/* Kanshi, a 90s anime maintenance HUD: one phosphor per machine, kanji, wireframes, sized on the screen itself */
+
+.kanshi {
+  --band-ink: #e8f0e8;
+  --osd-font: 'VT323', monospace;
+  position: absolute;
+  inset: 0;
+  background-color: #000;
+}
+
+.kanshi ::selection {
+  background-color: #60f08c;
+  color: #000;
+}
+
+.kanshi :focus-visible {
+  outline: 2px solid #60f08c;
+  outline-offset: 2px;
+}
+
+.kanshi__page {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqi;
+  height: 100%;
+  padding: 28px var(--page-edge) 18px;
+}
+
+/* Every call-out draws itself in when a page arrives, one after the other */
+.kanshi__page .kanshi-brk,
+.kanshi__page .kanshi__hero,
+.kanshi__page .kanshi__plate {
+  animation: kanshi-draw 520ms steps(6) both;
+}
+
+.kanshi__col--left > :nth-child(2) { animation-delay: 80ms; }
+.kanshi__col--left > :nth-child(3) { animation-delay: 160ms; }
+.kanshi__col--center > * { animation-delay: 120ms; }
+.kanshi__col--right > :nth-child(1) { animation-delay: 200ms; }
+.kanshi__col--right > :nth-child(2) { animation-delay: 280ms; }
+
+@keyframes kanshi-draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.3;
+  }
+}
+
+.kanshi__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, rgb(0 0 0 / 0.28) 2px 3px);
+  pointer-events: none;
+}
+
+.kanshi__scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent, rgb(var(--kanshi-rgb) / 0.06) 50%, transparent);
+  background-size: 100% 30%;
+  background-repeat: no-repeat;
+  animation: kanshi-roll 7s linear infinite;
+}
+
+@keyframes kanshi-roll {
+  from { background-position: 0 -40%; }
+  to { background-position: 0 140%; }
+}
+
+.kanshi__ticker {
+  overflow: hidden;
+  padding: 0.3cqi 0;
+  border-block: 1px solid var(--mon-line);
+  font-size: var(--t-chrome);
+  letter-spacing: 0.14em;
+  color: var(--mon-dim);
+  white-space: nowrap;
+}
+
+.kanshi__ticker-roll {
+  display: flex;
+  width: max-content;
+  animation: kanshi-ticker 32s linear infinite;
+}
+
+.kanshi__ticker-roll span {
+  padding-right: 3em;
+}
+
+@keyframes kanshi-ticker {
+  to { translate: -50% 0; }
+}
+
+/* Hazard stripes in the margins, the words on solid black */
+.kanshi__alert {
+  display: flex;
+  align-items: stretch;
+  gap: 1cqi;
+  margin: 0;
+  font-size: var(--t-title);
+  letter-spacing: 0.14em;
+  color: var(--mon-warn);
+}
+
+.kanshi__alert b {
+  padding: 0.1cqi 1cqi;
+  animation: kanshi-blink 1.2s steps(1) infinite;
+}
+
+.kanshi__hazard {
+  flex: 1;
+  background: repeating-linear-gradient(-45deg, var(--mon-warn) 0 0.6cqi, #000 0.6cqi 1.2cqi);
+}
+
+@keyframes kanshi-blink {
+  50% { opacity: 0.35; }
+}
+
+.kanshi-boot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4cqi;
+  padding: 4cqi;
+  color: #e8f0e8;
+  cursor: pointer;
+}
+
+.kanshi-boot__logo {
+  margin: 0;
+  font-family: var(--osd-font);
+  font-size: 1.5cqi;
+  line-height: 1;
+  white-space: pre;
+}
+
+.kanshi-boot__sub {
+  margin: 0;
+  font-size: 1.8cqi;
+  letter-spacing: 0.26em;
+  color: rgb(232 240 232 / 0.72);
+}
+
+.kanshi-boot__log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  width: min(100%, 58cqi);
+  font-size: 1.8cqi;
+  white-space: pre;
+}
+
+.kanshi-boot__log span {
+  opacity: 0;
+  animation: kanshi-line 10ms linear forwards;
+}
+
+@keyframes kanshi-line {
+  to { opacity: 1; }
+}
+
+.kanshi-boot__bar {
+  width: min(100%, 58cqi);
+  height: 1.4cqi;
+  padding: 2px;
+  border: 1px solid rgb(232 240 232 / 0.4);
+}
+
+.kanshi-boot__bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background-color: rgb(232 240 232 / 0.85);
+  animation: kanshi-fill 1.5s ease-out 0.5s forwards;
+}
+
+@keyframes kanshi-fill {
+  to { width: 100%; }
+}
+
+.kanshi-boot__cursor {
+  animation: kanshi-blink 1s steps(1) infinite;
+}
+
+.kanshi-screen {
+  --mon-hi: rgb(var(--kanshi-rgb));
+  --mon-dim: rgb(var(--kanshi-rgb) / 0.75);
+  --mon-faint: rgb(var(--kanshi-rgb) / 0.62);
+  --mon-line: rgb(var(--kanshi-rgb) / 0.26);
+  --mon-track: rgb(var(--kanshi-rgb) / 0.16);
+  --mon-warn: #e6b455;
+  --t-hero: 4.2cqi;
+  --t-big: 2.5cqi;
+  --t-title: 1.35cqi;
+  --t-data: 1.15cqi;
+  --t-chrome: 1.05cqi;
+  --page-edge: 24px;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: clip;
+  background-color: #000;
+  color: var(--mon-hi);
+  container-type: inline-size;
+  font-family: var(--osd-font);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kanshi-screen b,
+.kanshi-screen em {
+  font-style: normal;
+  font-weight: 400;
+}
+
+.kanshi-screen small {
+  margin-left: 0.05em;
+  font-size: 0.4em;
+  color: var(--mon-dim);
+}
+
+.kanshi__head,
+.kanshi__plate {
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+  min-width: 0;
+  padding-bottom: 0.4cqi;
+  border-bottom: 1px solid var(--mon-line);
+  white-space: nowrap;
+}
+
+.kanshi__head {
+  justify-content: space-between;
+  font-size: 2.2cqi;
+  letter-spacing: 0.16em;
+}
+
+.kanshi__ident {
+  overflow: hidden;
+  color: var(--mon-dim);
+  text-overflow: ellipsis;
+}
+
+.kanshi__ident i {
+  margin-right: 0.3em;
+  font-style: normal;
+  color: var(--mon-faint);
+}
+
+.kanshi__ident b {
+  color: var(--mon-hi);
+}
+
+.kanshi__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+}
+
+/* Stripes in the margins, the words on solid black: Kanshi's hazard badge */
+.kanshi__sample {
+  padding: 0 0.5em;
+  border-inline: 0.5em solid transparent;
+  border-image: repeating-linear-gradient(-45deg, var(--mon-warn) 0 4px, #000 4px 8px) 1;
+  color: var(--mon-warn);
+  font-size: 0.8em;
+}
+
+.kanshi__clock {
+  font-variant-numeric: tabular-nums;
+  color: var(--mon-hi);
+}
+
+.kanshi__rail {
+  display: flex;
+  gap: 0.6cqi;
+  font-size: var(--t-chrome);
+  letter-spacing: 0.14em;
+}
+
+.kanshi__rail button {
+  --mon-tab: rgb(var(--kanshi-rgb));
+  padding: 0.1cqi 1cqi;
+  border: 1px solid rgb(var(--kanshi-rgb) / 0.45);
+  background: none;
+  color: rgb(var(--kanshi-rgb) / 0.75);
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  transition-property: background-color, color, border-color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.kanshi__rail button:hover {
+  border-color: var(--mon-tab);
+  color: var(--mon-tab);
+}
+
+.kanshi__rail button:active {
+  scale: 0.96;
+}
+
+.kanshi__rail button[aria-checked='true'] {
+  border-color: var(--mon-tab);
+  background-color: var(--mon-tab);
+  color: #000;
+}
+
+.kanshi__plate {
+  font-size: var(--t-data);
+  letter-spacing: 0.12em;
+  color: var(--mon-dim);
+}
+
+.kanshi__plate b {
+  flex: none;
+  font-size: 1.4em;
+  letter-spacing: 0.2em;
+  color: var(--mon-hi);
+}
+
+.kanshi__plate span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kanshi__plate em {
+  flex: none;
+  margin-left: auto;
+  color: var(--mon-hi);
+}
+
+.kanshi__plate em.is-warn {
+  color: var(--mon-warn);
+}
+
+.kanshi__cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1.15fr);
+  gap: 1.2cqi;
+  flex: 1;
+  min-height: 0;
+}
+
+.kanshi-screen[data-page='rack'] .kanshi__cols {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.3fr);
+}
+
+.kanshi__col {
+  display: flex;
+  flex-direction: column;
+  gap: 1cqi;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Bracket: four square corners, no fill, the data floats on black */
+.kanshi-brk {
+  --corner: rgb(var(--kanshi-rgb) / 0.6);
+  --corner-size: 1.4cqi;
+  --corner-weight: 1.5px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  padding: 0.6cqi 0.8cqi;
+  background-image:
+    linear-gradient(var(--corner), var(--corner)), linear-gradient(var(--corner), var(--corner)),
+    linear-gradient(var(--corner), var(--corner)), linear-gradient(var(--corner), var(--corner)),
+    linear-gradient(var(--corner), var(--corner)), linear-gradient(var(--corner), var(--corner)),
+    linear-gradient(var(--corner), var(--corner)), linear-gradient(var(--corner), var(--corner));
+  background-repeat: no-repeat;
+  background-size:
+    var(--corner-size) var(--corner-weight), var(--corner-weight) var(--corner-size), var(--corner-size) var(--corner-weight), var(--corner-weight) var(--corner-size),
+    var(--corner-size) var(--corner-weight), var(--corner-weight) var(--corner-size), var(--corner-size) var(--corner-weight), var(--corner-weight) var(--corner-size);
+  background-position: left top, left top, right top, right top, left bottom, left bottom, right bottom, right bottom;
+}
+
+.kanshi-brk.is-warn {
+  --corner: var(--mon-warn);
+  --corner-weight: 2px;
+}
+
+.kanshi-brk--grow,
+.kanshi-brk--focal {
+  flex: 1;
+}
+
+.kanshi-brk__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5em;
+  margin-bottom: 0.4cqi;
+  font-size: var(--t-title);
+  letter-spacing: 0.14em;
+  color: var(--mon-dim);
+  white-space: nowrap;
+}
+
+.kanshi-brk__title {
+  color: var(--mon-hi);
+}
+
+.kanshi-brk__aside {
+  overflow: hidden;
+  font-size: 0.85em;
+  color: var(--mon-faint);
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi-brk__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5cqi;
+  flex: 1;
+  min-height: 0;
+}
+
+.kanshi__cpu {
+  display: flex;
+  align-items: flex-end;
+  gap: 1cqi;
+}
+
+.kanshi-gauge {
+  position: relative;
+  flex: none;
+  width: 7cqi;
+  aspect-ratio: 1;
+}
+
+.kanshi-gauge svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.kanshi-gauge circle {
+  fill: none;
+  stroke-width: 9;
+}
+
+.kanshi-gauge__track {
+  stroke: var(--mon-track);
+}
+
+.kanshi-gauge__value {
+  stroke: var(--mon-hi);
+}
+
+.kanshi-gauge__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--t-big);
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi-cores {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4cqi;
+  flex: 1;
+  height: 5.5cqi;
+}
+
+.kanshi-cores i {
+  flex: 1;
+  background-color: var(--mon-dim);
+}
+
+.kanshi__seg,
+.kanshi__big {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi__seg {
+  display: flex;
+  gap: 0.5em;
+  font-size: var(--t-data);
+}
+
+.kanshi__seg span {
+  color: var(--mon-faint);
+}
+
+.kanshi__big {
+  font-size: var(--t-big);
+  line-height: 0.9;
+}
+
+.kanshi-meter {
+  display: flex;
+  gap: 1.5px;
+  width: 100%;
+  height: 1.2cqi;
+}
+
+.kanshi-meter i {
+  flex: 1;
+  background-color: var(--mon-track);
+}
+
+.kanshi-meter i.is-on {
+  background-color: var(--mon-hi);
+}
+
+.kanshi-meter i.is-warn {
+  background-color: var(--mon-warn);
+}
+
+.kanshi-osc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3cqi;
+  flex: 1;
+  min-height: 0;
+}
+
+.kanshi-osc__peaks {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--t-data);
+  color: var(--mon-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi-osc__peaks b {
+  color: var(--mon-hi);
+}
+
+.kanshi-osc__graph {
+  position: relative;
+  flex: 1;
+  min-height: 2cqi;
+}
+
+.kanshi-osc__graph svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.kanshi-osc__grid {
+  stroke: var(--mon-line);
+  stroke-width: 0.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.kanshi-osc__fill {
+  fill: rgb(var(--kanshi-rgb) / 0.12);
+}
+
+.kanshi-osc__down,
+.kanshi-osc__up {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.kanshi-osc__down {
+  stroke: var(--mon-hi);
+  stroke-width: 1.2;
+}
+
+.kanshi-osc__up {
+  stroke: var(--mon-dim);
+  stroke-dasharray: 2 2;
+}
+
+.kanshi-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4cqi;
+  font-size: var(--t-data);
+}
+
+.kanshi-rows__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 0.4em;
+  color: var(--mon-dim);
+}
+
+.kanshi-rows__dots {
+  border-bottom: 1px dotted var(--mon-line);
+}
+
+.kanshi-rows__value {
+  color: var(--mon-hi);
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi__power {
+  display: grid;
+  grid-template-columns: 6.5em minmax(0, 1fr) 3.5em;
+  align-items: center;
+  gap: 0.6em;
+  font-size: var(--t-data);
+  color: var(--mon-dim);
+}
+
+.kanshi__power b {
+  color: var(--mon-hi);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi-disks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35cqi;
+  font-size: var(--t-data);
+}
+
+.kanshi-disks__row {
+  display: grid;
+  grid-template-columns: 1.6em minmax(0, 1fr) 4.5cqi 2em;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--mon-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi-disks__row.is-warn,
+.kanshi-disks__row.is-warn .kanshi-disks__temp {
+  color: var(--mon-warn);
+}
+
+.kanshi-disks__model {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kanshi-disks__row .kanshi-meter {
+  height: 0.8cqi;
+}
+
+.kanshi-disks__temp {
+  color: var(--mon-hi);
+  text-align: right;
+}
+
+.kanshi-streams {
+  display: flex;
+  flex-direction: column;
+  gap: 1cqi;
+  font-size: var(--t-data);
+}
+
+.kanshi-streams__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.2cqi 0.6em;
+}
+
+.kanshi-streams__user {
+  grid-column: 1 / -1;
+  font-size: 1.15em;
+  color: var(--mon-hi);
+  text-transform: none;
+}
+
+.kanshi-streams__title {
+  overflow: hidden;
+  color: var(--mon-dim);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kanshi-streams__mode {
+  color: var(--mon-faint);
+}
+
+.kanshi-streams__item .kanshi-meter {
+  grid-column: 1 / -1;
+  height: 0.8cqi;
+}
+
+.kanshi__3d {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.kanshi__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.kanshi__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 0.8;
+}
+
+.kanshi__hero-value {
+  font-size: var(--t-hero);
+  font-variant-numeric: tabular-nums;
+}
+
+.kanshi__hero-label {
+  margin-top: 0.3cqi;
+  font-size: var(--t-data);
+  letter-spacing: 0.16em;
+  color: var(--mon-dim);
+}
+
+.kanshi__hero.is-warn .kanshi__hero-value {
+  color: var(--mon-warn);
+}
+
+.kanshi__col--left > .kanshi-brk--grow {
+  flex: none;
+}
+
+.kanshi__col--left .kanshi-osc__graph {
+  height: 9cqi;
+  flex: none;
+}
+
+/* Full band on the TV: the HUD starts where the channel guide ends */
+.kanshi__page {
+  padding-left: max(24px, var(--safe-left, 0px));
+}
+
+.kanshi__head {
+  font-size: 1.6cqi;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kanshi__page .kanshi-brk,
+  .kanshi__page .kanshi__hero,
+  .kanshi__page .kanshi__plate,
+  .kanshi__scanlines::after,
+  .kanshi__ticker-roll,
+  .kanshi__alert b {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  /* On a phone the 4:3 tube is small: the machine and its headline number, nothing else */
+  .kanshi__col--left,
+  .kanshi__col--right,
+  .kanshi-screen[data-page='rack'] .kanshi__col--left,
+  .kanshi__alert,
+  .kanshi__rail,
+  .kanshi__plate span {
+    display: none;
+  }
+
+  .kanshi__cols,
+  .kanshi-screen[data-page='rack'] .kanshi__cols {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .kanshi__col--center {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .kanshi__col--center > .kanshi__hero {
+    align-self: flex-end;
+  }
+
+  .kanshi__page {
+    gap: 1.6cqi;
+    padding: 12px 14px 8px;
+  }
+
+  .kanshi-screen {
+    --t-hero: 12cqi;
+    --t-title: 3.6cqi;
+    --t-data: 3.4cqi;
+    --t-chrome: 3.2cqi;
+  }
+
+  .kanshi__head {
+    font-size: 3.6cqi;
+  }
+
+  .kanshi-boot__logo {
+    font-size: 1.9cqi;
+  }
+
+  .kanshi-boot__sub,
+  .kanshi-boot__log {
+    font-size: 3.4cqi;
+  }
+
+  .kanshi-boot__log,
+  .kanshi-boot__bar {
+    width: 100%;
+  }
+}

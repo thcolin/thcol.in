@@ -1,0 +1,22 @@
+{
+  "source": "tests/ClientTests.php, testGetArtworkTVShowSuccess, the values the project asserted for getArtwork(438579)",
+  "serialized": {
+    "id": 438579,
+    "url": "http://www.senscritique.com/serie/Black_Mirror/438579/details",
+    "type": "tvshow",
+    "title": "Black Mirror",
+    "year": 2011,
+    "directors": "Charlie Brooker",
+    "actors": "Gugu Mbatha-Raw, Alex Lawther, Jerome Flynn, Mackenzie Davis, Rasmus Hardiker, Tobias Menzies, Janet Montgomery, Ian Bonar",
+    "genres": "Thriller, Drame",
+    "duration": "1 h",
+    "countries": "Royaume-uni",
+    "storyline": "Chaque épisode de cette anthologie montre la dépendance des hommes vis-à-vis de tout ce qui a un écran et les conséquences de cette dépendance."
+  },
+  "rating": {
+    "value": 8,
+    "count": 74768,
+    "read": "2026-10-08",
+    "from": "https://www.senscritique.com/serie/black_mirror/438579, aggregateRating of its JSON-LD"
+  }
+}

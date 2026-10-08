@@ -30,7 +30,7 @@ export const Sensorr = () => {
           <p className='band__body'>
             Sensorr watches your Torznab indexers for the movies and shows you want, picks the best release by your rules, and hands it to your download client.
           </p>
-          <Choices label='Feature' options={FEATURES} value={feature} onChange={choose} className='choices sensorr__features' />
+          <Choices label='Feature' options={FEATURES} value={feature} onChange={choose} className='choices choices--journey' />
           <Tags items={['TypeScript', 'React', 'Node.js', 'Nx', 'Docker']} />
           <Links links={[['Demo', 'https://thcolin.github.io/sensorr/'], ['GitHub', 'https://github.com/thcolin/sensorr']]} />
         </div>

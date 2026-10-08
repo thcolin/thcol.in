@@ -1,0 +1,833 @@
+/* nipper v2, its theme.js as custom properties and its glamor styles as classes */
+
+.nipper {
+  --primary: hsl(348 100% 55%);
+  --dark: hsl(348 100% 50%);
+  --darken: hsl(348 100% 48%);
+  --darker: hsl(348 100% 40%);
+  --light: hsl(348 100% 95%);
+  --lighten: hsl(348 100% 96%);
+  --lighter: hsl(348 100% 97%);
+  --black: hsl(225 25% 2%);
+  --silver: #e5e5e5;
+  --porcelain: #f6f7f8;
+  --icecube: hsl(200 40% 98%);
+  /* theme.colors.gray (#999) darkened to reach 4.5:1 on white */
+  --gray: #737373;
+  --shadow-dark: hsl(348 100% 25% / 0.6);
+  --titillium: 'Titillium Web', sans-serif;
+  --open-sans: 'Open Sans', sans-serif;
+  position: relative;
+  isolation: isolate;
+  height: 100%;
+  overflow: hidden;
+  background-color: hsl(348 100% 60%);
+  color: var(--black);
+  font-family: var(--open-sans);
+  font-size: 14px;
+  line-height: normal;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--icecube);
+}
+
+.nipper ::selection {
+  background-color: var(--light);
+  color: var(--darker);
+}
+
+.nipper :focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
+}
+
+.nipper__landing :focus-visible {
+  outline-color: #fff;
+}
+
+.nipper-icon {
+  display: flex;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+}
+
+.nipper-icon.is-spinning {
+  animation: nipper-spin 2s linear infinite;
+}
+
+@keyframes nipper-spin {
+  to { rotate: 360deg; }
+}
+
+/* Landing: the html background, the topography under it, the gradient over both */
+
+.nipper__landing,
+.nipper__results {
+  position: absolute;
+  inset: 0;
+  transition: translate 600ms var(--ease, ease-out);
+}
+
+.nipper.is-results .nipper__landing {
+  translate: 0 -100%;
+}
+
+.nipper__results {
+  translate: 0 100%;
+}
+
+.nipper.is-results .nipper__results {
+  translate: none;
+}
+
+.nipper__landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(-45deg, hsl(348 100% 55% / 0.9), hsl(333 84% 42% / 0.7));
+}
+
+.nipper__topography {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-position: center;
+  background-size: cover;
+}
+
+.nipper-logo {
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.nipper-logo svg {
+  display: block;
+  width: 100%;
+  fill: var(--primary);
+}
+
+.nipper-logo svg.is-inverted {
+  fill: #fff;
+}
+
+.nipper-logo svg.is-waving rect {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nipper-wave 0.6s ease-in-out infinite;
+}
+
+@keyframes nipper-wave {
+  0% { scale: 1 1; }
+  20% { scale: 1 1.4; }
+  40%, 100% { scale: 1 1; }
+}
+
+.nipper__logo {
+  align-self: start;
+  width: 100%;
+  max-width: 9em;
+  margin: 1em 1.75em;
+}
+
+.nipper__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 var(--inset-right, 0px) 1.5em var(--inset-left, 0px);
+  text-align: center;
+}
+
+.nipper__heading {
+  margin: 0 0 0.35em;
+  padding: 0 0.2em;
+  background-color: #fff;
+  color: var(--primary);
+  font-family: var(--titillium);
+  font-size: 3.5em;
+  font-weight: 900;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
+/* components/Form.js */
+
+.nipper-form {
+  display: flex;
+  justify-content: center;
+  width: calc(100% - 2em);
+  max-width: 30em;
+  margin: 2em 1em;
+  border-radius: 0.25em;
+  overflow: hidden;
+  transition: translate 0.2s ease;
+}
+
+.nipper-form:focus-within {
+  translate: 0 -1px;
+}
+
+.nipper-form__input {
+  width: 100%;
+  min-width: 0;
+  padding: 1em 1.5em;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  background-color: hsl(0 0% 0% / 0.4);
+  color: #fff;
+  font-family: var(--open-sans);
+  font-size: 1em;
+  line-height: 1.25;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: width 400ms ease-out 75ms, padding 100ms ease-in;
+}
+
+.nipper-form__input::placeholder {
+  color: #fff;
+  font-family: var(--titillium);
+  text-overflow: ellipsis;
+  opacity: 0.75;
+}
+
+.nipper-form__input::-webkit-search-cancel-button {
+  filter: invert(1);
+}
+
+.nipper-form.is-busy .nipper-form__input {
+  width: 0;
+  padding: 1em 0;
+  transition: width 400ms ease-in, padding 100ms ease-out 375ms;
+}
+
+.nipper-form .nipper-form__submit {
+  flex-grow: 1;
+  width: 4em;
+  padding: 1em 1.25em;
+  border-radius: 0;
+}
+
+.nipper-form:has(.nipper-form__input:focus-visible) {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* components/atoms/Button.js */
+
+.nipper-button {
+  position: relative;
+  z-index: 0;
+  padding: 0.5em;
+  overflow: hidden;
+  border: none;
+  border-radius: 1.5em;
+  font-family: var(--titillium);
+  font-weight: 700;
+  line-height: 1.25;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition-property: background-color, color, box-shadow, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.nipper-button:active:not(:disabled) {
+  scale: 0.96;
+}
+
+.nipper-button.has-label {
+  padding: 0.5em 1em;
+}
+
+.nipper-button.is-bare {
+  border-radius: 0;
+}
+
+.nipper-button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.nipper-button__label {
+  margin: 0 0 0 0.75em;
+}
+
+.nipper-button__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  fill: rgb(0 0 0 / 0.2);
+}
+
+.nipper-button--plain {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.nipper-button--plain:hover {
+  background-color: var(--dark);
+}
+
+.nipper-button--plain:focus-visible {
+  background-color: var(--darken);
+}
+
+.nipper-button--plain.is-inverted,
+.nipper-button--plain.is-inverted:hover {
+  background-color: #fff;
+  color: var(--primary);
+}
+
+.nipper-button--plain.is-inverted:hover {
+  color: var(--darker);
+}
+
+.nipper-button--plain:disabled {
+  background-color: var(--silver);
+  color: #fff;
+  cursor: default;
+}
+
+.nipper-button--light {
+  background-color: #fff;
+  color: var(--primary);
+  box-shadow: inset 0 0 0 0.175em var(--primary);
+}
+
+.nipper-button--light:hover {
+  color: var(--darker);
+  box-shadow: inset 0 0 0 0.175em var(--darker);
+}
+
+.nipper-button--light:disabled {
+  color: var(--silver);
+  box-shadow: inset 0 0 0 0.175em var(--silver);
+  cursor: default;
+}
+
+.nipper-button--none {
+  background: none;
+  color: var(--primary);
+}
+
+.nipper-button--none.is-inverted {
+  color: #fff;
+}
+
+.nipper-button--none:hover:not(:disabled) {
+  color: var(--darker);
+}
+
+.nipper-button--none.is-inverted:hover:not(:disabled) {
+  color: var(--lighter);
+}
+
+.nipper-button--none:disabled {
+  color: var(--silver);
+  cursor: default;
+}
+
+/* components/blocks/Stepper.js */
+
+.nipper-stepper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.nipper-stepper__steps {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.nipper-stepper__step {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0 1em;
+  overflow: hidden;
+  color: #fff;
+  font-family: var(--titillium);
+  font-size: 1.25em;
+  font-weight: 300;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: translate 0.4s ease;
+}
+
+.nipper-stepper__step em {
+  margin: 0 0 0.25em 0.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nipper-stepper__emoji {
+  font-size: 1.2em;
+  line-height: 1.25em;
+}
+
+.nipper-stepper__radio {
+  display: flex;
+  margin: 1em 0 0;
+}
+
+.nipper-stepper__radio input {
+  width: 0.5em;
+  height: 0.5em;
+  margin: 0 0.25em;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 0.5);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background-color 0.2s ease;
+}
+
+.nipper-stepper__radio input:hover,
+.nipper-stepper__radio input:checked {
+  background-color: #fff;
+}
+
+/* components/blocks/Curtain.js and components/Tale.js */
+
+.nipper-curtain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.nipper-curtain.is-empty {
+  visibility: hidden;
+}
+
+.nipper-curtain__toggle.nipper-button {
+  align-self: stretch;
+  padding: 1em;
+  font-size: 1.25em;
+}
+
+.nipper-tale {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 13.75em;
+  margin: 0 1.5em 1.5em;
+  padding: 0;
+  border: none;
+  border-radius: 0.25em;
+  background-color: #fff;
+  box-shadow: 0 0.0625em 0.125em 0 var(--shadow-dark);
+  text-align: left;
+  cursor: pointer;
+  transition: translate 0.2s ease;
+}
+
+.nipper-tale:hover,
+.nipper-tale:focus-visible {
+  translate: 0 -1px;
+}
+
+.nipper-tale__head {
+  height: 7.5em;
+  border-radius: 0.25em 0.25em 0 0;
+  background:
+    radial-gradient(circle at 70% 40%, hsl(var(--hue) 90% 70% / 0.9) 0 18%, transparent 19%),
+    linear-gradient(135deg, hsl(var(--hue) 80% 50%), hsl(calc(var(--hue) + 50) 70% 22%));
+}
+
+.nipper-tale__body {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.nipper-tale__title {
+  padding: 0 0 0.25em;
+  overflow: hidden;
+  color: var(--black);
+  font-family: var(--titillium);
+  font-size: 1.25em;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nipper-tale__author {
+  color: var(--gray);
+  font-family: var(--titillium);
+  font-size: 0.75em;
+}
+
+/* Results: blocks/Belt.js, blocks/Message.js and the list of components/Track.js */
+
+.nipper__results {
+  padding: 0 var(--inset-right, 0px) 0 var(--inset-left, 0px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--icecube);
+}
+
+.nipper-belt {
+  margin: 0 calc(-1 * var(--inset-right, 0px)) 0 calc(-1 * var(--inset-left, 0px));
+  position: sticky;
+  top: -1px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625em 0.5em;
+  border-bottom: 1px solid var(--silver);
+  background-color: #fff;
+  box-shadow: 0 1.25em 2.5em -2em rgb(0 0 0 / 0.3);
+}
+
+.nipper-belt__side {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.nipper-belt__side .nipper-button--light,
+.nipper-belt__side .nipper-button--plain {
+  margin: 0 0.5em;
+}
+
+.nipper-belt__syncing {
+  display: flex;
+  padding: 0.5em;
+  color: var(--primary);
+  font-size: 1.25em;
+}
+
+.nipper-belt__logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 4.5em;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0.25em;
+}
+
+.nipper-belt__logo svg {
+  height: 100%;
+}
+
+.nipper-belt__dots.nipper-button {
+  margin: 0 0 0 0.25em;
+}
+
+.nipper-select {
+  position: relative;
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  color: var(--primary);
+}
+
+.nipper-select:hover:not(.is-disabled) {
+  color: var(--dark);
+}
+
+.nipper-select.is-disabled {
+  color: var(--silver);
+}
+
+.nipper-select select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.nipper-select select:disabled {
+  cursor: default;
+}
+
+.nipper-select:has(select:focus-visible) {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
+}
+
+.nipper-message {
+  display: flex;
+  align-items: center;
+  margin: 0 calc(-1 * var(--inset-right, 0px)) 0 calc(-1 * var(--inset-left, 0px));
+  padding: 1em 1.5em;
+  border-bottom: 1px solid var(--light);
+  background-color: var(--lighter);
+  color: var(--darker);
+  font-size: 0.875em;
+  text-wrap: pretty;
+}
+
+.nipper-message span {
+  flex-grow: 1;
+  margin: 0 0 0 10px;
+  text-align: center;
+}
+
+.nipper-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  width: calc(100% - 2em);
+  max-width: 50em;
+  margin: 0 auto;
+  padding: 1em 0;
+  list-style: none;
+}
+
+.nipper-track {
+  flex-shrink: 0;
+  display: flex;
+  height: 9em;
+  overflow: hidden;
+  border-radius: 0.25em;
+  background-color: #fff;
+  box-shadow: 0 0.0625em 0.125em 0 hsl(200 5% 60% / 0.4);
+  transition: translate 0.2s ease;
+}
+
+.nipper-track:hover {
+  translate: 0 -1px;
+}
+
+.nipper-track__thumbnail {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  flex-basis: 16.5em;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 35%, hsl(var(--hue) 95% 72% / 0.95) 0 16%, transparent 17%),
+    repeating-linear-gradient(170deg, transparent 0 0.9em, hsl(var(--hue) 60% 15% / 0.18) 0.9em 1.1em),
+    linear-gradient(135deg, hsl(var(--hue) 80% 52%), hsl(calc(var(--hue) + 50) 70% 20%));
+}
+
+.nipper-track__thumbnail span {
+  margin: 0.5em;
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+  background-color: rgb(0 0 0 / 0.8);
+  color: #fff;
+  font-size: 0.875em;
+  font-variant-numeric: tabular-nums;
+}
+
+.nipper-track__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  min-width: 0;
+  padding: 0.75em 1em;
+}
+
+.nipper-track__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.nipper-track__headings {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nipper-track__title {
+  margin: 0;
+  overflow: hidden;
+  color: var(--black);
+  font-family: var(--titillium);
+  font-size: 1.25em;
+  font-weight: 700;
+  line-height: 1.55;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nipper-track__author {
+  margin: 0.25em 0 0;
+  overflow: hidden;
+  color: var(--gray);
+  font-size: 0.75em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nipper-track__actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.75em;
+  margin: 0.5em 0 0.5em 1em;
+}
+
+.nipper-track__actions .nipper-select {
+  margin: 0 0.25em;
+}
+
+.nipper-track__inputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 0.5em 0 0;
+}
+
+.nipper-input {
+  position: relative;
+  display: inline-block;
+  flex: 1;
+  min-width: 0;
+  border-bottom: 1px solid var(--silver);
+  color: var(--gray);
+  transition-property: color, border-color;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+}
+
+.nipper-input:focus-within {
+  border-bottom-color: var(--primary);
+  color: var(--darker);
+}
+
+.nipper-input input {
+  width: 100%;
+  min-width: 0;
+  padding: 0 2em 0.5em 0;
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--gray);
+  font-family: var(--titillium);
+  font-size: 1.125em;
+  line-height: 1.25;
+}
+
+.nipper-input input:focus {
+  color: var(--darker);
+}
+
+.nipper-input input:disabled {
+  color: var(--silver);
+}
+
+.nipper-input input::placeholder {
+  color: var(--gray);
+}
+
+.nipper-input .nipper-icon {
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  font-size: 1.125em;
+}
+
+.nipper-track__switch.nipper-button {
+  margin: 0 0.75em;
+  color: var(--silver);
+  rotate: 90deg;
+}
+
+.nipper-track__switch.nipper-button:hover:not(:disabled),
+.nipper-track__switch.nipper-button:focus-visible {
+  color: var(--primary);
+}
+
+.nipper-track.is-placeholder .nipper-track__thumbnail,
+.nipper-shimmer {
+  background-color: var(--porcelain);
+  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-size: 50em 8em;
+  animation: nipper-shimmer 1s linear infinite forwards;
+}
+
+.nipper-shimmer {
+  display: block;
+  height: 1.4em;
+}
+
+.nipper-shimmer--title { width: 15em; }
+.nipper-shimmer--author { width: 8em; height: 0.9em; margin: 0.4em 0 0; }
+.nipper-shimmer--actions { width: 4.5em; height: 1em; margin: 0.5em 0; }
+.nipper-shimmer--inputs { height: 2em; margin: 0 0.5em 0 0; }
+
+@keyframes nipper-shimmer {
+  from { background-position: -25em 0; }
+  to { background-position: 25em 0; }
+}
+
+/* theme.breakpoints.mobile */
+@container archived (max-width: 479px) {
+  .nipper {
+    font-size: 11px;
+  }
+
+  .nipper__logo {
+    align-self: center;
+    max-width: 12em;
+  }
+
+  .nipper-track {
+    height: auto;
+    min-height: 6em;
+  }
+
+  .nipper-track__thumbnail {
+    flex-basis: 7em;
+  }
+
+  .nipper-track__inputs {
+    flex-direction: column;
+    gap: 0.75em;
+    margin: 0.75em 0 0;
+  }
+
+  .nipper-input {
+    width: 100%;
+  }
+
+  .nipper-track__switch.nipper-button {
+    align-self: center;
+    margin: -0.5em 0;
+    rotate: none;
+  }
+}

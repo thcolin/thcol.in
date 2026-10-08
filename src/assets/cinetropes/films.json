@@ -1,0 +1,910 @@
+[
+  {
+    "id": "spirited-away",
+    "title": "Spirited Away",
+    "originalTitle": "千と千尋の神隠し",
+    "originalLanguage": "ja",
+    "year": 2001,
+    "runtime": 125,
+    "genres": [
+      "Animation",
+      "Family",
+      "Fantasy"
+    ],
+    "director": "Hayao Miyazaki",
+    "synopsis": "A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.",
+    "cast": [
+      {
+        "name": "Rumi Hiiragi",
+        "character": "Chihiro (voice)"
+      },
+      {
+        "name": "Miyu Irino",
+        "character": "Haku (voice)"
+      },
+      {
+        "name": "Mari Natsuki",
+        "character": "Yubaba / Zeniba (voice)"
+      },
+      {
+        "name": "Takashi Naito",
+        "character": "Father (voice)"
+      },
+      {
+        "name": "Yasuko Sawaguchi",
+        "character": "Mother (voice)"
+      },
+      {
+        "name": "Tatsuya Gashûin",
+        "character": "Aogaeru (voice)"
+      }
+    ],
+    "scores": {
+      "critic": 4.83,
+      "public": 4.5,
+      "nerd": 4.31,
+      "votes": 1001248,
+      "notoriety": 750936,
+      "sources": [
+        {
+          "name": "Rotten Tomatoes critics",
+          "value": 97
+        },
+        {
+          "name": "Rotten Tomatoes audience",
+          "value": 96
+        },
+        {
+          "name": "Metacritic",
+          "value": 96
+        },
+        {
+          "name": "TMDB",
+          "value": 8.5
+        },
+        {
+          "name": "IMDb",
+          "value": 8.6
+        },
+        {
+          "name": "Letterboxd",
+          "value": 4.39
+        },
+        {
+          "name": "SensCritique",
+          "value": 8.4
+        }
+      ]
+    },
+    "emotions": {
+      "joy": 3.4,
+      "trust": 3.1,
+      "fear": 2.25,
+      "surprise": 2.9,
+      "sadness": 2.6,
+      "disgust": 1.75,
+      "anger": 1.1,
+      "anticipation": 2.4
+    },
+    "atmosphere": "Gentle chronicle",
+    "themes": [
+      "Growing up",
+      "Family"
+    ],
+    "tropes": [
+      {
+        "id": "t24335",
+        "name": "Trapped In Another World",
+        "value": 2.27,
+        "synonyms": [],
+        "description": "An ordinary person is transported to a magical or alien world and cannot return until a specific goal is met.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "Chihiro's parents eat food intended for spirits, and are turned into pigs as punishment. Chihiro must work at the bathhouse under Yubaba's rule or risk suffering the same fate, and until she finds a way to rescue them, Chihiro and her parents are stranded in the spirit world."
+      },
+      {
+        "id": "t30149",
+        "name": "Isekai",
+        "value": 2.63,
+        "synonyms": [
+          "Portal Fantasy",
+          "Summoned Hero Genre",
+          "Transported to Another World"
+        ],
+        "description": "A genre where a character from the ordinary world is transported or reincarnated into a fantasy or parallel world.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t04146",
+        "name": "Coming Of Age Story",
+        "value": 1.61,
+        "synonyms": [
+          "Adolescent maturation story",
+          "Teen transformation narrative",
+          "Growing up story arc"
+        ],
+        "description": "A story focused on an adolescent's transition from childhood to adulthood.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "Chihiro's experiences in the spirit world build her confidence and let her best qualities rise to the surface in service of her saving her parents and making it back home."
+      },
+      {
+        "id": "t04146",
+        "name": "Coming Of Age Story",
+        "value": 1.61,
+        "synonyms": [
+          "Adolescent maturation story",
+          "Teen transformation narrative",
+          "Growing up story arc"
+        ],
+        "description": "A story focused on an adolescent's transition from childhood to adulthood.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t22202",
+        "name": "Take Away Their Name",
+        "value": 5,
+        "synonyms": [
+          "stripping name as power theft",
+          "magical identity erasure",
+          "name-based power removal"
+        ],
+        "description": "Stripping a person of their name to steal their power or identity, often through magical means.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "Yubaba magically enslaves her employees by stealing bits of their names, which subsequently robs from them the memory of their full name and eventually their former lives. They can only get free of her if they remember their real, full name.Yubaba: So, your name's Chihiro? What a pretty name! And it belongs to me now."
+      },
+      {
+        "id": "t08120",
+        "name": "Fish Out Of Water",
+        "value": 1.5,
+        "synonyms": [
+          "out of place character",
+          "culture shock protagonist",
+          "stranger in a strange land"
+        ],
+        "description": "Character in unfamiliar environment.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t13201",
+        "name": "Loss Of Identity",
+        "value": 2.31,
+        "synonyms": [
+          "self stripped away",
+          "who am I crisis",
+          "fundamental identity change"
+        ],
+        "description": "When a character s sense of self is stripped away or fundamentally altered.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "Yubaba steals parts of the names of anyone who works for her; this not only makes them forget their original name, but eventually the entirety of their previous lives. Once Chihiro is renamed to Sen, she's only in the spirit world for about a day before she forgets her real name without a reminder. Similarly, Haku has lost his name and all memories of his former life since he entered into a contract with Yubaba. All of them except, for some reason, his memory of previously meeting Chihiro."
+      },
+      {
+        "id": "t13495",
+        "name": "Magically Binding Contract",
+        "value": 3.28,
+        "synonyms": [
+          "unbreakable magical oath",
+          "blood pact",
+          "supernaturally enforced contract"
+        ],
+        "description": "A contract that is enforced by magical laws and is physically impossible to break.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "How Yubaba employs people for her bathhouse—she literally rips pieces of their signature from the paper."
+      },
+      {
+        "id": "t12304",
+        "name": "Kid Hero",
+        "value": 1.74,
+        "synonyms": [
+          "Young World Saver",
+          "Child Prodigy Hero",
+          "Kid Saves Everyone"
+        ],
+        "description": "A child who performs heroic deeds and saves the world.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      }
+    ],
+    "palette": [
+      "#c5745c",
+      "#5f463b",
+      "#c7b1ae",
+      "#050404"
+    ]
+  },
+  {
+    "id": "kill-bill-vol-1",
+    "title": "Kill Bill: Vol. 1",
+    "year": 2003,
+    "runtime": 111,
+    "genres": [
+      "Action",
+      "Crime"
+    ],
+    "director": "Quentin Tarantino",
+    "synopsis": "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
+    "cast": [
+      {
+        "name": "Uma Thurman",
+        "character": "The Bride"
+      },
+      {
+        "name": "Lucy Liu",
+        "character": "O-Ren Ishii"
+      },
+      {
+        "name": "Vivica A. Fox",
+        "character": "Vernita Green"
+      },
+      {
+        "name": "Daryl Hannah",
+        "character": "Elle Driver"
+      },
+      {
+        "name": "David Carradine",
+        "character": "Bill"
+      },
+      {
+        "name": "Michael Madsen",
+        "character": "Budd"
+      }
+    ],
+    "scores": {
+      "critic": 3.96,
+      "public": 4.09,
+      "nerd": 4.04,
+      "votes": 1428223,
+      "notoriety": 1071167,
+      "sources": [
+        {
+          "name": "Rotten Tomatoes critics",
+          "value": 85
+        },
+        {
+          "name": "Rotten Tomatoes audience",
+          "value": 81
+        },
+        {
+          "name": "Metacritic",
+          "value": 69
+        },
+        {
+          "name": "TMDB",
+          "value": 8
+        },
+        {
+          "name": "IMDb",
+          "value": 8.2
+        },
+        {
+          "name": "Letterboxd",
+          "value": 4.16
+        },
+        {
+          "name": "SensCritique",
+          "value": 7.7
+        }
+      ]
+    },
+    "emotions": {
+      "joy": 0.9,
+      "trust": 0.6,
+      "fear": 2.1,
+      "surprise": 2.75,
+      "sadness": 2.25,
+      "disgust": 2.6,
+      "anger": 4.4,
+      "anticipation": 3.9
+    },
+    "atmosphere": "Explosive action",
+    "themes": [
+      "Revenge",
+      "Betrayal"
+    ],
+    "tropes": [
+      {
+        "id": "t18954",
+        "name": "Roaring Rampage Of Revenge",
+        "value": 1.67,
+        "synonyms": [
+          "Revenge Spree",
+          "Vengeance Rampage",
+          "Kill List"
+        ],
+        "description": "A character going on a violent rampage to exact revenge on those who wronged them.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "Invoked by name, but surprisingly not the technical Trope Namer; Tarantino used the phrase in a Shout-Out to the blaxploitation classic Ebony, Ivory, and Jade. Given that Kill Bill is much more popular than that film, and thus was likely what was in mind when the trope was named, however, it might as well be. Very downplayed in Vol. 2, because while it is still a very violent movie, by the end credits, the Bride has taken only one life."
+      },
+      {
+        "id": "t00189",
+        "name": "Action Girl",
+        "value": 1.5,
+        "synonyms": [
+          "Female action hero",
+          "Fighting female character",
+          "Tough woman protagonist"
+        ],
+        "description": "A female character who is a capable and tough fighter.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t09406",
+        "name": "Gotta Kill Them All",
+        "value": 5,
+        "synonyms": [
+          "Roaring Rampage Hit-list",
+          "MacGuffin Destroy Quest",
+          "Sequence Slaying"
+        ],
+        "description": "A plot structure where the characters must find and destroy a specific group of villains or artifacts.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "The Bride is out to enact her revenge on every last member of the DiVAS and lastly Bill himself. She even has a hit list written out that we get to see."
+      },
+      {
+        "id": "t30235",
+        "name": "Bad Ass Crew",
+        "value": 2.09,
+        "synonyms": [
+          "Elite Squad",
+          "Five-Man Band",
+          "Specialist Team"
+        ],
+        "description": "A group of unrelated but highly skilled badasses who form a tightly coordinated team.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t12720",
+        "name": "Left For Dead",
+        "value": 3.65,
+        "synonyms": [
+          "presumed dead survivor",
+          "left for dead comeback",
+          "unexpected survival return"
+        ],
+        "description": "When an attacker leaves a character thinking they are dead, only for them to survive.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "Elle Driver, after the Bride plucks her eye out. While the credits for volume 2 have the other Vipers' names crossed out, she simply gets a question mark. Presumably the black mamba bites her at some point."
+      },
+      {
+        "id": "t04477",
+        "name": "Cool Sword",
+        "value": 3.51,
+        "synonyms": [
+          "legendary blade",
+          "named sword",
+          "enchanted weapon"
+        ],
+        "description": "Swords with exceptional qualities, names, or powers.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "EVERY sword made by Hattori Hanzo, but especially the Bride's sword."
+      },
+      {
+        "id": "t04477",
+        "name": "Cool Sword",
+        "value": 3.51,
+        "synonyms": [
+          "legendary blade",
+          "named sword",
+          "enchanted weapon"
+        ],
+        "description": "Swords with exceptional qualities, names, or powers.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t00070",
+        "name": "Absurdly Sharp Blade",
+        "value": 3.25,
+        "synonyms": [
+          "Impossibly sharp sword",
+          "Molecular-edge blade",
+          "Cuts through anything weapon"
+        ],
+        "description": "A blade so sharp it can cut through anything by physical sharpness alone.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "Hattori Hanzo claims that the katana he's made for the Bride is so sharp that \"If on your journey, you should encounter God, God will be cut.\" With one swing, she can easily sever a limb, cut a person in two, take off the top of a person's skull, or even cut another sword as if it's made of bamboo instead of steel."
+      },
+      {
+        "id": "t10236",
+        "name": "High Pressure Blood",
+        "value": 3.65,
+        "synonyms": [
+          "blood spray",
+          "arterial gush",
+          "over-the-top gore"
+        ],
+        "description": "Unrealistic amounts of blood spraying out at high pressure when a character is cut.",
+        "prominence": "supporting",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "It's all over the place in the sections with O-Ren Ishii, particularly where she stabs Boss Matsumoto and his blood soaks the entire room, and in the House of Blue Leaves fight, where one sword wound results in a geyser of blood at least five feet high."
+      }
+    ],
+    "palette": [
+      "#fbe31e",
+      "#c84a36",
+      "#ca9652",
+      "#b2ad28",
+      "#4e9db4",
+      "#cfbca9"
+    ]
+  },
+  {
+    "id": "no-other-choice",
+    "title": "No Other Choice",
+    "originalTitle": "어쩔수가없다",
+    "originalLanguage": "ko",
+    "year": 2025,
+    "runtime": 139,
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Thriller"
+    ],
+    "director": "Park Chan-wook",
+    "synopsis": "After being laid off and humiliated by a ruthless job market, a veteran paper mill manager descends into violence in a desperate bid to reclaim his dignity.",
+    "cast": [
+      {
+        "name": "Lee Byung-hun",
+        "character": "Yoo Man-su"
+      },
+      {
+        "name": "Son Ye-jin",
+        "character": "Lee Mi-ri"
+      },
+      {
+        "name": "Park Hee-soon",
+        "character": "Choi Seon-chul"
+      },
+      {
+        "name": "Lee Sung-min",
+        "character": "Gu Bum-mo"
+      },
+      {
+        "name": "Yeom Hye-ran",
+        "character": "Lee A-ra"
+      },
+      {
+        "name": "Cha Seung-won",
+        "character": "Ko Si-jo"
+      }
+    ],
+    "scores": {
+      "critic": 4.25,
+      "public": 3.75,
+      "nerd": 3.86,
+      "votes": 74777,
+      "notoriety": 79806,
+      "sources": [
+        {
+          "name": "Metacritic",
+          "value": 85
+        },
+        {
+          "name": "TMDB",
+          "value": 7.5
+        },
+        {
+          "name": "IMDb",
+          "value": 7.5
+        },
+        {
+          "name": "Letterboxd",
+          "value": 4.1
+        },
+        {
+          "name": "SensCritique",
+          "value": 7
+        }
+      ]
+    },
+    "emotions": {
+      "joy": 2.1,
+      "trust": 0.9,
+      "fear": 2.9,
+      "surprise": 2.6,
+      "sadness": 2.4,
+      "disgust": 2.25,
+      "anger": 3.25,
+      "anticipation": 3.1
+    },
+    "atmosphere": "Explosive action",
+    "themes": [
+      "Power",
+      "Obsession"
+    ],
+    "tropes": [
+      {
+        "id": "t14768",
+        "name": "Murder Is The Best Solution",
+        "value": 2.47,
+        "synonyms": [
+          "Trigger-happy character",
+          "Murder as default solution",
+          "Kill-first mentality"
+        ],
+        "description": "A character immediately suggests murder as the solution to any problem, regardless of simpler options.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "Man-su comes to the conclusion that the best way to get his dream job is to murder the man who has it and also any candidates that have higher qualifications. He goes through a lot of effort to plan, select and prepare the murder of two other men that are former paper-makers... only to find that he can't stomach the kill itself. Unfortunately for his victims, he also finds that It Gets Easier."
+      },
+      {
+        "id": "t22852",
+        "name": "The Everyman",
+        "value": 1.5,
+        "synonyms": [
+          "Average Joe Hero",
+          "Audience Identification Character",
+          "Ordinary Person in Extraordinary Events"
+        ],
+        "description": "A grounded, relatable character of average background who serves as the audience's window into extraordinary events.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t18621",
+        "name": "Removing The Rival",
+        "value": 5,
+        "synonyms": [
+          "Eliminating competition",
+          "Dirty tactics rivalry",
+          "Sabotage of opponent"
+        ],
+        "description": "Using nefarious methods to get rid of a competitor for a specific goal.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "The bulk of the film revolves around Man-su's methodical plan to preemptively remove his would-be rivals for the job opening he intends to create at Moon Paper."
+      },
+      {
+        "id": "t19261",
+        "name": "Salaryman",
+        "value": 4.27,
+        "synonyms": [],
+        "description": "The typical white-collar worker in Japan, characterized by their work ethic, suit, and often workaholism.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t17832",
+        "name": "Protagonist Journey To Villain",
+        "value": 2.72,
+        "synonyms": [
+          "hero's descent into evil",
+          "fallen protagonist arc",
+          "making of a villain journey"
+        ],
+        "description": "The plot arc where a well-intentioned protagonist turns into a monster.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "Man-su starts the story as a calm, cheerful family man and a foreman that stands up for his crew. Then he starts to consider murdering rivals for his job. Then he actually starts doing that. Then he starts drinking. The story ends with him having killed three people with minimal guilt and symbolically agreeing to run a fully-automated plant, thus completely ignoring the well-being of others that got fired to make that happen."
+      },
+      {
+        "id": "t28286",
+        "name": "Family Man",
+        "value": 2.37,
+        "synonyms": [
+          "Action Dad",
+          "Papa Wolf",
+          "Family Protector"
+        ],
+        "description": "A male character whose primary motivation and loyalty are centered on his family and their well-being.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "In the first scene of the movie, Man-su is barbecuing eel outside his large, beautiful house, and is established to be a doting husband and father to his lovely wife and kids. The eel, as it turns out, is a reward for working 25 years at his paper company. The eel is also a parting gift as Man-su is about to get laid off. After months of unemployment, he goes to extremes to be able to provide for his family."
+      },
+      {
+        "id": "t10540",
+        "name": "Horror Comedy",
+        "value": 1.57,
+        "synonyms": [
+          "Comedy Horror",
+          "Scary Funny",
+          "Dark Comedy"
+        ],
+        "description": "A genre that balances elements of horror and comedy.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t07562",
+        "name": "Fallen On Hard Times Job",
+        "value": 2.79,
+        "synonyms": [
+          "former celebrity menial job",
+          "degrading work for once famous",
+          "fallen star low position"
+        ],
+        "description": "A menial job taken by a formerly famous or powerful character.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": "Man-su is forced to take a retail job stocking shelves. One of his victims is stuck working in a shoe store. Mi-ri works as a dental assistant after Man-su loses his job. Played with, as she doesn't seem to mind as much, but Man-su hates her working there."
+      },
+      {
+        "id": "t06085",
+        "name": "Double Meaning Title",
+        "value": 2.16,
+        "synonyms": [
+          "title with multiple independent meanings",
+          "pun-based ambiguous title",
+          "title that references work on two levels"
+        ],
+        "description": "Title with multiple independent meanings that all refer to the work s content.",
+        "prominence": "supporting",
+        "subversion": "played_straight",
+        "spoilerLevel": "mild",
+        "evidence": "The title conveys not only Man-su feeling that he has no choice but to eliminate the competition, but also that by doing so the company would have no choice but to hire him. While several characters use the phrase throughout the film, a subtle third meaning lies in the paper company executives claiming they have no choice but to lay off more and more workers in favor of automation, which is what kicks the whole plot off and plays a huge role in the Downer Ending."
+      }
+    ],
+    "palette": [
+      "#c0cacc",
+      "#1b7cc7",
+      "#191c1b",
+      "#6bacd4",
+      "#5e7679",
+      "#6d3f39"
+    ]
+  },
+  {
+    "id": "venom-2018",
+    "title": "Venom",
+    "year": 2018,
+    "runtime": 112,
+    "genres": [
+      "Science Fiction",
+      "Action"
+    ],
+    "director": "Ruben Fleischer",
+    "synopsis": "Investigative journalist Eddie Brock attempts a comeback following a scandal, but accidentally becomes the host of Venom, a violent, super powerful alien symbiote. Soon, he must rely on his newfound powers to protect the world from a shadowy organization looking for a symbiote of their own.",
+    "cast": [
+      {
+        "name": "Tom Hardy",
+        "character": "Eddie Brock / Venom"
+      },
+      {
+        "name": "Michelle Williams",
+        "character": "Anne Weying"
+      },
+      {
+        "name": "Riz Ahmed",
+        "character": "Carlton Drake / Riot"
+      },
+      {
+        "name": "Scott Haze",
+        "character": "Security Chief Roland Treece"
+      },
+      {
+        "name": "Reid Scott",
+        "character": "Dr. Dan Lewis"
+      },
+      {
+        "name": "Jenny Slate",
+        "character": "Dr. Dora Skirth"
+      }
+    ],
+    "scores": {
+      "critic": 1.6,
+      "public": 3.68,
+      "nerd": 2.56,
+      "votes": 633467,
+      "notoriety": 475100,
+      "sources": [
+        {
+          "name": "Rotten Tomatoes critics",
+          "value": 30
+        },
+        {
+          "name": "Rotten Tomatoes audience",
+          "value": 80
+        },
+        {
+          "name": "Metacritic",
+          "value": 35
+        },
+        {
+          "name": "TMDB",
+          "value": 6.8
+        },
+        {
+          "name": "IMDb",
+          "value": 6.6
+        },
+        {
+          "name": "Letterboxd",
+          "value": 2.56
+        }
+      ]
+    },
+    "emotions": {
+      "joy": 1.9,
+      "trust": 1.6,
+      "fear": 2.25,
+      "surprise": 2.1,
+      "sadness": 1.25,
+      "disgust": 2.6,
+      "anger": 2.4,
+      "anticipation": 2
+    },
+    "atmosphere": "Biting satire",
+    "themes": [
+      "Identity",
+      "Power"
+    ],
+    "tropes": [
+      {
+        "id": "t01079",
+        "name": "Anti Hero",
+        "value": 1.51,
+        "synonyms": [
+          "morally grey protagonist",
+          "amoral main character",
+          "byronic hero figure"
+        ],
+        "description": "A protagonist who lacks traditional heroic attributes and may be amoral or apathetic.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t23546",
+        "name": "The Symbiote",
+        "value": 5,
+        "synonyms": [
+          "Living Parasite Partner",
+          "Biological Host Sharing",
+          "Symbiotic Alien Creature"
+        ],
+        "description": "A living organism that lives in or on another, ranging from parasitic control to mutual heroism and shared powers.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": " Four amorphous alien entities are recovered by the Life Foundation, which dubs them symbiotes due to their ability to bond to and enhance a host. The symbiotes need a compatible host to function properly, however, and will consume their hosts from the inside-out unless they have a steady supply of living beings to feed upon. Other forms of artificial or pre-cooked food won't do. The blue and yellow symbiotes have trouble bonding to hosts and end up dying in captivity due to exposure to Earth's atmosphere. Venom and Riot adapt better, merging with multiple hosts that likely aren't fully compatible and retaining their abilities. Venom lucks out with Eddie, who is a perfect fit."
+      },
+      {
+        "id": "t21882",
+        "name": "SuperEmpowering",
+        "value": 2.92,
+        "synonyms": [
+          "Grant powers to others",
+          "Activate dormant abilities",
+          "Power source character"
+        ],
+        "description": "The ability of a character to grant or unlock superpowers, magic, or other extraordinary abilities in someone else, often making the user a crucial support figure or target.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t02568",
+        "name": "Body Horror",
+        "value": 1.5,
+        "synonyms": [
+          "visceral biological transformation",
+          "graphic body mutilation horror",
+          "anatomical nightmare"
+        ],
+        "description": "Horror derived from the graphic violation or transformation of the human body.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": " The symbiotes' host die rather gruesomely if their relationship are not compatible and if they are, they are slowly eating their hosts from the inside. Venom for instance is still eating Eddie's organs as shown by medical reports from Anne's boyfriend. Symbiotes are also capable of repairing their hosts bodies no matter what injuries they suffer but the process is rather painful to watch."
+      },
+      {
+        "id": "t11720",
+        "name": "Intrepid Reporter",
+        "value": 1.88,
+        "synonyms": [
+          "Investigative Journalist",
+          "Truth-Seeking Reporter",
+          "Crusading Journalist"
+        ],
+        "description": "An investigative journalist who gets personally involved in their stories to uncover the truth.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": " Eddie Brock is an investigative journalist asked to look into the Life Foundation by one of its employees — putting him at odds with his fiance Anne Weying, whose lawfirm represents Dr. Carlton Drake."
+      },
+      {
+        "id": "t07561",
+        "name": "Fallen Hero",
+        "value": 1.98,
+        "synonyms": [
+          "hero turned villain arc",
+          "righteous figure corruption arc",
+          "champion gone evil"
+        ],
+        "description": "Champion of good who has lost faith and turned to evil.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none"
+      },
+      {
+        "id": "t00240",
+        "name": "Adaptational Heroism",
+        "value": 2.03,
+        "synonyms": [
+          "Smarter character in adaptation",
+          "IQ boost in remake",
+          "Competence upgrade"
+        ],
+        "description": "Making a character more heroic or sympathetic in an adaptation.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": " While not exactly a villain in the comics, pre-Venom Eddie did some pretty shady things as a reporter and cared more about advancing his own career than doing the right thing. In some other cases,  Depending on the Writer , Eddie's hatred of Spider-Man was so great that it was what turned the symbiote into a murderous  Yandere  for Spidey. This movie provides a  Hard-Work Montage  of Eddie going after corrupt tech companies, followed by lightly chiding his girlfriend for working a defense law firm that defends evil people... and then using her login information to access confidential information to interview Carlton Drake with about performing life-threatening experiments on vulnerable people. See the  YMMV page ."
+      },
+      {
+        "id": "t05121",
+        "name": "Dark Is Not Evil",
+        "value": 2.35,
+        "synonyms": [
+          "good dark powers",
+          "heroic shadow user",
+          "dark aesthetic hero"
+        ],
+        "description": "Subversion of Dark Is Evil, where dark appearances or powers belong to good characters.",
+        "prominence": "central",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": " Downplayed. Eddie is our main protagonist and is very dark in appearance as Venom, but he suggests that the symbiote (from which his black \"suit\" derives) is more malicious than its comic counterpart, comparing it to a demon."
+      },
+      {
+        "id": "t25405",
+        "name": "VoiceOfTheLegion",
+        "value": 4.01,
+        "synonyms": [
+          "Reverberating Possession Voice",
+          "Multiple Voices as One",
+          "Demonic Echo Effect"
+        ],
+        "description": "A character's voice gains a reverberating echo, often accompanied by multiple voices speaking slightly out of sync, indicating possession, channeling spirits, or immense power.",
+        "prominence": "supporting",
+        "subversion": "played_straight",
+        "spoilerLevel": "none",
+        "evidence": " \"We...  are   Venom .\""
+      }
+    ],
+    "palette": [
+      "#3b5272",
+      "#8c746c",
+      "#0a0b10"
+    ]
+  }
+]

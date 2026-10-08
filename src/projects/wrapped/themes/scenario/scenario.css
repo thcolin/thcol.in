@@ -1,0 +1,2045 @@
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/CourierPrime-400-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/CourierPrime-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/CourierPrime-700-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/CourierPrime-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/CourierPrime-400-italic-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/CourierPrime-400-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/Caveat-500-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/scenario/Caveat-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+.wrapped__look[data-theme='scenario'] {
+  --scenario-desk: #2b2622;
+  --scenario-ink: #1b1a17;
+  --scenario-quiet: #4a4640;
+  --scenario-pencil: #a3201a;
+  --scenario-marker: #fff06a;
+  --scenario-clip: #7d828a;
+  --switch-bg: var(--scenario-desk);
+  --switch-fg: #efe9dc;
+  --switch-font: 400 16px/1 'Courier Prime', 'Courier New', monospace;
+  --switch-radius: 2px;
+}
+
+.wrapped__look[data-theme='scenario'] {
+  background: var(--scenario-desk);
+  color-scheme: dark;
+  scrollbar-color: #6e6259 var(--scenario-desk);
+}
+
+.wrapped__look[data-theme='scenario'] {
+  background: radial-gradient(ellipse 90% 60% at 50% 0%, rgb(255 214 160 / 0.09), transparent 70%) fixed, var(--scenario-desk);
+  color: var(--scenario-ink);
+  font: 400 16px/1.5 'Courier Prime', 'Courier New', monospace;
+}
+
+.wrapped__look[data-theme='scenario'] ::selection {
+  background: var(--scenario-marker);
+  color: var(--scenario-ink);
+}
+
+/* The desk: a lamp pool from above, pages in the middle, an index card and props on a wide screen */
+.wrapped__look[data-theme='scenario'] .scenario-desk {
+  min-height: 844px;
+  padding: 16px 12px 40px;
+  overflow-x: clip;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-script {
+  display: grid;
+  grid-template-columns: minmax(0, 816px);
+  justify-content: center;
+  gap: 28px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-index,
+.wrapped__look[data-theme='scenario'] .scenario-props {
+  display: none;
+}
+
+/* A US Letter sheet, 8.5 by 11 */
+.wrapped__look[data-theme='scenario'] .scenario-page {
+  --paper: #fbfaf5;
+  --marker: var(--scenario-marker);
+  --margin-left: 46px;
+  --margin-right: 18px;
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  max-width: 816px;
+  aspect-ratio: 8.5 / 11;
+  padding: 60px var(--margin-right) 88px var(--margin-left);
+  background: var(--paper);
+  color: var(--scenario-ink);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 0.3), 0 14px 32px -8px rgb(0 0 0 / 0.55);
+  scroll-margin-top: 24px;
+}
+
+.wrapped__look[data-theme='scenario'] [data-revision='blue'] { --paper: #dbe7f7; }
+.wrapped__look[data-theme='scenario'] [data-revision='pink'] { --paper: #f7dbe3; }
+.wrapped__look[data-theme='scenario'] [data-revision='yellow'] { --paper: #f8f0b8; --marker: #ffb0cf; }
+.wrapped__look[data-theme='scenario'] [data-revision='green'] { --paper: #d9edd0; }
+.wrapped__look[data-theme='scenario'] [data-revision='gold'] { --paper: #efd89e; --marker: #ffb0cf; }
+.wrapped__look[data-theme='scenario'] [data-revision='buff'] { --paper: #f1e3c7; --marker: #ffb0cf; }
+.wrapped__look[data-theme='scenario'] [data-revision='salmon'] { --paper: #f6d2c1; }
+.wrapped__look[data-theme='scenario'] [data-revision='cherry'] { --paper: #f2c6cc; }
+.wrapped__look[data-theme='scenario'] [data-revision='tan'] { --paper: #ddcbad; --marker: #ffb0cf; }
+
+.wrapped__look[data-theme='scenario'] .scenario-holes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 5px;
+  width: 11px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-holes i {
+  position: absolute;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--scenario-desk);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-holes i:nth-child(1) { top: 11%; }
+.wrapped__look[data-theme='scenario'] .scenario-holes i:nth-child(2) { top: calc(50% - 5px); }
+.wrapped__look[data-theme='scenario'] .scenario-holes i:nth-child(3) { bottom: 11%; }
+
+.wrapped__look[data-theme='scenario'] .scenario-holes-brads i:not(:nth-child(2)) {
+  background: radial-gradient(circle at 35% 35%, #ecd48a, #b38a33 55%, #7a5a1c);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-head {
+  position: absolute;
+  top: 20px;
+  right: var(--margin-right);
+  display: flex;
+  gap: 2ch;
+  font-size: 14px;
+  color: var(--scenario-quiet);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-head span:last-child {
+  color: var(--scenario-ink);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-act {
+  margin: 0 0 22px;
+  font-size: 1.12em;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slug {
+  position: relative;
+  margin: 24px 0 12px;
+  padding-right: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-scene {
+  position: absolute;
+  top: 0.1em;
+  left: calc(-1 * var(--margin-left) + 25px);
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-scene-right {
+  left: auto;
+  right: -12px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-action {
+  margin: 0 0 14px;
+  max-width: 62ch;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-date::first-letter {
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-character {
+  margin: 20px 0 0 32%;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-parenthetical {
+  margin-left: 24%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-dialogue {
+  margin: 0 8% 12px 16%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-transition {
+  margin: 28px 0 0;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-end {
+  margin: 48px 0 0;
+  font-size: clamp(3rem, 16cqw, 4.5rem);
+  line-height: 1;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-caps {
+  text-transform: uppercase;
+}
+
+/* A highlighter swipe: a little short at both ends, uneven like a felt tip */
+.wrapped__look[data-theme='scenario'] .scenario-mark {
+  padding: 0 0.18em;
+  margin: 0 -0.06em;
+  color: inherit;
+  background: linear-gradient(97deg, transparent 0 2px, var(--marker) 3px calc(100% - 4px), transparent calc(100% - 2px)) 0 55% / 100% 1.05em no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-pencil-note {
+  margin: 2px 0 16px;
+  font: 500 24px/1.1 'Caveat', cursive;
+  color: var(--scenario-pencil);
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+
+/* Posters paper-clipped to the page */
+.wrapped__look[data-theme='scenario'] .scenario-insert {
+  position: relative;
+  width: 56%;
+  margin: 22px 0 22px auto;
+  transform: rotate(var(--tilt, 1.5deg));
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert img,
+.wrapped__look[data-theme='scenario'] .scenario-insert-blank {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: #d8d2c4;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.25), 0 10px 18px -6px rgb(0 0 0 / 0.4);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert-blank {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  font-size: 13px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert-wide {
+  width: 100%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert-wide img {
+  aspect-ratio: 16 / 9;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-clip {
+  position: absolute;
+  z-index: 1;
+  top: -16px;
+  left: var(--clip, 20%);
+  width: 20px;
+  height: 54px;
+  filter: drop-shadow(0 2px 1px rgb(0 0 0 / 0.3));
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert figcaption span {
+  color: var(--scenario-quiet);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-inserts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 18px;
+  margin: 24px 0 20px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-inserts .scenario-insert {
+  width: 100%;
+  margin: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-beside {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 16px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-beside .scenario-insert {
+  flex: none;
+  margin-left: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-pencil-side {
+  flex: 1;
+  margin: 0;
+  text-align: right;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-tally {
+  flex: 1;
+  max-width: 180px;
+  max-height: 110px;
+  fill: none;
+  stroke: var(--scenario-pencil);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-continued p {
+  margin: 10px 0 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-continued p:nth-child(2) { opacity: 0.55; }
+.wrapped__look[data-theme='scenario'] .scenario-continued p:nth-child(3) { opacity: 0.25; }
+
+/* The cast list, billed in order */
+.wrapped__look[data-theme='scenario'] .scenario-cast {
+  max-width: 34ch;
+  margin: 8px auto 24px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cast li {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  line-height: 1.9;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cast li > span:first-child {
+  width: 4ch;
+  flex: none;
+  text-align: right;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cast i {
+  flex: 1;
+  height: 0.9em;
+  border-bottom: 1px dotted rgb(27 26 23 / 0.5);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cast li[data-gap] {
+  margin-top: 1.6em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cast li[data-gap]::before {
+  content: '…';
+  position: absolute;
+  top: -1.55em;
+  left: 2.5ch;
+}
+
+/* The months: short scenes, a thumbnail each */
+.wrapped__look[data-theme='scenario'] .scenario-months .scenario-slug {
+  margin: 18px 0 4px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-month {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-month .scenario-action {
+  flex: 1;
+  margin: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-month-text {
+  flex: 1;
+}
+
+/* A felt-tip stroke under each month, as long as its episodes */
+.wrapped__look[data-theme='scenario'] .scenario-swipe {
+  display: block;
+  width: calc(var(--share, 0) * 100%);
+  min-width: 6px;
+  height: 7px;
+  margin-top: 5px;
+  background: var(--marker);
+  border-radius: 1px 3px 2px 1px;
+  filter: saturate(1.3) brightness(0.96);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert-thumb {
+  flex: none;
+  width: 46px;
+  margin: 8px 4px 4px 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-insert-thumb .scenario-clip {
+  top: -9px;
+  width: 11px;
+  height: 30px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-month-peak .scenario-pencil-note {
+  margin: 6px 0 4px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-shout {
+  margin: 26px 0 26px;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-shout-figure {
+  font-size: clamp(4rem, 21cqw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-shout-figure sup {
+  font-size: 0.4em;
+  vertical-align: 1.3em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-shout-figure .scenario-mark {
+  padding: 0 0.12em;
+  background-size: 100% 0.62em;
+  background-position: 0 72%;
+}
+
+/* A word instead of a number shrinks to fit its line */
+.wrapped__look[data-theme='scenario'] .scenario-shout-word {
+  font-size: min(4.5rem, calc((100cqw - 90px) / (var(--length) * 0.62)));
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* An hour of the clock, as wide as a word */
+.wrapped__look[data-theme='scenario'] .scenario-shout-time .scenario-shout-figure {
+  font-size: clamp(3.5rem, 17cqw, 6rem);
+  letter-spacing: -0.06em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-shout-unit {
+  max-width: 26ch;
+  margin: 12px auto 0;
+  font-size: 1.25em;
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-inserts[data-count='1'] {
+  grid-template-columns: minmax(0, 56%);
+  justify-content: end;
+}
+
+/* A quantity in a sentence: typed bold, the number a size up, a red pencil stroke under it */
+.wrapped__look[data-theme='scenario'] .scenario-figure {
+  --underline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5.2 C 20 3.4, 42 6.4, 62 4.4 S 90 3.6, 99 4.8' fill='none' stroke='%23a3201a' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  padding-bottom: 0.12em;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--underline) 0 100% / 100% 0.34em no-repeat;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-figure-n {
+  font-size: 1.3em;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-act .scenario-figure {
+  background: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-act .scenario-figure-n {
+  font-size: 1.6em;
+}
+
+/* The month watched the most: its figure ringed in red pencil */
+.wrapped__look[data-theme='scenario'] .scenario-month-peak .scenario-figure {
+  margin: -0.4em -0.3em;
+  padding: 0.4em 0.7em;
+  --ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' preserveAspectRatio='none'%3E%3Cpath d='M70 4 C 30 1, 3 9, 4 21 C 5 34, 42 38, 74 36 C 104 34, 118 26, 116 16 C 114 6, 92 2, 52 5' fill='none' stroke='%23a3201a' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background: var(--ring) 0 0 / 100% 100% no-repeat;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-centred {
+  max-width: none;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cast-role {
+  color: var(--scenario-quiet);
+  font-style: italic;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cast-hours {
+  flex: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-beside-alone {
+  justify-content: center;
+}
+
+/* The evenings of the run, each a continued scene: its date as a heading, its title under it */
+.wrapped__look[data-theme='scenario'] .scenario-nights {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 14px 24px;
+  margin: 22px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-nights li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-nights li[data-gap] {
+  grid-column: 1 / -1;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-nights li[data-gap]::before {
+  content: '(suite)';
+  flex: none;
+  width: 42px;
+  color: var(--scenario-quiet);
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+/* `@sensorr/i18n/wrapped` sets the page's lang */
+.wrapped__look[data-theme='scenario'] .scenario-nights li[data-gap]:lang(en)::before {
+  content: '(cont’d)';
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-nights p {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-night-slug {
+  font-size: 0.875em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-nights .scenario-insert-thumb {
+  width: 42px;
+  margin: 6px 0 0;
+}
+
+/* A still clipped to the page, its poster clipped over the lower corner */
+.wrapped__look[data-theme='scenario'] .scenario-still {
+  position: relative;
+  margin: 24px 0 36px;
+  padding-left: 12%;
+  transform: rotate(var(--tilt, 0.5deg));
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-still > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #d8d2c4;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.25), 0 10px 18px -6px rgb(0 0 0 / 0.4);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-still > .scenario-clip {
+  left: 60%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-still .scenario-still-poster {
+  position: absolute;
+  z-index: 2;
+  bottom: -24px;
+  left: 0;
+  width: 27%;
+  margin: 0;
+}
+
+/* The clapperboard: striped sticks over a black board, the figures chalked in boxes */
+.wrapped__look[data-theme='scenario'] .scenario-slate {
+  --chalk: #f1ede4;
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 1), 1fr);
+  width: min(100%, 520px);
+  margin: 26px auto 18px;
+  padding: 34px 10px 10px;
+  background:
+    repeating-linear-gradient(-55deg, #1d1d1f 0 18px, #f1ede4 18px 36px) 0 0 / 100% 22px no-repeat,
+    #232427;
+  color: var(--chalk);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 22px -8px rgb(0 0 0 / 0.5);
+  transform: rotate(-1deg);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slate[data-count='2'] { --columns: 2; }
+.wrapped__look[data-theme='scenario'] .scenario-slate[data-count='3'],
+.wrapped__look[data-theme='scenario'] .scenario-slate[data-count='4'] { --columns: 2; }
+
+.wrapped__look[data-theme='scenario'] .scenario-slate li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px 8px;
+  border: 2px solid rgb(241 237 228 / 0.75);
+  margin: 0 -1px -1px 0;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slate[data-count='3'] li:first-child {
+  grid-column: 1 / -1;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slate b {
+  font: 500 clamp(2.6rem, 11cqw, 4rem)/1 'Caveat', cursive;
+  white-space: nowrap;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slate span {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slate-small {
+  flex: 1;
+  width: auto;
+  margin: 0;
+  padding-top: 26px;
+  background-size: 100% 16px, auto;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slate-small b {
+  font-size: clamp(1.9rem, 7cqw, 2.6rem);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-slate-small span {
+  font-size: 11px;
+}
+
+/* The night's log, one play per line with its hours */
+.wrapped__look[data-theme='scenario'] .scenario-log-title {
+  margin: 30px 0 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-log li {
+  display: grid;
+  grid-template-columns: 7ch 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0;
+  border-top: 1px dashed rgb(27 26 23 / 0.35);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-log li:last-child {
+  border-bottom: 1px dashed rgb(27 26 23 / 0.35);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-log-time {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-log-time > span {
+  color: var(--scenario-quiet);
+  font-weight: 400;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-log-title-line {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-log-title-line > span:not(.scenario-caps) {
+  color: var(--scenario-quiet);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-log .scenario-insert-thumb {
+  margin: 8px 4px 2px 0;
+}
+
+/* Dual dialogue: two characters speaking at once, side by side */
+.wrapped__look[data-theme='scenario'] .scenario-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 8px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-dual .scenario-character {
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-dual .scenario-dialogue {
+  max-width: none;
+  margin: 2px 0 0;
+  text-align: center;
+}
+
+/* The titles watched at two, each a line of dialogue */
+.wrapped__look[data-theme='scenario'] .scenario-exchange {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 30px 28px;
+  margin: 26px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-exchange li {
+  display: grid;
+  grid-template-columns: 38% 1fr;
+  align-items: center;
+  gap: 14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-exchange .scenario-insert {
+  width: 100%;
+  margin: 10px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-exchange .scenario-character,
+.wrapped__look[data-theme='scenario'] .scenario-exchange .scenario-parenthetical,
+.wrapped__look[data-theme='scenario'] .scenario-exchange .scenario-dialogue {
+  max-width: none;
+  margin: 0;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-exchange .scenario-dialogue {
+  margin-top: 4px;
+  text-wrap: balance;
+}
+
+/* A figure of the outliers, beside its poster */
+.wrapped__look[data-theme='scenario'] .scenario-verdict {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-verdict .scenario-pencil-note {
+  margin: 0 0 6px;
+  transform-origin: right center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-verdict-figure {
+  font-size: clamp(2rem, 9cqw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-verdict-figure .scenario-mark {
+  background-size: 100% 0.62em;
+  background-position: 0 72%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-verdict-when {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--scenario-quiet);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-pencil-stamp {
+  margin: 18px 0 0;
+  text-align: center;
+  transform-origin: center;
+}
+
+/* The title page: centred title, author, and the draft notes bottom left */
+.wrapped__look[data-theme='scenario'] .scenario-title-page {
+  display: flex;
+  flex-direction: column;
+  padding-top: 72px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-title-block {
+  margin-top: 10%;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-title {
+  font-size: clamp(2rem, 10.5cqw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.14em;
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-untyped {
+  visibility: hidden;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-caret::after {
+  content: '';
+  position: absolute;
+  bottom: -0.15em;
+  left: 1px;
+  width: 0.55em;
+  height: 1.15em;
+  background: var(--scenario-ink);
+  animation: scenario-caret 1.05s steps(1) infinite;
+}
+
+@keyframes scenario-caret {
+  50% { opacity: 0; }
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-byline {
+  margin-top: 2.2em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-author {
+  margin-top: 0.6em;
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-fan {
+  display: flex;
+  justify-content: center;
+  margin: 44px 0 36px;
+  padding-left: 7%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-fan .scenario-insert {
+  width: 27%;
+  margin: 0 0 0 -7%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-fan .scenario-insert:nth-child(even) {
+  margin-top: 14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-draft {
+  margin-top: auto;
+  max-width: 44ch;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-draft ul {
+  margin-top: 10px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-draft li + li {
+  margin-top: 2px;
+}
+
+/* The back cover: blue card stock, a typed label */
+.wrapped__look[data-theme='scenario'] .scenario-cover {
+  position: relative;
+  width: 100%;
+  max-width: 816px;
+  padding: 72px 28px 104px 44px;
+  background: #27405f;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 0.3), 0 14px 32px -8px rgb(0 0 0 / 0.55);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cover-label {
+  max-width: 44ch;
+  margin: 0 auto;
+  padding: 18px 20px;
+  background: #fbfaf5;
+  color: var(--scenario-ink);
+  transform: rotate(-0.6deg);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.35);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-cover-label p + p {
+  margin-top: 8px;
+}
+
+/* Waiting and notices: one page alone on the desk */
+.wrapped__look[data-theme='scenario'] .scenario-state {
+  display: grid;
+  align-content: center;
+  min-height: 844px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-title-blank {
+  text-decoration: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-notice-text {
+  margin: 56px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-retry {
+  display: block;
+  min-height: 44px;
+  margin: 28px 0 0 auto;
+  padding: 10px 6px;
+  border: 0;
+  background: transparent;
+  color: var(--scenario-ink);
+  font: inherit;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  cursor: pointer;
+  transition: text-underline-offset 160ms ease-out;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-retry:hover {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-retry:focus-visible {
+  outline: 2px solid var(--scenario-pencil);
+  outline-offset: 2px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-retry:active {
+  background: linear-gradient(97deg, transparent 0 2px, var(--marker) 3px calc(100% - 4px), transparent calc(100% - 2px)) 0 55% / 100% 1.05em no-repeat;
+}
+
+/* At real scale: 12 pt Courier, ten characters to the inch */
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='scenario'] .scenario-caret::after {
+    animation: none;
+  }
+
+  .wrapped__look[data-theme='scenario'] .scenario-retry {
+    transition: none;
+  }
+}
+
+/* Stories: each sheet on one page of the script, 396 × 704, scaled to the phone and shared as the image.
+   The top 28 px and the bottom 72 px stay free of words, Safari lays the stories' chrome over them */
+.wrapped__look[data-theme='scenario'] .scenario-story {
+  position: relative;
+  width: 396px;
+  height: 704px;
+  overflow: hidden;
+  background: var(--scenario-desk);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story > .scenario-page {
+  --margin-left: 40px;
+  --margin-right: 18px;
+  display: flex;
+  flex-direction: column;
+  width: 396px;
+  max-width: none;
+  height: 704px;
+  aspect-ratio: auto;
+  padding: 58px var(--margin-right) 72px var(--margin-left);
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.45;
+  box-shadow: none;
+  transform: none;
+  animation: scenario-feed 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story > .scenario-page > :not(.scenario-holes, .scenario-head) {
+  min-width: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-insert {
+  animation: scenario-clip-on 0.45s var(--mark-delay, 0.45s) cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* A poster's row or block shows with the poster, not before it */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-arrival {
+  animation: scenario-arrive 0.3s var(--mark-delay, 0.45s) ease-out backwards;
+}
+
+/* The red pencil's underline and ring, drawn over the typed figure rather than printed with it */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-figure {
+  position: relative;
+  background: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-figure::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 0.34em;
+  background: var(--underline) 0 0 / 100% 100% no-repeat;
+  animation: scenario-draw 0.35s var(--mark-delay, 0.9s) cubic-bezier(0.5, 0, 0.2, 1) backwards;
+  pointer-events: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-act .scenario-figure::after {
+  content: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-month-peak .scenario-figure::after {
+  inset: 0;
+  height: auto;
+  background-image: var(--ring);
+  animation-duration: 0.55s;
+}
+
+/* The title page shows the rest of itself once its title is typed, and only then are its marks added */
+.wrapped__look[data-theme='scenario'] .scenario-story:has(.scenario-title-page:not([data-typed])) :is(.scenario-byline, .scenario-author, .scenario-fan, .scenario-draft, .scenario-story-close) {
+  opacity: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story :is(.scenario-byline, .scenario-author, .scenario-fan, .scenario-draft, .scenario-story-close) {
+  transition: opacity 0.4s ease-out;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story:has(.scenario-title-page:not([data-typed])) :is(.scenario-insert, .scenario-arrival, .scenario-mark, .scenario-figure, .scenario-pencil-note),
+.wrapped__look[data-theme='scenario'] .scenario-story:has(.scenario-title-page:not([data-typed])) .scenario-figure::after {
+  animation-play-state: paused;
+}
+
+/* The page lands typed whole; its marks are added after, one by one, in reading order (`--mark-delay`) */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-mark {
+  animation: scenario-swipe 0.5s var(--mark-delay, 0.9s) cubic-bezier(0.5, 0, 0.2, 1) backwards;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-pencil-note {
+  animation: scenario-write 0.7s var(--mark-delay, 0.9s) ease-out backwards;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-holes {
+  left: 6px;
+  width: 11px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-holes i {
+  width: 11px;
+  height: 11px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-head {
+  top: 32px;
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-act {
+  margin: 0 0 8px;
+  font-size: 17px;
+  text-underline-offset: 4px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slug {
+  margin: 4px 0 8px;
+  padding-right: 14px;
+  font-size: 14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-scene {
+  left: calc(-1 * var(--margin-left) + 22px);
+  font-size: 12px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-scene-right {
+  left: auto;
+  right: -14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-action {
+  margin: 0 0 8px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-character {
+  margin: 6px 0 0 32%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-parenthetical {
+  margin-left: 24%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-dialogue {
+  max-width: none;
+  margin: 0 6% 8px 16%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-transition {
+  margin: auto 0 0;
+  padding-top: 8px;
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-shout {
+  margin: 4px 0 10px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-shout-figure {
+  font-size: 64px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-shout-figure .scenario-mark,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-verdict-figure .scenario-mark {
+  --swipe: 0.62em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-shout-unit {
+  margin-top: 6px;
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-shout-word {
+  font-size: min(56px, calc(248px / (var(--length) * 0.62)));
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-shout-time .scenario-shout-figure {
+  font-size: 60px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-pencil-note {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-insert {
+  width: 120px;
+  margin: 14px 0 8px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-insert figcaption {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-insert-thumb {
+  width: 30px;
+  margin: 6px 2px 2px 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-insert-thumb .scenario-clip {
+  top: -7px;
+  width: 8px;
+  height: 22px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-beside {
+  gap: 14px;
+}
+
+/* Up to four posters on one row, their titles on two lines at most */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-inserts {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0 6px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-inserts > .scenario-insert {
+  flex: 0 0 calc((100% - 30px) / 4);
+  width: auto;
+  margin: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-inserts[data-count='1'] > .scenario-insert {
+  flex-basis: 110px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-inserts .scenario-clip {
+  top: -11px;
+  width: 13px;
+  height: 36px;
+}
+
+/* Two rows of posters share the genre's page: they stand smaller */
+.wrapped__look[data-theme='scenario'] .scenario-story-genre .scenario-inserts > .scenario-insert {
+  flex-basis: 66px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-genre .scenario-inserts[data-count='1'] > .scenario-insert {
+  flex-basis: 80px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-genre .scenario-shout-word {
+  font-size: min(48px, calc(248px / (var(--length) * 0.62)));
+}
+
+/* Rank: the cast list typed tighter */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-cast {
+  margin: 0 auto 4px;
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-cast li {
+  line-height: 1.55;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-cast li[data-gap] {
+  margin-top: 1.1em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-cast li[data-gap]::before {
+  top: -1.2em;
+}
+
+/* Streak: the figure and its tally beside the poster, three evenings of the run under them */
+.wrapped__look[data-theme='scenario'] .scenario-story-streak .scenario-beside .scenario-insert {
+  width: 100px;
+  margin-top: 10px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-run {
+  flex: 1;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-run .scenario-shout {
+  margin: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-run .scenario-tally {
+  width: 100%;
+  max-width: 170px;
+  max-height: 64px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-run .scenario-tally path {
+  stroke-dasharray: 1;
+  animation: scenario-pen 0.14s var(--stroke-delay, 0.9s) cubic-bezier(0.3, 0, 0.2, 1) backwards;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-nights {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  margin: 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-nights li {
+  position: relative;
+  min-height: 0;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-nights li[data-gap] {
+  grid-column: auto;
+  margin-top: 18px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-nights li[data-gap]::before {
+  position: absolute;
+  top: -18px;
+  left: 0;
+  width: auto;
+  font-size: 11px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-nights p {
+  line-height: 1.3;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-nights .scenario-insert-thumb {
+  width: 30px;
+  margin: 4px 0 0;
+}
+
+/* Months: one line per month, the scene number in the margin */
+.wrapped__look[data-theme='scenario'] .scenario-story-months {
+  display: grid;
+  gap: 2px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-months li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9.5ch minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-months .scenario-scene {
+  top: auto;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-month {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-said {
+  display: flex;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-said > span {
+  flex: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-said > .scenario-story-title {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-months .scenario-swipe {
+  height: 5px;
+  margin-top: 3px;
+  transform-origin: left;
+  animation: scenario-stroke 0.4s var(--mark-delay, 0.9s) cubic-bezier(0.5, 0, 0.2, 1) backwards;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-months .scenario-insert-thumb {
+  width: 22px;
+  margin: 4px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-months .scenario-month-peak .scenario-figure {
+  margin: -0.35em -0.3em;
+  padding: 0.35em 0.6em;
+}
+
+/* Binge: the still and the clapperboard at the scale of the page */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-still {
+  margin: 10px 0 24px;
+  padding-left: 14%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-still > img {
+  height: 112px;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-still .scenario-still-poster {
+  width: 64px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate {
+  margin: 6px auto 8px;
+  padding: 26px 8px 8px;
+  background-size: 100% 16px, auto;
+  animation: scenario-clap 0.5s var(--mark-delay, 0.9s) cubic-bezier(0.5, 0, 0.2, 1) backwards;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate li {
+  padding: 6px 6px 5px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate b {
+  font-size: 30px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate span {
+  font-size: 11px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate-small {
+  margin: 0;
+  padding-top: 22px;
+  background-size: 100% 12px, auto;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate-small b {
+  font-size: 26px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate-small span {
+  font-size: 10px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-binge .scenario-beside .scenario-insert {
+  width: 76px;
+  margin: 10px 0 0;
+}
+
+/* Night: the last lines of the log */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-log-title {
+  margin: 6px 0 6px;
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-log li {
+  grid-template-columns: 6ch minmax(0, 1fr) auto;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-night .scenario-beside .scenario-insert {
+  width: 110px;
+}
+
+/* Server and the posters' scenes: the poster beside its words */
+.wrapped__look[data-theme='scenario'] .scenario-story-server .scenario-beside .scenario-insert {
+  width: 150px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-item .scenario-beside {
+  align-items: start;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-item .scenario-insert {
+  width: 72px;
+  margin: 8px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-item .scenario-insert .scenario-clip {
+  top: -10px;
+  width: 12px;
+  height: 32px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-verdict {
+  text-align: left;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-verdict .scenario-pencil-note {
+  margin: 0;
+  transform-origin: left center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-verdict-figure {
+  font-size: 30px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-title {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 4px;
+  font-weight: 700;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-verdict-when {
+  margin-top: 2px;
+  font-size: 13px;
+}
+
+/* Twin and duo: dialogue on the page's width */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-dual .scenario-character {
+  margin: 4px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-dual .scenario-dialogue {
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-dual .scenario-figure {
+  white-space: normal;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-exchange {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  margin: 6px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-exchange li {
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-exchange .scenario-insert {
+  width: 100%;
+  margin: 8px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-exchange .scenario-insert .scenario-clip {
+  top: -9px;
+  width: 10px;
+  height: 28px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-exchange .scenario-character,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-exchange .scenario-dialogue {
+  overflow-wrap: anywhere;
+}
+
+/* Finale: the end typed last */
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-pencil-stamp {
+  margin: 4px 0 0;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-end {
+  margin: 10px 0 0;
+  font-size: 52px;
+}
+
+/* Opening and summary: the title page */
+.wrapped__look[data-theme='scenario'] .scenario-story > .scenario-title-page {
+  padding-top: 58px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-title-block {
+  margin-top: 12px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-title {
+  font-size: 32px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-byline {
+  margin-top: 1.6em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-fan {
+  margin: 30px 0 24px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-fan .scenario-insert {
+  width: 27%;
+  margin: 0 0 0 -7%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-fan .scenario-insert:nth-child(even) {
+  margin-top: 14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-draft {
+  font-size: 14px;
+}
+
+/* The summary: the title page shortened, the note and the colophon typed at its foot on the same sheet */
+.wrapped__look[data-theme='scenario'] .scenario-story-summary {
+  display: flex;
+  flex-direction: column;
+  background: #fbfaf5;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-summary > .scenario-title-page {
+  flex: 1;
+  height: auto;
+  min-height: 0;
+  padding-bottom: 12px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-summary .scenario-title {
+  font-size: 28px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-summary .scenario-byline {
+  margin-top: 1.1em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-summary .scenario-fan {
+  margin: 16px 0 12px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-summary .scenario-fan .scenario-insert {
+  width: 22%;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-summary .scenario-draft > p {
+  display: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-close {
+  display: grid;
+  gap: 8px;
+  padding: 0 18px 72px 40px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-rank {
+  margin: 0;
+  font-size: 30px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-rank sup {
+  margin-left: 1px;
+  font-size: 0.62em;
+  vertical-align: 0.6em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-story-colophon {
+  display: grid;
+  gap: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed rgb(27 26 23 / 0.35);
+  color: var(--scenario-quiet);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+@keyframes scenario-feed {
+  from { transform: translateY(60px); }
+}
+
+@keyframes scenario-type {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes scenario-clip-on {
+  from { opacity: 0; transform: translateY(-14px) rotate(calc(var(--tilt, 0deg) - 6deg)); }
+}
+
+@keyframes scenario-swipe {
+  from { background-size: 0 var(--swipe, 1.05em); }
+}
+
+@keyframes scenario-write {
+  from { clip-path: inset(-20% 100% -20% 0); }
+  to { clip-path: inset(-20% 0 -20% 0); }
+}
+
+/* Hidden until struck: a round cap would draw a dot where the stroke is still to come */
+@keyframes scenario-arrive {
+  from { opacity: 0; }
+}
+
+@keyframes scenario-pen {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  1% { opacity: 1; }
+}
+
+@keyframes scenario-draw {
+  from { clip-path: inset(-20% 100% -20% 0); }
+  to { clip-path: inset(-20% 0 -20% 0); }
+}
+
+@keyframes scenario-stroke {
+  from { transform: scaleX(0); }
+}
+
+@keyframes scenario-clap {
+  from { transform: rotate(-6deg) translateY(-12px); }
+  60% { transform: rotate(0.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='scenario'] .scenario-story > .scenario-page,
+.wrapped__look[data-theme='scenario'] .scenario-story > .scenario-page > :not(.scenario-holes, .scenario-head),
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-insert,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-arrival,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-mark,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-figure::after,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-pencil-note,
+.wrapped__look[data-theme='scenario'] .scenario-story-run .scenario-tally path,
+.wrapped__look[data-theme='scenario'] .scenario-story-months .scenario-swipe,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-slate,
+.wrapped__look[data-theme='scenario'] .scenario-story .scenario-end,
+.wrapped__look[data-theme='scenario'] .scenario-story-colophon {
+    animation: none;
+  }
+}
+
+/* The title page on the desk, opened by Keep in touch in a frame of its own: `?cover` */
+.wrapped__look[data-theme='scenario'] .scenario-front {
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  height: 844px;
+  overflow: hidden;
+  background: var(--scenario-desk);
+  color: var(--switch-fg);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-pile {
+  position: absolute;
+  inset: 0 -14px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: scenario-slide 90s linear infinite;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-column:nth-child(even) {
+  animation-direction: reverse;
+  animation-duration: 110s;
+}
+
+@keyframes scenario-slide {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-50% - 7px)); }
+}
+
+/* A revised page of the script, its poster clipped to it */
+.wrapped__look[data-theme='scenario'] .scenario-front-sheet {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  aspect-ratio: 8.5 / 11;
+  padding: 18px 10px 10px 22px;
+  overflow: hidden;
+  background: var(--paper, #fbfaf5);
+  color: var(--scenario-ink);
+  font-size: 9px;
+  line-height: 1.2;
+  text-align: center;
+  transform: rotate(var(--tilt));
+  box-shadow: 0 10px 24px -8px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-sheet .scenario-holes {
+  left: 4px;
+  width: 8px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-sheet .scenario-holes i {
+  width: 8px;
+  height: 8px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-number {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  color: var(--scenario-quiet);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-insert {
+  position: relative;
+  width: 62%;
+  margin: 0;
+  transform: rotate(var(--tilt));
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-insert img,
+.wrapped__look[data-theme='scenario'] .scenario-front-insert > span {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: #d8d2c4;
+  box-shadow: 0 6px 10px -4px rgb(0 0 0 / 0.4);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-insert .scenario-clip {
+  top: -10px;
+  left: 18%;
+  width: 12px;
+  height: 32px;
+}
+
+/* The desk lamp on the title page, the dark of the desk under the outline */
+.wrapped__look[data-theme='scenario'] .scenario-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 45% at 50% 10%, rgb(255 214 160 / 0.14), transparent 70%),
+    linear-gradient(180deg, rgb(43 38 34 / 0.55), rgb(43 38 34 / 0.35) 45%, rgb(43 38 34 / 0.88) 62%, rgb(43 38 34 / 0.97) 82%);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front > :not(.scenario-front-pile) {
+  position: relative;
+  z-index: 2;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-title {
+  --marker: var(--scenario-marker);
+  container-type: inline-size;
+  align-self: center;
+  width: calc(100% - 32px);
+  max-width: 560px;
+  margin-top: 20px;
+  padding: 24px 18px 18px 40px;
+  background: #fbfaf5;
+  color: var(--scenario-ink);
+  font-size: 14px;
+  transform: rotate(-0.8deg);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 0.3), 0 18px 36px -10px rgb(0 0 0 / 0.7);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-title .scenario-holes {
+  left: 12px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-title :is(.scenario-title, .scenario-byline, .scenario-author) {
+  text-align: center;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-title .scenario-title {
+  font-size: clamp(1.6rem, 8.5cqw, 2.9rem);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-title .scenario-byline {
+  margin-top: 1em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-title .scenario-author {
+  margin-top: 0.2em;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-draft {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-draft li + li {
+  margin-top: 2px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-lines {
+  display: grid;
+  gap: 16px;
+  margin-top: auto;
+  padding: 0 24px 24px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-contents {
+  display: grid;
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-contents h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-contents ol {
+  display: grid;
+  gap: 2px;
+  font-size: clamp(15px, 2.6cqi, 18px);
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-contents a {
+  display: inline-flex;
+  align-items: baseline;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The scene number in the margin, as on the page */
+.wrapped__look[data-theme='scenario'] .scenario-front-contents a > span:first-child {
+  flex: none;
+  width: 3.5ch;
+  font-size: 0.75em;
+  font-weight: 400;
+  color: rgb(239 233 220 / 0.6);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-contents a > span:last-child {
+  padding: 0 0.18em;
+  margin: 0 -0.18em;
+  background: linear-gradient(97deg, transparent 0 2px, var(--scenario-marker) 3px calc(100% - 4px), transparent calc(100% - 2px)) 0 55% / 0% 1.05em no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* A slip of paper typed in capitals, the way into the script */
+.wrapped__look[data-theme='scenario'] .scenario-front-read {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 48px;
+  padding: 14px 24px 14px 34px;
+  background: #fbfaf5;
+  color: var(--scenario-ink);
+  font-size: clamp(17px, 3.2cqi, 21px);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: rotate(-1deg);
+  box-shadow: 0 10px 24px -8px rgb(0 0 0 / 0.7);
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-read > span {
+  position: relative;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-read > span::after {
+  content: '';
+  position: absolute;
+  inset: -0.45em -0.6em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' preserveAspectRatio='none'%3E%3Cpath d='M70 4 C 30 1, 3 9, 4 21 C 5 34, 42 38, 74 36 C 104 34, 118 26, 116 16 C 114 6, 92 2, 52 5' fill='none' stroke='%23a3201a' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-read::after {
+  content: '→' / '';
+  display: inline-block;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-contents a:focus-visible,
+.wrapped__look[data-theme='scenario'] .scenario-front-read:focus-visible {
+  outline: 2px solid var(--scenario-marker);
+  outline-offset: 4px;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-contents a,
+.wrapped__look[data-theme='scenario'] .scenario-front-contents a > span,
+.wrapped__look[data-theme='scenario'] .scenario-front-read::after {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-size 0.3s cubic-bezier(0.5, 0, 0.2, 1), color 0.2s;
+}
+
+.wrapped__look[data-theme='scenario'] .scenario-front-read > span::after {
+  transition: clip-path 0.5s cubic-bezier(0.5, 0, 0.2, 1);
+}
+
+@media (hover: hover) {
+  /* A scene of the outline swiped with the highlighter, as an actor marks the lines they are about to read */
+  .wrapped__look[data-theme='scenario'] .scenario-front-contents a:hover > span:last-child {
+    background-size: 100% 1.05em;
+    color: var(--scenario-ink);
+  }
+
+  .wrapped__look[data-theme='scenario'] .scenario-front-contents a:hover > span:first-child {
+    color: var(--scenario-marker);
+  }
+
+  /* The red pencil rings the title to read, as a take is circled on the continuity sheet */
+  .wrapped__look[data-theme='scenario'] .scenario-front-read:hover > span::after {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .wrapped__look[data-theme='scenario'] .scenario-front-read:hover::after {
+    transform: translateX(6px);
+  }
+}
+
+@container (max-width: 520px) {
+  .wrapped__look[data-theme='scenario'] .scenario-front-pile {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .wrapped__look[data-theme='scenario'] .scenario-front-column:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='scenario'] .scenario-front-column {
+    animation: none;
+  }
+}

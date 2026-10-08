@@ -1,0 +1,1377 @@
+/* cinetropes, its beta's own world: OLED black, Poppins and Spectral italic, the Tri-Force gold, red and green.
+   The cards are the app's SwipeCard, itself adapted from pokemon-cards-css.
+
+   Holo card effect adapted from pokemon-cards-css by Simon Goellner,
+   https://github.com/simeydotme/pokemon-cards-css, licensed under GPL-3.0.
+   This file is distributed under the same license; the rest of the site is MIT. */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Spectral:ital,wght@1,700&display=swap');
+
+.cinetropes,
+.cinetropes__zoom {
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --card-radius: 0.5em;
+}
+
+.band.cinetropes {
+  --band-bg: #0e0d0e;
+  --band-ink: oklch(0.98 0.01 285);
+  --band-dim: oklch(70.365% 0 0);
+  --band-line: rgb(255 255 255 / 0.08);
+  --accent: #f5c518;
+  --on-accent: #0e0d0e;
+  --edge: clamp(16px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  font-family: 'Hanken Grotesk', sans-serif;
+  isolation: isolate;
+}
+
+/* The film page's backdrop: the poster, blurred, desaturated and darkened, here under the whole band */
+.cinetropes__backdrop,
+.cinetropes__backdrop > div {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cinetropes__backdrop {
+  z-index: -1;
+  overflow: hidden;
+}
+
+.cinetropes__backdrop > div {
+  background-position: center 20%;
+  background-size: cover;
+  filter: blur(24px) saturate(0.5) brightness(0.25);
+  opacity: 0;
+  transform: scale(1.15);
+  transition: opacity 600ms ease-out;
+}
+
+.cinetropes__backdrop > div.is-shown {
+  opacity: 1;
+}
+
+.cinetropes__backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 100% at 30% 40%, transparent 0%, rgb(14 13 14 / 0.4) 60%, rgb(14 13 14 / 0.7) 100%),
+    linear-gradient(to bottom, rgb(14 13 14 / 0.3) 0%, transparent 30%);
+}
+
+/* The app's top bar, carrying the project's own header */
+
+.cinetropes__nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 56px;
+  padding: 0 var(--edge);
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.45), transparent);
+}
+
+.cinetropes__logo {
+  flex: none;
+  margin: 0;
+}
+
+/* A fixed width: in a shrink-to-fit heading, a percentage width resolves to nothing in Firefox and Safari */
+.cinetropes__logo img {
+  display: block;
+  width: 152px;
+  max-width: 100%;
+  height: auto;
+}
+
+.cinetropes__tagline {
+  margin: 0 0 0 24px;
+  color: #a3a3a3;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cinetropes__nav .tags {
+  justify-content: flex-end;
+  margin-left: auto;
+  color: rgb(255 255 255 / 0.55);
+  font-size: 0.6875rem;
+}
+
+/* The film page's body: the card column, then the main column */
+
+.cinetropes__page {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 var(--edge);
+  box-sizing: border-box;
+}
+
+/* The stack: the front card, the three others behind it, set back and smaller */
+
+.cinetropes__deck {
+  --card-w: 240px;
+  display: grid;
+  grid-template-columns: auto var(--card-w) auto;
+  align-items: center;
+  column-gap: 24px;
+  margin-top: 64px;
+}
+
+.cinetropes__stack {
+  position: relative;
+  width: var(--card-w);
+  aspect-ratio: 2 / 3;
+}
+
+.cinetropes__slot {
+  --position: translateY(calc(var(--depth) * -14px)) scale(calc(1 - var(--depth) * 0.06));
+  position: absolute;
+  inset: 0;
+  transform: var(--position);
+  transform-origin: 50% 0%;
+  filter: brightness(calc(1 - var(--depth) * 0.2));
+  transition-property: transform, filter;
+  transition-duration: 400ms;
+  transition-timing-function: var(--spring);
+}
+
+.cinetropes__slot:not(:has(.is-front)) {
+  pointer-events: none;
+}
+
+/* The match engine's step forward, from just behind */
+.cinetropes__slot .is-front {
+  animation: cinetropes-forward 500ms var(--spring) backwards;
+}
+
+@keyframes cinetropes-forward {
+  from {
+    transform: translateX(3%) rotate(2deg) scale(0.97);
+  }
+}
+
+/* Out to the side above the others, then back in behind them */
+.cinetropes__slot.is-tucking {
+  animation: cinetropes-tuck 600ms var(--ease) both;
+}
+
+.cinetropes__slot.is-pulling {
+  animation: cinetropes-tuck 600ms var(--ease) reverse both;
+}
+
+@keyframes cinetropes-tuck {
+  0% {
+    z-index: 10;
+    transform: none;
+    filter: brightness(1);
+  }
+
+  45% {
+    z-index: 10;
+    transform: translateX(-58%) rotate(-6deg) scale(0.92);
+  }
+
+  55% {
+    z-index: 0;
+  }
+
+  100% {
+    z-index: 0;
+    transform: translateY(-42px) scale(0.82);
+    filter: brightness(0.4);
+  }
+}
+
+.cinetropes__arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 0.08);
+  color: rgb(255 255 255 / 0.7);
+  cursor: pointer;
+  transition-property: background-color, border-color, color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.cinetropes__arrow:hover {
+  border-color: rgb(255 255 255 / 0.25);
+  background-color: rgb(255 255 255 / 0.14);
+  color: rgb(255 255 255 / 0.95);
+}
+
+.cinetropes__arrow:active {
+  scale: 0.96;
+}
+
+.cinetropes__count {
+  grid-column: 2;
+  margin: 16px 0 0;
+  color: var(--band-dim);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+/* The card. No transform at rest: a stacking context would dampen the holo's blend modes */
+
+.cinetropes__card {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --card-opacity: 0;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --background-x: 50%;
+  --background-y: 50%;
+  --sunpillar-1: hsl(2, 100%, 73%);
+  --sunpillar-2: hsl(53, 100%, 69%);
+  --sunpillar-3: hsl(93, 100%, 69%);
+  --sunpillar-4: hsl(176, 100%, 76%);
+  --sunpillar-5: hsl(228, 100%, 74%);
+  --sunpillar-6: hsl(283, 100%, 73%);
+  --sunpillar-clr-1: var(--sunpillar-5);
+  --sunpillar-clr-2: var(--sunpillar-6);
+  --sunpillar-clr-3: var(--sunpillar-1);
+  --sunpillar-clr-4: var(--sunpillar-2);
+  --sunpillar-clr-5: var(--sunpillar-3);
+  --sunpillar-clr-6: var(--sunpillar-4);
+  --glittersize: 25%;
+  /* The app points at a grain texture its server cannot decode: the layer renders empty there too */
+  --grain: none;
+  --card-edge: hsl(47, 100%, 78%);
+  --card-glow: #252728;
+  position: relative;
+  width: 100%;
+  border-radius: var(--card-radius);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  cursor: grab;
+}
+
+.cinetropes__card[data-rarity='holo'] { --card-glow: #4b595e; }
+.cinetropes__card[data-rarity='rare'] { --card-glow: #75908e; }
+.cinetropes__card[data-rarity='ultra'] { --card-glow: #97bfc2; }
+.cinetropes__card[data-rarity='secret'] { --card-glow: #abae97; }
+
+.cinetropes__card:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.9);
+  outline-offset: 4px;
+}
+
+.cinetropes__perspective {
+  transform-style: preserve-3d;
+  transform: perspective(800px);
+}
+
+.cinetropes__rotator {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--card-radius);
+  transform-style: preserve-3d;
+  transform: rotateY(var(--tilt-x)) rotateX(var(--tilt-y));
+  box-shadow: 0 10px 20px -5px rgb(0 0 0 / 0.4), 0 2px 15px -5px rgb(0 0 0 / 0.3);
+  transition: transform 0.5s, box-shadow 0.6s ease-out;
+}
+
+.cinetropes__card.is-interacting.is-entering .cinetropes__rotator {
+  transition: transform 0.8s ease-out, box-shadow 0.6s ease-out;
+}
+
+.cinetropes__card.is-interacting:not(.is-entering) .cinetropes__rotator {
+  transition: transform 0.05s ease-out, box-shadow 0.6s ease-out;
+}
+
+.cinetropes__card.is-interacting .cinetropes__rotator {
+  box-shadow:
+    0 0 2px 0 rgb(255 255 255 / 0.15),
+    0 0 4px 1px color-mix(in srgb, var(--card-edge) 12%, transparent),
+    0 0 40px 10px color-mix(in srgb, var(--card-glow) 8%, transparent),
+    0 0 80px 25px color-mix(in srgb, var(--card-glow) 5%, transparent),
+    0 0 140px 45px color-mix(in srgb, var(--card-glow) 3%, transparent),
+    0 10px 25px -5px rgb(0 0 0 / 0.35);
+}
+
+.cinetropes__front {
+  background-color: #111;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--card-radius);
+}
+
+.cinetropes__front img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  color: transparent;
+  pointer-events: none;
+}
+
+
+/* Grabbed, the card follows the pointer; let go, it springs back */
+
+.cinetropes__card.is-dragging,
+.cinetropes__card.is-returning {
+  transform: translate(var(--drag-x, 0px), var(--drag-y, 0px)) rotate(var(--drag-rotate, 0deg));
+}
+
+.cinetropes__card.is-dragging {
+  cursor: grabbing;
+  will-change: transform;
+}
+
+.cinetropes__card.is-returning {
+  transition: transform 400ms var(--spring);
+}
+
+/* The film page's meta: title, line, director, synopsis. Every line keeps its height, the charts never move */
+
+.cinetropes__main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
+}
+
+.cinetropes__info h4 {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 6.5svh, 4rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--band-ink);
+}
+
+.cinetropes__info p {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cinetropes__info .cinetropes__original {
+  color: rgb(255 255 255 / 0.5);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.cinetropes__meta {
+  margin-top: 0.5rem !important;
+  color: var(--band-dim);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.cinetropes__info .cinetropes__director {
+  margin-top: 0.5rem;
+  color: var(--band-dim);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.cinetropes__director span,
+.cinetropes__cast span {
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.cinetropes__info .cinetropes__synopsis {
+  display: -webkit-box;
+  height: 4.5em;
+  margin-top: 1rem;
+  color: rgb(255 255 255 / 0.72);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  white-space: normal;
+  text-wrap: pretty;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.cinetropes__info .cinetropes__cast {
+  margin-top: 0.5rem;
+  color: rgb(255 255 255 / 0.8);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* The film page's signature row: four glyphs, their names set small and wide */
+.cinetropes__signature {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.cinetropes__signature figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.cinetropes__signature figcaption {
+  color: var(--band-dim);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.5625rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.cinetropes__glyph {
+  position: relative;
+  width: min(100%, 104px);
+  aspect-ratio: 1;
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cinetropes__glyph::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 12px;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.07), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease-out;
+}
+
+.cinetropes__glyph:hover::before,
+.cinetropes__glyph[aria-expanded='true']::before {
+  opacity: 1;
+}
+
+.cinetropes__glyph:active {
+  scale: 0.96;
+}
+
+.cinetropes__glyph:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.9);
+  outline-offset: 6px;
+}
+
+.cinetropes__glyph svg {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cinetropes__glyph path {
+  transition: d 300ms ease;
+}
+
+.cinetropes__fill,
+.cinetropes__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cinetropes__fill {
+  transition-property: clip-path, opacity;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
+.cinetropes__glow {
+  animation: cinetropes-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.cinetropes__glow .cinetropes__fill {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes cinetropes-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+
+/* Badges: the radar's own labels, pinned outside the shape on hover */
+
+.cinetropes__badge {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(var(--tx), var(--ty));
+  animation: cinetropes-badge 200ms ease-out both;
+}
+
+.cinetropes__badge--center {
+  transform: translate(-50%, -50%);
+}
+
+.cinetropes__badge small {
+  padding: 1px 6px;
+  font-size: 9px;
+}
+
+.cinetropes__badge b {
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.cinetropes__badge--center b {
+  font-weight: 500;
+}
+
+@keyframes cinetropes-badge {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+}
+
+.cinetropes__vertex {
+  position: absolute;
+  width: 30%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--vertex) 56%, transparent) 0%, color-mix(in srgb, var(--vertex) 25%, transparent) 35%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: cinetropes-badge 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* Palette: four views of the poster's colours, a click to switch */
+
+.cinetropes__palette {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.cinetropes__mode {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.cinetropes__mode > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cinetropes__goo {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.cinetropes__barcode {
+  display: flex;
+}
+
+.cinetropes__barcode span {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.cinetropes__masonry {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-auto-flow: dense;
+  gap: 3px;
+  padding: 3px;
+}
+
+.cinetropes__aurora,
+.cinetropes__aurora canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cinetropes__modes {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  opacity: 0.5;
+  translate: 0 -50%;
+  transition: opacity 200ms ease-out;
+}
+
+.cinetropes__glyph:hover .cinetropes__modes,
+.cinetropes__glyph[aria-expanded='true'] .cinetropes__modes {
+  opacity: 1;
+}
+
+.cinetropes__modes i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 0.3);
+}
+
+.cinetropes__modes i.is-current {
+  background-color: rgb(255 255 255 / 0.9);
+}
+
+/* The app's glass tooltip, outside the band so nothing clips it */
+
+.cinetropes__tip {
+  position: fixed;
+  z-index: 999;
+  max-height: calc(100vh - 24px);
+  padding: 8px 12px;
+  overflow-y: auto;
+  translate: -50% 0;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 8px;
+  /* The app's glass is 35% opaque over an empty page; here it lies over text */
+  background-color: rgb(14 13 14 / 0.88);
+  background-image: linear-gradient(135deg, rgb(255 255 255 / 0.01) 0%, transparent 50%);
+  backdrop-filter: blur(24px) saturate(1.3);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 255 255 / 0.05), inset 0 1px 0 0 rgb(255 255 255 / 0.06);
+  color: #fff;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: nowrap;
+  animation: cinetropes-tip 200ms ease-out both;
+}
+
+.cinetropes__tip.is-bottom {
+  animation-name: cinetropes-tip-below;
+}
+
+.cinetropes__tip--wide {
+  width: 260px;
+  white-space: normal;
+}
+
+@keyframes cinetropes-tip {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+}
+
+@keyframes cinetropes-tip-below {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+}
+
+.cinetropes__tip ::selection {
+  background-color: #f5c518;
+  color: #0e0d0e;
+}
+
+.cinetropes__tip-title {
+  margin: 0 0 8px;
+  color: rgb(255 255 255 / 0.5);
+  font-size: 10px;
+  letter-spacing: 0.025em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.cinetropes__tip-title span {
+  color: rgb(255 255 255 / 0.3);
+}
+
+.cinetropes__tip-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 -4px;
+  padding: 0;
+  list-style: none;
+}
+
+.cinetropes__tip-rows li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background-color 150ms ease-out;
+}
+
+.cinetropes__tip-rows li:hover {
+  background-color: color-mix(in srgb, var(--row) 8%, transparent);
+}
+
+.cinetropes__tip-rows li.is-stacked {
+  padding: 4px;
+}
+
+.cinetropes__tip-rows i {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.cinetropes__tip-rows li > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  color: rgb(255 255 255 / 0.75);
+}
+
+.cinetropes__tip-rows small {
+  color: rgb(255 255 255 / 0.5);
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.cinetropes__tip-rows li.is-stacked small {
+  font-size: 10px;
+}
+
+.cinetropes__bar {
+  flex: none;
+  width: 40px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.cinetropes__bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 300ms ease;
+}
+
+.cinetropes__tip-rows data {
+  flex: none;
+  width: 24px;
+  color: rgb(255 255 255 / 0.9);
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.cinetropes__sources {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2px 16px;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  font-size: 10px;
+}
+
+.cinetropes__sources div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cinetropes__sources dt {
+  color: rgb(255 255 255 / 0.5);
+}
+
+.cinetropes__sources dd {
+  margin: 0;
+  color: rgb(255 255 255 / 0.85);
+  font-family: 'Fira Code', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.cinetropes__tropes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: min(360px, 55vh);
+  margin: 0 -4px;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(139 92 246 / 0.4) transparent;
+}
+
+.cinetropes__trope {
+  width: 100%;
+  margin: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+}
+
+.cinetropes__trope:hover {
+  background-color: rgb(139 92 246 / 0.1);
+}
+
+.cinetropes__trope > span {
+  overflow: hidden;
+  color: #c4b5fd;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cinetropes__trope small {
+  grid-column: 1 / -1;
+  margin-top: 2px;
+  overflow: hidden;
+  color: rgb(255 255 255 / 0.5);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cinetropes__trope:focus-visible,
+.cinetropes__views button:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.9);
+  outline-offset: -2px;
+}
+
+.cinetropes__tropes li.is-open .cinetropes__trope small {
+  white-space: normal;
+}
+
+.cinetropes__trope-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms ease-in-out;
+}
+
+.cinetropes__tropes li.is-open .cinetropes__trope-body {
+  grid-template-rows: 1fr;
+}
+
+.cinetropes__trope-body > div {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 4px;
+}
+
+.cinetropes__trope-body p {
+  margin: 2px 0 8px;
+  color: rgb(255 255 255 / 0.65);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.cinetropes__trope-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cinetropes__trope-badges span {
+  padding: 1px 6px;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 999px;
+  background-color: rgb(255 255 255 / 0.05);
+  color: rgb(255 255 255 / 0.55);
+  font-size: 9px;
+}
+
+.cinetropes__trope-badges .is-central {
+  border-color: rgb(139 92 246 / 0.3);
+  background-color: rgb(139 92 246 / 0.1);
+  color: #c4b5fd;
+}
+
+.cinetropes__trope-badges .is-subverted {
+  border-color: rgb(245 158 11 / 0.3);
+  background-color: rgb(245 158 11 / 0.1);
+  color: #fcd34d;
+}
+
+.cinetropes__trope-badges .is-spoiler-heavy {
+  border-color: rgb(239 68 68 / 0.3);
+  background-color: rgb(239 68 68 / 0.1);
+  color: #f87171;
+}
+
+.cinetropes__trope-badges [class^='is-spoiler']:not(.is-spoiler-heavy) {
+  border-color: rgb(249 115 22 / 0.3);
+  background-color: rgb(249 115 22 / 0.1);
+  color: #fdba74;
+}
+
+.cinetropes__trope-body blockquote {
+  margin: 8px 0 6px;
+  padding-left: 8px;
+  border-left: 2px solid rgb(139 92 246 / 0.3);
+  color: rgb(255 255 255 / 0.55);
+  font-size: 10px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Palette tooltip: the swatches, then the four views */
+
+.cinetropes__swatches {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 4px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cinetropes__swatches li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cinetropes__swatches i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+.cinetropes__swatches code {
+  color: rgb(255 255 255 / 0.85);
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+}
+
+.cinetropes__views.choices {
+  flex-wrap: nowrap;
+  gap: 2px;
+  margin-top: 10px;
+  padding: 2px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 999px;
+  background-color: rgb(255 255 255 / 0.06);
+}
+
+.cinetropes__views.choices button {
+  padding: 3px 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: rgb(255 255 255 / 0.55);
+  font-size: 11px;
+  transition-property: color, background-color, border-color, scale;
+}
+
+.cinetropes__views.choices button:hover {
+  color: rgb(255 255 255 / 0.8);
+}
+
+.cinetropes__views.choices button[aria-checked='true'] {
+  border-color: rgb(255 255 255 / 0.12);
+  background-color: rgb(255 255 255 / 0.1);
+  color: rgb(255 255 255 / 0.95);
+}
+
+.cinetropes__views.choices button:active {
+  scale: 0.96;
+}
+
+/* Holographic layers, per rarity */
+
+.cinetropes__foil,
+.cinetropes__shine,
+.cinetropes__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cinetropes__foil {
+  z-index: 2;
+  background-repeat: repeat;
+  opacity: 0;
+}
+
+.cinetropes__card[data-rarity='ultra'] .cinetropes__foil {
+  background-image: url('../assets/cinetropes/texture-cosmos-top.png');
+  background-size: 25%;
+  mix-blend-mode: color-dodge;
+  opacity: 0.2;
+}
+
+.cinetropes__card[data-rarity='secret'] .cinetropes__foil {
+  background-image: url('../assets/cinetropes/texture-cosmos-bottom.png');
+  background-size: 25%;
+  mix-blend-mode: color-dodge;
+  opacity: 0.1;
+}
+
+.cinetropes__glare {
+  z-index: 4;
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.5) 10%, hsla(0, 0%, 100%, 0.3) 25%, hsla(0, 0%, 0%, 0.3) 80%);
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.5);
+  transition: opacity 0.15s ease-out;
+}
+
+.cinetropes__shine {
+  z-index: 3;
+  display: grid;
+  mix-blend-mode: color-dodge;
+  opacity: var(--card-opacity);
+  transition: opacity 0.15s ease-out;
+}
+
+.cinetropes__shine::before,
+.cinetropes__shine::after {
+  content: '';
+  grid-area: 1 / 1;
+  border-radius: inherit;
+}
+
+/* Holo: glitter and a conic sunpillar on a gold base */
+.cinetropes__card[data-rarity='holo'] .cinetropes__shine {
+  background-image:
+    url('../assets/cinetropes/texture-glitter.png'),
+    url('../assets/cinetropes/texture-glitter.png'),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(152.7, 21.6%, 10%) 10%, hsla(177, 22%, 80%, 0.1) 50%, hsla(0, 0%, 95%, 0.98) 90%),
+    linear-gradient(45deg, hsl(46, 95%, 50%), hsl(52, 100%, 69%));
+  background-size: var(--glittersize) var(--glittersize), var(--glittersize) var(--glittersize), cover, cover;
+  background-position: 40% 45%, 55% 55%, center, center;
+  background-blend-mode: soft-light, darken, color;
+}
+
+.cinetropes__card[data-rarity='holo'] .cinetropes__shine::before {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(50, 20%, 90%, 0.95) 10%, hsla(324, 22%, 63%, 0.5) 50%, hsl(0, 0%, 0%) 90%);
+  mix-blend-mode: exclusion;
+}
+
+.cinetropes__card[data-rarity='holo'] .cinetropes__shine::after {
+  background-image:
+    url('../assets/cinetropes/texture-glitter.png'),
+    conic-gradient(var(--sunpillar-clr-4), var(--sunpillar-clr-5), var(--sunpillar-clr-6), var(--sunpillar-clr-1), var(--sunpillar-clr-2), var(--sunpillar-clr-3), var(--sunpillar-clr-4));
+  background-size: var(--glittersize) var(--glittersize), cover;
+  background-blend-mode: luminosity;
+  mix-blend-mode: soft-light;
+}
+
+/* Ultra: sunpillar bands under a diagonal sheen */
+.cinetropes__card[data-rarity='ultra'] .cinetropes__shine,
+.cinetropes__card[data-rarity='ultra'] .cinetropes__shine::after {
+  --space: 5%;
+  --angle: 133deg;
+  background-blend-mode: screen, hue, hard-light;
+}
+
+.cinetropes__card[data-rarity='ultra'] .cinetropes__shine {
+  background-image:
+    var(--grain),
+    repeating-linear-gradient(0deg, var(--sunpillar-5) calc(var(--space) * 1), var(--sunpillar-6) calc(var(--space) * 2), var(--sunpillar-1) calc(var(--space) * 3), var(--sunpillar-2) calc(var(--space) * 4), var(--sunpillar-3) calc(var(--space) * 5), var(--sunpillar-4) calc(var(--space) * 6), var(--sunpillar-5) calc(var(--space) * 7)),
+    repeating-linear-gradient(var(--angle), #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%, hsl(180, 10%, 60%) 5.2%, #0e152e 10%, #0e152e 12%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+  background-size: 500px 100%, 200% 700%, 300% 100%, 200% 100%;
+  background-position: center, 0% var(--background-y), var(--background-x) var(--background-y), var(--background-x) var(--background-y);
+  filter: brightness(0.8) contrast(2.95) saturate(0.65);
+}
+
+.cinetropes__card[data-rarity='ultra'] .cinetropes__shine::after {
+  background-image:
+    var(--grain),
+    repeating-linear-gradient(0deg, var(--sunpillar-6) calc(var(--space) * 1), var(--sunpillar-1) calc(var(--space) * 2), var(--sunpillar-2) calc(var(--space) * 3), var(--sunpillar-3) calc(var(--space) * 4), var(--sunpillar-4) calc(var(--space) * 5), var(--sunpillar-5) calc(var(--space) * 6), var(--sunpillar-6) calc(var(--space) * 7)),
+    repeating-linear-gradient(var(--angle), #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%, hsl(180, 10%, 60%) 5.2%, #0e152e 10%, #0e152e 12%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+  background-size: 500px 100%, 200% 400%, 195% 100%, 200% 100%;
+  background-position: center, 0% var(--background-y), calc(var(--background-x) * -1) calc(var(--background-y) * -1), var(--background-x) var(--background-y);
+  filter: brightness(1) contrast(2.5) saturate(1.75);
+  mix-blend-mode: soft-light;
+}
+
+/* Secret: diagonal rainbow over sunpillar, the V-Max finish */
+.cinetropes__card[data-rarity='secret'] .cinetropes__shine {
+  --space: 6%;
+  --angle: 133deg;
+  background-image:
+    repeating-linear-gradient(-33deg, hsl(2, 70%, 47%) calc(var(--space) * 1), hsl(228, 60%, 64%) calc(var(--space) * 2), hsl(176, 55%, 39%) calc(var(--space) * 3), hsl(123, 68%, 35%) calc(var(--space) * 4), hsl(283, 75%, 57%) calc(var(--space) * 5), hsl(2, 70%, 47%) calc(var(--space) * 6)),
+    repeating-linear-gradient(var(--angle), hsla(227, 53%, 12%, 0.5) 0%, hsl(180, 10%, 50%) 2.5%, hsl(83, 50%, 35%) 5%, hsl(180, 10%, 50%) 7.5%, hsla(227, 53%, 12%, 0.5) 10%, hsla(227, 53%, 12%, 0.5) 15%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsla(189, 76%, 77%, 0.6) 0%, hsla(147, 59%, 77%, 0.6) 25%, hsla(271, 55%, 69%, 0.6) 50%, hsla(355, 56%, 72%, 0.6) 75%);
+  background-blend-mode: difference, luminosity, soft-light;
+  background-size: 1100% 1100%, 600% 600%, 200% 200%;
+  background-position: var(--background-x) var(--background-y);
+}
+
+.cinetropes__card[data-rarity='secret'] .cinetropes__shine::after {
+  background-image:
+    repeating-linear-gradient(0deg, var(--sunpillar-clr-1) 6%, var(--sunpillar-clr-2) 12%, var(--sunpillar-clr-3) 18%, var(--sunpillar-clr-4) 24%, var(--sunpillar-clr-5) 30%, var(--sunpillar-clr-6) 36%, var(--sunpillar-clr-1) 42%),
+    repeating-linear-gradient(133deg, #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%, hsl(180, 10%, 60%) 5.2%, #0e152e 10%, #0e152e 12%);
+  background-blend-mode: hue, hard-light;
+  background-size: 200% 700%, 300% 100%;
+  background-position: 0% var(--background-y), var(--background-x) var(--background-y);
+  mix-blend-mode: lighten;
+  filter: saturate(1.5);
+}
+
+/* The app's popover: a dark veil, the card in the middle of the screen */
+
+.cinetropes__zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.cinetropes__zoom-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0.85);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.cinetropes__zoom.is-open .cinetropes__zoom-backdrop {
+  opacity: 1;
+}
+
+.cinetropes__card.cinetropes__zoom-card {
+  position: fixed;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cinetropes__close {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  translate: -50% -50%;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(8px);
+  color: rgb(255 255 255 / 0.7);
+  cursor: pointer;
+  opacity: 0;
+  transition-property: opacity, color, background-color, border-color, scale;
+  transition-duration: 300ms, 150ms, 150ms, 150ms, 150ms;
+  transition-timing-function: ease-out;
+}
+
+.cinetropes__zoom.is-open .cinetropes__close {
+  opacity: 1;
+  transition-delay: 400ms, 0ms, 0ms, 0ms, 0ms;
+}
+
+.cinetropes__close:hover {
+  border-color: rgb(255 255 255 / 0.25);
+  background-color: rgb(255 255 255 / 0.14);
+  color: rgb(255 255 255 / 0.9);
+}
+
+.cinetropes__close:active {
+  scale: 0.96;
+}
+
+.cinetropes__close:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.9);
+  outline-offset: 2px;
+}
+
+/* The app's footer: the project's pitch, the credits, set small */
+
+.cinetropes__footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 16px var(--edge) 20px;
+  box-sizing: border-box;
+  border-top: 1px solid var(--band-line);
+}
+
+.cinetropes__footer p {
+  margin: 0;
+  color: var(--band-dim);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.cinetropes__hint {
+  text-align: right;
+}
+
+.cinetropes__hint span {
+  color: rgb(255 255 255 / 0.5);
+}
+
+/* The card column: the stack between its arrows, the count under it */
+.cinetropes__deck {
+  --card-w: clamp(200px, calc((max(100svh, 640px) - 248px) * 2 / 3), 300px);
+  column-gap: 12px;
+  margin-top: 42px;
+}
+
+.cinetropes__glyph {
+  width: clamp(96px, calc((max(100svh, 640px) - 520px) * 0.6), 128px);
+  max-width: 100%;
+}
+
+/* Desktop: one screen, nav on top, footer at the bottom, the page in between */
+@media (min-width: 901px) {
+  .band.cinetropes {
+    box-sizing: border-box;
+    height: 100svh;
+    min-height: 640px;
+  }
+
+  .cinetropes__page {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+/* Mobile, as the beta lays it out: the card on top, then the meta, then the charts two by two */
+@media (max-width: 900px) {
+  .cinetropes__nav {
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .cinetropes__tagline {
+    margin: 0;
+  }
+
+  .cinetropes__nav .tags {
+    flex-basis: 100%;
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
+  .cinetropes__page {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 1.5rem;
+    padding-top: 8px;
+  }
+
+  .cinetropes__deck {
+    --card-w: 220px;
+    margin-top: 42px;
+  }
+
+  .cinetropes__main {
+    width: 100%;
+    gap: 2rem;
+  }
+
+  .cinetropes__info h4 {
+    font-size: 1.5rem;
+  }
+
+  .cinetropes__meta,
+  .cinetropes__info .cinetropes__cast {
+    font-size: 0.75rem;
+  }
+
+  .cinetropes__info .cinetropes__director {
+    font-size: 0.875rem;
+  }
+
+  .cinetropes__info .cinetropes__synopsis {
+    height: 6em;
+    font-size: 0.875rem;
+    -webkit-line-clamp: 4;
+  }
+
+  .cinetropes__signature {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 1.5rem;
+  }
+
+  .cinetropes__glyph {
+    width: 128px;
+  }
+
+  .cinetropes__footer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 48px;
+  }
+
+  .cinetropes__hint {
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinetropes__foil,
+  .cinetropes__shine,
+  .cinetropes__glare {
+    display: none;
+  }
+
+  .cinetropes__zoom *,
+  .cinetropes__zoom-backdrop,
+  .cinetropes__tip,
+  .cinetropes__tip * {
+    transition: none !important;
+  }
+}

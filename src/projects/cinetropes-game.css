@@ -1,0 +1,386 @@
+/* cinetropes meta-game: the game's own world. Its cinemas fill the band, its burgundy boxes edged
+   in copper carry the text, its bitmap font and sprites stay at whole pixels. */
+
+@font-face {
+  font-family: 'Determination';
+  src: url('../assets/cinetropes-game/determination.woff2') format('woff2');
+  font-display: swap;
+}
+
+.cg {
+  --band-bg: #110806;
+  --band-ink: #f0d9a8;
+  --band-dim: #b9997a;
+  --band-line: rgb(240 217 168 / 0.18);
+  --accent: #f0d9a8;
+  --on-accent: #110806;
+  --cg-title: #f0d9a8;
+  --cg-body: #b9997a;
+  --cg-dim: #a8896a;
+  --cg-active: #f8e3b8;
+  --cg-slot: #2a1a14;
+  --cg-gold: #ffd86a;
+  --cg-font: 'Determination', monospace;
+  height: max(100svh, 640px);
+  padding: 0;
+  font-family: var(--cg-font);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.cg :focus-visible {
+  outline: 2px solid var(--cg-gold);
+  outline-offset: 2px;
+}
+
+/* Background: every cinema's facade on top, its restored lobby below, moving past for good */
+
+.cg__reel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cg__row {
+  height: 50%;
+  overflow: hidden;
+}
+
+.cg__track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: cg-reel 160s linear infinite;
+}
+
+.cg__row--lobby .cg__track {
+  animation-direction: reverse;
+}
+
+.cg__reel:hover .cg__track,
+.cg__reel:focus-within .cg__track,
+.cg.is-visiting .cg__track {
+  animation-play-state: paused;
+}
+
+@keyframes cg-reel {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.cg__track li {
+  height: 100%;
+}
+
+.cg__tile {
+  display: block;
+  height: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  background-color: var(--cg-slot);
+  cursor: pointer;
+  transition-property: filter;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+}
+
+.cg__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.cg__tile:hover,
+.cg__tile:focus-visible {
+  filter: brightness(1.15);
+}
+
+.cg__tile:focus-visible {
+  outline-offset: -4px;
+}
+
+.cg__tile:active {
+  filter: brightness(0.9);
+}
+
+/* The game's box: copper edge, near-black burgundy */
+
+.cg__box {
+  border: 28px solid transparent;
+  border-image: url('../assets/cinetropes-game/border.webp') 14 / 28px stretch;
+  padding: 4px;
+  background-color: #110806;
+  image-rendering: pixelated;
+  color: var(--cg-body);
+}
+
+.cg__intro {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(30em, calc(100% - 2 * var(--gutter)));
+  box-shadow: 0 16px 48px rgb(0 0 0 / 0.5);
+}
+
+.cg__title {
+  margin: 0;
+  color: var(--cg-title);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+  text-wrap: balance;
+}
+
+
+.cg__text {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.cg__dim {
+  color: var(--cg-dim);
+}
+
+.cg__gold {
+  color: var(--cg-gold);
+}
+
+.cg .tags {
+  color: var(--cg-dim);
+}
+
+/* Visit: the reel stops and dims, the cinema's lobby opens in front */
+
+.cg__visit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px var(--gutter);
+  background-color: rgb(17 8 6 / 0.82);
+  cursor: pointer;
+}
+
+.cg__visit > * {
+  cursor: auto;
+}
+
+.cg__stage {
+  position: relative;
+  flex: none;
+  width: min(576px, calc(100svh - 96px));
+  aspect-ratio: 1;
+}
+
+.cg__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.cg__exit {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  translate: -50% 0;
+  padding: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition-property: translate, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.cg__exit img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  image-rendering: pixelated;
+}
+
+.cg__exit:hover {
+  translate: -50% 3px;
+}
+
+.cg__exit:active {
+  scale: 0.96;
+}
+
+.cg__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 400px;
+  flex: none;
+}
+
+.cg__heading {
+  margin: 0;
+  color: var(--cg-title);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.cg__heading:focus {
+  outline: none;
+}
+
+.cg__films {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cg__film {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--cg-title);
+  font: inherit;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: left;
+  cursor: pointer;
+  transition-property: translate, scale, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+
+.cg__film:hover {
+  translate: 0 -3px;
+}
+
+.cg__film:active {
+  scale: 0.96;
+}
+
+.cg__film[aria-pressed='true'] .cg__poster {
+  outline: 2px solid var(--cg-gold);
+  outline-offset: 2px;
+}
+
+.cg__film[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cg__film[aria-disabled='true']:hover {
+  translate: none;
+}
+
+.cg__poster {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background-color: var(--cg-slot);
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+.cg__quote {
+  min-height: 48px;
+}
+
+.cg__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+/* The game's buttons are bracketed words */
+.cg__button {
+  padding: 4px 6px;
+  border: none;
+  background: none;
+  color: var(--cg-active);
+  font: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition-property: color, background-color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.cg__button::before {
+  content: '[';
+}
+
+.cg__button::after {
+  content: ']';
+}
+
+.cg__button:hover {
+  color: var(--cg-gold);
+  background-color: rgb(240 217 168 / 0.08);
+}
+
+.cg__button:active {
+  scale: 0.96;
+}
+
+@media (max-width: 900px) {
+  .cg {
+    height: 860px;
+  }
+
+  .cg__reel {
+    inset: 0 0 auto;
+    height: 480px;
+  }
+
+  .cg__intro {
+    top: 448px;
+    bottom: auto;
+  }
+
+  .cg__visit {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 16px var(--gutter);
+  }
+
+  .cg__stage {
+    width: min(100%, 400px);
+  }
+
+  .cg__panel {
+    width: min(100%, 400px);
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cg__track {
+    animation: none;
+  }
+
+  .cg__tile,
+  .cg__film,
+  .cg__exit {
+    transition-duration: 0ms;
+  }
+}

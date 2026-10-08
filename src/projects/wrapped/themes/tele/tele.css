@@ -1,0 +1,2206 @@
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-600-italic-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-600-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-800-italic-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-800-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-900-italic-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-900-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-600-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-800-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-800.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-900-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/BarlowCondensed-900.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/SourceSerif4-400-700-italic-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/SourceSerif4-400-700-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/SourceSerif4-400-700-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../../../assets/wrapped/fonts/tele/SourceSerif4-400-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.wrapped__look[data-theme='tele'] {
+  --paper: #f4efe4;
+  --ink: #16140f;
+  --muted: #5c564a;
+  --red: #e2081c;
+  --red-deep: #b8000f;
+  --yellow: #ffd200;
+  --blue: #1537a8;
+  --table: #cfc6b4;
+  /* The test card's own bars */
+  --cyan: #3fb8c9;
+  --green: #3aa64a;
+  --magenta: #c23fa0;
+  --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --serif: 'Source Serif 4', Georgia, serif;
+  --switch-bg: var(--ink);
+  --switch-fg: var(--paper);
+  --switch-font: italic 800 18px/1 var(--cond);
+  --switch-radius: 0;
+  color-scheme: light;
+}
+
+.wrapped__look[data-theme='tele'] {
+  background: var(--table);
+  scrollbar-color: var(--red) var(--table);
+  scrollbar-width: thin;
+}
+
+.wrapped__look[data-theme='tele'] {
+  background: var(--table);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.wrapped__look[data-theme='tele'] ::selection {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-kiosk {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-x: clip;
+}
+
+.wrapped__look[data-theme='tele'] .tele-kiosk a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Pages */
+.wrapped__look[data-theme='tele'] .tele-spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--paper);
+}
+
+.wrapped__look[data-theme='tele'] .tele-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 16px 16px 32px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-page + .tele-page {
+  padding-top: 0;
+}
+
+.wrapped__look[data-theme='tele'] .tele-page + .tele-page > .tele-folio {
+  display: none;
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue {
+  background: var(--blue);
+  color: #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-folio {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid currentColor;
+  font: 800 12px/1.2 var(--cond);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-folio b {
+  color: var(--red-deep);
+  text-align: center;
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-folio b {
+  color: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-headline {
+  margin-top: 10px;
+  font: italic 900 clamp(46px, 54.6px, 68px)/0.92 var(--cond);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-band {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 0.04em;
+  padding: 0.06em 0.12em 0;
+  background: var(--blue);
+  color: #fff;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-band {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-standfirst {
+  max-width: 36ch;
+  font: italic 400 18px/1.45 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-body {
+  max-width: 40ch;
+  font: 400 17px/1.5 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-body strong,
+.wrapped__look[data-theme='tele'] .tele-body b {
+  font-weight: 700;
+}
+
+.wrapped__look[data-theme='tele'] .tele-unit {
+  font: 800 22px/1.05 var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.wrapped__look[data-theme='tele'] .tele-big {
+  margin-block: 4px -6px;
+  color: var(--red);
+  font: italic 900 clamp(120px, 156px, 176px)/0.8 var(--cond);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='tele'] .tele-big sup {
+  font-size: 0.42em;
+  vertical-align: top;
+  line-height: 1;
+}
+
+.wrapped__look[data-theme='tele'] .tele-figure {
+  display: inline-block;
+  margin: 0.1em 0.08em;
+  padding: 0.14em 0.32em 0.08em;
+  background: var(--red);
+  color: #fff;
+  font: italic 900 1.05em/1 var(--cond);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(-2deg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-figure-n {
+  font-size: 1.5em;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-figure {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-mark {
+  padding: 0 0.12em;
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-title {
+  font: italic 900 clamp(40px, 46.8px, 60px)/0.9 var(--cond);
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-tag {
+  position: absolute;
+  z-index: 2;
+  padding: 5px 10px;
+  background: var(--red);
+  color: #fff;
+  font: italic 900 18px/1 var(--cond);
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgb(22 20 15 / 0.3);
+}
+
+/* Photos */
+.wrapped__look[data-theme='tele'] .tele-photo {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  background: #d9d2c3;
+}
+
+.wrapped__look[data-theme='tele'] .tele-photo-thumb {
+  aspect-ratio: 2 / 3;
+}
+
+.wrapped__look[data-theme='tele'] .tele-photo-art {
+  aspect-ratio: 16 / 9;
+}
+
+.wrapped__look[data-theme='tele'] .tele-photo-none {
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  background: var(--blue);
+  color: #fff;
+  font: italic 900 18px/0.95 var(--cond);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* Cover */
+.wrapped__look[data-theme='tele'] .tele-spread-cover {
+  --lift: 0;
+  transform-origin: 50% 30%;
+  /* Lifted while the magazine is being put down, its shadow tightens as it lands */
+  box-shadow: 0 calc(30px + 30px * var(--lift)) calc(60px + 30px * var(--lift)) -24px rgb(40 30 20 / calc(0.5 - 0.45 * var(--lift)));
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover {
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-height: 844px;
+  overflow: hidden;
+  background: var(--red) radial-gradient(circle at 70% 30%, var(--blue), transparent 70%);
+  color: #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-star {
+  position: absolute;
+  inset: 0;
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-star .tele-photo {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-star::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0.25), transparent 18%, transparent 30%, rgb(0 0 0 / 0.6) 50%, rgb(0 0 0 / 0.88) 80%);
+}
+
+.wrapped__look[data-theme='tele'] .tele-mast {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  margin: 14px 14px 0;
+  max-width: calc(100% - 28px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-logo {
+  min-width: 0;
+  padding: 6px 12px 2px;
+  background: var(--red);
+  /* The masthead fits the reader's name on one line */
+  font: italic 900 min(84px, 15cqi, calc((100cqi - 120px) / (var(--letters) * 0.5)))/0.82 var(--cond);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.wrapped__look[data-theme='tele'] .tele-logo span {
+  color: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-issue {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: 800 12px/1.15 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-issue b {
+  color: var(--red-deep);
+  font-size: 26px;
+  line-height: 0.95;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sticker {
+  position: absolute;
+  top: 128px;
+  right: 14px;
+  display: grid;
+  place-content: center;
+  width: 104px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--ink);
+  font: 800 14px/1 var(--cond);
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(12deg);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.35);
+}
+
+.wrapped__look[data-theme='tele'] .tele-sticker b {
+  display: block;
+  color: var(--red-deep);
+  font: italic 900 30px/0.95 var(--cond);
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-lines {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  margin-top: auto;
+  padding: 0 16px 24px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-lede {
+  justify-self: start;
+  max-width: 32ch;
+  padding: 6px 10px;
+  background: var(--ink);
+  color: #fff;
+  font: italic 600 17px/1.3 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-title {
+  font: italic 900 clamp(38px, 42.9px, 60px)/0.9 var(--cond);
+  text-transform: uppercase;
+  text-wrap: balance;
+  text-shadow: 0 2px 14px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-line {
+  font: 600 18px/1.2 var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-line b {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  transform: none;
+  color: var(--yellow);
+  font: italic 900 1em/1.2 var(--cond);
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-line .tele-figure-n {
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-line-lead {
+  font-size: 24px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-inset {
+  display: flex;
+  gap: 6px;
+  padding-right: 84px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-inset li {
+  width: 22%;
+  border: 2px solid #fff;
+  box-shadow: 0 6px 16px rgb(0 0 0 / 0.45);
+  transform: rotate(-4deg);
+}
+
+.wrapped__look[data-theme='tele'] .tele-inset li:nth-child(2) { transform: rotate(3deg); }
+.wrapped__look[data-theme='tele'] .tele-inset li:nth-child(3) { transform: rotate(-2deg); }
+.wrapped__look[data-theme='tele'] .tele-inset li:nth-child(4) { transform: rotate(5deg); }
+
+.wrapped__look[data-theme='tele'] .tele-barcode {
+  display: block;
+  width: 64px;
+  height: 40px;
+  padding: 4px;
+  background: #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-barcode i {
+  display: block;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #000 0 1px, #fff 1px 3px, #000 3px 5px, #fff 5px 6px, #000 6px 7px, #fff 7px 9px, #000 9px 12px, #fff 12px 13px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover > .tele-barcode {
+  position: absolute;
+  right: 16px;
+  bottom: 24px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-contents {
+  display: none;
+}
+
+/* Audience: the ratings table, the reader's line highlighted */
+.wrapped__look[data-theme='tele'] .tele-ratings {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 3px solid var(--ink);
+  font-family: var(--cond);
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings th,
+.wrapped__look[data-theme='tele'] .tele-ratings td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--ink);
+  text-align: left;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings th {
+  width: 5ch;
+  color: var(--blue);
+  font: italic 900 30px/1 var(--cond);
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings sup {
+  font-size: 0.5em;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings-blank {
+  display: block;
+  height: 10px;
+  background: repeating-linear-gradient(90deg, var(--muted) 0 2px, transparent 2px 6px);
+  opacity: 0.5;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings-gap td {
+  padding-block: 2px;
+  color: var(--muted);
+  font: 900 22px/1 var(--cond);
+  text-align: center;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings .tele-ratings-you {
+  background: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings-you th {
+  color: var(--red-deep);
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings-you b {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--red);
+  color: #fff;
+  font: italic 900 22px/1 var(--cond);
+  text-transform: uppercase;
+}
+
+/* Soirée spéciale: the figures of a binge, each on its own line */
+.wrapped__look[data-theme='tele'] .tele-stats {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+
+.wrapped__look[data-theme='tele'] .tele-stats li {
+  display: grid;
+  justify-items: start;
+}
+
+.wrapped__look[data-theme='tele'] .tele-stats b {
+  color: var(--red);
+  font: italic 900 clamp(72px, 78px, 120px)/0.82 var(--cond);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.wrapped__look[data-theme='tele'] .tele-stats li:nth-child(3n + 2) b {
+  color: var(--blue);
+}
+
+.wrapped__look[data-theme='tele'] .tele-stats li:nth-child(3n) b {
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-stats span {
+  margin-top: -4px;
+  padding: 4px 10px 3px;
+  background: var(--ink);
+  color: #fff;
+  font: italic 900 20px/1 var(--cond);
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+.wrapped__look[data-theme='tele'] .tele-stats li:nth-child(even) span {
+  background: var(--red);
+  transform: rotate(1.5deg);
+}
+
+.wrapped__look[data-theme='tele'] .tele-pick .tele-stats b {
+  font-size: clamp(56px, 58.5px, 88px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-pick .tele-stats li:nth-child(3n + 1) b {
+  color: var(--red-deep);
+}
+
+/* Dernière partie de soirée: the night as a programme listing */
+.wrapped__look[data-theme='tele'] .tele-listing {
+  border-top: 3px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing li {
+  display: grid;
+  grid-template-columns: 4.2em 40px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing-time {
+  display: grid;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing-time b {
+  color: var(--blue);
+  font: italic 900 24px/1 var(--cond);
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing-time span {
+  color: var(--muted);
+  font: 600 14px/1 var(--cond);
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing-time span::before {
+  content: '→ ';
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing-title {
+  display: grid;
+  gap: 2px;
+  font: italic 700 17px/1.2 var(--serif);
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing-title span {
+  color: var(--muted);
+  font: 700 14px/1 var(--cond);
+  letter-spacing: 0.03em;
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing .tele-listing-last {
+  padding-inline: 8px;
+  background: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-listing-last .tele-listing-time b {
+  color: var(--red-deep);
+}
+
+/* Audience: the hours known for the ranks shown */
+.wrapped__look[data-theme='tele'] .tele-ratings-label {
+  color: var(--muted);
+  font: 800 16px/1 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings-bar {
+  display: block;
+  width: max(calc(var(--share) * 100%), 4.5em);
+  margin-top: 6px;
+  padding: 5px 8px;
+  background: var(--blue);
+  color: #fff;
+  font: italic 800 16px/1 var(--cond);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ratings-you .tele-ratings-bar {
+  background: var(--red);
+}
+
+/* Feuilleton: the evenings of the run on a wall calendar */
+.wrapped__look[data-theme='tele'] .tele-calendar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-calendar-month {
+  width: min(100%, 320px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-calendar-name {
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 3px solid var(--ink);
+  font: italic 900 26px/1 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-calendar ol {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-calendar li {
+  font: 700 17px/2 var(--cond);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='tele'] .tele-calendar .tele-calendar-head {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.wrapped__look[data-theme='tele'] .tele-calendar .tele-calendar-on {
+  background: var(--red);
+  color: #fff;
+  font-weight: 900;
+}
+
+.wrapped__look[data-theme='tele'] .tele-calendar .tele-calendar-last {
+  background: var(--red-deep);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Feuilleton: the serial's episode guide */
+.wrapped__look[data-theme='tele'] .tele-episodes {
+  border-top: 3px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  grid-template-areas: 'poster soir' 'poster day' 'poster title';
+  align-content: center;
+  column-gap: 12px;
+  row-gap: 2px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes li:not(:has(.tele-episodes-poster)) {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'soir' 'day' 'title';
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes li > b {
+  grid-area: soir;
+  font: italic 800 20px/1 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes-poster {
+  grid-area: poster;
+  align-self: center;
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes-day {
+  grid-area: day;
+  color: var(--muted);
+  font: 600 14px/1.2 var(--cond);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes-title {
+  grid-area: title;
+  font: italic 700 17px/1.25 var(--serif);
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes li:last-child > b {
+  color: var(--red-deep);
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes-later {
+  position: relative;
+  margin-top: 30px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-episodes-later::before {
+  content: '…';
+  position: absolute;
+  top: -30px;
+  left: 0;
+  color: var(--muted);
+  font-size: 22px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-pick {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40% minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 12px;
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-pick > .tele-tag {
+  top: 10px;
+  left: -6px;
+  transform: rotate(-3deg);
+}
+
+.wrapped__look[data-theme='tele'] .tele-pick > div {
+  display: grid;
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-pick p {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.wrapped__look[data-theme='tele'] .tele-pick-title {
+  font: italic 900 clamp(28px, 33.15px, 38px)/0.9 var(--cond);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* Programme grid */
+.wrapped__look[data-theme='tele'] .tele-grid {
+  border-top: 1px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot {
+  display: grid;
+  grid-template-columns: 76px 44px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-month {
+  color: var(--blue);
+  font: italic 800 18px/1 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-poster {
+  display: block;
+  width: 44px;
+  aspect-ratio: 2 / 3;
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-poster.tele-photo-none {
+  padding: 0;
+  font-size: 0;
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-text {
+  display: grid;
+  gap: 2px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-title {
+  font: 800 20px/1 var(--cond);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-episodes {
+  color: var(--muted);
+  font: 600 15px/1.1 var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-bar {
+  display: block;
+  width: calc(var(--share) * 100%);
+  min-width: 4px;
+  height: 5px;
+  margin-top: 3px;
+  background: var(--red);
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-none {
+  color: var(--muted);
+  font: italic 400 16px/1.2 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-peak {
+  margin-inline: -8px;
+  padding-inline: 8px;
+  background: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-peak .tele-slot-episodes {
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-slot-future .tele-slot-month {
+  color: var(--muted);
+}
+
+/* Soirée spéciale, dernière partie de soirée, exclusivité */
+.wrapped__look[data-theme='tele'] .tele-still {
+  position: relative;
+}
+
+.wrapped__look[data-theme='tele'] .tele-still > .tele-tag {
+  left: -6px;
+  bottom: -12px;
+  transform: rotate(-2deg);
+}
+
+.wrapped__look[data-theme='tele'] .tele-still + .tele-title {
+  margin-top: 14px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-full-poster {
+  width: 100%;
+}
+
+.wrapped__look[data-theme='tele'] .tele-clock {
+  color: var(--blue);
+  font: italic 900 clamp(96px, 117px, 168px)/0.85 var(--cond);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='tele'] .tele-exclusive {
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapped__look[data-theme='tele'] .tele-ribbon {
+  position: absolute;
+  top: 26px;
+  right: -52px;
+  padding: 6px 60px;
+  background: var(--red);
+  color: #fff;
+  font: italic 900 22px/1 var(--cond);
+  text-transform: uppercase;
+  transform: rotate(35deg);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
+}
+
+/* Posters with their titles */
+.wrapped__look[data-theme='tele'] .tele-thumb-title {
+  font: 800 16px/1.05 var(--cond);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-thumb-caption {
+  color: var(--muted);
+  font: italic 400 15px/1.3 var(--serif);
+}
+
+/* Captions, credits, galleries and pull quotes: the small matter of a page */
+.wrapped__look[data-theme='tele'] .tele-pictured {
+  display: grid;
+  gap: 6px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-pictured figcaption,
+.wrapped__look[data-theme='tele'] .tele-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid currentColor;
+  font: 600 14px/1.3 var(--cond);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-pictured figcaption b,
+.wrapped__look[data-theme='tele'] .tele-caption b {
+  font-weight: 800;
+}
+
+.wrapped__look[data-theme='tele'] .tele-credit {
+  margin-left: auto;
+  font: 600 11px/1 var(--cond);
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.wrapped__look[data-theme='tele'] .tele-pictured-frame {
+  position: relative;
+}
+
+.wrapped__look[data-theme='tele'] .tele-pictured-inset {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 24%;
+  border: 3px solid var(--paper);
+  box-shadow: 0 10px 22px -8px rgb(22 20 15 / 0.7);
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-pictured-inset {
+  border-color: #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-gallery {
+  display: grid;
+  gap: 14px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-gallery-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 3px solid currentColor;
+}
+
+.wrapped__look[data-theme='tele'] .tele-gallery-row[data-count='1'] {
+  grid-template-columns: minmax(0, 40%);
+}
+
+.wrapped__look[data-theme='tele'] .tele-gallery-row li {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-gallery-row .tele-photo {
+  box-shadow: 0 8px 16px -8px rgb(22 20 15 / 0.5);
+}
+
+.wrapped__look[data-theme='tele'] .tele-gallery-row .tele-thumb-title {
+  font-size: 14px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-gallery-row .tele-thumb-caption {
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-photo {
+  border: 3px solid #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-quote {
+  position: relative;
+  padding: 14px 34px 12px;
+  text-align: center;
+  border-block: 3px solid var(--red);
+  font: italic 700 clamp(24px, 27.3px, 30px)/1.2 var(--serif);
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='tele'] .tele-quote::before {
+  content: '«';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  color: var(--red);
+  font: italic 900 52px/1 var(--cond);
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-quote {
+  border-color: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-quote::before {
+  color: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-box {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-box-title {
+  font: 800 18px/1.15 var(--cond);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-palmares {
+  counter-reset: palmares;
+  border-top: 3px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-palmares li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--ink);
+  font: italic 900 22px/1 var(--cond);
+  text-transform: uppercase;
+  counter-increment: palmares;
+}
+
+.wrapped__look[data-theme='tele'] .tele-palmares li::before {
+  content: counter(palmares);
+  min-width: 1.2em;
+  color: var(--red-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ton jumeau: two circles of titles, the shared ones where they cross */
+.wrapped__look[data-theme='tele'] .tele-venn {
+  position: relative;
+  width: min(100%, 480px);
+  aspect-ratio: 100 / 62;
+  margin-block: 8px 4px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-venn-side {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  width: 62%;
+  aspect-ratio: 1;
+  padding-inline: 9%;
+  border-radius: 50%;
+  color: #fff;
+  mix-blend-mode: multiply;
+}
+
+.wrapped__look[data-theme='tele'] .tele-venn-you {
+  left: 0;
+  align-items: flex-start;
+  background: var(--red);
+}
+
+.wrapped__look[data-theme='tele'] .tele-venn-them {
+  right: 0;
+  align-items: flex-end;
+  background: var(--blue);
+  text-align: right;
+}
+
+.wrapped__look[data-theme='tele'] .tele-venn-side b {
+  max-width: 55%;
+  font: italic 900 clamp(18px, 18.72px, 24px)/0.95 var(--cond);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-venn-side span {
+  font: italic 900 clamp(26px, 27.3px, 38px)/1 var(--cond);
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='tele'] .tele-venn-caption {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  width: min(100%, 480px);
+  text-align: center;
+}
+
+.wrapped__look[data-theme='tele'] .tele-figure-caption {
+  display: contents;
+}
+
+.wrapped__look[data-theme='tele'] .tele-venn-shared {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: var(--yellow);
+  font: italic 900 clamp(64px, 66.3px, 112px)/0.8 var(--cond);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  transform: translate(-50%, -50%) rotate(-4deg);
+  text-shadow: 3px 3px 0 var(--ink);
+}
+
+/* Courrier des lecteurs */
+.wrapped__look[data-theme='tele'] .tele-letters {
+  display: grid;
+  gap: 0;
+  border-top: 3px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-letter {
+  display: grid;
+  grid-template-columns: 30% minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-letter > div {
+  display: grid;
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-letter .tele-pick-title {
+  font-size: clamp(22px, 25.35px, 32px);
+  overflow-wrap: normal;
+  hyphens: auto;
+}
+
+.wrapped__look[data-theme='tele'] .tele-letter-sign {
+  font: italic 400 17px/1.35 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-letter-sign::before {
+  content: '— ';
+}
+
+.wrapped__look[data-theme='tele'] .tele-letter-lead {
+  grid-template-columns: 40% minmax(0, 1fr);
+  padding: 14px;
+  border: 0;
+  background: var(--yellow);
+}
+
+/* A review opening on its still, the poster inset */
+.wrapped__look[data-theme='tele'] .tele-feature {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding-top: 14px;
+  border-top: 3px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-feature + .tele-feature {
+  margin-top: 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-feature-body {
+  display: grid;
+  grid-template-columns: 40% minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+}
+
+.wrapped__look[data-theme='tele'] .tele-feature-body > div {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.wrapped__look[data-theme='tele'] .tele-feature .tele-title {
+  font-size: clamp(30px, 35.1px, 44px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign-wheel {
+  width: min(100%, 320px);
+  margin: auto;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign-wheel circle {
+  stroke: var(--yellow);
+  stroke-width: 2;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign-wheel path {
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign-wheel .tele-sign-dot {
+  fill: var(--yellow);
+  stroke: none;
+}
+
+.wrapped__look[data-theme='tele'] .tele-reading-name {
+  display: block;
+  margin-block: 2px 4px;
+  color: var(--yellow);
+  font: italic 900 clamp(38px, 42.9px, 56px)/0.9 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-credit,
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-pictured figcaption {
+  color: #fff;
+}
+
+/* Critiques */
+.wrapped__look[data-theme='tele'] .tele-review {
+  display: grid;
+  grid-template-columns: 38% minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding-top: 14px;
+  border-top: 1px solid var(--ink);
+}
+
+.wrapped__look[data-theme='tele'] .tele-review > div {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.wrapped__look[data-theme='tele'] .tele-review-lead {
+  grid-template-columns: 44% minmax(0, 1fr);
+  padding: 12px;
+  border: 0;
+  background: var(--yellow);
+}
+
+.wrapped__look[data-theme='tele'] .tele-review-detail {
+  font: italic 400 20px/1.3 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-review-detail .tele-figure {
+  font-size: 1.6em;
+}
+
+.wrapped__look[data-theme='tele'] .tele-review-when {
+  font: italic 400 17px/1.35 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-review-what {
+  padding: 4px 8px;
+  background: var(--red);
+  color: #fff;
+  font: italic 900 17px/1 var(--cond);
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+/* Horoscope */
+.wrapped__look[data-theme='tele'] .tele-sign {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign svg {
+  width: 88px;
+  height: 88px;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign circle {
+  stroke: var(--yellow);
+  stroke-width: 3;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign path {
+  stroke: #fff;
+  stroke-width: 5;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign .tele-sign-dot {
+  fill: var(--yellow);
+  stroke: none;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign-label {
+  display: block;
+  font: 600 16px/1.2 var(--cond);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sign-name {
+  display: block;
+  color: var(--yellow);
+  font: italic 900 clamp(48px, 54.6px, 76px)/0.9 var(--cond);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='tele'] .tele-reading {
+  padding-top: 12px;
+  border-top: 1px solid rgb(255 255 255 / 0.4);
+}
+
+.wrapped__look[data-theme='tele'] .tele-reading dt {
+  color: var(--yellow);
+  font: 800 16px/1.2 var(--cond);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-reading dd {
+  margin-top: 4px;
+  font: 400 18px/1.45 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-spread-blue .tele-thumb-caption {
+  color: #fff;
+}
+
+/* Fin des programmes */
+.wrapped__look[data-theme='tele'] .tele-stamp {
+  align-self: flex-start;
+  padding: 4px 12px;
+  border: 3px solid var(--red-deep);
+  color: var(--red-deep);
+  font: italic 900 22px/1 var(--cond);
+  text-transform: uppercase;
+  transform: rotate(-6deg);
+}
+
+.wrapped__look[data-theme='tele'] .tele-end {
+  color: var(--red);
+  font: italic 900 72px/0.9 var(--cond);
+  text-transform: uppercase;
+}
+
+/* The imprint at the back of the issue */
+.wrapped__look[data-theme='tele'] .tele-ours {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding: 20px 16px 32px;
+  border-top: 6px solid var(--red);
+  background: var(--paper);
+}
+
+.wrapped__look[data-theme='tele'] .tele-ours-short {
+  max-width: 40ch;
+  padding: 10px 12px;
+  background: var(--yellow);
+  font: italic 400 17px/1.4 var(--serif);
+}
+
+.wrapped__look[data-theme='tele'] .tele-ours-text {
+  font: 600 15px/1.3 var(--cond);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* A wide screen opens the magazine flat on the table, two facing pages at a time */
+
+/* Waiting for the issue, or a notice in its place */
+.wrapped__look[data-theme='tele'] .tele-state {
+  display: grid;
+  place-items: center;
+  min-height: 844px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-state-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  min-height: 844px;
+  padding: 16px 16px 32px;
+  background: var(--paper);
+}
+
+.wrapped__look[data-theme='tele'] .tele-state-waiting > .tele-screen {
+  margin-top: 0;
+}
+
+.wrapped__look[data-theme='tele'] .tele-state-waiting {
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-state-logo {
+  padding: 6px 14px 2px;
+  background: var(--red);
+  color: #fff;
+  font: italic 900 64px/0.82 var(--cond);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* A set's screen: the card behind a slow rolling band, as an old tube shows it */
+.wrapped__look[data-theme='tele'] .tele-screen {
+  position: relative;
+  width: min(100%, 420px);
+  margin-top: auto;
+  padding: 14px;
+  border-radius: 22px;
+  background: var(--ink);
+  box-shadow: 0 24px 48px -20px rgb(40 30 20 / 0.55);
+}
+
+.wrapped__look[data-theme='tele'] .tele-screen-card {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-screen-rolling::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, transparent 40%, rgb(255 255 255 / 0.18) 50%, transparent 60%) 0 0 / 100% 300% no-repeat;
+  animation: tele-roll 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes tele-roll {
+  from { background-position: 0 100%; }
+  to { background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='tele'] .tele-screen-rolling::after {
+    animation: none;
+    background: none;
+  }
+}
+
+.wrapped__look[data-theme='tele'] .tele-button {
+  align-self: flex-start;
+  min-height: 48px;
+  padding: 10px 24px 8px;
+  border: 0;
+  background: var(--red);
+  color: #fff;
+  font: italic 900 24px/1 var(--cond);
+  text-transform: uppercase;
+  box-shadow: 0 8px 16px -6px rgb(22 20 15 / 0.45);
+  cursor: pointer;
+  transition: background-color 0.15s ease-out, transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.wrapped__look[data-theme='tele'] .tele-button:hover {
+  background: var(--red-deep);
+}
+
+.wrapped__look[data-theme='tele'] .tele-button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 6px -3px rgb(22 20 15 / 0.45);
+}
+
+/* Stories: each sheet on one page of 396 × 704, scaled to the phone and shared as the image.
+   The top 28 px and the bottom 72 px stay free of words, Safari lays the stories' chrome over them */
+.wrapped__look[data-theme='tele'] .tele-story {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 396px;
+  height: 704px;
+  padding: 28px 16px 72px;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  animation: tele-put 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story.tele-spread-blue {
+  background: var(--blue);
+  color: #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-piece {
+  min-width: 0;
+  animation: tele-land 0.5s calc(0.3s + var(--at, 0) * 100ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-headline {
+  margin-top: 4px;
+  font-size: 46px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-band {
+  display: inline-block;
+  animation: tele-wipe 0.45s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-big {
+  font-size: 120px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-unit {
+  font-size: 20px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-standfirst {
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-body {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-title {
+  font-size: 30px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-pick {
+  grid-template-columns: 76px minmax(0, 1fr);
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-pick-title {
+  font-size: 26px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-stats b {
+  font-size: 44px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-pick .tele-stats b {
+  font-size: 36px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-figure {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-row li {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  animation: tele-drop 0.5s calc(0.7s + var(--at, 0) * 100ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-row .tele-thumb-title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-row-small {
+  grid-template-columns: repeat(4, 64px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-ratings th,
+.wrapped__look[data-theme='tele'] .tele-story .tele-ratings td {
+  padding: 5px 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-ratings th {
+  font-size: 24px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-ratings-you b {
+  padding: 3px 8px;
+  font-size: 17px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-ratings-bar {
+  margin-top: 4px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-still .tele-photo {
+  height: 130px;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-venn {
+  width: 250px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-venn-side b {
+  max-width: 70%;
+  font-size: 16px;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* The run's months as bands of days, struck one evening after the other */
+.wrapped__look[data-theme='tele'] .tele-days {
+  display: grid;
+  gap: 6px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-days-month {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-days-month p {
+  font: 800 13px/1 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-days ol {
+  display: grid;
+  grid-template-columns: repeat(31, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-days li {
+  height: 16px;
+  background: var(--table);
+}
+
+.wrapped__look[data-theme='tele'] .tele-days .tele-days-on {
+  background: var(--red);
+  animation: tele-strike 0.2s calc(0.6s + var(--day, 0) * 16ms) ease-out both;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-grid {
+  gap: 0;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-slot {
+  grid-template-columns: 70px 24px minmax(0, 1fr);
+  gap: 8px;
+  min-height: 32px;
+  padding-block: 1px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-slot-month {
+  font-size: 15px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-slot-poster {
+  width: 20px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-slot-title {
+  overflow: hidden;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-slot-episodes {
+  font-size: 12px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-slot-text {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-slot-bar {
+  grid-column: 1 / -1;
+}
+
+/* The night's last poster behind its hour */
+.wrapped__look[data-theme='tele'] .tele-story-backdrop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  min-height: 290px;
+  margin: -12px -16px 0;
+  padding: 16px;
+  color: #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-backdrop > .tele-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, transparent 20%, rgb(22 20 15 / 0.85) 75%);
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-night .tele-story-piece:first-of-type {
+  position: relative;
+  z-index: 0;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-clock {
+  color: var(--yellow);
+  font-size: 96px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-listing li {
+  grid-template-columns: 4em 24px minmax(0, 1fr);
+  gap: 10px;
+  padding-block: 6px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-listing-title {
+  font-size: 15px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-full .tele-full-poster {
+  height: 220px;
+  aspect-ratio: auto;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-exclusive,
+.wrapped__look[data-theme='tele'] .tele-story-full > .tele-story-piece:has(> .tele-full-poster) {
+  margin-inline: -16px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-end {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-end .tele-screen {
+  width: 130px;
+  margin: 0;
+  padding: 6px;
+  border-radius: 14px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-letter {
+  grid-template-columns: 44px minmax(0, 1fr);
+  padding-block: 8px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-review {
+  grid-template-columns: 76px minmax(0, 1fr);
+  padding-top: 10px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-sign {
+  grid-template-columns: 52px minmax(0, 1fr);
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-sign svg {
+  width: 52px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-reading-name {
+  font-size: 34px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-reading dd {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover {
+  padding: 0;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-cover {
+  min-height: 0;
+  height: 100%;
+  padding-top: 28px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-cover-lines {
+  padding-bottom: 76px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-cover > .tele-barcode {
+  bottom: 76px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-cover-title {
+  font-size: 44px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-sticker {
+  top: 106px;
+  right: 10px;
+  width: 84px;
+  font-size: 12px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-sticker b {
+  font-size: 24px;
+}
+
+/* The lede keeps clear of the sticker */
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-cover-lede {
+  max-width: 280px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-story .tele-stamp {
+  width: fit-content;
+}
+
+.wrapped__look[data-theme='tele'] .tele-cover-colophon {
+  padding-right: 80px;
+  font: 600 14px/1.2 var(--cond);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='tele'] .tele-story-cover .tele-sticker-rank b {
+  font-size: 36px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-sticker-rank sup {
+  font-size: 0.5em;
+  vertical-align: top;
+}
+
+@keyframes tele-put {
+  from { transform: translateY(-24px) scale(1.04) rotate(-1.6deg); }
+}
+
+@keyframes tele-land {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+@keyframes tele-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+}
+
+@keyframes tele-drop {
+  from { opacity: 0; transform: translateY(-12px) rotate(-3deg) scale(1.04); }
+}
+
+@keyframes tele-strike {
+  from { transform: scaleY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='tele'] .tele-story,
+.wrapped__look[data-theme='tele'] .tele-story-piece,
+.wrapped__look[data-theme='tele'] .tele-story .tele-band,
+.wrapped__look[data-theme='tele'] .tele-story-row li,
+.wrapped__look[data-theme='tele'] .tele-days .tele-days-on {
+    animation: none;
+  }
+}
+
+/* The issue on the newsstand, opened by Keep in touch in a frame of its own: `?cover` */
+.wrapped__look[data-theme='tele'] .tele-presentation {
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  height: 844px;
+  overflow: hidden;
+  background: var(--ink);
+  color: #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-wall {
+  position: absolute;
+  inset: -12% -6%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  transform: rotate(-6deg);
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: tele-roll 70s linear infinite;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-column:nth-child(even) {
+  animation-direction: reverse;
+  animation-duration: 90s;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-column .tele-photo {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 4px solid #fff;
+}
+
+@keyframes tele-roll {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-50% - 6px)); }
+}
+
+/* The front reads over the posters: dark at the masthead, darker under the lines */
+.wrapped__look[data-theme='tele'] .tele-presentation::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(22 20 15 / 0.6), rgb(22 20 15 / 0.2) 28%, rgb(22 20 15 / 0.75) 55%, rgb(22 20 15 / 0.96) 80%);
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation > :not(.tele-presentation-wall) {
+  position: relative;
+  z-index: 2;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation .tele-sticker {
+  position: absolute;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-lines {
+  display: grid;
+  gap: 14px;
+  margin-top: auto;
+  padding: 0 24px 28px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation .tele-cover-title {
+  font-size: clamp(38px, 9cqi, 72px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-contents {
+  display: grid;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 3px solid #fff;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation .tele-headline {
+  margin: 0;
+  font-size: clamp(30px, 6cqi, 44px);
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-contents ol {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 600 clamp(15px, 2.6cqi, 19px)/1.2 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-contents li span {
+  margin-right: 0.25em;
+  color: var(--yellow);
+  font-style: italic;
+  font-weight: 900;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-read {
+  justify-self: start;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 18px 8px;
+  background: var(--red);
+  font: italic 900 clamp(22px, 4cqi, 30px)/1 var(--cond);
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-read::after {
+  content: '→' / '';
+  display: inline-block;
+  margin-left: 0.25em;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-contents a {
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-contents a:focus-visible,
+.wrapped__look[data-theme='tele'] .tele-presentation-read:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation-contents a,
+.wrapped__look[data-theme='tele'] .tele-presentation-contents a span,
+.wrapped__look[data-theme='tele'] .tele-presentation-read,
+.wrapped__look[data-theme='tele'] .tele-presentation-read::after {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, color 0.2s, box-shadow 0.35s;
+}
+
+@media (hover: hover) {
+  /* A line of the contents is marked like a programme circled in the TV guide */
+  .wrapped__look[data-theme='tele'] .tele-presentation-contents a:hover {
+    transform: translateX(8px);
+  }
+
+  .wrapped__look[data-theme='tele'] .tele-presentation-contents a:hover span {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: 0 0 0 3px var(--blue);
+  }
+
+  .wrapped__look[data-theme='tele'] .tele-presentation-read:hover {
+    background: var(--red-deep);
+    transform: rotate(-1.5deg);
+  }
+
+  .wrapped__look[data-theme='tele'] .tele-presentation-read:hover::after {
+    transform: translateX(6px);
+  }
+}
+
+.wrapped__look[data-theme='tele'] .tele-presentation > .tele-barcode {
+  position: absolute;
+  right: 24px;
+  bottom: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='tele'] .tele-presentation-column {
+    animation: none;
+  }
+}

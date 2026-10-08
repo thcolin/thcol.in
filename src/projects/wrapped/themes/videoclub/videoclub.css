@@ -1,0 +1,2814 @@
+@font-face {
+  font-family: 'Tilt Neon';
+  src: url('../../../../assets/wrapped/fonts/videoclub/TiltNeon.woff2') format('woff2');
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Tilt Neon';
+  src: url('../../../../assets/wrapped/fonts/videoclub/TiltNeon-ext.woff2') format('woff2');
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('../../../../assets/wrapped/fonts/videoclub/Archivo.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('../../../../assets/wrapped/fonts/videoclub/Archivo-ext.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Rock Salt ships a latin subset only */
+@font-face {
+  font-family: 'Rock Salt';
+  src: url('../../../../assets/wrapped/fonts/videoclub/RockSalt.woff2') format('woff2');
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+.wrapped__look[data-theme='videoclub'] {
+  --vc-night: #0c0a1a;
+  --vc-wall: #17122b;
+  --vc-panel: #221a3d;
+  --vc-pink: #ff3fa4;
+  --vc-cyan: #3ef2ff;
+  --vc-label: #f7f1de;
+  --vc-sticker: #ffdf2b;
+  --vc-ink: #15121f;
+  --vc-pen: #1b3fb8;
+  --vc-text: #efeaff;
+  --vc-soft: #cfc6ee;
+  --vc-wood: linear-gradient(#7a4e2d, #5b3a22 45%, #3a2415);
+  --vc-sign: 'Tilt Neon', 'Arial Rounded MT Bold', sans-serif;
+  --vc-type: 'Archivo', 'Helvetica Neue', sans-serif;
+  --vc-hand: 'Rock Salt', 'Marker Felt', cursive;
+  --vc-gutter: 18px;
+  --vc-brick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='48'%3E%3Crect width='64' height='48' fill='%232c1a27'/%3E%3Cpath d='M0 23H64M0 47H64M1 0V24M33 24V48' stroke='%23120a12' stroke-width='2'/%3E%3C/svg%3E");
+  --switch-bg: var(--vc-panel);
+  --switch-fg: var(--vc-cyan);
+  --switch-font: 800 14px/1 var(--vc-type);
+  --switch-radius: 4px;
+  color-scheme: dark;
+}
+
+.wrapped__look[data-theme='videoclub'] {
+  background: var(--vc-night);
+  scrollbar-color: var(--vc-pink) var(--vc-night);
+  scrollbar-width: thin;
+}
+
+.wrapped__look[data-theme='videoclub'] {
+  background: var(--vc-night);
+  color: var(--vc-text);
+  font-family: var(--vc-type);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.wrapped__look[data-theme='videoclub'] ::selection {
+  background: var(--vc-pink);
+  color: #fff;
+}
+
+/* The shop wall: dark panels, a slat every 160px */
+.wrapped__look[data-theme='videoclub'] .videoclub {
+  position: relative;
+  overflow-x: clip;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 158px, rgb(0 0 0 / 0.28) 158px 160px, rgb(255 255 255 / 0.035) 160px 161px),
+    linear-gradient(var(--vc-night), var(--vc-wall) 253.2px, var(--vc-wall) calc(100% - 253.2px), var(--vc-night));
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sheet {
+  position: relative;
+  width: min(100%, 1180px);
+  margin-inline: auto;
+  padding: 56px var(--vc-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  isolation: isolate;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sheet > * {
+  min-width: 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sheet h3,
+.wrapped__look[data-theme='videoclub'] .videoclub-sheet strong {
+  font-weight: 800;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-lede {
+  max-width: 34ch;
+  margin-inline: auto;
+  color: var(--vc-soft);
+  font-size: 1.0625rem;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-lede strong {
+  color: var(--vc-pink);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-lede .videoclub-time {
+  color: #e2fdff;
+}
+
+/* A figure priced with the gun: a yellow label slapped over the sentence */
+.wrapped__look[data-theme='videoclub'] .videoclub-figure {
+  display: inline-block;
+  margin: 0.08em 0.06em;
+  padding: 0.16em 0.34em 0.1em;
+  background: var(--vc-sticker);
+  color: #111;
+  font: 900 0.95em/1 var(--vc-type);
+  font-stretch: 80%;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(-2deg);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.45);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-figure-n {
+  margin-right: 0.1em;
+  font-size: 1.45em;
+  font-stretch: 90%;
+  line-height: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+
+/* On cream card the label is the fluorescent pink one */
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-card .videoclub-figure,
+.wrapped__look[data-theme='videoclub'] .videoclub-loan .videoclub-figure {
+  background: var(--vc-pink);
+  color: var(--vc-ink);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+}
+
+/* On till paper the figure is printed, only heavier */
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket .videoclub-figure {
+  margin: 0;
+  padding: 0;
+  background: none;
+  font-size: 1em;
+  font-stretch: 78%;
+  text-transform: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket .videoclub-figure-n {
+  font-size: 1.5em;
+  font-stretch: 78%;
+}
+
+/* In-store neon: a thin tube held off the wall, its shadow on the paint behind */
+.wrapped__look[data-theme='videoclub'] .videoclub-neon {
+  --lit-color: #ffd7ec;
+  --lit-glow: 0 0 1px #fff, 0 0 6px rgb(255 63 164 / 0.8), 0 0 16px rgb(255 63 164 / 0.35), 0 12px 10px rgb(0 0 0 / 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--lit-color);
+  font: 400 clamp(40px, 42.9px, 72px)/1 var(--vc-sign);
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-shadow: var(--lit-glow);
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-neon-cyan {
+  --lit-color: #d4fbff;
+  --lit-glow: 0 0 1px #fff, 0 0 6px rgb(62 242 255 / 0.75), 0 0 16px rgb(62 242 255 / 0.3), 0 12px 10px rgb(0 0 0 / 0.55);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-neon-long {
+  font-size: clamp(32px, 33.15px, 56px);
+}
+
+/* The shop front: a brick wall, a lightbox fascia bolted on it, the name in neon tube under it */
+.wrapped__look[data-theme='videoclub'] .videoclub-opening {
+  min-height: 844px;
+  padding-top: 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 64px 0 40px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto 0 50%;
+  width: 390px;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 72%, rgb(255 63 164 / 0.16), transparent 70%),
+    radial-gradient(ellipse 70% 40% at 50% 22%, rgb(255 236 190 / 0.12), transparent 70%),
+    linear-gradient(transparent 70%, var(--vc-night)),
+    var(--vc-brick);
+  background-size: auto, auto, auto, 64px 48px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-fascia {
+  position: relative;
+  display: block;
+  width: min(100%, 720px);
+  padding: 8px;
+  background: linear-gradient(#4a4656, #24222c);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 14px 24px rgb(0 0 0 / 0.6);
+}
+
+/* Two arms bolting the box to the wall above it */
+.wrapped__look[data-theme='videoclub'] .videoclub-fascia::before,
+.wrapped__look[data-theme='videoclub'] .videoclub-fascia::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  width: 6px;
+  height: 30px;
+  background: linear-gradient(90deg, #6a6676, #33303d);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-fascia::before {
+  left: 14%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-fascia::after {
+  right: 14%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-fascia-face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0 14px;
+  padding: 12px 16px 10px;
+  background:
+    radial-gradient(circle at 10px 10px, #8d8898 2.5px, transparent 3px),
+    radial-gradient(circle at calc(100% - 10px) 10px, #8d8898 2.5px, transparent 3px),
+    radial-gradient(circle at 10px calc(100% - 10px), #8d8898 2.5px, transparent 3px),
+    radial-gradient(circle at calc(100% - 10px) calc(100% - 10px), #8d8898 2.5px, transparent 3px),
+    radial-gradient(ellipse at 50% 40%, #fffaf0, #f3dfb4 90%);
+  color: #b3161f;
+  font-size: clamp(26px, 32.76px, 60px);
+  font-weight: 900;
+  font-stretch: 72%;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 18px rgb(120 70 20 / 0.25);
+}
+
+/* The year on a small red lightbox, screwed under the tubes */
+.wrapped__look[data-theme='videoclub'] .videoclub-plate {
+  padding: 8px 18px 6px;
+  background:
+    radial-gradient(circle at 8px 50%, #d9a0a4 2px, transparent 2.5px),
+    radial-gradient(circle at calc(100% - 8px) 50%, #d9a0a4 2px, transparent 2.5px),
+    radial-gradient(ellipse at 50% 40%, #d8262f, #9c1119 90%);
+  border: 5px solid #2e2b37;
+  color: #fff4dc;
+  font-size: clamp(28px, 31.2px, 44px);
+  font-weight: 900;
+  font-stretch: 72%;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  box-shadow: 0 10px 18px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign:not(.videoclub-sign-on) .videoclub-plate {
+  filter: brightness(0.45) saturate(0.6);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign-on .videoclub-plate {
+  animation: videoclub-box-on 0.5s steps(1, end) 1.4s both;
+}
+
+/* The name in tube letters, each on its clip; one tube is dead */
+.wrapped__look[data-theme='videoclub'] .videoclub-tube {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  font: 400 clamp(76px, 93.6px, 132px)/1 var(--vc-sign);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tube > span {
+  --lit-color: #d4fbff;
+  --lit-glow: 0 0 2px #fff, 0 0 8px var(--vc-cyan), 0 0 22px rgb(62 242 255 / 0.45), 0 18px 12px rgb(0 0 0 / 0.6);
+  position: relative;
+  color: var(--lit-color);
+  text-shadow: var(--lit-glow);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tube > span::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.12em;
+  width: 8px;
+  height: 12px;
+  margin-left: -4px;
+  border-radius: 2px;
+  background: linear-gradient(#8d8898, #4a4656);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign .videoclub-tube > span,
+.wrapped__look[data-theme='videoclub'] .videoclub-sign .videoclub-fascia-face {
+  transition: none;
+}
+
+/* Off until the power comes on */
+.wrapped__look[data-theme='videoclub'] .videoclub-sign:not(.videoclub-sign-on) .videoclub-tube > span,
+.wrapped__look[data-theme='videoclub'] .videoclub-tube > .videoclub-tube-dead {
+  color: #574866;
+  text-shadow: 0 18px 12px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign:not(.videoclub-sign-on) .videoclub-fascia-face {
+  filter: brightness(0.45) saturate(0.6);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign-on .videoclub-fascia-face {
+  animation: videoclub-box-on 0.5s steps(1, end) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sign-on .videoclub-tube > span:not(.videoclub-tube-dead) {
+  animation: videoclub-strike 1.4s steps(1, end) var(--delay) both;
+}
+
+@keyframes videoclub-box-on {
+  0%, 30% { filter: brightness(0.45) saturate(0.6); }
+  15%, 100% { filter: none; }
+}
+
+@keyframes videoclub-strike {
+  0%, 14%, 27% { color: #574866; text-shadow: 0 18px 12px rgb(0 0 0 / 0.6); }
+  9%, 20%, 36%, 100% { color: var(--lit-color); text-shadow: var(--lit-glow); }
+}
+
+/* Loading and notices: the shop front, before opening or closed */
+.wrapped__look[data-theme='videoclub'] .videoclub-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 844px;
+  background: radial-gradient(ellipse 60% 35% at 50% 48%, rgb(255 236 190 / 0.12), transparent 70%), var(--vc-brick);
+  background-size: auto, 64px 48px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-state .videoclub-fascia {
+  width: min(calc(100% - 2 * var(--vc-gutter)), 640px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-state .videoclub-fascia-face {
+  padding-block: 18px 16px;
+  font-size: clamp(44px, 54.6px, 88px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-waiting {
+  justify-content: center;
+  padding: 48px 0;
+}
+
+/* The starter clicks, the tube catches for a moment, and tries again: no progress, only waiting */
+.wrapped__look[data-theme='videoclub'] .videoclub-waiting .videoclub-fascia-face {
+  animation: videoclub-starter 2.8s steps(1, end) infinite;
+}
+
+@keyframes videoclub-starter {
+  0%, 18%, 26%, 100% { filter: brightness(0.4) saturate(0.5); }
+  12%, 22%, 30%, 70% { filter: none; }
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-closed .videoclub-fascia-face {
+  filter: brightness(0.55) saturate(0.7);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-closed-front {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 56px 0 28px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-closed-shutter {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 56px var(--vc-gutter) 72px;
+  background: repeating-linear-gradient(#9b98ae 0 14px, #605d76 14px 16px, #b4b1c4 16px 19px);
+  box-shadow: inset 0 14px 18px rgb(0 0 0 / 0.5);
+}
+
+/* The note, taped at two corners */
+.wrapped__look[data-theme='videoclub'] .videoclub-note {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+  width: min(100%, 460px);
+  padding: 28px 24px 26px;
+  background: var(--vc-label);
+  color: var(--vc-ink);
+  transform: rotate(-1.5deg);
+  box-shadow: 0 14px 24px rgb(0 0 0 / 0.45);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-note::before,
+.wrapped__look[data-theme='videoclub'] .videoclub-note::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  width: 86px;
+  height: 26px;
+  background: rgb(255 250 225 / 0.6);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-note::before {
+  left: -18px;
+  transform: rotate(-24deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-note::after {
+  right: -18px;
+  transform: rotate(20deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-note h1 {
+  display: grid;
+  color: var(--vc-pen);
+  font: 400 clamp(30px, 35.1px, 44px)/1.3 var(--vc-hand);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-note p {
+  font-size: 1.125rem;
+  line-height: 1.45;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-button {
+  min-height: 48px;
+  padding: 12px 22px 10px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--vc-sticker);
+  color: #111;
+  font: 900 1rem/1 var(--vc-type);
+  font-stretch: 88%;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 0 #b39500, 0 8px 14px rgb(0 0 0 / 0.3);
+  cursor: pointer;
+  transition: transform 120ms ease-out, box-shadow 120ms ease-out, background-color 120ms ease-out;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-button:hover {
+  background: #ffe95c;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-button:focus-visible {
+  outline: 3px solid var(--vc-pen);
+  outline-offset: 4px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #b39500, 0 3px 6px rgb(0 0 0 / 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='videoclub'] .videoclub-waiting .videoclub-fascia-face {
+    animation: none;
+    filter: brightness(0.7);
+  }
+
+  .wrapped__look[data-theme='videoclub'] .videoclub-button {
+    transition: none;
+  }
+}
+
+/* A plank of shelf, stretched to the edges of the screen */
+.wrapped__look[data-theme='videoclub'] .videoclub-front::after,
+.wrapped__look[data-theme='videoclub'] .videoclub-set::after,
+.wrapped__look[data-theme='videoclub'] .videoclub-spot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 390px;
+  height: 18px;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(90deg, rgb(0 0 0 / 0.1) 0 2px, transparent 2px 41px), var(--vc-wood);
+  box-shadow: 0 12px 20px rgb(0 0 0 / 0.55);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-plank {
+  display: block;
+  height: 14px;
+  margin-inline: -9px;
+  background: repeating-linear-gradient(90deg, rgb(0 0 0 / 0.1) 0 2px, transparent 2px 41px), var(--vc-wood);
+  box-shadow: 0 10px 16px rgb(0 0 0 / 0.5);
+}
+
+/* A VHS case: black plastic, the sleeve under its lip */
+.wrapped__look[data-theme='videoclub'] .videoclub-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-case {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3.2;
+  padding: 8% 5% 5%;
+  background: linear-gradient(#232128, #0d0c10);
+  border-radius: 2px;
+  box-shadow: 0 10px 18px rgb(0 0 0 / 0.6);
+  transform: perspective(900px) rotateY(var(--ry, 0deg));
+  transform-origin: 50% 100%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-case::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, rgb(255 255 255 / 0.16), transparent 32% 72%, rgb(255 255 255 / 0.07));
+  pointer-events: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-sleeve {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--case);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-sleeve img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-blank {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  padding: 10%;
+  color: #fff;
+  font: 900 0.875rem/1.05 var(--vc-type);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-sticker {
+  position: absolute;
+  z-index: 2;
+  top: 9%;
+  right: -8px;
+  padding: 5px 7px 4px;
+  background: var(--vc-sticker);
+  color: #111;
+  font: 900 0.75rem/1 var(--vc-type);
+  font-stretch: 88%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(7deg);
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-label {
+  position: absolute;
+  z-index: 1;
+  bottom: 4%;
+  width: 90%;
+  padding: 7px 8px 8px;
+  background: var(--vc-label);
+  color: var(--vc-pen);
+  font: 400 0.75rem/1.45 var(--vc-hand);
+  text-align: center;
+  transform: rotate(-2.5deg);
+  box-shadow: 0 3px 6px rgb(0 0 0 / 0.45);
+}
+
+/* Opening: five cases in the window, the counter under them */
+.wrapped__look[data-theme='videoclub'] .videoclub-front {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 6px;
+  width: min(100%, 880px);
+  margin-inline: auto;
+  padding-bottom: 18px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-front .videoclub-box {
+  flex: 0 0 18%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-front .videoclub-box-hero {
+  flex-basis: 28%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-counter {
+  display: grid;
+  gap: 22px;
+  width: min(100%, 880px);
+  margin-inline: auto;
+  padding: 20px 16px 22px;
+  background: linear-gradient(var(--vc-panel), #1a1431);
+  border-top: 6px solid #3a2d64;
+  box-shadow: 0 14px 28px rgb(0 0 0 / 0.45);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-counter .videoclub-lede {
+  margin: 0;
+  text-align: left;
+}
+
+/* Paper from the till: condensed type, torn zigzag edges */
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket {
+  position: relative;
+  padding: 18px 18px 22px;
+  background: var(--vc-label);
+  color: var(--vc-ink);
+  font-family: var(--vc-type);
+  font-stretch: 78%;
+  font-variant-numeric: tabular-nums;
+  -webkit-mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / 14px 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 51% repeat-x;
+  mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / 14px 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 51% repeat-x;
+  transform: rotate(1.5deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-head {
+  padding: 4px 0 8px;
+  border-bottom: 1px dashed currentColor;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-receipt li {
+  padding: 8px 0;
+  border-bottom: 1px dashed rgb(21 18 31 / 0.45);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Streak: the case and its stamped ticket */
+.wrapped__look[data-theme='videoclub'] .videoclub-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-large {
+  width: min(58%, 300px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-stamps {
+  z-index: 1;
+  width: min(94%, 440px);
+  margin-top: -40px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-figure {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding-top: 10px;
+  font-size: clamp(72px, 85.8px, 116px);
+  font-weight: 900;
+  font-stretch: 100%;
+  line-height: 0.9;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-unit {
+  font-size: 1.125rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-stamps {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin: 14px 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-stamps li {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  color: rgb(214 32 120 / 0.9);
+  font-size: clamp(11px, 11.7px, 15px);
+  font-weight: 900;
+  font-stretch: 78%;
+  border: 2px solid rgb(214 32 120 / 0.78);
+  border-radius: 50%;
+  transform: rotate(var(--turn));
+  mix-blend-mode: multiply;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-foot {
+  padding-top: 10px;
+  border-top: 1px dashed currentColor;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Streak: every evening's tape back on the shelf, its day under it */
+.wrapped__look[data-theme='videoclub'] .videoclub-run {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-run-tapes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px 0;
+  width: min(100%, 1000px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-run-tapes li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  width: 76px;
+  padding: 0 4px;
+}
+
+/* The plank under each tape joins the next one's into a shelf */
+.wrapped__look[data-theme='videoclub'] .videoclub-run-tapes li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 29px);
+  height: 10px;
+  background: var(--vc-wood);
+  box-shadow: 0 6px 10px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-run-tapes .videoclub-box-mini,
+.wrapped__look[data-theme='videoclub'] .videoclub-run-empty {
+  width: 100%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-run-empty {
+  aspect-ratio: 2 / 3.2;
+  border: 2px dashed #3b3357;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-run-tapes small {
+  color: var(--vc-soft);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-stretch: 85%;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-run-tapes[data-long] li {
+  width: 52px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-run-tapes[data-long] small {
+  font-size: 0.625rem;
+}
+
+/* Rank: the membership card, number embossed */
+.wrapped__look[data-theme='videoclub'] .videoclub-card {
+  width: min(100%, 540px);
+  margin-inline: auto;
+  container-type: inline-size;
+  transform: rotate(-3deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-face {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.586;
+  overflow: hidden;
+  border-radius: 4cqi;
+  background: linear-gradient(135deg, #2d2168, #6a1f68 55%, #b42a7c);
+  box-shadow: 0 22px 44px rgb(0 0 0 / 0.6);
+  color: #f3ecff;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(115deg, rgb(255 255 255 / 0.06) 0 2px, transparent 2px 9px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-face > span {
+  position: absolute;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-brand {
+  left: 6cqi;
+  top: 5.5cqi;
+  color: #e2fdff;
+  font: 400 11cqi/1 var(--vc-sign);
+  text-shadow: 0 0 2px #fff, 0 0 8px var(--vc-cyan), 0 0 20px rgb(62 242 255 / 0.6);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-server {
+  left: 6.4cqi;
+  top: 18cqi;
+  font-size: 3.4cqi;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-chip {
+  right: 6cqi;
+  top: 6cqi;
+  width: 12cqi;
+  height: 9cqi;
+  border-radius: 1.4cqi;
+  background:
+    linear-gradient(90deg, transparent 32%, rgb(0 0 0 / 0.25) 32% 34%, transparent 34% 66%, rgb(0 0 0 / 0.25) 66% 68%, transparent 68%),
+    linear-gradient(transparent 45%, rgb(0 0 0 / 0.25) 45% 55%, transparent 55%),
+    linear-gradient(135deg, #f6d77a, #b8892b);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-number,
+.wrapped__look[data-theme='videoclub'] .videoclub-card-holder,
+.wrapped__look[data-theme='videoclub'] .videoclub-card-since {
+  text-shadow: -1px -1px 0 rgb(255 255 255 / 0.4), 1px 1px 0 rgb(0 0 0 / 0.55), 2px 3px 3px rgb(0 0 0 / 0.3);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-number {
+  left: 6cqi;
+  bottom: 22cqi;
+  font-size: 9cqi;
+  font-weight: 600;
+  font-stretch: 72%;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-holder {
+  left: 6cqi;
+  bottom: 6.5cqi;
+  font-size: 4.6cqi;
+  font-weight: 700;
+  font-stretch: 80%;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-since sup {
+  text-transform: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-card-since {
+  right: 6cqi;
+  bottom: 6.5cqi;
+  max-width: 42%;
+  font-size: 3.8cqi;
+  font-weight: 700;
+  font-stretch: 80%;
+  line-height: 1.2;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+/* The felt letter board by the till, white plastic letters pushed in its grooves */
+.wrapped__look[data-theme='videoclub'] .videoclub-rank-text {
+  display: grid;
+  gap: 24px;
+  justify-items: center;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rank-text > .videoclub-lede {
+  margin: 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board {
+  width: min(100%, 420px);
+  padding: 14px 18px 16px;
+  background: repeating-linear-gradient(transparent 0 5px, rgb(0 0 0 / 0.35) 5px 6px), #1c1a22;
+  border: 10px solid #4a2e1b;
+  border-image: var(--vc-wood) 10;
+  box-shadow: 0 14px 26px rgb(0 0 0 / 0.55);
+  color: #f4f1ea;
+  font-stretch: 78%;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board-head {
+  padding-bottom: 8px;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board li {
+  display: grid;
+  grid-template-columns: 3.4em 1fr auto;
+  gap: 10px;
+  padding: 3px 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board li > span:last-child {
+  text-align: right;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board .videoclub-board-you {
+  color: var(--vc-sticker);
+  font-size: 1.625rem;
+  font-weight: 900;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board .videoclub-board-gap {
+  display: block;
+  color: #8f8a9e;
+  line-height: 0.6;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board-foot {
+  margin-top: 10px;
+  color: #d8d3e6;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board-foot + .videoclub-board-foot {
+  margin-top: 4px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-board-foot .videoclub-figure {
+  font-size: 0.9em;
+}
+
+/* Months: a bookcase, one shelf per month */
+.wrapped__look[data-theme='videoclub'] .videoclub-rack {
+  display: grid;
+  gap: 0 12px;
+  width: min(100%, 1100px);
+  margin-inline: auto;
+  padding: 8px 10px;
+  background: #140f26;
+  border: 10px solid #4a2e1b;
+  border-image: var(--vc-wood) 10;
+  box-shadow: inset 0 0 30px rgb(0 0 0 / 0.7), 0 16px 30px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px auto auto;
+  justify-content: start;
+  align-items: end;
+  gap: 10px;
+  min-height: 70px;
+  padding: 8px 0 12px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack-row::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  bottom: 0;
+  height: 9px;
+  background: var(--vc-wood);
+  box-shadow: 0 6px 10px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack-tag {
+  display: grid;
+  align-self: center;
+  padding: 5px 6px 6px;
+  background: var(--vc-label);
+  color: var(--vc-pen);
+  font: 400 0.6875rem/1.6 var(--vc-hand);
+  white-space: nowrap;
+  transform: rotate(-2deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack-tag small {
+  color: var(--vc-ink);
+  font: 700 0.75rem/1.2 var(--vc-type);
+  font-stretch: 80%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack-tag small b {
+  font-size: 1.5em;
+  font-weight: 900;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack-future .videoclub-rack-tag {
+  background: #3b3357;
+  color: #c9c0e6;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack-peak .videoclub-rack-tag {
+  box-shadow: 0 0 0 2px var(--vc-pink), 0 0 14px var(--vc-pink);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-spines {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-spine {
+  position: relative;
+  display: block;
+  width: 12px;
+  height: 56px;
+  background: var(--tape);
+  box-shadow: inset -2px 0 0 rgb(0 0 0 / 0.35), inset 2px 0 0 rgb(255 255 255 / 0.12);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-spine span {
+  position: absolute;
+  inset: 16% 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--vc-label);
+  color: #1a1a1a;
+  font: 400 6px/1 var(--vc-hand);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-rack .videoclub-spines {
+  flex-wrap: nowrap;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-mini {
+  width: 40px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-mini .videoclub-sticker {
+  top: -6px;
+  right: -10px;
+  font-size: 0.6875rem;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-peak .videoclub-shelf-card {
+  width: auto;
+}
+
+/* Binge: the box set, a spine for each episode of the evening */
+.wrapped__look[data-theme='videoclub'] .videoclub-set {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  padding-bottom: 18px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-set .videoclub-box-large {
+  flex: 0 0 min(46%, 280px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-set .videoclub-spines {
+  flex-wrap: nowrap;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-set .videoclub-spine {
+  width: clamp(4px, calc(156px / var(--count) - 2px), 18px);
+  height: clamp(120px, 195px, 250px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-set .videoclub-spine span {
+  font-size: 8px;
+}
+
+/* A shelf talker: the cream card pinned under the case */
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-card {
+  width: min(100%, 460px);
+  margin-inline: auto;
+  padding: 16px 18px 18px;
+  background: var(--vc-label);
+  color: var(--vc-ink);
+  transform: rotate(-1deg);
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.45);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-card h3 {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid currentColor;
+  font-size: clamp(22px, 23.4px, 30px);
+  font-weight: 900;
+  font-stretch: 90%;
+  line-height: 1;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-card p + p {
+  margin-top: 6px;
+}
+
+/* The pace show beside the box set, its figures on tags under it */
+.wrapped__look[data-theme='videoclub'] .videoclub-binge-visual,
+.wrapped__look[data-theme='videoclub'] .videoclub-binge-text {
+  display: grid;
+  gap: 24px;
+}
+
+/* Price tags, the scoreboard of a sheet that only has figures */
+.wrapped__look[data-theme='videoclub'] .videoclub-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 12px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tag {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  min-width: 120px;
+  padding: 12px 16px 12px 32px;
+  background: var(--vc-sticker);
+  color: #111;
+  clip-path: polygon(18px 0, 100% 0, 100% 100%, 18px 100%, 0 50%);
+  transform: rotate(var(--turn));
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tag::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--vc-wall);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tag b {
+  font-size: clamp(44px, 46.8px, 64px);
+  font-weight: 900;
+  font-stretch: 85%;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tag span {
+  font-size: 0.875rem;
+  font-weight: 800;
+  font-stretch: 85%;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tag:nth-child(3n + 2) {
+  background: var(--vc-pink);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-tag:nth-child(3n) {
+  background: var(--vc-cyan);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-pace {
+  display: grid;
+  grid-template-columns: 34% 1fr;
+  align-items: center;
+  gap: 18px;
+  width: min(100%, 460px);
+  margin-inline: auto;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-pace-text {
+  display: grid;
+  gap: 18px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-pace-text .videoclub-shelf-card h3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-pace-text .videoclub-tag {
+  min-width: 0;
+  padding: 8px 12px 8px 26px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-pace-text .videoclub-tag b {
+  font-size: clamp(30px, 31.2px, 40px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-binge-text .videoclub-pace {
+  grid-template-columns: 28% 1fr;
+  width: min(100%, 540px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-pace-text .videoclub-tags {
+  justify-content: flex-start;
+  gap: 10px 6px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-pace-text .videoclub-tag span {
+  font-size: 0.75rem;
+}
+
+/* Night: the returns box, the last tape half through the slot */
+.wrapped__look[data-theme='videoclub'] .videoclub-returns {
+  width: min(100%, 400px);
+  margin-inline: auto;
+  container-type: inline-size;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-returns-slot {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 52cqi;
+  overflow: hidden;
+  padding-top: 4cqi;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-box-returned {
+  width: 48cqi;
+  transform: rotate(-4deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-returns-plate {
+  position: relative;
+  padding: 11cqi 0 9cqi;
+  background: linear-gradient(#4a4466, #28233f);
+  border-radius: 3px 3px 10px 10px;
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.18), 0 16px 28px rgb(0 0 0 / 0.55);
+  color: var(--vc-label);
+  font-size: 6cqi;
+  font-weight: 900;
+  letter-spacing: 0.4em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-returns-plate::before {
+  content: '';
+  position: absolute;
+  top: -1.5cqi;
+  left: 22%;
+  right: 22%;
+  height: 3cqi;
+  border-radius: 2cqi;
+  background: #07060d;
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.9), 0 1px 0 rgb(255 255 255 / 0.15);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-night-text {
+  display: grid;
+  gap: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-night-date {
+  color: var(--vc-cyan);
+  font-size: 1.125rem;
+  font-weight: 800;
+  font-stretch: 85%;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-time {
+  color: #e2fdff;
+  font: 400 1.7em/1 var(--vc-sign);
+  text-shadow: 0 0 1px #fff, 0 0 6px rgb(62 242 255 / 0.75), 0 0 14px rgb(62 242 255 / 0.3);
+  white-space: nowrap;
+}
+
+/* The return slip of the night, a line per tape, the hours printed */
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-returns {
+  width: min(100%, 440px);
+  margin: 8px auto 0;
+  transform: rotate(-1deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-returns li {
+  display: grid;
+  grid-template-columns: 3.4em 32px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgb(21 18 31 / 0.45);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-returns .videoclub-box-mini {
+  width: 32px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-time {
+  display: grid;
+  gap: 2px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-time b {
+  font-size: 1.375rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-time span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-time span::before {
+  content: '→ ';
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-title {
+  display: grid;
+  gap: 2px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-title b {
+  color: #b3165a;
+  font-weight: 900;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-ticket-returns li:last-child .videoclub-ticket-time b {
+  color: #b3165a;
+}
+
+/* Server: the case under a spotlight */
+.wrapped__look[data-theme='videoclub'] .videoclub-spot {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 18px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-spot::before {
+  content: '';
+  position: absolute;
+  inset: -60px -10% 18px;
+  background: radial-gradient(closest-side, rgb(62 242 255 / 0.16), transparent);
+}
+
+/* Personne d’autre: the price tag and the aisle nobody else visits */
+.wrapped__look[data-theme='videoclub'] .videoclub-price {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-self: center;
+  max-width: 300px;
+  padding: 18px 24px 18px 40px;
+  background: var(--vc-sticker);
+  color: #111;
+  border-radius: 6px;
+  clip-path: polygon(22px 0, 100% 0, 100% 100%, 22px 100%, 0 50%);
+  transform: rotate(-4deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-price::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: var(--vc-wall);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-price > span:first-child {
+  font-size: clamp(76px, 93.6px, 136px);
+  font-weight: 900;
+  line-height: 0.85;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-price-unit {
+  max-width: 17ch;
+  margin-top: 6px;
+  font-size: 1rem;
+  font-weight: 800;
+  font-stretch: 85%;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-aisle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-aisle-tag {
+  padding: 6px 16px;
+  background: repeating-linear-gradient(90deg, rgb(0 0 0 / 0.1) 0 2px, transparent 2px 23px), var(--vc-wood);
+  color: var(--vc-label);
+  font-size: 0.875rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.5);
+}
+
+/* Covers standing on planks, two to a plank on a phone */
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px 12px;
+  width: min(100%, 1100px);
+  margin-inline: auto;
+}
+
+/* On a phone the covers share one plank, the figure sheets two to a plank */
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-entry {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  max-width: 46%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-large .videoclub-shelf-entry {
+  flex: 0 0 calc(50% - 6px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf[data-count='1'] .videoclub-shelf-entry {
+  flex: 0 0 min(62%, 280px);
+  max-width: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-entry .videoclub-box {
+  width: 88%;
+  margin-inline: auto;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-title {
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-large .videoclub-box {
+  width: 92%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-large .videoclub-shelf-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-when {
+  margin-top: 4px;
+  color: var(--vc-soft);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* The figure written large on the case's label */
+.wrapped__look[data-theme='videoclub'] .videoclub-shelf-large .videoclub-label {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+/* Twin and duo: loan cards, ruled, a red margin */
+.wrapped__look[data-theme='videoclub'] .videoclub-loan {
+  background:
+    linear-gradient(90deg, transparent 34px, rgb(200 40 70 / 0.55) 34px 36px, transparent 36px),
+    repeating-linear-gradient(transparent 0 27px, rgb(27 63 184 / 0.2) 27px 28px),
+    var(--vc-label);
+  color: var(--vc-ink);
+  box-shadow: 0 12px 22px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-twin > .videoclub-loan {
+  width: min(100%, 520px);
+  margin-inline: auto;
+  padding: 16px 18px 20px 50px;
+  transform: rotate(-1.2deg);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-head {
+  padding-bottom: 6px;
+  border-bottom: 2px solid currentColor;
+  font-size: 0.8125rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-figure {
+  display: grid;
+  gap: 6px;
+  padding: 12px 0 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-figure > span:first-child {
+  color: var(--vc-pen);
+  font: 400 clamp(56px, 66.3px, 96px)/1.1 var(--vc-hand);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-unit {
+  font-size: 1.1875rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-unit em {
+  color: #b3165a;
+  font: 400 1.05em/1.2 var(--vc-hand);
+  font-style: normal;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-details {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-details + .videoclub-loan-details {
+  margin-top: 6px;
+}
+
+/* Both borrowers' totals, written on the ruled lines */
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-ledger {
+  display: grid;
+  margin-bottom: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-ledger div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  line-height: 28px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-ledger dt {
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-ledger dd {
+  color: var(--vc-pen);
+  font: 400 1.125rem/28px var(--vc-hand);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loans {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 14px;
+  width: min(100%, 1100px);
+  margin-inline: auto;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loans[data-count='1'] {
+  grid-template-columns: min(70%, 300px);
+  justify-content: center;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-small {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 10px 14px 32px;
+  background-position: -8px 0, 0 0, 0 0;
+  transform: rotate(var(--turn));
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-small .videoclub-box {
+  width: 100%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-title {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-hand {
+  margin-top: 4px;
+  color: var(--vc-pen);
+  font: 400 0.75rem/1.5 var(--vc-hand);
+  overflow-wrap: anywhere;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-loan-hand .videoclub-figure {
+  font-size: 0.8125rem;
+}
+
+/* Genre: the aisle's board, hung on two chains */
+.wrapped__look[data-theme='videoclub'] .videoclub-aisle-sign {
+  position: relative;
+  align-self: center;
+  max-width: 100%;
+  margin-top: 24px;
+  padding: 10px 26px 12px;
+  background: var(--vc-sticker);
+  color: #111;
+  font-size: clamp(44px, 54.6px, 92px);
+  font-weight: 900;
+  font-stretch: 90%;
+  line-height: 1;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  box-shadow: 0 14px 24px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-aisle-sign::before,
+.wrapped__look[data-theme='videoclub'] .videoclub-aisle-sign::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  width: 2px;
+  height: 40px;
+  background: repeating-linear-gradient(#8a86a0 0 4px, transparent 4px 6px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-aisle-sign::before {
+  left: 18%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-aisle-sign::after {
+  right: 18%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-genre .videoclub-lede strong {
+  color: var(--vc-cyan);
+}
+
+/* Finale: the shop window, the shutter half down */
+.wrapped__look[data-theme='videoclub'] .videoclub-window {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: min(100%, 440px);
+  margin-inline: auto;
+  padding: 28px 20px 0;
+  overflow: hidden;
+  background: linear-gradient(115deg, rgb(255 255 255 / 0.08), transparent 30% 60%, rgb(255 255 255 / 0.05)), #0f0c20;
+  border: 10px solid #2c2645;
+  border-bottom-width: 18px;
+  box-shadow: 0 18px 34px rgb(0 0 0 / 0.55);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-window .videoclub-box-large {
+  width: 66%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-window .videoclub-sticker {
+  top: auto;
+  bottom: 14%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shutter {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 22%;
+  background: repeating-linear-gradient(#9b98ae 0 9px, #605d76 9px 11px, #b4b1c4 11px 13px);
+  box-shadow: 0 8px 14px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-window[data-closed='true'] .videoclub-shutter {
+  height: 32%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-shutter::after {
+  content: '';
+  position: absolute;
+  left: 42%;
+  right: 42%;
+  bottom: 4px;
+  height: 6px;
+  border-radius: 3px;
+  background: #3d3a50;
+}
+
+/* Fin., sprayed across the shutter slats */
+.wrapped__look[data-theme='videoclub'] .videoclub-end {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 22%;
+  color: #1c1826;
+  font-size: clamp(34px, 39px, 56px);
+  font-weight: 900;
+  font-stretch: 80%;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+  mix-blend-mode: multiply;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-window[data-closed='true'] .videoclub-end {
+  height: 32%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-colophon {
+  display: grid;
+  gap: 8px;
+  width: min(100%, 560px);
+  margin-inline: auto;
+  padding: 24px var(--vc-gutter) 32px;
+  color: var(--vc-soft);
+  font-size: 0.875rem;
+  font-stretch: 85%;
+  text-align: center;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-colophon-short {
+  color: var(--vc-text);
+  font-size: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='videoclub'] .videoclub-sign .videoclub-tube > span:not(.videoclub-tube-dead) {
+    color: var(--lit-color);
+    text-shadow: var(--lit-glow);
+    animation: none;
+  }
+
+  .wrapped__look[data-theme='videoclub'] .videoclub-sign .videoclub-fascia-face,
+.wrapped__look[data-theme='videoclub'] .videoclub-sign .videoclub-plate {
+    filter: none;
+    animation: none;
+  }
+}
+
+/* Stories: each sheet on one screen of the shop, 396 × 704, scaled to the phone and shared as the image.
+   The top 28 px and the bottom 72 px stay free of words, Safari lays the stories' chrome over them */
+.wrapped__look[data-theme='videoclub'] .videoclub-story {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 396px;
+  height: 704px;
+  padding: 28px 16px 72px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 130px, rgb(0 0 0 / 0.28) 130px 132px, rgb(255 255 255 / 0.035) 132px 133px),
+    linear-gradient(var(--vc-night), var(--vc-wall) 25%, var(--vc-wall) 75%, var(--vc-night));
+  color: var(--vc-text);
+  font-size: 16px;
+  animation: videoclub-box-on 0.6s steps(1, end) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet {
+  flex: 1;
+  justify-content: safe center;
+  gap: 12px;
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each piece slid onto the shelf a beat after the last; the tubes catch instead */
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > * {
+  animation: videoclub-shelve 0.5s calc(0.35s + var(--at, 0) * 100ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > :nth-child(2) { --at: 1; }
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > :nth-child(3) { --at: 2; }
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > :nth-child(4) { --at: 3; }
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > :nth-child(5) { --at: 4; }
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > :nth-child(6) { --at: 5; }
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > .videoclub-neon {
+  animation: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-neon > span {
+  animation: videoclub-strike 1.2s steps(1, end) 0.3s both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-neon > span + span {
+  animation-delay: 0.45s;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-neon {
+  font-size: 42px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-neon-long {
+  font-size: 30px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-lede {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-card {
+  padding: 10px 14px 12px;
+  font-size: 15px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-card h3 {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  font-size: 22px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-front::after,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-set::after,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-spot::after,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-sign::before {
+  width: 396px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-box-large {
+  width: 150px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-tag {
+  min-width: 0;
+  padding: 7px 12px 7px 26px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-tag b {
+  font-size: 34px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-tag span {
+  font-size: 12px;
+}
+
+/* Opening and summary: the shop front, its tube sized to the name */
+.wrapped__look[data-theme='videoclub'] .videoclub-story-opening,
+.wrapped__look[data-theme='videoclub'] .videoclub-story-summary {
+  padding-top: 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-opening {
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-sign {
+  gap: 8px;
+  padding: 34px 0 8px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-fascia::before,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-fascia::after {
+  height: 36px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-fascia-face {
+  padding: 7px 12px 6px;
+  font-size: 24px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-tube {
+  font-size: min(62px, calc(520px / var(--letters, 8)));
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-plate {
+  padding: 5px 14px 4px;
+  border-width: 4px;
+  font-size: 22px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-front {
+  gap: 4px;
+  padding-bottom: 12px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-front .videoclub-box {
+  flex-basis: 17%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-front .videoclub-box-hero {
+  flex-basis: 23%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-front .videoclub-sticker {
+  font-size: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-counter {
+  gap: 10px;
+  padding: 10px 12px 12px;
+  border-top-width: 4px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-counter .videoclub-lede {
+  max-width: none;
+  font-size: 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket {
+  padding: 12px 14px 16px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-head {
+  padding: 2px 0 6px;
+  font-size: 11px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-receipt li {
+  padding: 3px 0;
+  font-size: 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-summary > .videoclub-opening {
+  flex: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-summary .videoclub-sign {
+  padding-bottom: 6px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-summary .videoclub-tube {
+  font-size: min(54px, calc(460px / var(--letters, 8)));
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-summary .videoclub-front .videoclub-box {
+  flex-basis: 15%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-summary .videoclub-front .videoclub-box-hero {
+  flex-basis: 22%;
+}
+
+/* The figures say it again on the summary: the lede stays on the opening */
+.wrapped__look[data-theme='videoclub'] .videoclub-story-summary .videoclub-counter > .videoclub-lede {
+  display: none;
+}
+
+/* The membership card left on the counter, its rank embossed, the closing note beside it */
+.wrapped__look[data-theme='videoclub'] .videoclub-story-close {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-member {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  margin: -24px 0 0;
+  padding: 10px 14px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2d2168, #6a1f68 55%, #b42a7c);
+  color: #f3ecff;
+  font-size: 13px;
+  font-weight: 700;
+  font-stretch: 80%;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-shadow: -1px -1px 0 rgb(255 255 255 / 0.4), 1px 1px 0 rgb(0 0 0 / 0.55);
+  box-shadow: 0 14px 26px rgb(0 0 0 / 0.6);
+  transform: rotate(-4deg);
+  animation: videoclub-swipe 0.6s 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-member b {
+  font-size: 34px;
+  font-weight: 600;
+  font-stretch: 72%;
+  line-height: 1;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-member sup {
+  font-size: 0.5em;
+  text-transform: none;
+  vertical-align: top;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-colophon {
+  display: grid;
+  gap: 4px;
+  color: var(--vc-soft);
+  font-size: 13px;
+  font-stretch: 85%;
+  line-height: 1.3;
+  text-align: left;
+  animation: videoclub-shelve 0.5s 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story-colophon .videoclub-colophon-short {
+  font-size: 14px;
+}
+
+/* Rank: the card swiped across the counter */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-card {
+  width: 290px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-card-face {
+  animation: videoclub-swipe 0.7s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rank-text {
+  gap: 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-board {
+  padding: 10px 14px 12px;
+  border-width: 8px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-board-head {
+  font-size: 13px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-board li {
+  padding: 2px 0;
+  font-size: 18px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-board .videoclub-board-you {
+  font-size: 22px;
+}
+
+/* Streak: the ticket stamped once per evening, one stamp after the other */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-pair .videoclub-box-large {
+  width: 116px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-stamps {
+  width: 100%;
+  margin-top: -48px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-figure {
+  padding-top: 6px;
+  font-size: 76px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-unit {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-stamps {
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3px;
+  margin: 10px 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-stamps li {
+  font-size: 11px;
+  animation: videoclub-stamp 0.18s calc(0.9s + var(--day, 0) * 40ms) ease-out both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-foot {
+  padding-top: 8px;
+  font-size: 15px;
+}
+
+/* Months: the bookcase in two bays of six shelves, the tapes slid in month after month */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack {
+  grid-template-rows: repeat(6, auto);
+  grid-auto-flow: column;
+  gap: 0 12px;
+  padding: 4px 8px;
+  border-width: 8px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack-row {
+  grid-template-columns: 70px auto auto;
+  gap: 4px;
+  min-height: 0;
+  padding: 6px 0 9px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack-row::after {
+  left: -6px;
+  right: -6px;
+  height: 6px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack-tag {
+  padding: 3px 5px 4px;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack-tag small {
+  font-size: 11px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack .videoclub-spines {
+  gap: 1px;
+  animation: videoclub-slide 0.4s calc(0.6s + var(--at, 0) * 60ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack .videoclub-spine {
+  width: 4px;
+  height: 34px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack .videoclub-spine span {
+  display: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack .videoclub-box-mini {
+  width: 22px;
+}
+
+/* Binge: the box set, its spines pushed in one after the other */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-binge-visual,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-binge-text {
+  gap: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-set {
+  padding-bottom: 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-set .videoclub-box-large {
+  flex: 0 0 84px;
+  width: 84px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-set .videoclub-spine {
+  width: clamp(3px, calc(170px / var(--count) - 2px), 14px);
+  height: 116px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-set .videoclub-spines {
+  animation: videoclub-slide 0.6s 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-binge-text .videoclub-pace,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-pace {
+  grid-template-columns: 70px 1fr;
+  gap: 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-pace-text {
+  gap: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-pace-text .videoclub-tag b {
+  font-size: 26px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-pace-text .videoclub-tag span {
+  font-size: 11px;
+}
+
+/* Night: the last tape falls through the returns slot */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-returns {
+  width: 200px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-box-returned {
+  animation: videoclub-return 0.7s 0.7s cubic-bezier(0.5, 0, 0.75, 0) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-night-text {
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-night-date {
+  font-size: 15px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-returns {
+  margin-top: 4px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-returns li {
+  grid-template-columns: 3.4em 26px minmax(0, 1fr);
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-returns .videoclub-box-mini {
+  width: 26px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-time b {
+  font-size: 19px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-time span {
+  font-size: 12px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-ticket-title {
+  font-size: 15px;
+}
+
+/* Server: the spotlight comes on over the case */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-spot {
+  padding: 18px 0 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-spot::before {
+  inset: -20px 0 14px;
+  animation: videoclub-box-on 0.6s 0.8s steps(1, end) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-spot .videoclub-box-large {
+  width: 168px;
+}
+
+/* Personne d’autre: the price tag slapped on with the gun */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-price {
+  padding: 12px 20px 12px 38px;
+  animation: videoclub-slap 0.35s 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-price > span:first-child {
+  font-size: 92px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-price-unit {
+  font-size: 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-aisle {
+  gap: 12px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-aisle-tag {
+  padding: 4px 14px;
+  font-size: 12px;
+}
+
+/* Up to four covers on one plank, their titles on two lines at most */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf {
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-entry {
+  flex: 1 1 0;
+  max-width: 25%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf[data-count='1'] .videoclub-shelf-entry {
+  flex: 0 0 110px;
+  max-width: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-title {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 6px;
+  font-size: 12px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Ton jumeau: the figure written in by hand on the loan card */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-twin > .videoclub-loan {
+  padding: 12px 14px 14px 48px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-figure {
+  padding: 6px 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-figure > span:first-child {
+  font-size: 64px;
+  animation: videoclub-write 0.7s 0.7s steps(8, end) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-unit {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-ledger {
+  margin-bottom: 4px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-details {
+  font-size: 15px;
+}
+
+/* Vus à deux: the loan cards dealt one under the other, the case beside its title */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loans {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loans[data-count='1'] {
+  grid-template-columns: 1fr;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-small {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px 8px 34px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loans li {
+  animation: videoclub-deal 0.45s calc(0.7s + var(--at, 0) * 100ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loans li:nth-child(2) { --at: 1; }
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loans li:nth-child(3) { --at: 2; }
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loans li:nth-child(4) { --at: 3; }
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-hand {
+  font-size: 11px;
+}
+
+/* Two or three cases, their figures slapped on their labels */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-large .videoclub-shelf-entry {
+  flex: 1 1 0;
+  max-width: 50%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-large[data-count='1'] .videoclub-shelf-entry {
+  flex: 0 0 180px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-large .videoclub-shelf-title {
+  font-size: 16px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-large .videoclub-label {
+  font-size: 16px;
+  animation: videoclub-slap 0.35s 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Genre: the aisle's board swings on its chains */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-aisle-sign {
+  margin-top: 26px;
+  padding: 5px 18px 7px;
+  font-size: 40px;
+  transform-origin: 50% -40px;
+  animation: videoclub-swing 1.6s 0.5s ease-out both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-aisle-sign::before,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-aisle-sign::after {
+  height: 30px;
+}
+
+/* Two shelves share the page: their covers stand smaller */
+.wrapped__look[data-theme='videoclub'] .videoclub-story-genre .videoclub-shelf-entry {
+  flex: 0 0 72px;
+}
+
+/* Finale: the shutter comes down over the window */
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-window {
+  width: 270px;
+  padding-top: 22px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-window .videoclub-box-large {
+  width: 62%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shutter {
+  transform-origin: 50% 0;
+  animation: videoclub-shutter 0.9s 0.8s cubic-bezier(0.5, 0, 0.2, 1) both;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-end {
+  font-size: 40px;
+  animation: videoclub-shelve 0.4s 1.6s ease-out both;
+}
+
+@keyframes videoclub-shelve {
+  from { opacity: 0; transform: translateX(-18px); }
+}
+
+@keyframes videoclub-slide {
+  from { clip-path: inset(0 100% 0 0); }
+}
+
+@keyframes videoclub-stamp {
+  from { opacity: 0; transform: scale(1.8) rotate(var(--turn)); }
+}
+
+@keyframes videoclub-swipe {
+  from { opacity: 0; transform: translateX(-120%) rotate(-10deg); }
+}
+
+@keyframes videoclub-return {
+  from { transform: translateY(-110%) rotate(-4deg); }
+}
+
+@keyframes videoclub-slap {
+  from { opacity: 0; transform: scale(1.4) rotate(6deg); }
+}
+
+@keyframes videoclub-write {
+  from { clip-path: inset(0 100% 0 0); }
+}
+
+@keyframes videoclub-deal {
+  from { opacity: 0; transform: translateY(-24px) rotate(-6deg); }
+}
+
+@keyframes videoclub-swing {
+  0% { transform: rotate(-2deg) translateY(-60px); opacity: 0; }
+  30% { transform: rotate(6deg); opacity: 1; }
+  55% { transform: rotate(-5deg); }
+  80% { transform: rotate(0deg); }
+}
+
+@keyframes videoclub-shutter {
+  from { transform: scaleY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='videoclub'] .videoclub-story,
+.wrapped__look[data-theme='videoclub'] .videoclub-story > .videoclub-sheet > *,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-neon > span,
+.wrapped__look[data-theme='videoclub'] .videoclub-story-member,
+.wrapped__look[data-theme='videoclub'] .videoclub-story-colophon,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-card-face,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-stamps li,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-rack .videoclub-spines,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-set .videoclub-spines,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-box-returned,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-spot::before,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-price,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loan-figure > span:first-child,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-loans li,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shelf-large .videoclub-label,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-aisle-sign,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-shutter,
+.wrapped__look[data-theme='videoclub'] .videoclub-story .videoclub-end {
+    animation: none;
+  }
+}
+
+/* The shop at night, opened by Keep in touch in a frame of its own: `?cover` */
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation {
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  height: 844px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--vc-night);
+  color: var(--vc-text);
+}
+
+/* The aisle behind the sign: one shelf over the other, each running past the other way */
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-aisle {
+  position: absolute;
+  inset: 0 0 -4%;
+  z-index: -2;
+  display: grid;
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+  background: var(--vc-wall);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-shelf {
+  position: relative;
+  min-height: 0;
+  padding-top: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-shelf::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 14px;
+  background: repeating-linear-gradient(90deg, rgb(0 0 0 / 0.1) 0 2px, transparent 2px 41px), var(--vc-wood);
+  box-shadow: 0 10px 16px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-run {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  width: max-content;
+  height: 100%;
+  padding-bottom: 14px;
+  animation: videoclub-aisle 90s linear infinite;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-shelf:nth-child(even) .videoclub-presentation-run {
+  animation-direction: reverse;
+  animation-duration: 110s;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-run .videoclub-box {
+  flex: none;
+  height: 100%;
+  aspect-ratio: 2 / 3.2;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-run .videoclub-box-case {
+  box-shadow: 0 6px 10px rgb(0 0 0 / 0.6);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-run .videoclub-spines {
+  flex-wrap: nowrap;
+  height: 92%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-run .videoclub-spine {
+  width: 16px;
+  height: 100%;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-run .videoclub-spine span {
+  font-size: 8px;
+}
+
+@keyframes videoclub-aisle {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 4px)); }
+}
+
+/* The lights are off in the aisle: the sign and the counter read over it */
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 30% at 50% 18%, rgb(62 242 255 / 0.1), transparent 70%),
+    linear-gradient(180deg, rgb(12 10 26 / 0.82), rgb(12 10 26 / 0.5) 30%, rgb(12 10 26 / 0.88) 46%, rgb(12 10 26 / 0.97) 72%);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-sign {
+  gap: 10px;
+  padding: 40px 20px 0;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-sign::before {
+  content: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-fascia {
+  width: min(100%, 560px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-fascia::before,
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-fascia::after {
+  height: 40px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-fascia-face {
+  padding: 8px 14px 7px;
+  font-size: clamp(22px, 6cqi, 40px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-tube {
+  font-size: min(17cqi, calc(88cqi / var(--letters, 8)));
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-plate {
+  padding: 5px 14px 4px;
+  border-width: 4px;
+  font-size: clamp(20px, 4.4cqi, 30px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-counter {
+  display: grid;
+  gap: 16px;
+  margin-top: auto;
+  padding: 0 20px 24px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-lede {
+  max-width: 40ch;
+  margin: 0 auto;
+  font-size: clamp(14px, 2.6cqi, 17px);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-pair {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-ticket {
+  padding: 10px 14px 14px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-ticket-head {
+  padding: 2px 0 6px;
+  font-size: 11px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation .videoclub-ticket-receipt li {
+  padding: 3px 0;
+  font-size: clamp(13px, 2.4cqi, 15px);
+}
+
+/* The next stories: a pile of tapes lying on the counter, spine out, the shop's number on each */
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases .videoclub-aisle-tag {
+  margin: 0;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases ol {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 6px;
+  background: var(--tape);
+  color: var(--vc-ink);
+  text-decoration: none;
+  box-shadow: inset 0 -3px 0 rgb(0 0 0 / 0.3), inset 0 2px 0 rgb(255 255 255 / 0.14), 0 3px 6px rgb(0 0 0 / 0.5);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases li:nth-child(even) a {
+  margin-left: 10px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases b {
+  color: #fff;
+  font: 900 0.8125rem/1 var(--vc-type);
+  font-stretch: 78%;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases a span {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 8px 3px;
+  background: var(--vc-label);
+  font: 800 clamp(13px, 2.4cqi, 15px)/1.15 var(--vc-type);
+  font-stretch: 85%;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-rewind {
+  display: inline-flex;
+  align-items: center;
+  justify-self: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 24px 12px;
+  font-size: clamp(16px, 3cqi, 20px);
+  text-decoration: none;
+}
+
+/* The rewind key of the deck, two triangles pointing back */
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-rewind::before {
+  content: '';
+  width: 1.1em;
+  height: 0.75em;
+  background: currentColor;
+  clip-path: polygon(0 50%, 50% 0, 50% 50%, 100% 0, 100% 100%, 50% 50%, 50% 100%);
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases a:focus-visible,
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-rewind:focus-visible {
+  outline: 3px solid var(--vc-cyan);
+  outline-offset: 3px;
+}
+
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases a,
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases a span {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s, color 0.15s;
+}
+
+@media (hover: hover) {
+  /* The tape is slid out of the pile, its label caught in the pink of the sign */
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases a:hover {
+    transform: translateX(14px) rotate(-0.6deg);
+  }
+
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases a:hover span {
+    background: var(--vc-pink);
+    color: #fff;
+  }
+
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-rewind:hover {
+    transform: rotate(-1.5deg);
+  }
+
+  /* The key held down: the tape spins back */
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-rewind:hover::before {
+    animation: videoclub-rewind 0.5s steps(3, end) infinite;
+  }
+}
+
+@keyframes videoclub-rewind {
+  to { transform: translateX(-6px); }
+}
+
+@container (min-width: 560px) {
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-pair {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 24px;
+  }
+
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-counter {
+    gap: 22px;
+    padding: 0 32px 36px;
+  }
+
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-releases {
+    padding-top: 4px;
+  }
+}
+
+/* A phone frame of Keep in touch is shorter than the phone */
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapped__look[data-theme='videoclub'] .videoclub-presentation-run,
+.wrapped__look[data-theme='videoclub'] .videoclub-presentation-rewind:hover::before {
+    animation: none;
+  }
+}

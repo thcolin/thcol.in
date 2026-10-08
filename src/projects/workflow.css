@@ -1,0 +1,1246 @@
+/* Workflow: the kit's Dashboard redrawn from its snippet, in the Catppuccin Mocha theme of its capture,
+   with the Claude Code session that writes it. On desktop the band is the Obsidian window itself */
+
+.band.workflow {
+  --background-primary: #1e1e2e;
+  --background-secondary: #181825;
+  --background-modifier-border: #313244;
+  --background-modifier-hover: #313244;
+  --text-normal: #cdd6f4;
+  --text-muted: #a6adc8;
+  --text-faint: #6c7086;
+  --text-accent: #89b4fa;
+  --text-on-accent: #11111b;
+  --color-red: #f38ba8;
+  --color-orange: #fab387;
+  --color-yellow: #f9e2af;
+  --color-green: #a6e3a1;
+  --color-cyan: #94e2d5;
+  --color-blue: #89b4fa;
+  --color-purple: #cba6f7;
+  --color-pink: #f5c2e7;
+  --appui: color-mix(in srgb, var(--text-muted) 70%, var(--text-faint));
+  --band-bg: var(--background-primary);
+  --band-ink: var(--text-normal);
+  --band-dim: var(--text-muted);
+  --band-line: rgb(205 214 244 / 0.14);
+  --accent: var(--color-purple);
+  --on-accent: #11111b;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+}
+
+.workflow__layout {
+  display: grid;
+  grid-template-areas: 'bar bar' 'text term' 'dash dash';
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: 36px clamp(232px, 34svh, 300px) minmax(0, 1fr);
+  height: 100%;
+}
+
+.workflow__layout > .band__text {
+  grid-area: text;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 40px 16px var(--gutter);
+}
+
+.workflow__title {
+  margin: 0;
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.workflow .band__body {
+  font-size: 1rem;
+}
+
+.workflow .choices button:active {
+  scale: 0.96;
+}
+
+.workflow__figure {
+  grid-area: dash;
+  min-height: 0;
+  margin: 0;
+  border-top: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 16px;
+}
+
+/* Two windows on one desk: the terminal sits over the corner of Obsidian */
+
+.workflow-lights {
+  display: inline-flex;
+  gap: 7px;
+}
+
+.workflow-lights i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #45475a;
+}
+
+.workflow-lights i:first-child {
+  background-color: #f38ba8;
+}
+
+.workflow-lights i:nth-child(2) {
+  background-color: #f9e2af;
+}
+
+.workflow-lights i:last-child {
+  background-color: #a6e3a1;
+}
+
+/* Claude Code, dark theme: its clay orange, its green dot for a tool that ran, ⎿ under a call */
+
+.workflow-term {
+  --clay: #d77757;
+  --ok: #4eba65;
+  --dim: #9a9a9a;
+  position: relative;
+  z-index: 2;
+  grid-area: term;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  margin: 14px var(--gutter) 14px 0;
+  border: 1px solid #313244;
+  border-radius: 10px;
+  background-color: #0c0c12;
+  color: #e6e6e6;
+  font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78125rem;
+  line-height: 1.6;
+  box-shadow: 0 24px 48px -12px rgb(0 0 0 / 0.6), 0 2px 6px rgb(0 0 0 / 0.4);
+  overflow: hidden;
+}
+
+.workflow-term__bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 34px;
+  padding: 0 12px;
+  border-bottom: 1px solid #1e1e2e;
+  background-color: #181825;
+}
+
+.workflow-term__name {
+  color: var(--dim);
+  font-size: 0.75rem;
+}
+
+.workflow-term__screen {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: 10px 14px 8px;
+}
+
+:where(.workflow-term__screen) p {
+  margin: 0;
+}
+
+.workflow-term__welcome {
+  padding-bottom: 6px;
+}
+
+.workflow-term__claude,
+.workflow-term__spin {
+  color: var(--clay);
+}
+
+.workflow-term__dim {
+  color: var(--dim);
+}
+
+.workflow-term__log {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.workflow-term__log.is-full {
+  mask-image: linear-gradient(transparent, #000 1.6em);
+}
+
+.workflow-term__line {
+  display: grid;
+  grid-template-columns: 2ch minmax(0, 1fr);
+  overflow-wrap: anywhere;
+}
+
+.workflow-term__line.is-prompt {
+  margin-bottom: 6px;
+  color: var(--dim);
+}
+
+.workflow-term__line.is-result {
+  padding-left: 2ch;
+  color: var(--dim);
+}
+
+.workflow-term__line.is-say {
+  margin-top: 6px;
+}
+
+.workflow-term__line b {
+  font-weight: 600;
+}
+
+.workflow-term__dot {
+  color: #e6e6e6;
+}
+
+.workflow-term__dot.is-done {
+  color: var(--ok);
+}
+
+.workflow-term__line.is-result .workflow-term__dot {
+  color: var(--dim);
+}
+
+.workflow-term__spinner {
+  min-height: 1.6em;
+  margin-top: 6px;
+  color: var(--clay);
+}
+
+.workflow-term__spin::before {
+  content: '✻';
+  display: inline-block;
+  width: 1.2ch;
+  animation: workflow-spin 900ms steps(1) infinite;
+}
+
+@keyframes workflow-spin {
+  0% { content: '·'; }
+  17% { content: '✢'; }
+  33% { content: '✳'; }
+  50% { content: '✶'; }
+  67% { content: '✻'; }
+  83% { content: '✽'; }
+}
+
+.workflow-term__input {
+  display: flex;
+  gap: 1ch;
+  margin-top: 4px;
+  padding: 5px 10px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  cursor: text;
+  transition: border-color 150ms ease-out;
+}
+
+.workflow-term__input:focus-within {
+  border-color: #cdd6f4;
+}
+
+.workflow-term__input input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: none;
+  color: #e6e6e6;
+  font: inherit;
+  caret-color: #e6e6e6;
+}
+
+.workflow .workflow-term__input input:focus-visible {
+  outline: none;
+}
+
+.workflow-term__input input::placeholder {
+  color: var(--dim);
+}
+
+.workflow-term__input input::selection {
+  background-color: rgb(215 119 87 / 0.45);
+}
+
+.workflow-term__menu {
+  margin: 4px 0 0;
+  padding: 0 10px;
+  list-style: none;
+}
+
+.workflow-term__menu li {
+  display: grid;
+  grid-template-columns: 16ch minmax(0, 1fr);
+  gap: 2ch;
+  color: #e6e6e6;
+  cursor: pointer;
+}
+
+.workflow-term__menu li span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workflow-term__menu li:hover,
+.workflow-term__menu li[aria-selected='true'] {
+  color: #b1b9f9;
+}
+
+.workflow-term__menu li[aria-selected='true'] .workflow-term__dim {
+  color: #b1b9f9;
+}
+
+.workflow-term__hint {
+  padding: 3px 10px 0;
+  color: var(--dim);
+  font-size: 0.6875rem;
+}
+
+/* Obsidian: its tab bar runs across the band, its note fills what is left */
+
+.workflow-obsidian__bar {
+  grid-area: bar;
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  height: 36px;
+  padding: 0 var(--gutter) 0 12px;
+  background-color: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.workflow-obsidian__sample {
+  align-self: center;
+  margin-left: auto;
+  color: var(--appui);
+  font-size: 0.75rem;
+}
+
+.workflow-obsidian__bar .workflow-lights {
+  align-self: center;
+}
+
+.workflow-obsidian__tab {
+  padding: 6px 28px 7px 14px;
+  border: 1px solid var(--background-modifier-border);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: -1px;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.8125rem;
+}
+
+.workflow-obsidian__note {
+  height: 100%;
+  overflow: auto;
+  container-type: inline-size;
+  scrollbar-color: #45475a transparent;
+  scrollbar-width: thin;
+}
+
+.workflow-obsidian__note:focus-visible {
+  outline-offset: -2px;
+}
+
+/* A reset lands at once: only what a command writes moves */
+.workflow-obsidian__note.is-instant * {
+  transition: none !important;
+}
+
+.workflow-dash {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px 14px 14px;
+}
+
+.workflow-dash__wide {
+  grid-column: span 12;
+  min-width: 0;
+}
+
+.workflow-dash__half {
+  display: flex;
+  grid-column: span 6;
+  min-width: 0;
+}
+
+.workflow-dash__half > .workflow-panel {
+  flex: 1;
+}
+
+.workflow [data-tint='progress'] { --tint: var(--color-blue); }
+.workflow [data-tint='diff'] { --tint: var(--color-cyan); }
+.workflow [data-tint='review'] { --tint: var(--color-orange); }
+.workflow [data-tint='merged'] { --tint: var(--color-green); }
+.workflow [data-tint='c0'] { --tint: var(--color-purple); }
+.workflow [data-tint='c1'] { --tint: var(--color-cyan); }
+.workflow [data-tint='c2'] { --tint: var(--color-pink); }
+.workflow [data-tint='c3'] { --tint: var(--color-yellow); }
+.workflow [data-tint='due'] { --tint: var(--color-orange); }
+.workflow [data-tint='todo'] { --tint: var(--color-blue); }
+.workflow [data-tint='meeting'] { --tint: var(--color-purple); }
+.workflow [data-tint='milestone'] { --tint: var(--color-cyan); }
+
+.workflow-link {
+  color: var(--text-accent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Panels */
+
+.workflow-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.workflow-panel__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 12px 5px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.workflow-panel__title {
+  font-size: 0.7em;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.workflow-panel__legend {
+  font-size: 0.7em;
+  color: var(--appui);
+  text-align: right;
+}
+
+.workflow-panel__body {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px 12px;
+}
+
+.workflow-panel__scroll {
+  min-width: 0;
+}
+
+.workflow-panel__subtitle {
+  margin: 12px 0 0;
+  padding-top: 9px;
+  border-top: 1px solid var(--background-modifier-border);
+  font-size: 0.7em;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.workflow-key {
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+.workflow-key i {
+  display: inline-block;
+  margin-right: 4px;
+  background-color: var(--tint);
+}
+
+.workflow-key__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.workflow-key .workflow-key__diamond {
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  rotate: 45deg;
+}
+
+.workflow-key__square {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+
+.workflow-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 6px 0 0;
+  font-size: 0.72em;
+  color: var(--appui);
+}
+
+.workflow-legend .workflow-key {
+  margin-left: 0;
+}
+
+/* Calendar: the hour band */
+
+.workflow-agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+  font-size: 0.85em;
+}
+
+.workflow-agenda__row {
+  display: grid;
+  grid-template-columns: 8.5em 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.workflow-agenda__lane {
+  position: relative;
+  height: 20px;
+  border-radius: 3px;
+  background-color: var(--background-modifier-border);
+}
+
+.workflow-agenda__row--head .workflow-agenda__lane {
+  height: 13px;
+  background: none;
+}
+
+.workflow-agenda__hour {
+  position: absolute;
+  translate: -50% 0;
+  font-size: 0.72em;
+  color: var(--appui);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflow-agenda__hour:first-child {
+  translate: 0 0;
+}
+
+.workflow-agenda__hour:last-child {
+  translate: -100% 0;
+}
+
+.workflow-agenda__event {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  padding: 0 5px;
+  border-radius: 3px;
+  font-size: 0.8em;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: var(--color-purple);
+  color: var(--text-on-accent);
+}
+
+.workflow-agenda__event.is-short {
+  min-width: 5px;
+  padding: 0;
+}
+
+.workflow-agenda__now {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  margin-left: -1px;
+  background-color: var(--color-red);
+  transition: left 900ms var(--ease);
+}
+
+/* Calendar: thirty days, a lane per section of the planning. The track carries three days more, and
+   slides by them when the Dashboard catches up with today */
+
+.workflow-frise {
+  --step: calc(100% / var(--days));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85em;
+}
+
+.workflow-frise__row {
+  display: grid;
+  grid-template-columns: 6.5em 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.workflow-frise__label {
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+.workflow-frise__window {
+  position: relative;
+  height: 20px;
+  overflow: hidden;
+}
+
+.workflow-frise__row:first-child .workflow-frise__window {
+  height: 16px;
+}
+
+.workflow-frise__track {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: grid;
+  grid-template-columns: repeat(var(--days), minmax(0, 1fr));
+  width: calc(100% * var(--days) / (var(--days) - 3));
+  translate: calc(-100% * var(--shift) / var(--days)) 0;
+  transition: translate 1100ms var(--ease);
+}
+
+.workflow-frise__day {
+  font-size: 0.75em;
+  color: var(--appui);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+  transition-property: color;
+  transition-duration: 300ms;
+}
+
+.workflow-frise__day.is-off {
+  opacity: 0.45;
+}
+
+.workflow-frise__day.is-today {
+  color: var(--text-accent);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.workflow-frise__col {
+  border-left: 1px solid var(--background-modifier-border);
+  transition: border-color 300ms ease-out;
+}
+
+.workflow-frise__col.is-off {
+  background: repeating-linear-gradient(135deg, var(--background-modifier-border) 0 1px, transparent 1px 6px);
+  opacity: 0.6;
+}
+
+.workflow-frise__col.is-today {
+  border-left-color: var(--text-accent);
+  opacity: 1;
+}
+
+.workflow-frise__bar,
+.workflow-frise__point,
+.workflow-frise__milestone {
+  position: absolute;
+  top: 2px;
+  height: 16px;
+  font-size: 0.78em;
+  line-height: 16px;
+}
+
+.workflow-frise__bar {
+  padding: 0 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.workflow-frise__bar.is-plan {
+  background-color: color-mix(in srgb, var(--color-cyan) 85%, var(--background-primary));
+  color: var(--background-primary);
+}
+
+.workflow-frise__bar.is-off {
+  background-color: color-mix(in srgb, var(--text-faint) 70%, var(--background-primary));
+  color: var(--text-normal);
+}
+
+.workflow-frise__hollow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: var(--background-secondary);
+  opacity: 0.55;
+}
+
+.workflow-frise__text {
+  position: relative;
+}
+
+.workflow-frise__point {
+  display: flex;
+  justify-content: center;
+  width: var(--step);
+}
+
+.workflow-frise__point i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--tint);
+  color: var(--text-on-accent);
+  font-size: 0.85em;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.workflow-frise__milestone {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--step);
+}
+
+.workflow-frise__milestone i {
+  width: 11px;
+  height: 11px;
+  rotate: 45deg;
+  background-color: var(--color-cyan);
+}
+
+.workflow-frise__milestone span {
+  position: absolute;
+  left: calc(50% + 10px);
+  padding: 0 4px;
+  border-radius: 2px;
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Calendar: Overdue and Coming up hold their place whether they carry a line or none */
+
+.workflow-list {
+  display: grid;
+  grid-template-columns: fit-content(11em) minmax(0, 1fr) max-content;
+  align-content: start;
+  row-gap: 7px;
+  column-gap: 10px;
+  margin: 7px 0 0;
+  padding: 0 0 0 10px;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.workflow-list--overdue {
+  height: 18px;
+}
+
+.workflow-list--coming {
+  height: 43px;
+}
+
+.workflow-list__row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  transition: color 100ms ease-out;
+}
+
+.workflow-list__date {
+  color: var(--text-accent);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflow-list__text {
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workflow-list__end {
+  color: var(--text-muted);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflow-list__row:hover .workflow-list__text {
+  color: var(--text-normal);
+}
+
+.workflow-list__empty {
+  grid-column: 1 / -1;
+  color: var(--appui);
+  font-style: italic;
+}
+
+/* Ongoing work: a column per state, a row per project. Rows are as tall as their busiest moment */
+
+.workflow-kanban {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.85em;
+}
+
+.workflow-kanban__row {
+  display: grid;
+  grid-template-columns: 7em repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 6px;
+}
+
+.workflow-kanban__row--head {
+  align-items: end;
+}
+
+.workflow-kanban__row > .workflow-link {
+  padding-top: 2px;
+  padding-right: 2px;
+}
+
+.workflow-kanban__state {
+  display: flex;
+  align-items: center;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 0.82em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.workflow-kanban__state i {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background-color: var(--tint);
+}
+
+.workflow-kanban__col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.workflow-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 5px 7px 6px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  background-color: var(--background-modifier-hover);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+  font-size: 12px;
+}
+
+.workflow-card.is-ghost {
+  visibility: hidden;
+}
+
+.workflow-card__title {
+  margin: 1px 0 2px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.workflow-card__muted {
+  color: var(--appui);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflow-badge {
+  align-self: flex-start;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background-color: var(--color-red);
+  color: var(--background-primary);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Time this week */
+
+.workflow-gauge {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.workflow-gauge p {
+  margin: 0;
+}
+
+.workflow-gauge__line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.workflow-gauge__value {
+  color: var(--color-red);
+  font-size: 1.9em;
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflow-gauge__gap {
+  color: var(--appui);
+  font-size: 0.74em;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflow-gauge__bar {
+  position: relative;
+  display: flex;
+  height: 10px;
+  margin: 4px 0 2px;
+  border-radius: 3px;
+  background-color: var(--background-modifier-border);
+}
+
+.workflow-gauge__fill {
+  border-radius: 3px;
+  background-color: var(--color-red);
+}
+
+.workflow-gauge__mark {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  margin-left: -1px;
+  background-color: var(--text-normal);
+  opacity: 0.7;
+}
+
+.workflow-gauge__mark.is-target {
+  background-color: var(--color-red);
+}
+
+.workflow-gauge__detail {
+  color: var(--appui);
+  font-size: 0.78em;
+}
+
+.workflow-share {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  row-gap: 6px;
+  column-gap: 10px;
+  margin: 10px 0 0;
+  padding: 9px 0 0;
+  border-top: 1px solid var(--background-modifier-border);
+  list-style: none;
+  font-size: 0.8em;
+}
+
+.workflow-share li {
+  display: contents;
+}
+
+.workflow-share__keys {
+  color: var(--appui);
+  white-space: nowrap;
+}
+
+.workflow-share__bar {
+  display: flex;
+  height: 8px;
+  border-radius: 3px;
+  background-color: var(--background-modifier-border);
+}
+
+.workflow-share__bar span {
+  border-radius: 3px;
+  background-color: var(--tint);
+}
+
+.workflow-share__end {
+  min-width: 7.4em;
+  color: var(--text-muted);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Where my time goes */
+
+.workflow-graph {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.workflow-graph__grid {
+  stroke: var(--background-modifier-border);
+  stroke-width: 1;
+}
+
+.workflow-graph__target {
+  stroke: var(--color-red);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+
+.workflow-graph__axis {
+  fill: var(--text-faint);
+  font-size: 8px;
+  font-family: inherit;
+}
+
+.workflow-graph__axis.is-x {
+  font-size: 6.5px;
+  letter-spacing: -0.2px;
+}
+
+.workflow-graph__seg {
+  fill: var(--tint);
+}
+
+.workflow-graph__column {
+  fill: var(--background-modifier-border);
+  opacity: 0.35;
+}
+
+.workflow-graph__column.is-today {
+  fill: var(--text-accent);
+  opacity: 0.12;
+}
+
+/* Tickets, day by day */
+
+.workflow-squares {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.85em;
+}
+
+.workflow-squares__row {
+  display: grid;
+  grid-template-columns: 7em 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.workflow-squares__cells {
+  display: grid;
+  grid-template-columns: repeat(var(--days), minmax(0, 1fr));
+  gap: 5px;
+}
+
+.workflow-squares__day {
+  color: var(--appui);
+  font-size: 0.75em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflow-squares__day.is-today {
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+.workflow-squares__cell {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.workflow-squares__square {
+  aspect-ratio: 1;
+  min-width: 0;
+  border-radius: 2px;
+  background-color: var(--tint);
+}
+
+.workflow-squares__square.is-empty {
+  background-color: var(--background-modifier-border);
+  opacity: 0.55;
+}
+
+.workflow-squares__cell.is-off .is-empty {
+  opacity: 0.22;
+}
+
+.workflow-squares__cell.is-today .is-empty {
+  background-color: var(--text-accent);
+  opacity: 0.1;
+}
+
+/* A narrow window stacks the panels, and each wide one scrolls inside itself, as the snippet does */
+
+@container (max-width: 760px) {
+  .workflow-dash {
+    padding: 10px;
+  }
+
+  .workflow-dash__half {
+    grid-column: span 12;
+  }
+
+  .workflow-panel__scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #45475a transparent;
+  }
+
+  .workflow-agenda,
+  .workflow-frise {
+    min-width: 1040px;
+  }
+
+  .workflow-kanban {
+    min-width: 600px;
+  }
+
+  .workflow-graph {
+    min-width: 480px;
+  }
+
+  .workflow-squares {
+    min-width: 640px;
+  }
+
+  .workflow-panel__head {
+    flex-wrap: wrap;
+  }
+
+  .workflow-panel__legend {
+    text-align: left;
+  }
+
+  .workflow-key:first-child {
+    margin-left: 0;
+  }
+
+  .workflow-list__text {
+    white-space: normal;
+  }
+
+  .workflow-share {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .workflow-share__keys {
+    display: none;
+  }
+
+  .workflow-list--coming {
+    height: auto;
+    min-height: 80px;
+  }
+
+  .workflow-list--overdue {
+    height: auto;
+    min-height: 37px;
+  }
+}
+
+/* One screen on desktop: the band is exactly the viewport, the note scrolls inside it */
+@media (min-width: 900px) {
+  .band.workflow {
+    height: 100svh;
+    min-height: 640px;
+    padding: 0;
+  }
+}
+
+/* A phone keeps the band's natural height: text, terminal, then the Obsidian window */
+@media (max-width: 899px) {
+  .band.workflow {
+    background-color: #11111b;
+  }
+
+  .workflow__layout {
+    grid-template-areas: 'text' 'term' 'bar' 'dash';
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    height: auto;
+    padding: 0 var(--gutter);
+  }
+
+  .workflow__layout > .band__text {
+    padding: 0;
+  }
+
+  .workflow-term {
+    height: 340px;
+    margin: 32px 0 40px;
+  }
+
+  .workflow-obsidian__bar {
+    padding-right: 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 10px 10px 0 0;
+  }
+
+  .workflow__figure {
+    border: 1px solid var(--background-modifier-border);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+  }
+
+  .workflow-obsidian__note {
+    height: 560px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workflow-term__spin::before {
+    animation: none;
+  }
+
+  .workflow-dash * {
+    transition: none !important;
+  }
+}
+
+/* The commands scroll the note to the panel they write; the wheel belongs to the page */
+@media (min-width: 900px) {
+  .workflow-obsidian__note {
+    overflow: hidden;
+  }
+}
