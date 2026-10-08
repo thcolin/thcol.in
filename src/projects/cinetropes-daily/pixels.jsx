@@ -154,7 +154,7 @@ const BACKGROUND = { r: 14, g: 13, b: 14 }
 
 // PixelatedText. One change from the app: the hidden text is never in the page, only its mosaic,
 // so the answer cannot be read before the end. Its box is measured from the text instead of laid out by it
-export const PixelatedText = ({ text, mosaic, revealed, resolution = 3, fontSize = 16, fontWeight = 400, fontFamily = "'Hanken Grotesk', sans-serif", color = 'rgba(255, 255, 255, 0.85)', block = false, className, children }) => {
+export const PixelatedText = ({ text, revealed, resolution = 3, fontSize = 16, fontWeight = 400, fontFamily = "'Hanken Grotesk', sans-serif", color = 'rgba(255, 255, 255, 0.85)', block = false, className, children }) => {
   const wrapper = useRef(null)
   const canvas = useRef(null)
   const [coarse, setCoarse] = useState(null)
@@ -171,11 +171,6 @@ export const PixelatedText = ({ text, mosaic, revealed, resolution = 3, fontSize
 
   useLayoutEffect(() => {
     if (revealed && !animating) {
-      return
-    }
-
-    if (mosaic) {
-      setCoarse(mosaic)
       return
     }
 
@@ -234,7 +229,7 @@ export const PixelatedText = ({ text, mosaic, revealed, resolution = 3, fontSize
       live = false
       observer.disconnect()
     }
-  }, [text, mosaic, resolution, fontSize, fontWeight, fontFamily, color, block, revealed])
+  }, [text, resolution, fontSize, fontWeight, fontFamily, color, block, revealed])
 
   useLayoutEffect(() => {
     if (!coarse || animating || revealed || !canvas.current) {

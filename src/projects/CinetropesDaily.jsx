@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Tags } from './shared'
-import { FROZEN, getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
+import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
 import { HistoryCard, MysteryCard } from './cinetropes-daily/card'
 import { confettiOn } from './cinetropes-daily/confetti'
@@ -21,6 +21,13 @@ const KONAMI_LABELS = ['▲', '▲', '▼', '▼', '◀', '▶', '◀', '▶', '
 
 const runtimeOf = (minutes) => `${Math.floor(minutes / 60)}h${String(minutes % 60).padStart(2, '0')}`
 const normalize = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '')
+// The API's titleMask: capitals X, small letters x, digits 0, the rest kept
+const maskOf = (text) => [...text].map((c) => /\p{Lu}/u.test(c) ? 'X' : /\p{Ll}/u.test(c) ? 'x' : /\d/.test(c) ? '0' : c).join('')
+
+// The client never has the title before the end, only its mask: a role with the title's shape, as a whole or in one
+// of its words, stays hidden to the end. The app gives the answer away there at the third attempt (Nikita, for #190)
+const mayBeTitle = (role, titleMask) => !!role && !!titleMask && (maskOf(role) === titleMask || (!titleMask.includes(' ') && role.split(/[\s,]+/).some((word) => maskOf(word) === titleMask)))
+
 const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const read = (key) => {
@@ -409,6 +416,8 @@ export const CinetropesDaily = () => {
       setPendingBar(attemptsUsed)
       setLastGuessIndex(attemptsUsed)
       setLastGuessResult(res.correct ? 'correct' : attemptsUsed + 1 >= maxAttempts ? 'lost' : 'wrong')
+    } catch {
+      setToast({ type: 'error', message: 'Something went wrong', at: Date.now() })
     } finally {
       setSubmitting(false)
     }
@@ -613,7 +622,7 @@ export const CinetropesDaily = () => {
   const won = phase === 'won'
   const answer = mysteryFilm?.title
   const titleRevealed = revealTier >= 7 || victoryRevealed
-  const titleText = titleRevealed && answer ? answer : 'Today’s Mystery Film'
+  const titleText = titleRevealed && answer ? answer : mystery?.titleMask ?? 'Xxxxxx'
   const twins = new Map()
   results.forEach(({ title }) => twins.set(normalize(title), (twins.get(normalize(title)) ?? 0) + 1))
   const resultMode = victoryRevealed || phase === 'lost'
@@ -646,8 +655,8 @@ export const CinetropesDaily = () => {
         <h3 id='cinetropes-daily' className='cd__nav-title'>Film of the day</h3>
         <div className='cd__nav-side'>
           <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />
-          {FROZEN && (
-            <p className='cd__sample' title='Daily #190, taken from the beta on 8 October 2026: its API only answers the beta for now. Search covers 2,327 of its best-known films.'>
+          {puzzle?.sample && (
+            <p className='cd__sample' title='The beta’s API did not answer: this is daily #190, taken from the beta on 8 October 2026.'>
               <span>Sample data</span> <span className='cd__sample-text'>Daily #190 from the beta, 8 October 2026</span>
             </p>
           )}
@@ -696,7 +705,7 @@ export const CinetropesDaily = () => {
 
         <div className='cd__panel'>
           <h4 className='cd__film-title'>
-            <PixelatedText text={titleText} mosaic={titleRevealed ? null : puzzle?.titleMosaic} revealed={!loading && titleRevealed && !!answer} resolution={1} fontSize={48} fontWeight={800} fontFamily="'Poppins', sans-serif" color='rgba(255, 255, 255, 0.95)'>
+            <PixelatedText text={titleText} revealed={!loading && titleRevealed && !!answer} resolution={1} fontSize={48} fontWeight={800} fontFamily="'Poppins', sans-serif" color='rgba(255, 255, 255, 0.95)'>
               <span>{answer}</span>
             </PixelatedText>
           </h4>
@@ -736,10 +745,8 @@ export const CinetropesDaily = () => {
               <div className='cd__accordion'>
                 <Section id='casting' label='Casting' open={openSection === 'casting'} onToggle={setOpenSection}>
                   <ul className='cd__people'>
-                    {/* A role named after the film stays hidden to the end: the app gives the answer away there at the third attempt.
-                        The flag is set when the data is frozen, so the title itself never reaches the page early */}
                     {mystery.castDetailed.slice(0, CAST_LIMIT).map((person) => (
-                      <Person key={person.personId} name={person.name} role={person.character} imageUrl={person.imageUrl} revealed={castRevealed} hideRole={person.characterSpoiler && !victoryRevealed} />
+                      <Person key={person.personId} name={person.name} role={person.character} imageUrl={person.imageUrl} revealed={castRevealed} hideRole={!victoryRevealed && mayBeTitle(person.character, mystery.titleMask)} />
                     ))}
                   </ul>
                 </Section>
