@@ -1,0 +1,1 @@
+(0,globalThis.parcelRequiredc51.register)("9Mwpu",function(e,i){e.exports=JSON.parse('{"id":9322,"title":"Nikita"}')});
