@@ -1,6 +1,6 @@
 // The daily's data, from the beta's API: GET /daily, POST /daily/guess, GET /daily/reveal, GET /daily/poster/:level.
 // Its CORS answers https://thcol.in only. Anywhere else, or when it fails, the band falls back to daily #190,
-// frozen on 8 October 2026 and marked as sample data. Search has no endpoint open to this origin: it stays local
+// frozen on 8 October 2026 and marked as sample data. Search is GET /search with the live daily, local with the sample
 
 import frozen from '../../assets/cinetropes-daily/daily.json'
 
@@ -75,8 +75,16 @@ export const getPosterPixels = async (level) => {
 // The original poster, level 5, shown once the game is over
 const posterOf = (film) => live !== null ? `${API}/daily/poster/5?d=${live}` : film.posterUrl ?? FROZEN_POSTER
 
-// Search, films only, five at most, from 2,327 of the beta's best-known films
+// GET /search, films only, five at most. The sample's search stays within 2,327 of the beta's best-known films,
+// the ones its guesses can be checked against
 export const search = async (query, excludeIds = []) => {
+  if (live !== null) {
+    const params = new URLSearchParams({ q: query })
+    if (excludeIds.length) params.set('excludeFilmIds', excludeIds.join(','))
+    const { results } = await (await request(`/search?${params}`)).json()
+    return results.filter((result) => result.type === 'film').slice(0, 5)
+  }
+
   const key = normalize(query)
   const found = (await films()).filter((film) => film.key.includes(key) && !excludeIds.includes(film.id))
   return [...found.filter((film) => film.key.startsWith(key)), ...found.filter((film) => !film.key.startsWith(key))]

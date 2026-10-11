@@ -1,7 +1,7 @@
 /* cinetropes daily: the beta's /daily page and its DailyPage.css, SwipeCard.css, Accordion.css and Toast,
    with their tokens: OLED black, Poppins, Spectral italic, Hanken Grotesk, the liquid glass, the Tri-Force red and green */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Spectral:ital,wght@1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@600&family=Poppins:wght@800&family=Spectral:ital,wght@1,700&display=swap');
 
 .band.cd {
   --band-bg: rgb(14 13 14);

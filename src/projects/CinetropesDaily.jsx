@@ -388,7 +388,7 @@ export const CinetropesDaily = () => {
         setOpen(found.length > 0)
         setActive(-1)
       }
-    }), 300)
+    }).catch(() => live && setResults([])), 300)
     return () => { live = false; clearTimeout(timer) }
   }, [query, staged, guessedIds])
 
