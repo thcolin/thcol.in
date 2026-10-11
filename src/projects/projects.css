@@ -512,7 +512,7 @@ main#projects ::selection {
   gap: 10px;
 }
 
-/* The consoles' webp carry their own transparent margin, which stands for the gap */
+/* The consoles' webp carry their own transparent margin, most of the gap to the text */
 @media (min-width: 900px) {
   .gmca > .band__column {
     max-width: 96em;
