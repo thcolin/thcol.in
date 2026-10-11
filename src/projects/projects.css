@@ -390,6 +390,11 @@ main#projects ::selection {
   .sensorr > .band__column {
     max-width: 96em;
     grid-template-columns: min(26em, 40%) minmax(0, 1fr);
+    gap: calc(64px + var(--gutter) / 2);
+  }
+
+  .sensorr__stage {
+    margin-right: calc(var(--gutter) / -2);
   }
 }
 
@@ -512,7 +517,11 @@ main#projects ::selection {
   .gmca > .band__column {
     max-width: 96em;
     grid-template-columns: minmax(0, 1fr) min(26em, 40%);
-    gap: 0;
+    gap: calc(var(--gutter) / 2);
+  }
+
+  .gmca__stage {
+    margin-left: calc(var(--gutter) / -2);
   }
 }
 
