@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Tags } from './shared'
 import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
 import { HistoryCard, MysteryCard } from './cinetropes-daily/card'
 import { confettiOn } from './cinetropes-daily/confetti'
-import { Atmosphere, Reception, Tropes } from './cinetropes-daily/radars'
+import { Atmosphere, Reception, Tropes } from './cinetropes-radars'
 import './cinetropes-daily.css'
 
 // The beta's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
@@ -103,7 +103,7 @@ const topTropes = (tropes) => {
   const values = picked.map((t) => 1 / Math.log2(2 + (t.usageCount || 1)))
   const min = Math.min(...values)
   const max = Math.max(...values)
-  return picked.map((t, i) => ({ name: t.name, value: max === min ? values[i] : Math.round((1.5 + ((values[i] - min) / (max - min)) * 3.5) * 100) / 100 }))
+  return picked.map((t, i) => ({ ...t, value: max === min ? values[i] : Math.round((1.5 + ((values[i] - min) / (max - min)) * 3.5) * 100) / 100 }))
 }
 
 const SkipIcon = () => (
@@ -196,6 +196,33 @@ const KonamiOverlay = ({ progress, activated }) => {
         {KONAMI_LABELS.slice(0, count).map((label, i) => <kbd key={i} className='cd__konami-key'>{label}</kbd>)}
       </div>
     </div>
+  )
+}
+
+// The app's Synopsis: clamped to its lines, a More button when the text runs longer
+const Synopsis = ({ text }) => {
+  const [expanded, setExpanded] = useState(false)
+  const [overflows, setOverflows] = useState(false)
+  const ref = useRef(null)
+
+  useLayoutEffect(() => {
+    const p = ref.current
+    const measure = () => setOverflows(p.scrollHeight > p.clientHeight + 2)
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(p)
+    return () => observer.disconnect()
+  }, [text])
+
+  return (
+    <>
+      <p ref={ref} className={expanded ? 'is-expanded' : undefined}>{text}</p>
+      {(overflows || expanded) && (
+        <button type='button' className='cd__synopsis-toggle' aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>
+          {expanded ? 'Less' : 'More'}
+        </button>
+      )}
+    </>
   )
 }
 
@@ -740,14 +767,14 @@ export const CinetropesDaily = () => {
 
               <div className='cd__synopsis'>
                 <PixelatedText text={mystery.overview} revealed={revealTier >= 5 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.6)' block>
-                  <p>{mystery.overview}</p>
+                  <Synopsis text={mystery.overview} />
                 </PixelatedText>
               </div>
 
               <div className='cd__signature'>
-                <Reception scores={mystery.scores} />
+                <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} />
                 <Atmosphere emotions={mystery.emotions} />
-                <Tropes tropes={tropes} />
+                <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} />
               </div>
 
               <div className='cd__accordion'>
