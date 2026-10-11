@@ -40,8 +40,8 @@ export const usePrefersReducedMotion = () => {
   return reduced
 }
 
-const range = (p, from, to) => Math.min(1, Math.max(0, (p - from) / (to - from)))
-const easeOut = (t) => 1 - (1 - t) ** 3
+export const range = (p, from, to) => Math.min(1, Math.max(0, (p - from) / (to - from)))
+export const easeOut = (t) => 1 - (1 - t) ** 3
 
 // Progress runs from the screen entering the viewport to the first band pushing it out
 export const Group = ({ id, title, phrase, projects, children }) => {

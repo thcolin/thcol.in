@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Tags, stepOf, useScrub } from './shared'
+import { Tags, easeOut, range, stepOf, useScrub } from './shared'
 import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
 import { HistoryCard, MysteryCard } from './cinetropes-daily/card'
@@ -340,8 +340,19 @@ export const CinetropesDaily = () => {
     }
   }, [phase, mysteryFilm])
 
-  // Once past the rules, the scroll opens the drawers one by one, until the visitor opens one
-  const [scrub, hold] = useScrub((progress) => onboarded && setOpenSection(SECTIONS[stepOf(progress, SECTIONS.length)]))
+  // The scroll brings the rules in as the sections' own screens do, then once past them opens the drawers
+  // one by one, until the visitor opens one
+  const [scrub, hold] = useScrub((progress) => {
+    if (onboarded) {
+      setOpenSection(SECTIONS[stepOf(progress, SECTIONS.length)])
+      return
+    }
+
+    const style = root.current.style
+    style.setProperty('--cd-guess', easeOut(range(progress, 0, 0.4)))
+    style.setProperty('--cd-film', easeOut(range(progress, 0.1, 0.5)))
+    style.setProperty('--cd-rules', range(progress, 0.45, 0.75))
+  })
 
   const toggle = (id) => {
     hold()
@@ -923,7 +934,7 @@ export const CinetropesDaily = () => {
         {!onboarded && (
           <div className={onboardingLeaving ? 'cd__onboarding is-leaving' : 'cd__onboarding'}>
             <div className='cd__onboarding-content'>
-              <p className='cd__hero-title'><i>Guess<br />the Film of the Day</i></p>
+              <p className='cd__hero-title'><i><span>Guess</span><span>the Film of the Day</span></i></p>
               <p className='cd__hero-subtitle'>
                 Can you recognise today’s film simply<br />from its tropes, its atmosphere and its ratings?
                 <br /><br />

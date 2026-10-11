@@ -1346,11 +1346,25 @@
   text-shadow: 0 0 24px rgb(255 255 255 / 0.35);
 }
 
+.cd__hero-title span {
+  display: block;
+}
+
+/* Before Play the scroll sets these, as on the sections' own screens; without it they rest at 1 */
+.cd__hero-title span:first-child {
+  transform: translateX(calc((1 - var(--cd-guess, 1)) * -110vw));
+}
+
+.cd__hero-title span:last-child {
+  transform: translateX(calc((1 - var(--cd-film, 1)) * 110vw));
+}
+
 .cd__hero-subtitle {
   margin: -1.75rem 0 0;
   color: var(--band-dim);
   font-size: 0.75rem;
   line-height: 1.6;
+  opacity: var(--cd-rules, 1);
 }
 
 .cd__play {
