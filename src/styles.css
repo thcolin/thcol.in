@@ -140,6 +140,79 @@ header nav a.projects-link:hover {
   color: #111;
 }
 
+/* Logos at equal visual weight through --h, all in the same dimmed white, lit when they link somewhere */
+#clients {
+  padding: 96px clamp(16px, 4vw, 48px) 120px;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+  background-color: #0c0c0c;
+}
+
+#clients h2 {
+  max-width: 1152px;
+  margin: 0 auto;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+#clients p {
+  max-width: 1152px;
+  margin: 14px auto 0;
+  color: rgb(255 255 255 / 0.62);
+  font-weight: 500;
+}
+
+#clients ul {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  max-width: 1152px;
+  margin: 56px auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+#clients li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+}
+
+#clients li > a {
+  display: flex;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+#clients img {
+  height: var(--h);
+  max-width: 100%;
+  filter: brightness(0) invert(1);
+  opacity: 0.45;
+  transition: opacity 150ms ease-out;
+}
+
+#clients a:hover img,
+#clients a:focus-visible img {
+  opacity: 1;
+}
+
+#clients a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  #clients ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #clients li {
+    height: 96px;
+  }
+}
+
 @media (max-width: 480px) {
   header h1 {
     font-size: 3em !important;
