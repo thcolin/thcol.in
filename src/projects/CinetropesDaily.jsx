@@ -627,6 +627,11 @@ export const CinetropesDaily = () => {
   results.forEach(({ title }) => twins.set(normalize(title), (twins.get(normalize(title)) ?? 0) + 1))
   const resultMode = victoryRevealed || phase === 'lost'
 
+  // The verdict's module needs the room of the open section
+  useEffect(() => {
+    resultMode && setOpenSection('')
+  }, [resultMode])
+
   const roundClass = (attempt, i) => {
     let className = 'cd__round'
 
@@ -645,7 +650,7 @@ export const CinetropesDaily = () => {
   }
 
   return (
-    <article ref={root} className='band cd' aria-labelledby='cinetropes-daily'>
+    <article ref={root} className={resultMode ? 'band cd is-over' : 'band cd'} aria-labelledby='cinetropes-daily'>
       <div className='cd__backdrop' aria-hidden='true'>
         {pixels[4] && <PixelGrid pixels={pixels[4]} className='cd__backdrop-image' />}
       </div>

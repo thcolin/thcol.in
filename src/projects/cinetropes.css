@@ -804,33 +804,6 @@
   text-align: right;
 }
 
-.cinetropes__sources {
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 2px 16px;
-  margin: 8px 0 0;
-  padding-top: 8px;
-  border-top: 1px solid rgb(255 255 255 / 0.1);
-  font-size: 10px;
-}
-
-.cinetropes__sources div {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.cinetropes__sources dt {
-  color: rgb(255 255 255 / 0.5);
-}
-
-.cinetropes__sources dd {
-  margin: 0;
-  color: rgb(255 255 255 / 0.85);
-  font-family: 'Fira Code', monospace;
-  font-variant-numeric: tabular-nums;
-}
-
 .cinetropes__tropes {
   display: flex;
   flex-direction: column;

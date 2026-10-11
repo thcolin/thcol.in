@@ -330,11 +330,6 @@ const Reception = ({ scores }) => {
           </li>
         ))}
       </ul>
-      <dl className='cinetropes__sources'>
-        {scores.sources.map(({ name, value }) => (
-          <div key={name}><dt>{name}</dt><dd>{value}</dd></div>
-        ))}
-      </dl>
     </>
   )
 

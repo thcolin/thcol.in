@@ -45,6 +45,13 @@
 .cg__row {
   height: 50%;
   overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+}
+
+.cg__row:active {
+  cursor: grabbing;
 }
 
 .cg__track {
@@ -54,23 +61,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: cg-reel 160s linear infinite;
-}
-
-.cg__row--lobby .cg__track {
-  animation-direction: reverse;
-}
-
-.cg__reel:hover .cg__track,
-.cg__reel:focus-within .cg__track,
-.cg.is-visiting .cg__track {
-  animation-play-state: paused;
-}
-
-@keyframes cg-reel {
-  to {
-    transform: translateX(-50%);
-  }
+  will-change: transform;
 }
 
 .cg__track li {
@@ -84,7 +75,7 @@
   padding: 0;
   border: none;
   background-color: var(--cg-slot);
-  cursor: pointer;
+  cursor: inherit;
   transition-property: filter;
   transition-duration: 200ms;
   transition-timing-function: ease-out;
@@ -191,35 +182,6 @@
   image-rendering: pixelated;
 }
 
-.cg__exit {
-  position: absolute;
-  left: 50%;
-  bottom: 8px;
-  translate: -50% 0;
-  padding: 4px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  transition-property: translate, scale;
-  transition-duration: 150ms;
-  transition-timing-function: ease-out;
-}
-
-.cg__exit img {
-  display: block;
-  width: 48px;
-  height: 48px;
-  image-rendering: pixelated;
-}
-
-.cg__exit:hover {
-  translate: -50% 3px;
-}
-
-.cg__exit:active {
-  scale: 0.96;
-}
-
 .cg__panel {
   display: flex;
   flex-direction: column;
@@ -304,6 +266,69 @@
   min-height: 48px;
 }
 
+.cg__caption {
+  min-height: 48px;
+  color: var(--cg-title);
+}
+
+.cg mark {
+  background: none;
+  color: #fff200;
+}
+
+/* The game's HUD inside the scene: room tabs at the bottom, the room's condition on top */
+.cg__hud {
+  position: absolute;
+  left: 0;
+  right: 0;
+  gap: 2px 16px;
+  padding: 8px 12px;
+  text-transform: uppercase;
+}
+
+.cg__hud--top {
+  top: 0;
+  padding-bottom: 20px;
+  background-image: linear-gradient(rgb(17 8 6 / 0.88), rgb(17 8 6 / 0));
+}
+
+.cg__hud--bottom {
+  bottom: 0;
+  padding-top: 20px;
+  background-image: linear-gradient(rgb(17 8 6 / 0), rgb(17 8 6 / 0.88));
+}
+
+.cg__hud button {
+  position: relative;
+  padding: 2px 0;
+  color: var(--cg-dim);
+  text-decoration: underline 2px transparent;
+  text-underline-offset: 6px;
+}
+
+.cg__hud button:hover,
+.cg__hud button[aria-checked='true'] {
+  color: var(--cg-active);
+}
+
+.cg__hud button[aria-checked='true'] {
+  text-decoration-color: var(--cg-active);
+}
+
+.cg__hud button:active {
+  scale: 0.96;
+}
+
+/* The tier the cinema stands at, a gold pixel above the label */
+.cg__now {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  width: 4px;
+  height: 4px;
+  background-color: var(--cg-gold);
+}
+
 .cg__actions {
   display: flex;
   justify-content: flex-end;
@@ -374,13 +399,21 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cg__track {
-    animation: none;
-  }
-
   .cg__tile,
   .cg__film,
-  .cg__exit {
+  .cg__button {
     transition-duration: 0ms;
+  }
+}
+
+/* The visit's heading takes focus for screen readers, not for the eye */
+.cg .cg__heading:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 480px) {
+  .cg__hud {
+    gap: 2px 10px;
+    padding-inline: 8px;
   }
 }

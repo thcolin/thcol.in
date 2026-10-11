@@ -92,14 +92,20 @@ export const submitGuess = async (filmId, attemptsUsed) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ filmId, attemptsUsed }),
     })).json()
-    return result.mysteryFilm ? { ...result, mysteryFilm: { ...result.mysteryFilm, posterUrl: posterOf(result.mysteryFilm) } } : result
+    if (!result.mysteryFilm) {
+      return result
+    }
+
+    // The found film's card shows the daily's own poster, the one of the big card and of the beta
+    const mysteryFilm = { ...result.mysteryFilm, posterUrl: posterOf(result.mysteryFilm) }
+    return { ...result, mysteryFilm, guessFilm: result.correct ? { ...result.guessFilm, posterUrl: mysteryFilm.posterUrl } : result.guessFilm }
   }
 
   const [film, mystery] = await Promise.all([films().then((all) => all.find(({ id }) => id === filmId)), answer()])
   const correct = filmId === mystery.id
   return {
     correct,
-    guessFilm: { id: film.id, title: film.title, year: film.year, posterUrl: tmdb(film.poster, 'w342') },
+    guessFilm: { id: film.id, title: film.title, year: film.year, posterUrl: correct ? FROZEN_POSTER : tmdb(film.poster, 'w342') },
     ...((correct || attemptsUsed + 1 >= frozen.maxGuesses) && { mysteryFilm: { ...mystery, posterUrl: FROZEN_POSTER } }),
   }
 }

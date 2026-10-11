@@ -44,37 +44,7 @@
       "public": 4.5,
       "nerd": 4.31,
       "votes": 1001248,
-      "notoriety": 750936,
-      "sources": [
-        {
-          "name": "Rotten Tomatoes critics",
-          "value": 97
-        },
-        {
-          "name": "Rotten Tomatoes audience",
-          "value": 96
-        },
-        {
-          "name": "Metacritic",
-          "value": 96
-        },
-        {
-          "name": "TMDB",
-          "value": 8.5
-        },
-        {
-          "name": "IMDb",
-          "value": 8.6
-        },
-        {
-          "name": "Letterboxd",
-          "value": 4.39
-        },
-        {
-          "name": "SensCritique",
-          "value": 8.4
-        }
-      ]
+      "notoriety": 750936
     },
     "emotions": {
       "joy": 3.4,
@@ -269,37 +239,7 @@
       "public": 4.09,
       "nerd": 4.04,
       "votes": 1428223,
-      "notoriety": 1071167,
-      "sources": [
-        {
-          "name": "Rotten Tomatoes critics",
-          "value": 85
-        },
-        {
-          "name": "Rotten Tomatoes audience",
-          "value": 81
-        },
-        {
-          "name": "Metacritic",
-          "value": 69
-        },
-        {
-          "name": "TMDB",
-          "value": 8
-        },
-        {
-          "name": "IMDb",
-          "value": 8.2
-        },
-        {
-          "name": "Letterboxd",
-          "value": 4.16
-        },
-        {
-          "name": "SensCritique",
-          "value": 7.7
-        }
-      ]
+      "notoriety": 1071167
     },
     "emotions": {
       "joy": 0.9,
@@ -504,29 +444,7 @@
       "public": 3.75,
       "nerd": 3.86,
       "votes": 74777,
-      "notoriety": 79806,
-      "sources": [
-        {
-          "name": "Metacritic",
-          "value": 85
-        },
-        {
-          "name": "TMDB",
-          "value": 7.5
-        },
-        {
-          "name": "IMDb",
-          "value": 7.5
-        },
-        {
-          "name": "Letterboxd",
-          "value": 4.1
-        },
-        {
-          "name": "SensCritique",
-          "value": 7
-        }
-      ]
+      "notoriety": 79806
     },
     "emotions": {
       "joy": 2.1,
@@ -724,33 +642,7 @@
       "public": 3.68,
       "nerd": 2.56,
       "votes": 633467,
-      "notoriety": 475100,
-      "sources": [
-        {
-          "name": "Rotten Tomatoes critics",
-          "value": 30
-        },
-        {
-          "name": "Rotten Tomatoes audience",
-          "value": 80
-        },
-        {
-          "name": "Metacritic",
-          "value": 35
-        },
-        {
-          "name": "TMDB",
-          "value": 6.8
-        },
-        {
-          "name": "IMDb",
-          "value": 6.6
-        },
-        {
-          "name": "Letterboxd",
-          "value": 2.56
-        }
-      ]
+      "notoriety": 475100
     },
     "emotions": {
       "joy": 1.9,
