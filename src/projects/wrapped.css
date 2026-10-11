@@ -76,26 +76,27 @@
   text-wrap: balance;
 }
 
-/* sensorr's mark stays upright whatever the look's display face */
-.wrapped__mark {
-  display: inline-flex;
-  gap: 0;
-  margin-right: 0.14em;
+/* sensorr's own logo, as on its band: the emoji pair and the lowercase wordmark, whatever the look */
+.wrapped__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  margin-bottom: 0.18em;
+  font: 800 0.42em/1 'Raleway', sans-serif;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  text-shadow: none;
+}
+
+.wrapped__logo span {
   font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
-  font-size: 0.76em;
+  font-size: 1.15em;
   font-style: normal;
-  font-synthesis: none;
-  line-height: 1;
-  vertical-align: 0.02em;
+  letter-spacing: 0.06em;
 }
 
-.wrapped__lead {
-  white-space: nowrap;
-}
-
-/* Emoji glyphs carry wide side bearings: the pair sits as tight as sensorr's README mark */
-.wrapped__mark span + span {
-  margin-left: -0.06em;
+.wrapped__name {
+  display: block;
 }
 
 /* The look's own mark under the title: the TV guide's red, the film's edge, the neon, the highlighter, the crimson */
