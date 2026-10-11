@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Choices, Tags, range, stepOf, usePrefersReducedMotion, useScrub } from '../shared'
+import { Anchor, Choices, Tags, range, stepOf, usePrefersReducedMotion, useScrub } from '../shared'
 import { GuideLabel, Hud, Legend, clock, useInView } from './osd'
 import { Bars, Film, Radio, STREAM, Spotify, TRACK, Weather } from './channels'
 import { PetChannel } from './Pet'
@@ -363,8 +363,10 @@ export const Tv = () => {
         </div>
         <div className='teevy-osd'>
           <h3 id='teevy-title' className='teevy-osd__band'>
-            <span className='teevy-osd__key'>teevy</span>
-            <span className='teevy-osd__value'>Channel guide</span>
+            <Anchor id='teevy'>
+              <span className='teevy-osd__key'>teevy</span>
+              <span className='teevy-osd__value'>Channel guide</span>
+            </Anchor>
           </h3>
           <p className='teevy-osd__text'>
             A Mac drives a real CRT as a television, through HDMI to RCA. Every source becomes a channel: films, Spotify, the radio, the weather, the consoles booting like they did, the homelab's monitor, and a tamagotchi on channel zero. All of it zapped from the keyboard, in a 90s on-screen display.

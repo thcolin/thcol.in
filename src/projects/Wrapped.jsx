@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { Links, Tags, stepOf, useScrub } from './shared'
+import { Anchor, Links, Tags, stepOf, useScrub } from './shared'
 import { sheetsOf, t } from './wrapped/sheets'
 import share from './wrapped/share.json'
 import './wrapped.css'
@@ -219,8 +219,10 @@ export const Wrapped = () => {
         <div className='band__column band__split band__split--reverse'>
           <div className='band__text'>
             <h3 id='sensorr-wrapped-title' className='wrapped__title'>
-              <span className='wrapped__logo'><span aria-hidden='true'>🍿📼</span>sensorr</span>
-              <span className='wrapped__name'>Wrapped</span>
+              <Anchor id='sensorr-wrapped'>
+                <span className='wrapped__logo'><span aria-hidden='true'>🍿📼</span>sensorr</span>
+                <span className='wrapped__name'>Wrapped</span>
+              </Anchor>
             </h3>
             <p className='wrapped__tagline'>A wrapped for every friend, every year.</p>
             <p className='band__body'>

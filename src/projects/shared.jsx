@@ -96,7 +96,7 @@ export const Group = ({ id, title, phrase, projects, children }) => {
         <div className='group__stick'>
           <div className='group__stack'>
             <h2 id={`${id}-title`} className='group__title'>
-              {title.split(' ').map((word) => <span key={word}>{word}</span>)}
+              <Anchor id={id}>{title.split(' ').map((word) => <span key={word}>{word}</span>)}</Anchor>
             </h2>
             <div className='group__meta'>
               <p className='group__phrase'>{phrase}</p>
@@ -178,6 +178,21 @@ export const useScrub = (onProgress) => {
   }, [])
 
   return [ref, hold]
+}
+
+// A title links to its anchor, to be copied: a click puts the anchor in the address bar without scrolling back
+// to the top of a band the scroll is walking through
+export const Anchor = ({ id, label, children }) => {
+  const click = (event) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return
+    }
+
+    event.preventDefault()
+    history.replaceState(null, '', `#${id}`)
+  }
+
+  return <a href={`#${id}`} className='anchor' aria-label={label} onClick={click}>{children}</a>
 }
 
 export const Tags = ({ items }) => (

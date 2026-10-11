@@ -267,14 +267,18 @@
 }
 
 .teevy-osd__band {
-  display: flex;
-  align-items: flex-start;
   margin: 0;
   font-weight: 400;
   font-family: var(--osd-font);
   font-size: 1.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.teevy-osd__band > a {
+  display: flex;
+  align-items: flex-start;
+  width: fit-content;
 }
 
 .teevy-osd__key {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Tags, easeOut, range, stepOf, useScrub } from './shared'
+import { Anchor, Tags, easeOut, range, stepOf, useScrub } from './shared'
 import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
 import { HistoryCard, MysteryCard } from './cinetropes-daily/card'
@@ -728,8 +728,10 @@ export const CinetropesDaily = () => {
 
         <header className='cd__nav'>
           <h3 id='cinetropes-daily-title' className='cd__nav-title'>
-            <img src={LOGO} alt='cinetropes' width='275' height='40' />
-            <span>daily</span>
+            <Anchor id='cinetropes-daily'>
+              <img src={LOGO} alt='cinetropes' width='275' height='40' />
+              <span>daily</span>
+            </Anchor>
           </h3>
           <div className='cd__nav-side'>
             <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />

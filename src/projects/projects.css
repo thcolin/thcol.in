@@ -161,6 +161,15 @@ main#projects ::selection {
   outline-offset: 2px;
 }
 
+/* A title links to its anchor in the title's own colour */
+.anchor {
+  color: inherit;
+}
+
+.group__title > .anchor {
+  display: block;
+}
+
 @media (max-width: 900px) {
   .band {
     padding: 64px 0;
@@ -449,11 +458,15 @@ main#projects ::selection {
 }
 
 .gmca__brand {
+  margin: 0;
+}
+
+.gmca__brand > a {
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 16px;
   align-items: center;
-  margin: 0;
+  width: fit-content;
 }
 
 .gmca__brand img {
@@ -590,7 +603,16 @@ main#projects ::selection {
   align-items: start;
 }
 
+.oleoo__title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Inline-block, so the title's underline on hover stays out of the drawing */
 .oleoo__logo {
+  display: inline-block;
+  vertical-align: top;
   margin: 0;
   /* 42 columns of Fira Code are about 25em wide: 3.3vw fits a phone, 1.15rem fits the text column */
   font-size: round(min(3.3vw, 1.15rem), 1px);
@@ -827,14 +849,18 @@ main#projects ::selection {
 }
 
 .grid__title {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   margin: 0;
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
+}
+
+.grid__title > a {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: fit-content;
 }
 
 .grid code {

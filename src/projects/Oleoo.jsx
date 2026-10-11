@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import oleoo from 'oleoo'
-import { Links, Tags, useReveal, useScrub } from './shared'
+import { Anchor, Links, Tags, useReveal, useScrub } from './shared'
 
 const EXAMPLE = 'Arrival.2016.MULTi.2160p.WEB-DL.x265.EAC3-VCR'
 
@@ -210,12 +210,15 @@ export const Oleoo = () => {
         <div aria-hidden='true' className='oleoo__edge'>{EDGE}</div>
         <div ref={ref} className='band__column band__split oleoo__split'>
           <div className='band__text'>
-            <h3 id='oleoo-title' className='visually-hidden'>oleoo</h3>
-            <pre aria-hidden='true' className='oleoo__logo'>
-              {LOGO.map((line, index) => (
-                <span key={index} style={{ transitionDelay: `${index * 70}ms` }} className={shown ? 'is-shown' : undefined}>{line}</span>
-              ))}
-            </pre>
+            <h3 id='oleoo-title' className='oleoo__title'>
+              <Anchor id='oleoo' label='oleoo'>
+                <span aria-hidden='true' className='oleoo__logo'>
+                  {LOGO.map((line, index) => (
+                    <span key={index} style={{ transitionDelay: `${index * 70}ms` }} className={shown ? 'is-shown' : undefined}>{line}</span>
+                  ))}
+                </span>
+              </Anchor>
+            </h3>
             <p className='oleoo__subtitle'>Scene/P2P/Warez release name parser</p>
             <p className='oleoo__forum'>Named after an old French warez forum closed in 2008.</p>
             <dl className='oleoo__facts'>

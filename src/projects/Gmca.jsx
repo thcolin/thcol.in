@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Choices, Links, Tags, stepOf, useScrub } from './shared'
+import { Anchor, Choices, Links, Tags, stepOf, useScrub } from './shared'
 
 const DEVICES = [
   { id: 'switch', label: 'Switch', name: 'Nintendo Switch' },
@@ -57,9 +57,11 @@ export const Gmca = () => {
               </p>
               <div className='gmca__current'>
                 <h3 id='gmca-title' className='gmca__brand'>
-                  <img src={new URL('../assets/gmca/gmca-logo.webp', import.meta.url)} alt='' width='64' height='64' />
-                  <span>GMCA</span>
-                  <small>Gamepad Media Center Aggregator</small>
+                  <Anchor id='gmca'>
+                    <img src={new URL('../assets/gmca/gmca-logo.webp', import.meta.url)} alt='' width='64' height='64' />
+                    <span>GMCA</span>
+                    <small>Gamepad Media Center Aggregator</small>
+                  </Anchor>
                 </h3>
                 <p className='gmca__headline'>
                   Runs <em>{current.label}</em> on your {name}

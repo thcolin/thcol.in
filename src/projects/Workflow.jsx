@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
+import { Anchor, Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import './workflow.css'
 
 // The sample vault of the kit, Monday 21/09: what each command writes, in the order it writes it
@@ -677,7 +677,7 @@ export const Workflow = () => {
       <article className='band workflow' aria-labelledby='workflow-obsidian-title'>
         <div className='workflow__layout'>
           <div className='band__text'>
-            <h3 id='workflow-obsidian-title' className='workflow__title'>Workflow & Obsidian</h3>
+            <h3 id='workflow-obsidian-title' className='workflow__title'><Anchor id='workflow-obsidian'>Workflow & Obsidian</Anchor></h3>
             <p className='band__body'>
               An Obsidian vault as a second brain, kept by Claude Code commands. The Dashboard is never written by hand: it is computed from the notes and the sessions.
             </p>

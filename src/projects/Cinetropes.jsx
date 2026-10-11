@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import films from '../assets/cinetropes/films.json'
-import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
+import { Anchor, Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import { Atmosphere, Reception, Signature, Tropes, useGradientId } from './cinetropes-radars'
 import './cinetropes.css'
 
@@ -680,7 +680,9 @@ export const Cinetropes = () => {
         </div>
         <div className='cinetropes__nav'>
           <h3 id='cinetropes-title' className='cinetropes__logo'>
-            <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
+            <Anchor id='cinetropes'>
+              <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
+            </Anchor>
           </h3>
           <p className='cinetropes__tagline'>Explore, discover, find</p>
           <Tags items={['TypeScript', 'React', 'Hono', 'Drizzle', 'PostgreSQL + pgvector', 'Python', 'Gemini']} />

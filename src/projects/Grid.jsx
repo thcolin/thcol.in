@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import ResponsiveVirtualGrid from 'react-responsive-virtual-grid'
-import { Links, Tags, useReveal, useScrub } from './shared'
+import { Anchor, Links, Tags, useReveal, useScrub } from './shared'
 
 const CELLS = 10000
 const GLIDE = 1600
@@ -48,8 +48,10 @@ export const Grid = () => {
         <div ref={ref} className='band__column band__split band__split--reverse'>
           <div className='band__text'>
             <h3 id='react-responsive-virtual-grid-title' className='grid__title'>
-              <span aria-hidden='true'>💀🚟</span>
-              <span>react-<wbr />responsive-<wbr />virtual-<wbr />grid</span>
+              <Anchor id='react-responsive-virtual-grid'>
+                <span aria-hidden='true'>💀🚟</span>
+                <span>react-<wbr />responsive-<wbr />virtual-<wbr />grid</span>
+              </Anchor>
             </h3>
             <p className='band__body'>
               Dead-simple react virtual grid library that act like a normal <code>{'<div>'}</code>.

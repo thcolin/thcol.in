@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
+import { Anchor, Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import './printing.css'
 
 // Exploded offsets in mm, Y up, taken from each project's exploded() module
@@ -495,7 +495,7 @@ const Piece = ({ piece, step, hold }) => {
       <Stage piece={piece} view={view} viewer={viewer} />
       <div className='printing__overlay'>
         <Choices label={`${piece.title} view`} options={views} value={view} onChange={pick} className='choices choices--bracket' />
-        <h3 id={`${piece.id}-title`} className='printing__title'>{piece.title}</h3>
+        <h3 id={`${piece.id}-title`} className='printing__title'><Anchor id={piece.id}>{piece.title}</Anchor></h3>
         <p className='band__body'>{piece.text}</p>
         <Tags items={piece.tags} />
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Links, Tags } from './shared'
+import { Anchor, Links, Tags } from './shared'
 import { Nipper } from './archived/Nipper'
 import { Boaty } from './archived/Boaty'
 import { Quicklook } from './archived/Quicklook'
@@ -100,7 +100,7 @@ const Band = ({ id, title, years, text, tags, Demo, sample, index }) => {
       {...handlers}
     >
       <div className='archived__panel'>
-        <h3 id={`${id}-title`} className='archived__title'>{breakable(title)}</h3>
+        <h3 id={`${id}-title`} className='archived__title'><Anchor id={id}>{breakable(title)}</Anchor></h3>
         <p className='band__body'>{text}</p>
         <p className='archived__years'>{years}</p>
         <Tags items={tags} />

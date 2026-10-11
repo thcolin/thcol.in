@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ASSETS } from './cinetropes-game/assets'
 import { CINEMAS } from './cinetropes-game/cinemas'
 import { createHall, curtainFrame, npcFrame, pickupsOf, stepHall, stillNpc } from './cinetropes-game/hall'
-import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
+import { Anchor, Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import './cinetropes-game.css'
 
 const SIZE = 192
@@ -426,8 +426,10 @@ export const CinetropesGame = () => {
           </Console>
           <section className='cg__box cg__panel'>
             <h3 id='cinetropes-meta-game-title' className='cg__title'>
-              <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
-              <span>meta-game</span>
+              <Anchor id='cinetropes-meta-game'>
+                <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
+                <span>meta-game</span>
+              </Anchor>
             </h3>
             <Choices
               label='Cinema'

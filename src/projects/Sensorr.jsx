@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Choices, Links, Tags, stepOf, useScrub } from './shared'
+import { Anchor, Choices, Links, Tags, stepOf, useScrub } from './shared'
 
 const FEATURES = [
   { id: 'library', label: 'Library', src: new URL('../assets/sensorr/movies-tv.webp', import.meta.url) },
@@ -28,7 +28,9 @@ export const Sensorr = () => {
         <div className='band__column band__split'>
           <div className='band__text'>
             <h3 id='sensorr-title' className='sensorr__title'>
-              <span aria-hidden='true'>🍿📼 </span>sensorr
+              <Anchor id='sensorr'>
+                <span aria-hidden='true'>🍿📼 </span>sensorr
+              </Anchor>
             </h3>
             <p className='sensorr__tagline'>Your Friendly Digital Video Recorder. Think VCR, but in modern times.</p>
             <p className='band__body'>
