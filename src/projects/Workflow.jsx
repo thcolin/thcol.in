@@ -558,6 +558,8 @@ export const Workflow = () => {
   const [play, setPlay] = useState(() => ({ index: 0, typed: reduced ? 99 : 0, sent: reduced, lines: reduced ? 99 : 0, running: false, snap: true }))
   const timers = useRef([])
   const step = useRef(-1)
+  const ends = useRef(0)
+  const queued = useRef(0)
   const scroller = useRef(null)
   const panels = useRef({})
 
@@ -617,22 +619,28 @@ export const Workflow = () => {
       at(time, () => ({ lines: rank + 1 }))
     })
     at(time += 900, () => ({ running: false }))
+    ends.current = performance.now() + time
   }
 
-  // The scroll plays the day one command at a time, until someone picks one
+  // The scroll plays the day one command at a time, each once the one before has finished, until someone picks one
   const [scrub, hold] = useScrub((progress) => {
     const index = stepOf(progress, COMMANDS.length)
 
     if (index !== step.current) {
       step.current = index
-      start(index)
+      clearTimeout(queued.current)
+      queued.current = setTimeout(() => start(index), Math.max(0, ends.current - performance.now()))
     }
   })
 
-  useEffect(() => clear, [])
+  useEffect(() => () => {
+    clear()
+    clearTimeout(queued.current)
+  }, [])
 
   const choose = (id) => {
     hold()
+    clearTimeout(queued.current)
     setDraft(null)
     step.current = COMMANDS.findIndex((item) => item.id === id)
     start(step.current)

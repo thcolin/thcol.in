@@ -33,6 +33,7 @@ const VIEWS = ['cover', 'aurora']
 const HUD_MS = 4000
 const SNOW_MS = 320
 const HOLD_MS = 1400
+const BOOT_MAX_MS = 9000
 const ENTRY_MS = 1500
 const SWIPE_PX = 40
 
@@ -75,28 +76,41 @@ export const Tv = () => {
   const audio = useRef(null)
   const pet = useRef(null)
   const hold = useRef(0)
+  const booting = useRef(false)
   const inView = useInView(band, '100px 0px')
   const current = CHANNELS[channel]
   const photo = PHOTOS[current.id] ? current.id : null
 
   const tune = (index) => {
+    const next = (index + CHANNELS.length) % CHANNELS.length
     clearTimeout(hold.current)
-    setChannel((index + CHANNELS.length) % CHANNELS.length)
+    booting.current = CHANNELS[next].kind === 'game'
+    setChannel(next)
     setSnow(!reduced)
     setElapsed(0)
     setRun((count) => count + 1)
   }
 
-  // The scroll zaps through the flagships, faster through a boot screen the quicker it goes, until someone takes the remote
+  // The scroll zaps through the flagships, until someone takes the remote. A boot screen plays to its end first,
+  // faster the quicker the scroll goes
   const step = useRef(0)
   const scroll = useRef({ velocity: 0, at: 0 })
+  const queued = useRef(0)
+  const flagship = () => tune(CHANNELS.findIndex((item) => item.id === FLAGSHIPS[step.current]))
   const [scrub, handOver] = useScrub((progress, velocity) => {
     const index = stepOf(progress, FLAGSHIPS.length)
     scroll.current = { velocity, at: performance.now() }
 
     if (index !== step.current) {
       step.current = index
-      tune(CHANNELS.findIndex((item) => item.id === FLAGSHIPS[index]))
+      clearTimeout(queued.current)
+      queued.current = 0
+
+      if (booting.current) {
+        queued.current = setTimeout(flagship, BOOT_MAX_MS)
+      } else {
+        flagship()
+      }
     }
   })
 
@@ -108,6 +122,8 @@ export const Tv = () => {
 
   const take = (index) => {
     handOver()
+    clearTimeout(queued.current)
+    queued.current = 0
     tune(index)
   }
 
@@ -141,6 +157,7 @@ export const Tv = () => {
 
   useEffect(() => () => {
     clearTimeout(hold.current)
+    clearTimeout(queued.current)
     drainRenderers()
   }, [])
 
@@ -221,6 +238,18 @@ export const Tv = () => {
   }, [sound])
 
   const introDone = () => {
+    booting.current = false
+
+    if (queued.current) {
+      clearTimeout(queued.current)
+      queued.current = 0
+
+      if (FLAGSHIPS[step.current] !== current.id) {
+        flagship()
+        return
+      }
+    }
+
     if (reduced) {
       return
     }
