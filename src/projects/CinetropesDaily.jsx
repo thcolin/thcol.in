@@ -686,6 +686,21 @@ export const CinetropesDaily = () => {
     resultMode && setOpenSection('')
   }, [resultMode])
 
+  // Once the game is over the scroll has nothing left to walk: the band is one screen, and a visitor pinned on it
+  // stays at its top instead of being pushed out by the steps it loses
+  const steps = resultMode ? 1 : onboarded ? SECTIONS.length : 2
+  const stepsBefore = useRef(steps)
+  useLayoutEffect(() => {
+    const top = scrub.current.getBoundingClientRect().top
+    const pinned = getComputedStyle(root.current).position === 'sticky'
+
+    if (pinned && steps < stepsBefore.current && top < 0 && top >= -(stepsBefore.current - 1) * innerHeight) {
+      scrollBy(0, top)
+    }
+
+    stepsBefore.current = steps
+  }, [steps])
+
   const roundClass = (attempt, i) => {
     let className = 'cd__round'
 
@@ -704,7 +719,7 @@ export const CinetropesDaily = () => {
   }
 
   return (
-    <div ref={scrub} id='cinetropes-daily' className='scrub' style={{ '--steps': onboarded ? SECTIONS.length : 2 }}>
+    <div ref={scrub} id='cinetropes-daily' className='scrub' style={{ '--steps': steps }}>
       <article ref={root} className={resultMode ? 'band cd is-over' : 'band cd'} aria-labelledby='cinetropes-daily-title'>
         <div className='cd__backdrop' aria-hidden='true'>
           {pixels[4] && <PixelGrid pixels={pixels[4]} className='cd__backdrop-image' />}
