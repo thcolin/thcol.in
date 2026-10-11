@@ -207,6 +207,7 @@ const createViewer = async ({ host, url, direction, explode, reduced, insets, on
   let idle = 0
   let isExploded = false
   let transition = null
+  const duration = 1100 + parts.length * 45
   const turntable = () => {
     controls.autoRotate = !reduced
     controls.enableDamping = !reduced
@@ -226,7 +227,7 @@ const createViewer = async ({ host, url, direction, explode, reduced, insets, on
         done = done && t === 1
         part.object.position.lerpVectors(part.from, part.to, ease(t))
       })
-      const t = ease(Math.min(elapsed / (1100 + parts.length * 45), 1))
+      const t = ease(Math.min(elapsed / duration, 1))
       const center = new THREE.Vector3().lerpVectors(transition.center, transition.toCenter, t)
       camera.position.add(center.clone().sub(controls.target))
       controls.target.copy(center)
@@ -321,7 +322,7 @@ const createViewer = async ({ host, url, direction, explode, reduced, insets, on
 
   return {
     setExploded,
-    settling: () => (transition ? Math.max(0, 1100 + parts.length * 45 - (performance.now() - transition.start)) : 0),
+    settling: () => (transition ? Math.max(0, duration - (performance.now() - transition.start)) : 0),
     setActive: (next) => {
       active = next
       run()
@@ -470,6 +471,7 @@ const Stage = ({ piece, view, viewer }) => {
 const Piece = ({ piece, step, hold }) => {
   const [view, setView] = useState('assembled')
   const viewer = useRef(null)
+  const landing = useRef(0)
   const views = [
     { id: 'assembled', label: 'Assembled' },
     { id: 'exploded', label: 'Exploded' },
@@ -478,12 +480,13 @@ const Piece = ({ piece, step, hold }) => {
 
   // The scroll leaves the exploded view only once its parts have landed
   useEffect(() => {
-    const timer = setTimeout(() => setView(views[step].id), view === 'exploded' ? viewer.current?.settling() ?? 0 : 0)
-    return () => clearTimeout(timer)
+    landing.current = setTimeout(() => setView(views[step].id), view === 'exploded' ? viewer.current?.settling() ?? 0 : 0)
+    return () => clearTimeout(landing.current)
   }, [step])
 
   const pick = (id) => {
     hold()
+    clearTimeout(landing.current)
     setView(id)
   }
 
