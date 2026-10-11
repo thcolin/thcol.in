@@ -21,8 +21,10 @@
   --cg-slot: #2a1a14;
   --cg-gold: #ffd86a;
   --cg-font: 'Determination', monospace;
-  --console-height: min(calc(100svh - 64px), 860px);
+  /* The console stands at the bottom of the band, cut under its buttons, above Select and Start */
+  --console-height: calc((max(100svh, 640px) - 48px) / 0.79);
   min-height: max(100svh, 640px);
+  overflow: hidden;
   padding: 0;
   font-family: var(--cg-font);
   font-size: 16px;
@@ -84,19 +86,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 56px;
-  min-height: inherit;
-  padding: 32px var(--gutter);
+  flex: 1;
+  align-self: stretch;
+  gap: 64px;
+  min-height: max(100svh, 640px);
+  padding: 0 var(--gutter);
 }
 
 /* The console: the photographed Game Boy Color, its screen and buttons placed on its 1000×1675
-   picture; the screen is 10:9, the game square in its middle */
+   picture, its screen made square for the game's 192 × 192 */
 
 .cg__console {
   position: relative;
   flex: none;
+  align-self: flex-end;
   height: var(--console-height);
   aspect-ratio: 1000 / 1675;
+  margin-bottom: calc(var(--console-height) * -0.21);
+  translate: -32px 0;
   filter: drop-shadow(0 24px 40px rgb(0 0 0 / 0.55));
   user-select: none;
   touch-action: manipulation;
@@ -112,24 +119,18 @@
 
 .cg__screen {
   position: absolute;
-  left: 22.8%;
+  left: 25.8%;
   top: 9.97%;
-  width: 54.4%;
+  width: 48.4%;
   height: 28.9%;
-  display: flex;
-  justify-content: center;
   background-color: #000;
-}
-
-.cg__screen > * {
-  flex: none;
 }
 
 .cg__canvas,
 .cg__game {
   display: block;
+  width: 100%;
   height: 100%;
-  aspect-ratio: 1;
   border: 0;
   image-rendering: pixelated;
 }
@@ -443,6 +444,13 @@
   }
 }
 
+/* Cut under the cross, Select and Start are out of sight: Start is A, Select the panel's rooms */
+@media (min-width: 861px) {
+  .cg__pill {
+    display: none;
+  }
+}
+
 @media (max-width: 860px) {
   .cg {
     --console-height: min(calc((100vw - 2 * var(--gutter)) * 1.675), 760px);
@@ -450,6 +458,13 @@
 
   .cg__layout {
     flex-direction: column;
+    padding-block: 32px;
+  }
+
+  .cg__console {
+    align-self: center;
+    margin-bottom: 0;
+    translate: none;
   }
 
   .cg__panel {
