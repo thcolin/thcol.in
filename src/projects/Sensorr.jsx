@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Anchor, Choices, Links, Tags, stepOf, useScrub } from './shared'
+import { Anchor, Choices, Links, Tags, preload, stepOf, useScrub } from './shared'
 
 const FEATURES = [
   { id: 'library', label: 'Library', src: new URL('../assets/sensorr/movies-tv.webp', import.meta.url) },
@@ -12,9 +12,12 @@ const FEATURES = [
 
 const TOUR = FEATURES.slice(0, 3)
 
+// Each capture is an animated webp of about 150 KB: once the first has loaded the others are preloaded, and one
+// joins the stage when its tab is first chosen
+let preloaded = null
+
 export const Sensorr = () => {
   const [feature, setFeature] = useState(FEATURES[0].id)
-  // Each capture is an animated webp of about 150 KB: one loads when its tab is first chosen
   const [seen, setSeen] = useState([FEATURES[0].id])
   const show = (id) => {
     setFeature(id)
@@ -52,6 +55,7 @@ export const Sensorr = () => {
                 width='2000'
                 height='1124'
                 className={id === feature ? 'is-shown' : undefined}
+                onLoad={() => { preloaded ||= preload(FEATURES.map(({ src }) => src)) }}
               />
             ))}
           </div>

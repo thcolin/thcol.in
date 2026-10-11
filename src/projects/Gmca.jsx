@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Anchor, Choices, Links, Tags, stepOf, useScrub } from './shared'
+import { Anchor, Choices, Links, Tags, preload, stepOf, useScrub } from './shared'
 
 const DEVICES = [
   { id: 'switch', label: 'Switch', name: 'Nintendo Switch' },
@@ -31,16 +31,8 @@ const HEROES = {
 
 const TOUR = [['switch', 'plex'], ['vita', 'jellyfin'], ['tv', 'emby']]
 
-// Once the first screen has loaded, the others are fetched and decoded, so a step never shows an empty stage
+// Once the first screen has loaded, the others are preloaded, so a step never shows an empty stage
 let preloaded = null
-const preload = () => {
-  preloaded ||= Object.values(HEROES).map((url) => {
-    const img = new Image()
-    img.src = url
-    img.decode().catch(() => {})
-    return img
-  })
-}
 
 export const Gmca = () => {
   const [device, setDevice] = useState('switch')
@@ -102,7 +94,7 @@ export const Gmca = () => {
               decoding='async'
               width='1280'
               height='640'
-              onLoad={preload}
+              onLoad={() => { preloaded ||= preload(Object.values(HEROES)) }}
             />
           </div>
         </div>

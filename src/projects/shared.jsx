@@ -40,6 +40,14 @@ export const usePrefersReducedMotion = () => {
   return reduced
 }
 
+// Fetches and decodes images ahead of the step that shows them; the caller keeps them so the browser does too
+export const preload = (urls) => urls.map((url) => {
+  const img = new Image()
+  img.src = url
+  img.decode().catch(() => {})
+  return img
+})
+
 export const range = (p, from, to) => Math.min(1, Math.max(0, (p - from) / (to - from)))
 export const easeOut = (t) => 1 - (1 - t) ** 3
 
