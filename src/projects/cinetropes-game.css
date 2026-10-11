@@ -21,8 +21,6 @@
   --cg-slot: #2a1a14;
   --cg-gold: #ffd86a;
   --cg-font: 'Determination', monospace;
-  /* The console stands at the bottom of the band, cut under its buttons, above Select and Start */
-  --console-height: calc((max(100svh, 640px) - 48px) / 0.79);
   min-height: max(100svh, 640px);
   overflow: hidden;
   padding: 0;
@@ -100,10 +98,8 @@
 .cg__console {
   position: relative;
   flex: none;
-  align-self: flex-end;
   height: var(--console-height);
   aspect-ratio: 1000 / 1675;
-  margin-bottom: calc(var(--console-height) * -0.21);
   translate: -32px 0;
   filter: drop-shadow(0 24px 40px rgb(0 0 0 / 0.55));
   user-select: none;
@@ -447,8 +443,21 @@
   }
 }
 
-/* Cut under the cross, Select and Start are out of sight: Start is A, Select the panel's rooms */
+/* On a desktop the screen's recess is 384 px high, the game's 192 at twice its size, and the
+   console is cut where the band ends: under the cross and the buttons when the band is high enough,
+   never under Select and Start, which are out of sight: Start is A, Select the panel's rooms. A
+   window too narrow for it shrinks the console with it */
 @media (min-width: 861px) {
+  .cg {
+    --console-height: min(calc(384px * 1675 / 508), calc((100vw - 2 * var(--gutter) - 24px - 380px) * 1.675));
+  }
+
+  .cg__console {
+    align-self: flex-start;
+    margin-top: max(48px, calc(max(100svh, 640px) - var(--console-height) * 0.79));
+    margin-bottom: 0;
+  }
+
   .cg__pill {
     display: none;
   }
