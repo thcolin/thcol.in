@@ -416,7 +416,7 @@ export const CinetropesGame = () => {
             <>
               {near && <Slides cinema={cinema.id} slide={slide} running={visible} reduced={reduced} label={`${cinema.name}, ${SLIDES[slide].label}`} />}
               <button type='button' className='cg__press' onClick={start}>
-                <span>{hasGame ? 'Press start to continue' : 'Press start'}</span>
+                <span>{hasGame ? 'Press A to continue' : 'Press A'}</span>
               </button>
             </>
           )}
