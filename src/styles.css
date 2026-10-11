@@ -78,20 +78,29 @@ header aside article {
 
 header aside article h2 {
   font-size: 36px;
-  margin: 8px 0px;
+  margin: 8px 0px 4px;
 }
 
 header aside article h3 {
   font-size: 22px;
-  margin: 8px 0px;
+  margin: 4px 0px;
 }
 
 header aside article h4 {
   font-weight: 500;
-  margin: 8px 0px;
+  margin: 4px 0px;
+  color: rgb(255 255 255 / 0.65);
 }
 
-header aside article h4 a {
+header aside article p {
+  margin: 20px 0px 0px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.5);
+}
+
+header aside article p a {
+  color: inherit;
   font-weight: bold;
 }
 
