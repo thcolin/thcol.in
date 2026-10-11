@@ -532,7 +532,10 @@ export const CinetropesGame = () => {
         <Row kind='lobby' direction={-1} near={near} paused={visiting} reduced={reduced} onVisit={enter} />
       </div>
       <div className='cg__box cg__intro' inert={visiting ? '' : undefined}>
-        <h3 id='cinetropes-game' className='cg__title'>cinetropes meta-game</h3>
+        <h3 id='cinetropes-game' className='cg__title'>
+          <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
+          <span>meta-game</span>
+        </h3>
         <p className='cg__text'>
           An incremental pixel-art management game: you restore an abandoned cinema that changes with the films you log on cinetropes. Eighty cinemas, each with its own facade and lobby.
         </p>

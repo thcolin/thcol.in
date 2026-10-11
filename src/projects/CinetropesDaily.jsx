@@ -657,7 +657,10 @@ export const CinetropesDaily = () => {
       <canvas ref={confettiCanvas} className='cd__confetti' aria-hidden='true' />
 
       <header className='cd__nav'>
-        <h3 id='cinetropes-daily' className='cd__nav-title'>Film of the day</h3>
+        <h3 id='cinetropes-daily' className='cd__nav-title'>
+          <img src={LOGO} alt='cinetropes' width='275' height='40' />
+          <span>Film of the day</span>
+        </h3>
         <div className='cd__nav-side'>
           <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />
           {puzzle?.sample && (
