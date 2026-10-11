@@ -415,16 +415,31 @@ main#projects ::selection {
   text-wrap: balance;
 }
 
-.gmca__headline {
+.gmca__head {
   display: grid;
 }
 
-.gmca__headline span {
+.gmca__sizer,
+.gmca__current {
   grid-area: 1 / 1;
 }
 
-.gmca__headline span[aria-hidden='true'] {
+/* Room for the brand above the tallest headline */
+.gmca__sizer {
+  display: grid;
+  padding-top: calc(64px + 20px);
   visibility: hidden;
+}
+
+.gmca__sizer span {
+  grid-area: 1 / 1;
+}
+
+.gmca__current {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: end;
 }
 
 .gmca__headline em {

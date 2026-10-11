@@ -72,19 +72,24 @@ export const Gmca = () => {
     >
       <div className='band__column band__split band__split--reverse'>
         <div className='band__text'>
-          <h3 id='gmca' className='gmca__brand'>
-            <img src={new URL('../assets/gmca/gmca-logo.webp', import.meta.url)} alt='' width='64' height='64' />
-            <span>GMCA</span>
-            <small>Gamepad Media Center Aggregator</small>
-          </h3>
-          {/* Every server and device stacked in one cell: the tallest sets the height, so rotating never moves the band */}
-          <p className='gmca__headline'>
-            {DEVICES.flatMap((d) => SERVERS.map((s) => (
-              <span key={`${d.id}-${s.id}`} aria-hidden={d.id !== device || s.id !== server}>
-                Runs <em style={s.style}>{s.label}</em> on your {d.name}
-              </span>
-            )))}
-          </p>
+          {/* Every server and device stacked in one cell sets the height; the current one sits at its bottom, on the description, so rotating never moves the band */}
+          <div className='gmca__head'>
+            <p aria-hidden='true' className='gmca__headline gmca__sizer'>
+              {DEVICES.flatMap((d) => SERVERS.map((s) => (
+                <span key={`${d.id}-${s.id}`}>Runs <em>{s.label}</em> on your {d.name}</span>
+              )))}
+            </p>
+            <div className='gmca__current'>
+              <h3 id='gmca' className='gmca__brand'>
+                <img src={new URL('../assets/gmca/gmca-logo.webp', import.meta.url)} alt='' width='64' height='64' />
+                <span>GMCA</span>
+                <small>Gamepad Media Center Aggregator</small>
+              </h3>
+              <p className='gmca__headline'>
+                Runs <em>{current.label}</em> on your {name}
+              </p>
+            </div>
+          </div>
           <p className='band__body'>
             One native, controller-first client. Point it at any media center and run it on any device you left in a drawer. The interface never changes; only the accent and the tabs follow your server.
           </p>
