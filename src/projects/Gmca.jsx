@@ -31,6 +31,17 @@ const HEROES = {
 
 const TOUR = [['switch', 'plex'], ['vita', 'jellyfin'], ['tv', 'emby']]
 
+// Once the first screen has loaded, the others are fetched and decoded, so a step never shows an empty stage
+let preloaded = null
+const preload = () => {
+  preloaded ||= Object.values(HEROES).map((url) => {
+    const img = new Image()
+    img.src = url
+    img.decode().catch(() => {})
+    return img
+  })
+}
+
 export const Gmca = () => {
   const [device, setDevice] = useState('switch')
   const [server, setServer] = useState('plex')
@@ -91,6 +102,7 @@ export const Gmca = () => {
               decoding='async'
               width='1280'
               height='640'
+              onLoad={preload}
             />
           </div>
         </div>
