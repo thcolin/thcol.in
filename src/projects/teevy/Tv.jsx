@@ -121,10 +121,11 @@ export const Tv = () => {
     }
   })
 
-  const reach = (id) => () => range(progress.current, ...BOOTS[id])
+  const reach = (id) => () => BOOTS[id] ? range(progress.current, ...BOOTS[id]) : 0
 
   const take = (index) => {
     handOver()
+    progress.current = 0
     clearTimeout(queued.current)
     queued.current = 0
     tune(index)
