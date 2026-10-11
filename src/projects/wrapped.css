@@ -1,7 +1,7 @@
 /* Sensorr Wrapped: the band wears the look the phone shows, its ground, its ink and its lettering */
 
 .band.wrapped {
-  --band-bg: #cfc6b4;
+  --band-bg: #b5ab95;
   --band-ink: #16140f;
   --band-dim: #4a453b;
   --band-line: rgb(22 20 15 / 0.2);
@@ -10,6 +10,7 @@
   --wrapped-text: 'Source Serif 4', Georgia, serif;
   --wrapped-case: uppercase;
   --wrapped-glow: none;
+  --wrapped-logo: #f7f2e7;
   transition-property: background-color, color;
   transition-duration: 600ms;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -24,6 +25,7 @@
   --accent: #ffb238;
   --wrapped-display: 900 1em/0.92 'Big Shoulders Display', 'Arial Narrow', sans-serif;
   --wrapped-text: 'IBM Plex Mono', ui-monospace, monospace;
+  --wrapped-logo: var(--band-ink);
 }
 
 /* Video Store: the shop at night under its pink neon */
@@ -37,6 +39,7 @@
   --wrapped-text: 'Archivo', 'Helvetica Neue', sans-serif;
   --wrapped-case: none;
   --wrapped-glow: 0 0 1px #fff, 0 0 6px rgb(255 63 164 / 0.8), 0 0 16px rgb(255 63 164 / 0.35);
+  --wrapped-logo: var(--band-ink);
 }
 
 /* Screenplay: the desk the script lies on, typed in Courier */
@@ -48,6 +51,7 @@
   --accent: #fff06a;
   --wrapped-display: 700 0.62em/1.05 'Courier Prime', 'Courier New', monospace;
   --wrapped-text: 'Courier Prime', 'Courier New', monospace;
+  --wrapped-logo: var(--band-ink);
 }
 
 /* Polish Poster: cheap ochre stock, bruise violet ink, brush lettering */
@@ -60,6 +64,7 @@
   --wrapped-display: 400 0.9em/1 'Knewave', 'Marker Felt', cursive;
   --wrapped-text: 'Patrick Hand', 'Segoe Print', cursive;
   --wrapped-case: none;
+  --wrapped-logo: #f4e8cf;
 }
 
 .wrapped .band__text {
@@ -76,13 +81,14 @@
   text-wrap: balance;
 }
 
-/* sensorr's own logo, as on its band: the emoji pair and the lowercase wordmark, whatever the look */
+/* sensorr's own logo, as on its band: the emoji pair and a light wordmark in each look's own tone */
 .wrapped__logo {
   display: flex;
   align-items: center;
   gap: 0.2em;
   margin-bottom: 0.18em;
-  font: 800 0.42em/1 'Raleway', sans-serif;
+  color: var(--wrapped-logo);
+  font: 800 0.52em/1 'Raleway', sans-serif;
   letter-spacing: -0.02em;
   text-transform: none;
   text-shadow: none;
