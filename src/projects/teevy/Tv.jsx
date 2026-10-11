@@ -103,11 +103,11 @@ export const Tv = () => {
 
     if (index !== step.current) {
       step.current = index
-      clearTimeout(queued.current)
-      queued.current = 0
-
       if (booting.current) {
-        queued.current = setTimeout(flagship, BOOT_MAX_MS)
+        queued.current ||= setTimeout(() => {
+          queued.current = 0
+          flagship()
+        }, BOOT_MAX_MS)
       } else {
         flagship()
       }

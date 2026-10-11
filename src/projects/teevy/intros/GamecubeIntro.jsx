@@ -211,7 +211,7 @@ function GamecubeIntro({ speed, onDone }) {
       });
       const tick = () => {
         const now = performance.now();
-        const delta = (now - previousNow) / 1e3 * (speedRef.current?.() ?? 1);
+        const delta = (now - previousNow) / 1e3 * speedRef.current();
         previousNow = now;
         mixer?.update(delta);
         for (const binding of opacityBindings) {
