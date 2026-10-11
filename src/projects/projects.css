@@ -27,31 +27,76 @@ main#projects ::selection {
 .group {
   display: flex;
   flex-direction: column;
-  padding-top: 96px;
 }
 
-/* Quiet section labels: the band below carries the colour */
-.group__title {
+/* The section's own screen: its words come in with the scroll, one per line, and the first band pushes them out */
+.group__screen {
+  height: 200svh;
+}
+
+.group__stick {
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
-  gap: 16px;
-  width: 100%;
-  max-width: 72em;
-  margin: 0 auto 32px;
-  padding: 0 var(--gutter);
-  color: rgb(255 255 255 / 0.5);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  line-height: 1;
+  height: 100svh;
+  overflow: hidden;
 }
 
-.group__title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background-color: rgb(255 255 255 / 0.12);
+.group__stack {
+  display: grid;
+  gap: 28px;
+  width: 100%;
+  max-width: 72em;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.group__title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(4rem, 15vw, 13rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+}
+
+.group__title span {
+  display: block;
+}
+
+.group__meta {
+  display: grid;
+  gap: 14px;
+}
+
+.group__phrase {
+  margin: 0;
+  color: rgb(255 255 255 / 0.62);
+  font-size: clamp(1rem, 1.5vw, 1.1875rem);
+  font-weight: 500;
+}
+
+.group__names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(0.875rem, 1.3vw, 1rem);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group__screen {
+    height: auto;
+  }
+
+  .group__stick {
+    position: static;
+    min-height: 100svh;
+  }
 }
 
 /* Band */

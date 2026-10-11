@@ -40,12 +40,77 @@ export const usePrefersReducedMotion = () => {
   return reduced
 }
 
-export const Group = ({ id, title, children }) => (
-  <section className='group' aria-labelledby={`group-${id}`}>
-    <h2 id={`group-${id}`} className='group__title'>{title}</h2>
-    {children}
-  </section>
-)
+const range = (p, from, to) => Math.min(1, Math.max(0, (p - from) / (to - from)))
+const easeOut = (t) => 1 - (1 - t) ** 3
+
+// Progress runs from the screen entering the viewport to the first band pushing it out
+export const Group = ({ id, title, phrase, projects, children }) => {
+  const screen = useRef(null)
+  const reduced = usePrefersReducedMotion()
+
+  useEffect(() => {
+    const element = screen.current
+
+    if (reduced || !element) {
+      return
+    }
+
+    const lines = element.querySelectorAll('.group__title span')
+    const meta = element.querySelector('.group__meta')
+    let frame = 0
+
+    const render = () => {
+      frame = 0
+      const rect = element.getBoundingClientRect()
+      const p = Math.min(1, Math.max(0, (innerHeight - rect.top) / rect.height))
+
+      lines.forEach((line, index) => {
+        const t = easeOut(range(p, 0.1 + index * 0.08, 0.38 + index * 0.08))
+        line.style.transform = `translateX(${(1 - t) * (index % 2 ? 110 : -110)}vw)`
+      })
+
+      const shown = range(p, 0.5, 0.62)
+      meta.style.opacity = shown
+      meta.style.transform = `translateY(${(1 - shown) * 24}px)`
+    }
+
+    const schedule = () => {
+      frame ||= requestAnimationFrame(render)
+    }
+
+    render()
+    addEventListener('scroll', schedule, { passive: true })
+    addEventListener('resize', schedule)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      removeEventListener('scroll', schedule)
+      removeEventListener('resize', schedule)
+      element.querySelectorAll('[style]').forEach((node) => node.removeAttribute('style'))
+    }
+  }, [reduced])
+
+  return (
+    <section className='group' aria-labelledby={`group-${id}`}>
+      <div ref={screen} className='group__screen'>
+        <div className='group__stick'>
+          <div className='group__stack'>
+            <h2 id={`group-${id}`} className='group__title'>
+              {title.split(' ').map((word) => <span key={word}>{word}</span>)}
+            </h2>
+            <div className='group__meta'>
+              <p className='group__phrase'>{phrase}</p>
+              <ul className='group__names'>
+                {projects.map((name) => <li key={name}>{name}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {children}
+    </section>
+  )
+}
 
 export const Tags = ({ items }) => (
   <ul className='tags' aria-label='Stack'>
