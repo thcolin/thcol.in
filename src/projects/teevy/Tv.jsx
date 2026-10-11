@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from '../shared'
+import { Choices, Tags, range, stepOf, usePrefersReducedMotion, useScrub } from '../shared'
 import { GuideLabel, Hud, Legend, clock, useInView } from './osd'
 import { Bars, Film, Radio, STREAM, Spotify, TRACK, Weather } from './channels'
 import { PetChannel } from './Pet'
@@ -27,8 +27,15 @@ const CHANNELS = [
   { n: 21, id: 'moonlight', label: 'Moonlight', kind: 'game', render: 'SVG' },
 ]
 
-// The scroll only visits a few flagship channels
-const FLAGSHIPS = ['teevy', 'plex', 'spotify', 'gamecube', 'kanshi']
+// The scroll only visits a few flagship channels, one screen a step: gamecube's boot and kanshi, which only comes
+// once that boot ends, have two each
+const FLAGSHIPS = ['teevy', 'plex', 'spotify', 'gamecube', 'gamecube', 'kanshi', 'kanshi']
+// The share of the scroll over which a boot screen is walked: gamecube's over its two screens, kanshi's over its first
+const span = (id, screens) => {
+  const from = (FLAGSHIPS.indexOf(id) - 0.5) / (FLAGSHIPS.length - 1)
+  return [from, from + screens / (FLAGSHIPS.length - 1)]
+}
+const BOOTS = { gamecube: span('gamecube', 2), kanshi: span('kanshi', 1) }
 const VIEWS = ['cover', 'aurora']
 const HUD_MS = 4000
 const SNOW_MS = 320
@@ -92,17 +99,17 @@ export const Tv = () => {
   }
 
   // The scroll zaps through the flagships, until someone takes the remote. A boot screen plays to its end first,
-  // faster the quicker the scroll goes; the last flagship has one screen more, as it only comes once gamecube's boot ends
-  const step = useRef(0)
-  const scroll = useRef({ velocity: 0, at: 0 })
+  // and the scroll walks a boot screen at least as far as it goes
+  const step = useRef(FLAGSHIPS[0])
+  const progress = useRef(0)
   const queued = useRef(0)
-  const flagship = () => tune(CHANNELS.findIndex((item) => item.id === FLAGSHIPS[step.current]))
-  const [scrub, handOver] = useScrub((progress, velocity) => {
-    const index = Math.min(stepOf(progress, FLAGSHIPS.length + 1), FLAGSHIPS.length - 1)
-    scroll.current = { velocity, at: performance.now() }
+  const flagship = () => tune(CHANNELS.findIndex((item) => item.id === step.current))
+  const [scrub, handOver] = useScrub((value) => {
+    const id = FLAGSHIPS[stepOf(value, FLAGSHIPS.length)]
+    progress.current = value
 
-    if (index !== step.current) {
-      step.current = index
+    if (id !== step.current) {
+      step.current = id
       if (booting.current) {
         queued.current ||= setTimeout(() => {
           queued.current = 0
@@ -114,11 +121,7 @@ export const Tv = () => {
     }
   })
 
-  const speed = useCallback(() => {
-    const { velocity, at } = scroll.current
-    const fade = Math.max(0, 1 - (performance.now() - at) / 400)
-    return 1 + Math.min(3, velocity * 1.5) * fade
-  }, [])
+  const reach = (id) => () => range(progress.current, ...BOOTS[id])
 
   const take = (index) => {
     handOver()
@@ -244,7 +247,7 @@ export const Tv = () => {
       clearTimeout(queued.current)
       queued.current = 0
 
-      if (FLAGSHIPS[step.current] !== current.id) {
+      if (step.current !== current.id) {
         flagship()
         return
       }
@@ -327,7 +330,7 @@ export const Tv = () => {
   if (current.kind === 'game') legend.push(['Replay', ['OK']])
 
   return (
-    <div ref={scrub} id='teevy' className='scrub' style={{ '--steps': FLAGSHIPS.length + 1 }}>
+    <div ref={scrub} id='teevy' className='scrub' style={{ '--steps': FLAGSHIPS.length }}>
       <article
         ref={band}
         className='band teevy'
@@ -349,8 +352,8 @@ export const Tv = () => {
               {current.kind === 'av' && <Bars />}
               {current.kind === 'radio' && <Radio sound={sound} onToggle={() => { handOver(); setSound(!sound) }} running={inView} reduced={reduced} level={level} />}
               {current.kind === 'pet' && <PetChannel ref={pet} active={inView} reduced={reduced} />}
-              {current.kind === 'game' && <IntroChannel id={current.id} run={run} playing={inView && (!reduced || run > 1)} speed={speed} onDone={introDone} />}
-              {current.kind === 'kanshi' && <KanshiChannel active={inView} reduced={reduced} />}
+              {current.kind === 'game' && <IntroChannel id={current.id} run={run} playing={inView && (!reduced || run > 1)} reach={reach(current.id)} onDone={introDone} />}
+              {current.kind === 'kanshi' && <KanshiChannel active={inView} reduced={reduced} reach={reach('kanshi')} />}
             </div>
             <audio ref={audio} preload='none' crossOrigin='anonymous' />
             <div className={snow ? 'teevy-snow is-on' : 'teevy-snow'} aria-hidden='true' />

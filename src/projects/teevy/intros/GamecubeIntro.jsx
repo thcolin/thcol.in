@@ -17,12 +17,12 @@ const NINTENDO_BACK_COLOR = new THREE.Vector3(102 / 255, 102 / 255, 102 / 255);
 const TRAIL_COUNT = 15;
 const GAMECUBE_COUNT = 5;
 const NINTENDO_COUNT = 8;
-function GamecubeIntro({ speed, onDone }) {
+function GamecubeIntro({ reach, onDone }) {
   const hostRef = useRef(null);
   const onDoneRef = useRef(onDone);
   onDoneRef.current = onDone;
-  const speedRef = useRef(speed);
-  speedRef.current = speed;
+  const reachRef = useRef(reach);
+  reachRef.current = reach;
   useEffect(() => {
     const host = hostRef.current;
     if (!host) return;
@@ -205,13 +205,17 @@ function GamecubeIntro({ speed, onDone }) {
     };
     const start = () => {
       let previousNow = performance.now();
+      let played = 0;
+      const from = reachRef.current();
       let finished = false;
       mixer?.addEventListener("finished", () => {
         finished = true;
       });
       const tick = () => {
         const now = performance.now();
-        const delta = (now - previousNow) / 1e3 * speedRef.current();
+        const ahead = from < 1 ? (reachRef.current() - from) / (1 - from) * CLIP_DURATION : CLIP_DURATION;
+        const delta = Math.max((now - previousNow) / 1e3, ahead - played);
+        played += delta;
         previousNow = now;
         mixer?.update(delta);
         for (const binding of opacityBindings) {

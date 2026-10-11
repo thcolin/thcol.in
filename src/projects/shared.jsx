@@ -136,14 +136,10 @@ export const useScrub = (onProgress) => {
 
     const pinned = matchMedia(PINNED)
     let frame = 0
-    let last = { y: scrollY, at: performance.now() }
 
     const render = () => {
       frame = 0
       const rect = element.getBoundingClientRect()
-      const now = { y: scrollY, at: performance.now() }
-      const velocity = Math.abs(now.y - last.y) / Math.max(1, now.at - last.at)
-      last = now
 
       if (rect.bottom <= 0 || rect.top >= innerHeight) {
         held.current = false
@@ -159,7 +155,7 @@ export const useScrub = (onProgress) => {
         ? -rect.top / Math.max(1, rect.height - innerHeight)
         : (innerHeight * 0.75 - (demo.top + demo.height / 2)) / (innerHeight * 0.5)
 
-      callback.current(Math.min(1, Math.max(0, progress)), velocity)
+      callback.current(Math.min(1, Math.max(0, progress)))
     }
 
     const schedule = () => {

@@ -270,8 +270,8 @@ const BOOT = [
 ]
 
 // The cracktro Kanshi plays when it powers on
-const Boot = ({ onSkip }) => (
-  <div className='kanshi-boot' onPointerDown={onSkip} role='status' aria-label='Kanshi is powering on'>
+const Boot = ({ onSkip, root }) => (
+  <div ref={root} className='kanshi-boot' onPointerDown={onSkip} role='status' aria-label='Kanshi is powering on'>
     <pre className='kanshi-boot__logo' aria-hidden='true'>{WORDMARK}</pre>
     <p className='kanshi-boot__sub'>監視 · System monitor · CH 09</p>
     <div className='kanshi-boot__log'>
@@ -293,7 +293,7 @@ const Ticker = ({ page, index }) => {
   )
 }
 
-export const KanshiChannel = ({ active, reduced }) => {
+export const KanshiChannel = ({ active, reduced, reach }) => {
   const [pageId, setPage] = useState('kyoto')
   const [auto, setAuto] = useState(true)
   const [booted, setBooted] = useState(false)
@@ -319,13 +319,40 @@ export const KanshiChannel = ({ active, reduced }) => {
     }
   }, [near])
 
+  // The boot runs at its own pace, and the scroll pushes it ahead from where it was when the boot started
+  const boot = useRef(null)
+  const reachRef = useRef(reach)
+  reachRef.current = reach
+
   useEffect(() => {
     if (!near || powered) {
       return
     }
 
-    const timer = setTimeout(() => setBooted(true), BOOT_MS)
-    return () => clearTimeout(timer)
+    const from = reachRef.current()
+    let previous = performance.now()
+    let played = 0
+    let frame = 0
+
+    const tick = () => {
+      const now = performance.now()
+      const ahead = from < 1 ? (reachRef.current() - from) / (1 - from) * BOOT_MS : BOOT_MS
+      played += Math.max(now - previous, ahead - played)
+      previous = now
+
+      if (played >= BOOT_MS) {
+        setBooted(true)
+        return
+      }
+
+      boot.current?.getAnimations({ subtree: true }).forEach((animation) => {
+        animation.currentTime = played
+      })
+      frame = requestAnimationFrame(tick)
+    }
+
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
   }, [near, powered])
 
   useEffect(() => {
@@ -406,7 +433,7 @@ export const KanshiChannel = ({ active, reduced }) => {
                 <Ticker page={page} index={index} />
               </div>
               )
-            : <Boot onSkip={() => setBooted(true)} />}
+            : <Boot root={boot} onSkip={() => setBooted(true)} />}
           <span className='kanshi__scanlines' aria-hidden='true' />
       </div>
     </div>
