@@ -95,7 +95,7 @@
 
 /* The console: the photographed Game Boy Color, its screen and buttons placed on its 1000×1675
    picture. Its screen is opened up to its whole recess, 572 × 508, and the square game stands in
-   its height between two black bands */
+   its height between two bands of the screen's own grey */
 
 .cg__console {
   position: relative;
@@ -126,7 +126,7 @@
   height: 30.33%;
   display: flex;
   justify-content: center;
-  background-color: #000;
+  background-color: rgb(31 32 34);
 }
 
 .cg__canvas,
