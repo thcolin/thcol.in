@@ -92,13 +92,13 @@ export const Tv = () => {
   }
 
   // The scroll zaps through the flagships, until someone takes the remote. A boot screen plays to its end first,
-  // faster the quicker the scroll goes
+  // faster the quicker the scroll goes; the last flagship has one screen more, as it only comes once gamecube's boot ends
   const step = useRef(0)
   const scroll = useRef({ velocity: 0, at: 0 })
   const queued = useRef(0)
   const flagship = () => tune(CHANNELS.findIndex((item) => item.id === FLAGSHIPS[step.current]))
   const [scrub, handOver] = useScrub((progress, velocity) => {
-    const index = stepOf(progress, FLAGSHIPS.length)
+    const index = Math.min(stepOf(progress, FLAGSHIPS.length + 1), FLAGSHIPS.length - 1)
     scroll.current = { velocity, at: performance.now() }
 
     if (index !== step.current) {
@@ -327,7 +327,7 @@ export const Tv = () => {
   if (current.kind === 'game') legend.push(['Replay', ['OK']])
 
   return (
-    <div ref={scrub} id='teevy' className='scrub' style={{ '--steps': FLAGSHIPS.length }}>
+    <div ref={scrub} id='teevy' className='scrub' style={{ '--steps': FLAGSHIPS.length + 1 }}>
       <article
         ref={band}
         className='band teevy'
