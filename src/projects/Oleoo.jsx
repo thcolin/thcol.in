@@ -147,9 +147,11 @@ const piecesOf = (value, marks) => {
 }
 
 // The textarea grows with the name through an invisible copy of it laid out the same way
-const Release = ({ value, onChange }) => {
+const Release = ({ value, detected, onChange }) => {
   const result = useMemo(() => parse(value), [value])
-  const pieces = useMemo(() => piecesOf(value, marksOf(value, result)), [value, result])
+  const marks = useMemo(() => marksOf(value, result), [value, result])
+  const shown = marks.slice(0, Math.round(detected * marks.length))
+  const pieces = piecesOf(value, shown)
 
   return (
     <>
@@ -181,7 +183,7 @@ const Release = ({ value, onChange }) => {
       </p>
       <dl aria-live='polite' className='oleoo__fields'>
         {FIELDS.map(([key, read]) => {
-          const found = result ? read(result) : null
+          const found = result && (detected === 1 || shown.some(({ field }) => field === key)) ? read(result) : null
 
           return (
             <div key={key} className={key === 'title' ? 'oleoo__field oleoo__field--wide' : 'oleoo__field'}>
@@ -197,9 +199,10 @@ const Release = ({ value, onChange }) => {
 
 export const Oleoo = () => {
   const [value, setValue] = useState(EXAMPLE)
+  const [detected, setDetected] = useState(1)
   const [ref, shown] = useReveal()
-  // The scroll types the example, done a little before the band moves on
-  const [scrub, hold] = useScrub((progress) => setValue(EXAMPLE.slice(0, Math.round(Math.min(1, progress / 0.8) * EXAMPLE.length))))
+  // The scroll reads the example's fields one by one, all of them a little before the band moves on
+  const [scrub, hold] = useScrub((progress) => setDetected(Math.min(1, progress / 0.8)))
 
   return (
     <div ref={scrub} id='oleoo' className='scrub' style={{ '--steps': 2 }}>
@@ -233,7 +236,7 @@ export const Oleoo = () => {
           </div>
           <div className='band__demo oleoo__parse'>
             <label htmlFor='oleoo-release' className='oleoo__label'>Release name, parsed as you type</label>
-            <Release value={value} onChange={(next) => { hold(); setValue(next) }} />
+            <Release value={value} detected={detected} onChange={(next) => { hold(); setDetected(1); setValue(next) }} />
           </div>
         </div>
       </article>
