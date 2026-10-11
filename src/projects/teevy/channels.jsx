@@ -1,36 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
 import { clock } from './osd'
 
-// What teevy would be showing: Blender's open movies (CC BY), a Triplego album, FIP Cultes live,
+// What teevy would be showing: Blender's open movies (CC BY), TRIPLEGO's Dreamin, FIP Cultes live,
 // today's real forecast from Open-Meteo, and the AV input left empty
 
-export const ALBUM = {
-  artist: 'Triplego',
-  title: 'MACHAKIL',
-  year: 2019,
-  cover: new URL('../../assets/teevy/channels/machakil.webp', import.meta.url),
-  // The cover is black and white split by a red and cyan fringe: the aurora takes those two
-  colors: ['#ff3b3b', '#2ee6f0'],
-  tracks: [
-    ["Tu l'auras", 255], ['3an 3an 3an', 202], ['Panama', 258], ['Trou Noir', 248], ['Pagavinho', 221], ['Costa', 248], ['Die', 182], ['Interlude', 153],
-    ['Socios', 233], ['Hasta la muerte', 291], ['No conozco', 207], ['Habeeba', 218], ['Vamos', 240], ['Iris', 213], ['Rihanna', 258], ["Les cheveux d'Assala", 270],
-  ],
+export const TRACK = {
+  artist: 'TRIPLEGO',
+  title: 'Dreamin',
+  album: '33',
+  year: 2025,
+  number: 1,
+  tracks: 11,
+  length: 198,
+  cover: new URL('../../assets/teevy/channels/triplego-33.webp', import.meta.url),
+  // The cover is a teal haze with orange hands: the aurora takes those two
+  colors: ['#ff5a3c', '#5aa6a0'],
+  // The track's official audio on YouTube (TRIPLEGO - Topic), embedded without cookies
+  video: 'KqNBGHAXz24',
 }
 
 export const STREAM = 'https://icecast.radiofrance.fr/fipcultes-hifi.aac'
 
-// Where the album is at, `seconds` after the band came on: starts on track 3, as if picked up mid-listen
-export const albumAt = (seconds) => {
-  let left = seconds + 42 + ALBUM.tracks.slice(0, 2).reduce((sum, [, length]) => sum + length, 0)
-  let index = 0
-
-  while (left >= ALBUM.tracks[index][1]) {
-    left -= ALBUM.tracks[index][1]
-    index = (index + 1) % ALBUM.tracks.length
-  }
-
-  return { index, title: ALBUM.tracks[index][0], length: ALBUM.tracks[index][1], position: left }
-}
+const YOUTUBE = 'https://www.youtube-nocookie.com'
 
 export const Film = ({ still }) => (
   <div className='teevy-prog teevy-prog--film' aria-hidden='true'>
@@ -38,16 +29,7 @@ export const Film = ({ still }) => (
   </div>
 )
 
-const CreditTag = ({ kicker, artist, title, meta }) => (
-  <div className='teevy-credit'>
-    <span className='teevy-credit__kicker'><i className='teevy-credit__dot' />{kicker}</span>
-    <span className='teevy-credit__artist'>{artist}</span>
-    <span className='teevy-credit__title'>{title}</span>
-    <span className='teevy-credit__meta'>{meta}</span>
-  </div>
-)
-
-const Aurora = ({ running, still }) => {
+export const Aurora = ({ running, still, colors, level = null }) => {
   const host = useRef(null)
 
   useEffect(() => {
@@ -60,7 +42,7 @@ const Aurora = ({ running, still }) => {
 
     import('./aurora').then(({ mountAurora }) => {
       if (!cancelled && host.current) {
-        dispose = mountAurora(host.current, { colors: ALBUM.colors, still })
+        dispose = mountAurora(host.current, { colors, still, level })
       }
     })
 
@@ -68,26 +50,94 @@ const Aurora = ({ running, still }) => {
       cancelled = true
       dispose?.()
     }
-  }, [running, still])
+  }, [running, still, level])
 
-  return <div ref={host} className='teevy-aurora' />
+  return <div ref={host} className='teevy-aurora' aria-hidden='true' />
 }
 
-export const Spotify = ({ seconds, view, running, reduced }) => {
-  const track = albumAt(seconds)
+// YouTube's iframe speaks postMessage: no API script to load, the frame reports its own clock
+const useYouTube = (frame, { sound, onTime }) => {
+  const report = useRef(onTime)
+  report.current = onTime
+
+  const send = (message) => frame.current?.contentWindow?.postMessage(JSON.stringify(message), YOUTUBE)
+  const command = (func, args = []) => send({ event: 'command', func, args })
+
+  useEffect(() => {
+    const listen = (event) => {
+      if (event.origin !== YOUTUBE || event.source !== frame.current?.contentWindow) {
+        return
+      }
+
+      try {
+        const info = JSON.parse(event.data)?.info
+
+        if (info && typeof info.currentTime === 'number') {
+          report.current({ position: info.currentTime, length: info.duration || TRACK.length })
+        }
+      } catch {}
+    }
+
+    window.addEventListener('message', listen)
+    return () => window.removeEventListener('message', listen)
+  }, [frame])
+
+  useEffect(() => {
+    if (sound) {
+      command('unMute')
+      command('setVolume', [80])
+    } else {
+      command('mute')
+    }
+  }, [sound])
+
+  // The frame only starts reporting once told someone listens; say it a few times while it boots
+  return () => {
+    for (const delay of [0, 600, 1500, 3000]) {
+      setTimeout(() => {
+        send({ event: 'listening', id: 'teevy', channel: 'widget' })
+        command(sound ? 'unMute' : 'mute')
+      }, delay)
+    }
+  }
+}
+
+const Explicit = () => <abbr className='teevy-explicit' title='Explicit'>E</abbr>
+
+export const Spotify = ({ view, running, reduced, sound, onTime, position }) => {
+  const frame = useRef(null)
+  const loaded = useYouTube(frame, { sound, onTime })
+  const src = `${YOUTUBE}/embed/${TRACK.video}?autoplay=1&mute=1&controls=0&disablekb=1&loop=1&playlist=${TRACK.video}&playsinline=1&rel=0&iv_load_policy=3&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`
 
   return (
-    <div className='teevy-prog teevy-prog--spotify' aria-hidden='true'>
+    <div className='teevy-prog teevy-prog--spotify'>
+      {running && (
+        <iframe
+          ref={frame}
+          className='teevy-prog__youtube'
+          src={src}
+          title={`${TRACK.artist}, ${TRACK.title}, on YouTube`}
+          allow='autoplay; encrypted-media'
+          referrerPolicy='strict-origin-when-cross-origin'
+          tabIndex={-1}
+          onLoad={loaded}
+        />
+      )}
       {view === 'aurora'
-        ? <Aurora running={running} still={reduced} />
+        ? <Aurora running={running} still={reduced} colors={TRACK.colors} />
         : (
           <>
-            <div className='teevy-prog__blur' style={{ backgroundImage: `url(${ALBUM.cover})` }} />
-            <img className='teevy-prog__cover' src={ALBUM.cover} alt='' width='600' height='600' loading='lazy' />
+            <div className='teevy-prog__blur' style={{ backgroundImage: `url(${TRACK.cover})` }} aria-hidden='true' />
+            <img className='teevy-prog__cover' src={TRACK.cover} alt='' width='600' height='600' loading='lazy' />
           </>
           )}
-      <CreditTag kicker='Spotify' artist={ALBUM.artist} title={track.title} meta={`${ALBUM.title} · ${ALBUM.year} · ${String(track.index + 1).padStart(2, '0')}/${ALBUM.tracks.length}`} />
-      <p className='teevy-prog__view'>{view === 'aurora' ? 'Aurora' : 'Cover'} · {clock(track.position)}</p>
+      <div className='teevy-credit' aria-hidden='true'>
+        <span className='teevy-credit__kicker'><i className='teevy-credit__dot' />Spotify</span>
+        <span className='teevy-credit__artist'>{TRACK.artist}</span>
+        <span className='teevy-credit__title'>{TRACK.title}</span>
+        <span className='teevy-credit__meta'><Explicit /> {TRACK.album} · {TRACK.year} · {String(TRACK.number).padStart(2, '0')}/{TRACK.tracks}</span>
+      </div>
+      <p className='teevy-prog__view' aria-hidden='true'>{view === 'aurora' ? 'Aurora' : 'Cover'} · {clock(position)}</p>
     </div>
   )
 }
@@ -101,17 +151,20 @@ const SpeakerIcon = ({ off }) => (
   </svg>
 )
 
-export const Radio = ({ sound, onToggle }) => (
+// teevy's radio view without a now playing: the aurora on the stream, the station's bug, the credit
+export const Radio = ({ sound, onToggle, running, reduced, level }) => (
   <div className='teevy-prog teevy-prog--radio'>
-    <div className='teevy-prog__plate' aria-hidden='true'>
-      <span className='teevy-prog__station'>FIP</span>
-      <span className='teevy-prog__station-sub'>Cultes</span>
-    </div>
+    <Aurora running={running} still={reduced} colors={['#e2007a', '#ff9a3c']} level={level} />
+    <p className='teevy-radio-bug' aria-hidden='true'>FIP Cultes</p>
     <button type='button' className='teevy-mute' onClick={onToggle} aria-pressed={sound} aria-label={sound ? 'Mute FIP Cultes' : 'Listen to FIP Cultes, live'}>
       <SpeakerIcon off={!sound} />
       <span>{sound ? 'On air' : 'Sound off'}</span>
     </button>
-    <p className='teevy-prog__view' aria-hidden='true'>Radio France · live stream</p>
+    <div className='teevy-credit teevy-credit--radio' aria-hidden='true'>
+      <span className='teevy-credit__kicker'><i className='teevy-credit__dot' />Live</span>
+      <span className='teevy-credit__artist'>FIP Cultes</span>
+      <span className='teevy-credit__meta'>Radio France · live stream</span>
+    </div>
   </div>
 )
 

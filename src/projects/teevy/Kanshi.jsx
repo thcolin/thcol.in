@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Choices } from '../shared'
 import { drainRenderers } from './gl'
-import { PAGES } from './kanshi/data'
+import { PAGES, livePage } from './kanshi/data'
 import '../kanshi.css'
 
 const WARN = '#e6b455'
@@ -108,7 +108,7 @@ const Machine = ({ page }) => (
 )
 
 const Side = ({ page }) => {
-  if (page.id === 'rack') {
+  if (page.id === 'honshu') {
     const total = page.power.reduce((sum, [, watts]) => sum + watts, 0)
 
     return (
@@ -123,13 +123,13 @@ const Side = ({ page }) => {
           ))}
         </Bracket>
         <Bracket title='SYS.CHECK' className='kanshi-brk--grow'>
-          <Rows rows={[['BABYLON', 'ONLINE'], ['CORTEX', 'ONLINE'], ['CHROMA', 'ONLINE'], ['TOTAL', `${total} W`]]} />
+          <Rows rows={[['KYOTO', 'ONLINE'], ['TOKYO', 'ONLINE'], ['AKIHABARA', 'ONLINE'], ['TOTAL', `${total} W`]]} />
         </Bracket>
       </>
     )
   }
 
-  if (page.id === 'babylon') {
+  if (page.id === 'kyoto') {
     return (
       <>
         <Bracket title='DISKS · 記録' aside='SMART' className='kanshi-brk--grow' status='warn'>
@@ -152,7 +152,7 @@ const Side = ({ page }) => {
     )
   }
 
-  if (page.id === 'cortex') {
+  if (page.id === 'tokyo') {
     return (
       <>
         <Bracket title='PLEX · 配信' aside={`${page.streams.length} STREAMS`} className='kanshi-brk--grow'>
@@ -196,13 +196,21 @@ const Side = ({ page }) => {
 
 const Wireframe = ({ page, running, reduced }) => {
   const host = useRef(null)
+  const handle = useRef(null)
+  const color = page.status === 'warn' ? WARN : `rgb(${page.rgb.split(' ').join(', ')})`
+  const colorRef = useRef(color)
+  colorRef.current = color
+
+  // The wireframe turns amber with the machine's health, without being rebuilt
+  useEffect(() => {
+    handle.current?.color(color)
+  }, [color])
 
   useEffect(() => {
     if (!running) {
       return
     }
 
-    let handle = null
     let cancelled = false
     const addon = page.containers
       ? { pos: [0.11, -0.02, 0.04], cols: 5, cell: 0.07, gap: 0.022, colors: [...Array(page.containers.up).fill('#60f08c'), ...Array(page.containers.idle).fill('#5a6a60')] }
@@ -210,15 +218,16 @@ const Wireframe = ({ page, running, reduced }) => {
 
     import('./kanshi/wireframe').then(({ mountWireframe }) => {
       if (!cancelled && host.current) {
-        handle = mountWireframe(host.current, { url: page.model, color: page.status === 'warn' ? WARN : `rgb(${page.rgb.split(' ').join(', ')})`, spin: !reduced, addon })
+        handle.current = mountWireframe(host.current, { url: page.model, color: colorRef.current, spin: !reduced, addon })
       }
     })
 
     return () => {
       cancelled = true
-      handle?.dispose()
+      handle.current?.dispose()
+      handle.current = null
     }
-  }, [page, running, reduced])
+  }, [page.id, running, reduced])
 
   return <div ref={host} className='kanshi__3d' role='img' aria-label={`${page.name}, wireframe of the real machine`} />
 }
@@ -255,9 +264,9 @@ const WORDMARK = `@@@  @@@   @@@@@@   @@@  @@@   @@@@@@   @@@  @@@  @@@
 const BOOT = [
   'KANSHI 監視 SYSTEM ......... v1.0',
   '初期化 KERNEL / MEM ........ OK',
-  'NODE BABYLON .............. LINK',
-  'NODE CORTEX ............... LINK',
-  'NODE CHROMA ............... LINK',
+  'NODE KYOTO 京都 ........... LINK',
+  'NODE TOKYO 東京 ........... LINK',
+  'NODE AKIHABARA 秋葉原 ..... LINK',
 ]
 
 // The cracktro Kanshi plays when it powers on
@@ -274,7 +283,7 @@ const Boot = ({ onSkip }) => (
 )
 
 const Ticker = ({ page, index }) => {
-  const items = ['監視システム稼働中', 'MONITORING ONLINE', 'バビロン', 'コルテックス', 'クロマ', page.alert ? `警告 ${page.alert}` : '通信良好', 'SAMPLE DATA', `P${index + 1}/${PAGES.length}`]
+  const items = ['監視システム稼働中', 'MONITORING ONLINE', ...PAGES.map(({ kanji, kana }) => `${kanji} ${kana}`), page.alert ? `警告 ${page.alert}` : '通信良好', 'SAMPLE DATA', `P${index + 1}/${PAGES.length}`]
   const row = items.join('   ///   ')
 
   return (
@@ -285,13 +294,23 @@ const Ticker = ({ page, index }) => {
 }
 
 export const KanshiChannel = ({ active, reduced }) => {
-  const [pageId, setPage] = useState('babylon')
+  const [pageId, setPage] = useState('kyoto')
   const [auto, setAuto] = useState(true)
   const [booted, setBooted] = useState(false)
   const near = active
   const clock = useClock(near)
-  const page = PAGES.find(({ id }) => id === pageId)
-  const index = PAGES.indexOf(page)
+  const [seconds, setSeconds] = useState(0)
+  const page = livePage(PAGES.find(({ id }) => id === pageId), seconds)
+
+  useEffect(() => {
+    if (!near || reduced) {
+      return
+    }
+
+    const timer = setInterval(() => setSeconds((value) => value + 1.5), 1500)
+    return () => clearInterval(timer)
+  }, [near, reduced])
+  const index = PAGES.findIndex(({ id }) => id === pageId)
   const powered = booted || reduced
 
   useEffect(() => {
@@ -351,7 +370,7 @@ export const KanshiChannel = ({ active, reduced }) => {
                   className='kanshi__rail'
                   value={page.id}
                   onChange={take}
-                  options={PAGES.map(({ id, name, rgb }) => ({ id, label: name, style: { '--kanshi-rgb': rgb } }))}
+                  options={PAGES.map(({ id, name, kana, rgb }) => ({ id, label: <>{name} <small lang='ja'>{kana}</small></>, style: { '--kanshi-rgb': rgb } }))}
                 />
                 {page.alert && (
                   <p className='kanshi__alert'>
@@ -361,7 +380,7 @@ export const KanshiChannel = ({ active, reduced }) => {
                   </p>
                 )}
                 <div className='kanshi__plate'>
-                  <b>{page.name}</b>
+                  <b>{page.name} <i lang='ja'>{page.kanji}</i></b>
                   <span>{page.plate}</span>
                   <em className={page.status ? `is-${page.status}` : undefined}>{page.status === 'warn' ? 'SYSTEM WARN' : 'SYSTEM OK'}</em>
                 </div>

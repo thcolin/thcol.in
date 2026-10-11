@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Choices, Tags, usePrefersReducedMotion } from '../shared'
 import { GuideLabel, Hud, Legend, clock, useInView } from './osd'
-import { ALBUM, Bars, Film, Radio, STREAM, Spotify, Weather, albumAt } from './channels'
+import { Bars, Film, Radio, STREAM, Spotify, TRACK, Weather } from './channels'
 import { PetChannel } from './Pet'
 import { IntroChannel } from './Intro'
 import { KanshiChannel } from './Kanshi'
@@ -14,8 +14,8 @@ const CHANNELS = [
   { n: 2, id: 'weather', label: 'Weather', kind: 'weather', title: 'Today', byline: 'Nantes, Brest, Paris, Lyon, Marseille' },
   { n: 4, id: 'cine', label: 'Cinéma libre', kind: 'film', title: 'Tears of Steel', byline: 'YouTube · Blender', duration: 734, start: 181, still: new URL('../../assets/teevy/channels/tears-of-steel.webp', import.meta.url) },
   { n: 6, id: 'spotify', label: 'Spotify', kind: 'spotify' },
-  { n: 8, id: 'fip', label: 'FIP Cultes', kind: 'radio', title: 'FIP Cultes', byline: 'Radio France · live' },
-  { n: 9, id: 'kanshi', label: 'Kanshi', kind: 'kanshi', title: 'Homelab', byline: 'Babylon · Cortex · Chroma' },
+  { n: 8, id: 'fip', label: 'FIP Cultes', kind: 'radio', title: 'Live stream', byline: 'Radio France' },
+  { n: 9, id: 'kanshi', label: 'Kanshi', kind: 'kanshi', title: 'Homelab', byline: 'Kyoto · Tokyo · Akihabara' },
   { n: 10, id: 'av', label: 'AV input', kind: 'av', title: 'No signal', byline: 'Composite' },
   { n: 11, id: 'snes', label: 'Super Nintendo', kind: 'game', render: 'SVG' },
   { n: 12, id: 'n64', label: 'Nintendo 64', kind: 'game', render: 'three.js' },
@@ -44,7 +44,7 @@ const pad = (n) => String(n).padStart(2, '0')
 // Thomas's photos of the real Sharp CRT: the print shows the tube on the channel being watched
 const PHOTOS = {
   teevy: { src: new URL('../../assets/teevy/photo/tube.webp', import.meta.url), alt: 'The real CRT on channel 00: the colour bars with teevy\'s face, a controller on the desk' },
-  kanshi: { src: new URL('../../assets/teevy/photo/kanshi.webp', import.meta.url), alt: 'The real CRT on channel 09: Kanshi, on the Babylon page' },
+  kanshi: { src: new URL('../../assets/teevy/photo/kanshi.webp', import.meta.url), alt: 'The real CRT on channel 09: Kanshi, on the Kyoto page' },
   spotify: { src: new URL('../../assets/teevy/photo/spotify.webp', import.meta.url), alt: 'The real CRT on channel 06: Spotify\'s screensaver' },
   plex: { src: new URL('../../assets/teevy/photo/plex.webp', import.meta.url), alt: 'The real CRT on channel 01: Plex playing a cartoon' },
 }
@@ -69,6 +69,8 @@ export const Tv = () => {
   const [listened, setListened] = useState(0)
   const [view, setView] = useState('cover')
   const [sound, setSound] = useState(false)
+  const [playback, setPlayback] = useState(null)
+  const analyser = useRef(null)
   const [run, setRun] = useState(0)
   const [entry, setEntry] = useState('')
   const reduced = usePrefersReducedMotion()
@@ -176,10 +178,29 @@ export const Tv = () => {
 
   // The stream only plays after a gesture, and stops as soon as the radio is left or scrolled away
   useEffect(() => {
-    if (sound && (current.kind !== 'radio' || !inView)) {
+    if (sound && ((current.kind !== 'radio' && current.kind !== 'spotify') || !inView)) {
       setSound(false)
     }
   }, [current.kind, inView, sound])
+
+  useEffect(() => {
+    if (current.kind !== 'spotify') setPlayback(null)
+  }, [current.kind])
+
+  // The radio's level, read off the stream itself, drives its aurora
+  const level = useCallback(() => {
+    const node = analyser.current
+
+    if (!node) {
+      return null
+    }
+
+    const bins = new Uint8Array(node.frequencyBinCount)
+    node.getByteFrequencyData(bins)
+    let sum = 0
+    for (let i = 2; i < bins.length * 0.25; i++) sum += bins[i]
+    return Math.min(1, sum / (bins.length * 0.25 - 2) / 160)
+  }, [])
 
   useEffect(() => {
     const element = audio.current
@@ -188,8 +209,20 @@ export const Tv = () => {
       return
     }
 
-    if (sound) {
+    if (sound && current.kind === 'radio') {
       element.src = STREAM
+
+      if (!analyser.current) {
+        try {
+          const context = new AudioContext()
+          const node = context.createAnalyser()
+          node.fftSize = 512
+          context.createMediaElementSource(element).connect(node)
+          node.connect(context.destination)
+          analyser.current = node
+        } catch {}
+      }
+
       element.play().catch(() => setSound(false))
     } else if (element.getAttribute('src')) {
       element.pause()
@@ -221,7 +254,7 @@ export const Tv = () => {
       event.preventDefault()
       setAuto(false)
       setView((value) => VIEWS[(VIEWS.indexOf(value) + side + VIEWS.length) % VIEWS.length])
-    } else if (event.key === ' ' && current.kind === 'radio') {
+    } else if (event.key === ' ' && (current.kind === 'radio' || current.kind === 'spotify')) {
       event.preventDefault()
       setAuto(false)
       setSound(!sound)
@@ -256,9 +289,11 @@ export const Tv = () => {
     }
   }
 
-  const track = albumAt(listened)
+  // The track's clock comes from the YouTube player when it reports, otherwise it runs on its own
+  const position = playback ? playback.position : listened % TRACK.length
+  const length = playback?.length || TRACK.length
   const info = current.kind === 'spotify'
-    ? { title: track.title, byline: `${ALBUM.artist} · ${ALBUM.title}`, progress: { ratio: track.position / track.length, elapsed: clock(track.position), total: clock(track.length) } }
+    ? { title: TRACK.title, byline: `${TRACK.artist} · ${TRACK.album}`, progress: { ratio: position / length, elapsed: clock(position), total: clock(length) } }
     : current.kind === 'game'
       ? { title: 'Boot screen', byline: `Live · ${current.render}` }
       : {
@@ -268,7 +303,7 @@ export const Tv = () => {
         }
 
   const legend = [['Select', ['▲', '▼']], ['Tune', ['0', '9']]]
-  if (current.kind === 'spotify') legend.push(['View', ['◄', '►']])
+  if (current.kind === 'spotify') legend.push(['View', ['◄', '►']], ['Sound', ['Space']])
   if (current.kind === 'radio') legend.push(['Sound', ['Space']])
   if (current.kind === 'pet') legend.push(['Play', ['P']])
   if (current.kind === 'game') legend.push(['Replay', ['OK']])
@@ -290,15 +325,15 @@ export const Tv = () => {
         <div className='teevy__screen'>
           <div className='teevy__channel' data-channel={current.id}>
             {current.kind === 'film' && <Film still={current.still} />}
-            {current.kind === 'spotify' && <Spotify seconds={listened} view={view} running={inView} reduced={reduced} />}
+            {current.kind === 'spotify' && <Spotify view={view} running={inView} reduced={reduced} sound={sound} onTime={setPlayback} position={position} />}
             {current.kind === 'weather' && <Weather active={inView} />}
             {current.kind === 'av' && <Bars />}
-            {current.kind === 'radio' && <Radio sound={sound} onToggle={() => { setAuto(false); setSound(!sound) }} />}
+            {current.kind === 'radio' && <Radio sound={sound} onToggle={() => { setAuto(false); setSound(!sound) }} running={inView} reduced={reduced} level={level} />}
             {current.kind === 'pet' && <PetChannel ref={pet} active={inView} reduced={reduced} />}
             {current.kind === 'game' && <IntroChannel id={current.id} run={run} playing={inView && (!reduced || run > 1)} onDone={introDone} />}
             {current.kind === 'kanshi' && <KanshiChannel active={inView} reduced={reduced} />}
           </div>
-          <audio ref={audio} preload='none' />
+          <audio ref={audio} preload='none' crossOrigin='anonymous' />
           <div className={snow ? 'teevy-snow is-on' : 'teevy-snow'} aria-hidden='true' />
           <Hud visible={hud} number={pad(current.n)} name={current.label} title={info.title} byline={info.byline} progress={info.progress} />
           {entry && <p className='teevy-entry' aria-hidden='true'>{entry.padEnd(2, '-')}</p>}

@@ -306,6 +306,19 @@
   scale: 0.96;
 }
 
+.kanshi__rail small {
+  color: inherit;
+  font-size: 1em;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+.kanshi__plate b i {
+  font-style: normal;
+  letter-spacing: 0.08em;
+  color: rgb(var(--kanshi-rgb));
+}
+
 .kanshi__rail button[aria-checked='true'] {
   border-color: var(--mon-tab);
   background-color: var(--mon-tab);
@@ -348,7 +361,7 @@
   min-height: 0;
 }
 
-.kanshi-screen[data-page='rack'] .kanshi__cols {
+.kanshi-screen[data-page='honshu'] .kanshi__cols {
   grid-template-columns: minmax(0, 1fr) minmax(0, 2.3fr);
 }
 
@@ -759,7 +772,7 @@
   /* On a phone the 4:3 tube is small: the machine and its headline number, nothing else */
   .kanshi__col--left,
   .kanshi__col--right,
-  .kanshi-screen[data-page='rack'] .kanshi__col--left,
+  .kanshi-screen[data-page='honshu'] .kanshi__col--left,
   .kanshi__alert,
   .kanshi__rail,
   .kanshi__plate span {
@@ -767,7 +780,7 @@
   }
 
   .kanshi__cols,
-  .kanshi-screen[data-page='rack'] .kanshi__cols {
+  .kanshi-screen[data-page='honshu'] .kanshi__cols {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
   }

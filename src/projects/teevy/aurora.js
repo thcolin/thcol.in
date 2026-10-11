@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { acquireRenderer, releaseRenderer } from './gl'
 
 // teevy's aurora, the raymarched waves of its Spotify visualizer. The shader is teevy's, except for
-// the palette, taken from the cover; without the audio tap, a slow synthetic beat drives it.
+// the palette, taken from the cover; the live stream drives it when it plays, a slow beat otherwise.
 const BASE = { timeScale: 0.5, waveSpeed: 1, waveHeight: 1, wave1Freq: 4.8, wave1Amp: 0.038, wave2Freq: 0.3, wave2Amp: -0.09, wave3FreqX: -0.6, wave3FreqZ: -0.7, wave3Amp: 0.12, noiseAmount: 0.004, foldingOffset: 9.291, stepBase: 0.146, glowIntensity: 0.0085, glowSpread: 5.1 }
 
 const fragmentShader = `
@@ -98,7 +98,7 @@ const fragmentShader = `
       }
     `
 
-export const mountAurora = (host, { colors, still }) => {
+export const mountAurora = (host, { colors, still, level }) => {
   const renderer = acquireRenderer()
   const canvas = renderer.domElement
   canvas.className = 'teevy-aurora__canvas'
@@ -145,7 +145,8 @@ export const mountAurora = (host, { colors, still }) => {
     const dt = Math.min((now - last) / 1000, 0.05)
     last = now
     // A beat around 95 bpm, the tempo of a cloud rap record, standing in for the audio tap
-    const beat = Math.max(0, Math.sin((now / 1000) * Math.PI * 2 * (95 / 60))) ** 4
+    const heard = level?.()
+    const beat = typeof heard === 'number' ? heard : Math.max(0, Math.sin((now / 1000) * Math.PI * 2 * (95 / 60))) ** 4
     const energy = 0.25 + 0.35 * beat
     pattern += dt * BASE.timeScale * (1 + energy * 0.5)
     wave += dt * BASE.timeScale * (1 + energy * 0.5) * (1 + energy * 0.9)
