@@ -207,7 +207,7 @@ export const Wrapped = () => {
     <article className='band wrapped' data-look={theme} aria-labelledby='wrapped'>
       <div className='band__column band__split band__split--reverse'>
         <div className='band__text'>
-          <h3 id='wrapped' className='wrapped__title'><span aria-hidden='true'>🍿📼 </span>Sensorr Wrapped</h3>
+          <h3 id='wrapped' className='wrapped__title'><span className='wrapped__lead'><span aria-hidden='true' className='wrapped__mark'><span>🍿</span><span>📼</span></span>Sensorr</span> Wrapped</h3>
           <p className='wrapped__tagline'>A wrapped for every friend, every year.</p>
           <p className='band__body'>
             Friends link their Plex account to sensorr. Each year, Tautulli’s watch history gives them a wrapped of their year on your server, in five looks, in English and French.

@@ -76,6 +76,28 @@
   text-wrap: balance;
 }
 
+/* sensorr's mark stays upright whatever the look's display face */
+.wrapped__mark {
+  display: inline-flex;
+  gap: 0;
+  margin-right: 0.14em;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+  font-size: 0.76em;
+  font-style: normal;
+  font-synthesis: none;
+  line-height: 1;
+  vertical-align: 0.02em;
+}
+
+.wrapped__lead {
+  white-space: nowrap;
+}
+
+/* Emoji glyphs carry wide side bearings: the pair sits as tight as sensorr's README mark */
+.wrapped__mark span + span {
+  margin-left: -0.06em;
+}
+
 /* The look's own mark under the title: the TV guide's red, the film's edge, the neon, the highlighter, the crimson */
 .wrapped__title::after {
   content: '';
