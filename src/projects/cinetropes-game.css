@@ -21,16 +21,8 @@
   --cg-slot: #2a1a14;
   --cg-gold: #ffd86a;
   --cg-font: 'Determination', monospace;
-  --shell: #a3244a;
-  --shell-light: #c8395f;
-  --shell-dark: #6e1531;
-  --shell-ink: #f3c9d4;
-  --bezel: #2b2730;
-  --bezel-ink: #8d8796;
-  --key: #1d1619;
-  --key-light: #3a2d33;
-  --screen: 384px;
-  min-height: max(100svh, 760px);
+  --console-height: min(calc(100svh - 64px), 860px);
+  min-height: max(100svh, 640px);
   padding: 0;
   font-family: var(--cg-font);
   font-size: 16px;
@@ -42,25 +34,30 @@
   outline-offset: 2px;
 }
 
-/* Backdrop: the street of the eleven cinemas, drifting by, dimmed behind the console */
+/* Backdrop: the street of the eleven cinemas, their facades above and their lobbies below,
+   drifting by in opposite directions, dimmed behind the console */
 
 .cg__street {
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   overflow: hidden;
-  opacity: 0.32;
+  opacity: 0.35;
 }
 
 .cg__track {
   display: flex;
   width: max-content;
-  height: min(100%, 576px);
+  height: 50%;
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: cg-street 160s linear infinite;
+  animation: cg-street 180s linear infinite;
+}
+
+.cg__track--lobby {
+  animation-direction: reverse;
 }
 
 .cg__track li {
@@ -87,75 +84,72 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 48px;
+  gap: 56px;
   min-height: inherit;
-  padding: 48px var(--gutter);
+  padding: 32px var(--gutter);
 }
 
-/* The console: a Game Boy Color around a square screen, its buttons live */
+/* The console: the photographed Game Boy Color, its screen and buttons placed on its 1000×1675
+   picture; the screen is 10:9, the game square in its middle */
 
 .cg__console {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    'bezel bezel'
-    'brand brand'
-    'pad ab'
-    'menu menu';
+  position: relative;
   flex: none;
-  width: calc(var(--screen) + 88px);
-  padding: 28px 28px 40px;
-  border-radius: 18px 18px 64px 18px;
-  background-color: var(--shell);
-  background-image: linear-gradient(160deg, var(--shell-light), var(--shell) 40%, var(--shell-dark));
-  box-shadow:
-    inset 0 2px 0 rgb(255 255 255 / 0.18),
-    inset 0 -6px 0 rgb(0 0 0 / 0.25),
-    0 24px 64px rgb(0 0 0 / 0.55);
+  height: var(--console-height);
+  aspect-ratio: 1000 / 1675;
+  filter: drop-shadow(0 24px 40px rgb(0 0 0 / 0.55));
   user-select: none;
   touch-action: manipulation;
 }
 
-.cg__bezel {
-  grid-area: bezel;
-  position: relative;
-  padding: 18px 16px 18px 34px;
-  border-radius: 10px 10px 36px 10px;
-  background-color: var(--bezel);
+.cg__shell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
+.cg__screen {
+  position: absolute;
+  left: 22.8%;
+  top: 9.97%;
+  width: 54.4%;
+  height: 28.9%;
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+}
+
+.cg__screen > * {
+  flex: none;
+}
+
+.cg__canvas,
+.cg__game {
+  display: block;
+  height: 100%;
+  aspect-ratio: 1;
+  border: 0;
+  image-rendering: pixelated;
+}
+
+/* The power light, lit while a game runs */
 .cg__led {
   position: absolute;
-  top: calc(50% - 4px);
-  left: 12px;
-  width: 8px;
-  height: 8px;
+  left: 9.7%;
+  top: 17.25%;
+  width: 1.6%;
+  aspect-ratio: 1;
   border-radius: 50%;
-  background-color: #3a1a1f;
+  background-color: transparent;
   transition-property: background-color, box-shadow;
   transition-duration: 300ms;
 }
 
 .cg__led[data-on] {
   background-color: #ff4a3d;
-  box-shadow: 0 0 6px 1px rgb(255 74 61 / 0.7);
-}
-
-.cg__screen {
-  position: relative;
-  width: var(--screen);
-  aspect-ratio: 1;
-  overflow: hidden;
-  background-color: var(--band-bg);
-}
-
-.cg__canvas,
-.cg__game {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  image-rendering: pixelated;
+  box-shadow: 0 0 6px 2px rgb(255 74 61 / 0.7);
 }
 
 /* Press start: the whole screen starts the game, the word blinks like a title screen */
@@ -165,12 +159,12 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 0 0 24px;
+  padding: 0 0 8%;
   border: 0;
   background: linear-gradient(rgb(17 8 6 / 0) 60%, rgb(17 8 6 / 0.85));
   color: var(--cg-active);
   font: inherit;
-  font-size: 24px;
+  font-size: clamp(14px, calc(var(--console-height) * 0.024), 22px);
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -189,154 +183,66 @@
   }
 }
 
-.cg__brand {
-  grid-area: brand;
-  margin: 14px 0 22px;
-  color: var(--shell-ink);
-  font-family: 'Hanken Grotesk', system-ui, sans-serif;
-  font-size: 15px;
-  font-style: italic;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.02em;
-}
-
-.cg__brand span {
-  margin-left: 4px;
-  font-style: normal;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
-.cg__controls {
-  display: contents;
-}
-
-/* The cross: four keys around a still center */
-.cg__pad {
-  grid-area: pad;
-  display: grid;
-  grid-template-columns: repeat(3, 40px);
-  grid-template-rows: repeat(3, 40px);
-  align-self: center;
-  filter: drop-shadow(0 3px 0 rgb(0 0 0 / 0.35));
-}
-
-.cg__key {
+/* The buttons: invisible zones over the picture's own, darkened while pressed */
+.cg__key,
+.cg__round,
+.cg__pill {
+  position: absolute;
   padding: 0;
   border: 0;
-  background-color: var(--key);
+  background-color: transparent;
   cursor: pointer;
+  transition-property: background-color;
+  transition-duration: 80ms;
 }
 
-.cg__key--up { grid-area: 1 / 2; border-radius: 6px 6px 0 0; }
-.cg__key--left { grid-area: 2 / 1; border-radius: 6px 0 0 6px; }
-.cg__key--center { grid-area: 2 / 2; background-color: var(--key); }
-.cg__key--right { grid-area: 2 / 3; border-radius: 0 6px 6px 0; }
-.cg__key--down { grid-area: 3 / 2; border-radius: 0 0 6px 6px; }
-
-.cg__key:hover {
-  background-color: var(--key-light);
-}
-
-.cg__key:active {
-  background-color: #000;
-}
-
-.cg__ab {
-  grid-area: ab;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding-top: 8px;
-  rotate: -22deg;
-}
-
-.cg__round {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background-color: var(--key);
-  box-shadow: 0 3px 0 rgb(0 0 0 / 0.35);
-  color: var(--shell-ink);
-  font-family: 'Hanken Grotesk', system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-  transition-property: scale, background-color;
-  transition-duration: 100ms;
-  transition-timing-function: ease-out;
-}
-
-.cg__round--a {
-  translate: 0 -18px;
-}
-
-.cg__round span {
-  rotate: 22deg;
-}
-
-.cg__round:hover {
-  background-color: var(--key-light);
-}
-
+.cg__key:active,
 .cg__round:active,
 .cg__pill:active {
-  scale: 0.96;
-}
-
-.cg__menu {
-  grid-area: menu;
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-  margin-top: 28px;
-}
-
-.cg__pill {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--shell-ink);
-  font-family: 'Hanken Grotesk', system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.cg__pill::before {
-  content: '';
-  width: 44px;
-  height: 12px;
-  border-radius: 6px;
-  background-color: var(--bezel);
-  box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.4);
-  rotate: -22deg;
-}
-
-.cg__pill:hover::before {
-  background-color: var(--key-light);
+  background-color: rgb(0 0 0 / 0.3);
 }
 
 .cg__key:disabled,
 .cg__round:disabled,
 .cg__pill:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
+  cursor: default;
 }
 
+.cg__pad {
+  position: absolute;
+  left: 8.4%;
+  top: 58.7%;
+  width: 24.8%;
+  height: 15%;
+}
+
+.cg__key--up { left: 33%; top: 0; width: 34%; height: 36%; border-radius: 6px 6px 0 0; }
+.cg__key--down { left: 33%; bottom: 0; width: 34%; height: 36%; border-radius: 0 0 6px 6px; }
+.cg__key--left { left: 0; top: 33%; width: 36%; height: 34%; border-radius: 6px 0 0 6px; }
+.cg__key--right { right: 0; top: 33%; width: 36%; height: 34%; border-radius: 0 6px 6px 0; }
+
+.cg__round {
+  width: 12.8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.cg__round--b { left: 60.8%; top: 64.2%; }
+.cg__round--a { left: 79.2%; top: 60.6%; }
+
+.cg__pill {
+  top: 81.9%;
+  width: 10.4%;
+  height: 2.9%;
+  border-radius: 999px;
+}
+
+.cg__pill--select { left: 37.2%; }
+.cg__pill--start { left: 52.2%; }
+
 .cg__console :focus-visible {
-  outline-color: #fff;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 /* The game's box: copper edge, near-black burgundy */
@@ -524,10 +430,6 @@
 }
 
 @media (max-width: 1080px) {
-  .cg {
-    --screen: 320px;
-  }
-
   .cg__layout {
     gap: 24px;
   }
@@ -543,12 +445,11 @@
 
 @media (max-width: 860px) {
   .cg {
-    --screen: min(336px, calc(100vw - 2 * var(--gutter) - 88px));
+    --console-height: min(calc((100vw - 2 * var(--gutter)) * 1.675), 760px);
   }
 
   .cg__layout {
     flex-direction: column;
-    padding-block: 32px;
   }
 
   .cg__panel {
@@ -568,23 +469,6 @@
   .cg__heading {
     font-size: 26px;
     line-height: 28px;
-  }
-
-  .cg__console {
-    width: 100%;
-    padding: 20px 16px 32px;
-  }
-
-  .cg__bezel {
-    padding: 14px 12px 14px 28px;
-  }
-
-  .cg__screen {
-    width: 100%;
-  }
-
-  .cg__led {
-    left: 10px;
   }
 }
 

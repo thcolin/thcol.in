@@ -1,5 +1,10 @@
 // Sprites copied from the game, re-encoded; each one is fetched the first time it is drawn
 export const ASSETS = {
+  'gbc-berry': new URL('../../assets/cinetropes-game/gbc-berry.webp', import.meta.url),
+  'gbc-cyan': new URL('../../assets/cinetropes-game/gbc-cyan.webp', import.meta.url),
+  'gbc-lime': new URL('../../assets/cinetropes-game/gbc-lime.webp', import.meta.url),
+  'gbc-purple': new URL('../../assets/cinetropes-game/gbc-purple.webp', import.meta.url),
+  'gbc-yellow': new URL('../../assets/cinetropes-game/gbc-yellow.webp', import.meta.url),
   'cabin-map': new URL('../../assets/cinetropes-game/cabin-map.webp', import.meta.url),
   'cashier': new URL('../../assets/cinetropes-game/cashier.webp', import.meta.url),
   'combo-5': new URL('../../assets/cinetropes-game/combo-5.webp', import.meta.url),
@@ -171,4 +176,15 @@ export const ASSETS = {
   'champo-cabin-3': new URL('../../assets/cinetropes-game/cinemas/champo-cabin-3.webp', import.meta.url),
   'champo-cabin-4': new URL('../../assets/cinetropes-game/cinemas/champo-cabin-4.webp', import.meta.url),
   'champo-cabin-5': new URL('../../assets/cinetropes-game/cinemas/champo-cabin-5.webp', import.meta.url),
+  'regent-lobby': new URL('../../assets/cinetropes-game/cinemas/regent-lobby.webp', import.meta.url),
+  'empire-lobby': new URL('../../assets/cinetropes-game/cinemas/empire-lobby.webp', import.meta.url),
+  'almeria-lobby': new URL('../../assets/cinetropes-game/cinemas/almeria-lobby.webp', import.meta.url),
+  'bagdad-lobby': new URL('../../assets/cinetropes-game/cinemas/bagdad-lobby.webp', import.meta.url),
+  'eden-lobby': new URL('../../assets/cinetropes-game/cinemas/eden-lobby.webp', import.meta.url),
+  'lunar-lobby': new URL('../../assets/cinetropes-game/cinemas/lunar-lobby.webp', import.meta.url),
+  'haddonfield-lobby': new URL('../../assets/cinetropes-game/cinemas/haddonfield-lobby.webp', import.meta.url),
+  'starlite-lobby': new URL('../../assets/cinetropes-game/cinemas/starlite-lobby.webp', import.meta.url),
+  'shinjuku-lobby': new URL('../../assets/cinetropes-game/cinemas/shinjuku-lobby.webp', import.meta.url),
+  'argento-lobby': new URL('../../assets/cinetropes-game/cinemas/argento-lobby.webp', import.meta.url),
+  'champo-lobby': new URL('../../assets/cinetropes-game/cinemas/champo-lobby.webp', import.meta.url),
 }

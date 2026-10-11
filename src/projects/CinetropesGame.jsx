@@ -277,50 +277,32 @@ const Slides = ({ cinema, slide, running, reduced, label }) => {
   return <canvas ref={canvas} className='cg__canvas' width={SIZE} height={SIZE} role='img' aria-label={label} />
 }
 
-// A Game Boy Color: the cross is held like a key, A, B and the pills are tapped
-const Console = ({ children, playing, onPad, onTap, onStart }) => (
+// A Game Boy Color, each cinema in its own colour: the game shows in its screen, and
+// its buttons are live. The cross is held like a key; A, B and the pills are tapped.
+const Console = ({ color, children, playing, onPad, onTap, onStart }) => (
   <div className='cg__console'>
-    <div className='cg__bezel'>
-      <span className='cg__led' data-on={playing || undefined} aria-hidden='true' />
-      <div className='cg__screen'>{children}</div>
+    <img className='cg__shell' src={ASSETS[`gbc-${color}`]} width='1000' height='1675' alt='' draggable={false} />
+    <span className='cg__led' data-on={playing || undefined} aria-hidden='true' />
+    <div className='cg__screen'>{children}</div>
+    <div className='cg__pad' role='group' aria-label='Direction pad'>
+      {PAD.map((button) => (
+        <button
+          key={button.id}
+          type='button'
+          className={`cg__key cg__key--${button.id}`}
+          aria-label={button.label}
+          onPointerDown={() => onPad(button.key, true)}
+          onPointerUp={() => onPad(button.key, false)}
+          onPointerLeave={(event) => event.buttons && onPad(button.key, false)}
+          onKeyDown={(event) => (event.key === 'Enter' || event.key === ' ') && !event.repeat && onPad(button.key, true)}
+          onKeyUp={(event) => (event.key === 'Enter' || event.key === ' ') && onPad(button.key, false)}
+        />
+      ))}
     </div>
-    <p className='cg__brand' aria-hidden='true'>
-      cinetropes <span>COLOR</span>
-    </p>
-    <div className='cg__controls'>
-      <div className='cg__pad' role='group' aria-label='Direction pad'>
-        {PAD.map((button) => (
-          <button
-            key={button.id}
-            type='button'
-            className={`cg__key cg__key--${button.id}`}
-            aria-label={button.label}
-            onPointerDown={() => onPad(button.key, true)}
-            onPointerUp={() => onPad(button.key, false)}
-            onPointerLeave={(event) => event.buttons && onPad(button.key, false)}
-            onKeyDown={(event) => (event.key === 'Enter' || event.key === ' ') && !event.repeat && onPad(button.key, true)}
-            onKeyUp={(event) => (event.key === 'Enter' || event.key === ' ') && onPad(button.key, false)}
-          />
-        ))}
-        <span className='cg__key cg__key--center' aria-hidden='true' />
-      </div>
-      <div className='cg__ab'>
-        <button type='button' className='cg__round cg__round--b' aria-label='B: back' onClick={() => onTap('Escape')} disabled={!playing}>
-          <span>B</span>
-        </button>
-        <button type='button' className='cg__round cg__round--a' aria-label={playing ? 'A: confirm' : 'A: start the game'} onClick={playing ? () => onTap('Enter') : onStart}>
-          <span>A</span>
-        </button>
-      </div>
-    </div>
-    <div className='cg__menu'>
-      <button type='button' className='cg__pill' aria-label='Select: next room' onClick={() => onTap('ArrowRight')} disabled={playing}>
-        <span>Select</span>
-      </button>
-      <button type='button' className='cg__pill' aria-label={playing ? 'Start: back to the game' : 'Start the game'} onClick={onStart}>
-        <span>Start</span>
-      </button>
-    </div>
+    <button type='button' className='cg__round cg__round--b' aria-label='B: back' onClick={() => onTap('Escape')} disabled={!playing} />
+    <button type='button' className='cg__round cg__round--a' aria-label={playing ? 'A: confirm' : 'A: start the game'} onClick={playing ? () => onTap('Enter') : onStart} />
+    <button type='button' className='cg__pill cg__pill--select' aria-label='Select: next room' onClick={() => onTap('ArrowRight')} disabled={playing} />
+    <button type='button' className='cg__pill cg__pill--start' aria-label={playing ? 'Start: back to the game' : 'Start the game'} onClick={onStart} />
   </div>
 )
 
@@ -400,16 +382,19 @@ export const CinetropesGame = () => {
   return (
     <article ref={root} className='band cg' aria-labelledby='cinetropes-game'>
       <div className='cg__street' aria-hidden='true'>
-        <ul className='cg__track'>
-          {[0, 1].map((copy) => CINEMAS.map((other) => (
-            <li key={`${copy}-${other.id}`}>
-              {near && <img src={ASSETS[`${other.id}-facade`]} width='192' height='192' alt='' loading='lazy' />}
-            </li>
-          )))}
-        </ul>
+        {['facade', 'lobby'].map((kind) => (
+          <ul key={kind} className={`cg__track cg__track--${kind}`}>
+            {[0, 1].map((copy) => CINEMAS.map((other) => (
+              <li key={`${copy}-${other.id}`}>
+                {near && <img src={ASSETS[`${other.id}-${kind}`]} width='192' height='192' alt='' loading='lazy' />}
+              </li>
+            )))}
+          </ul>
+        ))}
       </div>
       <div className='cg__layout'>
         <Console
+          color={cinema.console}
           playing={playing}
           onPad={pad}
           onTap={(key) => {

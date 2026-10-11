@@ -3,3 +3,6 @@ dist
 .parcel-cache
 .DS_Store
 .shots
+.e2e
+test-results
+playwright-report

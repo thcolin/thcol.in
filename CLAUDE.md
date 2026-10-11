@@ -15,7 +15,7 @@ yarn start   # http://localhost:8080
 
 ## Vérifier
 
-`yarn build` doit passer. Pas de tests, pas de lint.
+`yarn build` doit passer. `yarn test` lance les tests Playwright de `e2e/` sur un build de prod servi en statique (port 8090) ; ils couvrent la bande du meta-game de cinetropes. Pas de lint.
 
 ## Recette visuelle
 

@@ -9,9 +9,11 @@
   "scripts": {
     "start": "parcel -p 8080 --public-url='http://localhost:8080/'",
     "build": "parcel build --no-source-maps --public-url='https://thcol.in/'",
-    "deploy": "yarn build && echo 'thcol.in' > ./dist/CNAME && gh-pages -d dist"
+    "deploy": "yarn build && echo 'thcol.in' > ./dist/CNAME && gh-pages -d dist",
+    "test": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "1.58.2",
     "gh-pages": "^6.0.0",
     "parcel": "^2.16.4"
   },
