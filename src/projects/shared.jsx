@@ -65,11 +65,11 @@ export const Group = ({ id, title, phrase, projects, children }) => {
       const p = Math.min(1, Math.max(0, (innerHeight - rect.top) / rect.height))
 
       lines.forEach((line, index) => {
-        const t = easeOut(range(p, 0.1 + index * 0.08, 0.38 + index * 0.08))
+        const t = easeOut(range(p, 0.08 + index * 0.07, 0.4 + index * 0.07))
         line.style.transform = `translateX(${(1 - t) * (index % 2 ? 110 : -110)}vw)`
       })
 
-      const shown = range(p, 0.5, 0.62)
+      const shown = range(p, 0.52, 0.66)
       meta.style.opacity = shown
       meta.style.transform = `translateY(${(1 - shown) * 24}px)`
     }

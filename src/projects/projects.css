@@ -31,7 +31,7 @@ main#projects ::selection {
 
 /* The section's own screen: its words come in with the scroll, one per line, and the first band pushes them out */
 .group__screen {
-  height: 200svh;
+  height: 150svh;
 }
 
 .group__stick {
