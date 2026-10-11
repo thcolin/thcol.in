@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import films from '../assets/cinetropes/films.json'
-import { Choices, Tags, usePrefersReducedMotion } from './shared'
+import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import { Atmosphere, Reception, Signature, Tropes, useGradientId } from './cinetropes-radars'
 import './cinetropes.css'
 
@@ -627,6 +627,22 @@ export const Cinetropes = () => {
     }
   }
 
+  // The scroll moves on to the second film, one card move at a time, until the visitor deals the cards
+  const [wanted, setWanted] = useState(null)
+  const [scrub, hold] = useScrub((progress) => setWanted(stepOf(progress, 2)))
+
+  useEffect(() => {
+    if (wanted !== null && wanted !== front) {
+      step(wanted > front ? 1 : -1)
+    }
+  }, [wanted, front, motion])
+
+  const deal = (direction, focus) => {
+    hold()
+    setWanted(null)
+    step(direction, focus)
+  }
+
   useLayoutEffect(() => {
     if (refocus.current) {
       card.current?.focus({ preventScroll: true })
@@ -639,7 +655,7 @@ export const Cinetropes = () => {
 
     if (direction && !zoom) {
       event.preventDefault()
-      step(direction, event.target === card.current)
+      deal(direction, event.target === card.current)
     }
   }
 
@@ -655,69 +671,71 @@ export const Cinetropes = () => {
   }
 
   return (
-    <article id='cinetropes' className='band cinetropes' aria-labelledby='cinetropes-title'>
-      <div className='cinetropes__backdrop' aria-hidden='true'>
-        {films.map((item, index) => (
-          <div key={item.id} className={index === front ? 'is-shown' : undefined} style={{ backgroundImage: `url(${POSTERS[item.id]})` }} />
-        ))}
-      </div>
-      <div className='cinetropes__nav'>
-        <h3 id='cinetropes-title' className='cinetropes__logo'>
-          <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
-        </h3>
-        <p className='cinetropes__tagline'>Explore, discover, find</p>
-        <Tags items={['TypeScript', 'React', 'Hono', 'Drizzle', 'PostgreSQL + pgvector', 'Python', 'Gemini']} />
-      </div>
-      <div className='cinetropes__page'>
-        <div className='cinetropes__deck' role='group' aria-roledescription='carousel' aria-label='Films' onKeyDown={keyDown}>
-          <button type='button' className='cinetropes__arrow' aria-label='Previous film' onClick={() => step(-1)}>
-            <Chevron d='M15 6l-6 6l6 6' />
-          </button>
-          <div className='cinetropes__stack'>
-            {films.map((item, index) => {
-              const depth = (index - front + films.length) % films.length
-              const moving = motion?.film === index ? (motion.direction > 0 ? ' is-tucking' : ' is-pulling') : ''
-              return (
-                <div key={item.id} className={`cinetropes__slot${moving}`} style={{ '--depth': depth, zIndex: films.length - depth }} aria-hidden={depth > 0}>
-                  {depth === 0
-                    ? <Card key={`${item.id}-front`} film={item} hidden={!!zoom} still={still} cardRef={card} onZoom={open} onSwipe={(direction) => step(direction, true)} />
-                    : <div className='cinetropes__card' data-rarity={rarityOf(item.scores)}><Holo film={item} /></div>}
-                </div>
-              )
-            })}
-          </div>
-          <button type='button' className='cinetropes__arrow' aria-label='Next film' onClick={() => step(1)}>
-            <Chevron d='M9 6l6 6l-6 6' />
-          </button>
-          <p className='cinetropes__count'><span className='visually-hidden'>Film </span>{front + 1} / {films.length}</p>
+    <div ref={scrub} id='cinetropes' className='scrub' style={{ '--steps': 2 }}>
+      <article className='band cinetropes' aria-labelledby='cinetropes-title'>
+        <div className='cinetropes__backdrop' aria-hidden='true'>
+          {films.map((item, index) => (
+            <div key={item.id} className={index === front ? 'is-shown' : undefined} style={{ backgroundImage: `url(${POSTERS[item.id]})` }} />
+          ))}
         </div>
-        <div className='cinetropes__main'>
-          <div className='cinetropes__info' aria-live='polite'>
-            <h4>{film.title}</h4>
-            <p className='cinetropes__original' lang={film.originalLanguage}>{film.originalTitle ?? ' '}</p>
-            <p className='cinetropes__meta'>{film.year} · {film.genres.join(', ')} · {runtimeOf(film.runtime)}</p>
-            <p className='cinetropes__director'><span>a film by</span> {film.director}</p>
-            <p className='cinetropes__synopsis'>{film.synopsis}</p>
-            <p className='cinetropes__cast'><span>with</span> {film.cast.slice(0, 3).map(({ name }) => name).join(', ')}</p>
+        <div className='cinetropes__nav'>
+          <h3 id='cinetropes-title' className='cinetropes__logo'>
+            <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
+          </h3>
+          <p className='cinetropes__tagline'>Explore, discover, find</p>
+          <Tags items={['TypeScript', 'React', 'Hono', 'Drizzle', 'PostgreSQL + pgvector', 'Python', 'Gemini']} />
+        </div>
+        <div className='cinetropes__page'>
+          <div className='cinetropes__deck' role='group' aria-roledescription='carousel' aria-label='Films' onKeyDown={keyDown}>
+            <button type='button' className='cinetropes__arrow' aria-label='Previous film' onClick={() => deal(-1)}>
+              <Chevron d='M15 6l-6 6l6 6' />
+            </button>
+            <div className='cinetropes__stack'>
+              {films.map((item, index) => {
+                const depth = (index - front + films.length) % films.length
+                const moving = motion?.film === index ? (motion.direction > 0 ? ' is-tucking' : ' is-pulling') : ''
+                return (
+                  <div key={item.id} className={`cinetropes__slot${moving}`} style={{ '--depth': depth, zIndex: films.length - depth }} aria-hidden={depth > 0}>
+                    {depth === 0
+                      ? <Card key={`${item.id}-front`} film={item} hidden={!!zoom} still={still} cardRef={card} onZoom={open} onSwipe={(direction) => deal(direction, true)} />
+                      : <div className='cinetropes__card' data-rarity={rarityOf(item.scores)}><Holo film={item} /></div>}
+                  </div>
+                )
+              })}
+            </div>
+            <button type='button' className='cinetropes__arrow' aria-label='Next film' onClick={() => deal(1)}>
+              <Chevron d='M9 6l6 6l-6 6' />
+            </button>
+            <p className='cinetropes__count'><span className='visually-hidden'>Film </span>{front + 1} / {films.length}</p>
           </div>
-          <div className='cinetropes__signature'>
-            <Reception scores={film.scores} />
-            <Atmosphere emotions={film.emotions} archetype={film.atmosphere} />
-            <Tropes tropes={film.tropes} themes={film.themes} filmId={film.id} />
-            <Palette key={film.id} colors={film.palette} still={still} />
+          <div className='cinetropes__main'>
+            <div className='cinetropes__info' aria-live='polite'>
+              <h4>{film.title}</h4>
+              <p className='cinetropes__original' lang={film.originalLanguage}>{film.originalTitle ?? ' '}</p>
+              <p className='cinetropes__meta'>{film.year} · {film.genres.join(', ')} · {runtimeOf(film.runtime)}</p>
+              <p className='cinetropes__director'><span>a film by</span> {film.director}</p>
+              <p className='cinetropes__synopsis'>{film.synopsis}</p>
+              <p className='cinetropes__cast'><span>with</span> {film.cast.slice(0, 3).map(({ name }) => name).join(', ')}</p>
+            </div>
+            <div className='cinetropes__signature'>
+              <Reception scores={film.scores} />
+              <Atmosphere emotions={film.emotions} archetype={film.atmosphere} />
+              <Tropes tropes={film.tropes} themes={film.themes} filmId={film.id} />
+              <Palette key={film.id} colors={film.palette} still={still} />
+            </div>
           </div>
         </div>
-      </div>
-      <footer className='cinetropes__footer'>
-        <p className='cinetropes__pitch'>
-          A film recommendation engine that speaks the language of cinephiles. Not vague genres: what makes a film unique, its themes, its tropes, its mood. Every film is rated by critics, audience and nerds apart.
-        </p>
-        <p id='cinetropes-hint' className='cinetropes__hint'>
-          Grab the card, click it to zoom. The arrows, the arrow keys or a swipe turn the stack. Click or tap a chart for its details.
-          <span> Posters from TMDB. Ratings, atmospheres and tropes from the beta.</span>
-        </p>
-      </footer>
-      {zoom && <Zoom film={film} from={zoom} still={still} onClose={shut} />}
-    </article>
+        <footer className='cinetropes__footer'>
+          <p className='cinetropes__pitch'>
+            A film recommendation engine that speaks the language of cinephiles. Not vague genres: what makes a film unique, its themes, its tropes, its mood. Every film is rated by critics, audience and nerds apart.
+          </p>
+          <p id='cinetropes-hint' className='cinetropes__hint'>
+            Grab the card, click it to zoom. The arrows, the arrow keys or a swipe turn the stack. Click or tap a chart for its details.
+            <span> Posters from TMDB. Ratings, atmospheres and tropes from the beta.</span>
+          </p>
+        </footer>
+        {zoom && <Zoom film={film} from={zoom} still={still} onClose={shut} />}
+      </article>
+    </div>
   )
 }

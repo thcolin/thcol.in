@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Tags } from './shared'
+import { Tags, stepOf, useScrub } from './shared'
 import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
 import { HistoryCard, MysteryCard } from './cinetropes-daily/card'
@@ -12,6 +12,7 @@ import './cinetropes-daily.css'
 const LOGO = new URL('../assets/cinetropes/logo.svg', import.meta.url)
 const STORAGE = 'daily-state-v1-'
 const ONBOARDING = 'daily-onboarding-seen'
+const SECTIONS = ['casting', 'equipe', 'similar']
 const CAST_LIMIT = 4
 const CREW_JOBS = ['Director', 'Co-Director', 'Writer', 'Screenplay']
 const SIMILAR_GRID = { w: 4, h: 6 }
@@ -338,6 +339,14 @@ export const CinetropesDaily = () => {
       })
     }
   }, [phase, mysteryFilm])
+
+  // Once past the rules, the scroll opens the drawers one by one, until the visitor opens one
+  const [scrub, hold] = useScrub((progress) => onboarded && setOpenSection(SECTIONS[stepOf(progress, SECTIONS.length)]))
+
+  const toggle = (id) => {
+    hold()
+    setOpenSection(id)
+  }
 
   useEffect(() => {
     if (revealTier === 2) setOpenSection('equipe')
@@ -677,252 +686,254 @@ export const CinetropesDaily = () => {
   }
 
   return (
-    <article ref={root} className={resultMode ? 'band cd is-over' : 'band cd'} id='cinetropes-daily' aria-labelledby='cinetropes-daily-title'>
-      <div className='cd__backdrop' aria-hidden='true'>
-        {pixels[4] && <PixelGrid pixels={pixels[4]} className='cd__backdrop-image' />}
-      </div>
-      <canvas ref={confettiCanvas} className='cd__confetti' aria-hidden='true' />
-
-      <header className='cd__nav'>
-        <h3 id='cinetropes-daily-title' className='cd__nav-title'>
-          <img src={LOGO} alt='cinetropes' width='275' height='40' />
-          <span>daily</span>
-        </h3>
-        <div className='cd__nav-side'>
-          <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />
-          {puzzle?.sample && (
-            <p className='cd__sample' title='The beta’s API did not answer: this is daily #190, taken from the beta on 8 October 2026.'>
-              <span>Sample data</span> <span className='cd__sample-text'>Daily #190 from the beta, 8 October 2026</span>
-            </p>
-          )}
+    <div ref={scrub} id='cinetropes-daily' className='scrub' style={{ '--steps': onboarded ? SECTIONS.length : 1 }}>
+      <article ref={root} className={resultMode ? 'band cd is-over' : 'band cd'} aria-labelledby='cinetropes-daily-title'>
+        <div className='cd__backdrop' aria-hidden='true'>
+          {pixels[4] && <PixelGrid pixels={pixels[4]} className='cd__backdrop-image' />}
         </div>
-      </header>
+        <canvas ref={confettiCanvas} className='cd__confetti' aria-hidden='true' />
 
-      <div className='cd__banner'>
-        <ol className='cd__rounds' aria-label='Attempts'>
-          {Array.from({ length: maxAttempts }, (_, i) => {
-            const attempt = attempts[i]
-            const suspenseSlot = lastGuessIndex === i
-            return (
-              <li key={i} className={roundClass(attempt, i)}>
-                {attempt?.type === 'guess' ? (
-                  <div className='cd__slot is-filled'>
-                    <HistoryCard
-                      film={attempt.film}
-                      suspense={suspenseSlot ? lastGuessResult : null}
-                      overlayVisible={suspenseSlot && lastGuessResult === 'correct' ? victoryRevealed : undefined}
-                      onResult={suspenseSlot ? onResult(i) : undefined}
-                    />
-                  </div>
-                ) : (
-                  <div className={attempt?.type === 'skip' ? 'cd__slot is-skip' : 'cd__slot'}>
-                    {attempt?.type === 'skip' && <SkipIcon />}
-                  </div>
-                )}
-                <div className='cd__round-bar' />
-              </li>
-            )
-          })}
-        </ol>
-        <p className='cd__attempts' aria-live='polite'>
-          {loading ? '—/6 attempts' : `${attemptsUsed}/${maxAttempts} attempts`}
-        </p>
-      </div>
-
-      <div className='cd__body'>
-        <div className='cd__card-area' ref={card}>
-          <MysteryCard holo={victoryRevealed}>
-            {basePosterLevel === 5 && mysteryFilm?.posterUrl && <img className='cd__poster' src={mysteryFilm.posterUrl} alt={answer ?? ''} width='500' height='750' />}
-            {basePosterLevel < 5 && pixels[basePosterLevel] && <PixelGrid pixels={pixels[basePosterLevel]} className='cd__poster' />}
-            {transition && <PixelSplit key={`${basePosterLevel}`} coarse={transition.coarse} fine={transition.fine} onComplete={transitionDone} className='cd__pixel-split' />}
-          </MysteryCard>
-        </div>
-
-        <div className='cd__panel'>
-          <h4 className='cd__film-title'>
-            <PixelatedText text={titleText} revealed={!loading && titleRevealed && !!answer} resolution={1} fontSize={48} fontWeight={800} fontFamily="'Poppins', sans-serif" color='rgba(255, 255, 255, 0.95)'>
-              <span>{answer}</span>
-            </PixelatedText>
-          </h4>
-
-          {mystery && (
-            <>
-              <p className='cd__meta'>
-                <span>{mystery.year}</span>
-                <PixelatedText text={`  ${mystery.genres.map((g) => g.name).join(', ')}  ·  ${runtimeOf(mystery.runtime)}`} revealed={revealTier >= 1 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
-                  <span className='cd__meta-rest'>
-                    <i aria-hidden='true' />
-                    <span>{mystery.genres.map((g) => g.name).join(', ')}</span>
-                    <i aria-hidden='true' />
-                    <span>{runtimeOf(mystery.runtime)}</span>
-                  </span>
-                </PixelatedText>
-              </p>
-
-              <p className='cd__director'>
-                <PixelatedText text={`a film by ${mystery.director}`} revealed={revealTier >= 2 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
-                  <span><span className='cd__director-prefix'>a film by </span><b>{mystery.director}</b></span>
-                </PixelatedText>
-              </p>
-
-              <div className='cd__synopsis'>
-                <PixelatedText text={mystery.overview} revealed={revealTier >= 5 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.6)' block>
-                  <Synopsis text={mystery.overview} />
-                </PixelatedText>
-              </div>
-
-              <div className='cd__signature'>
-                <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} />
-                <Atmosphere emotions={mystery.emotions} />
-                <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} />
-              </div>
-
-              <div className='cd__accordion'>
-                <Section id='casting' label='Casting' open={openSection === 'casting'} onToggle={setOpenSection}>
-                  <ul className='cd__people'>
-                    {mystery.castDetailed.slice(0, CAST_LIMIT).map((person) => (
-                      <Person key={person.personId} name={person.name} role={person.character} imageUrl={person.imageUrl} revealed={castRevealed} hideRole={!victoryRevealed && mayBeTitle(person.character, mystery.titleMask)} />
-                    ))}
-                  </ul>
-                </Section>
-                <Section id='equipe' label='Crew' open={openSection === 'equipe'} onToggle={setOpenSection}>
-                  <ul className='cd__people'>
-                    {mystery.crewDetailed.filter((person) => CREW_JOBS.includes(person.job)).map((person) => (
-                      <Person key={`${person.personId}-${person.job}`} name={person.name} role={person.job} imageUrl={person.imageUrl} revealed={crewRevealed} />
-                    ))}
-                  </ul>
-                </Section>
-                <Section id='similar' label='Similar' open={openSection === 'similar'} onToggle={setOpenSection}>
-                  <ul className='cd__similar'>
-                    {mystery.similarFilms.map((film, i) => (
-                      <li key={film.id}>
-                        <span className='cd__similar-poster'>
-                          {similarPhase !== 'hidden' && <img src={film.posterUrlSmall} alt={similarPhase === 'done' ? `${film.title} (${film.year})` : ''} width='92' height='138' loading='lazy' />}
-                          {similarPhase === 'hidden' && similarPixels[i] && <img className='is-pixelated' src={similarPixels[i].dataUrl} alt='' width='4' height='6' />}
-                          {similarPhase === 'animating' && similarPixels[i] && <PixelSplit coarse={similarPixels[i].pixels} fine={null} onComplete={similarDone} className='cd__pixel-split' />}
-                        </span>
-                        <PixelatedText text={film.title} revealed={similarPhase !== 'hidden'} resolution={2} fontSize={12} fontWeight={500} color='rgba(255, 255, 255, 0.85)'>
-                          <b>{film.title}</b>
-                        </PixelatedText>
-                        <PixelatedText text={String(film.year)} revealed={similarPhase !== 'hidden'} resolution={2} fontSize={11} color='rgba(255, 255, 255, 0.4)'>
-                          <small>{film.year}</small>
-                        </PixelatedText>
-                      </li>
-                    ))}
-                  </ul>
-                </Section>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-
-      <div className='cd__dock'>
-        <KonamiOverlay progress={konamiProgress} activated={konami} />
-        <div className={resultMode ? 'cd__glass is-result' : 'cd__glass'}>
-          <div className='cd__dock-header'>
+        <header className='cd__nav'>
+          <h3 id='cinetropes-daily-title' className='cd__nav-title'>
             <img src={LOGO} alt='cinetropes' width='275' height='40' />
-            <span className='cd__dock-daily'>#{loading ? '—' : gameDay}</span>
+            <span>daily</span>
+          </h3>
+          <div className='cd__nav-side'>
+            <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />
+            {puzzle?.sample && (
+              <p className='cd__sample' title='The beta’s API did not answer: this is daily #190, taken from the beta on 8 October 2026.'>
+                <span>Sample data</span> <span className='cd__sample-text'>Daily #190 from the beta, 8 October 2026</span>
+              </p>
+            )}
+          </div>
+        </header>
+
+        <div className='cd__banner'>
+          <ol className='cd__rounds' aria-label='Attempts'>
+            {Array.from({ length: maxAttempts }, (_, i) => {
+              const attempt = attempts[i]
+              const suspenseSlot = lastGuessIndex === i
+              return (
+                <li key={i} className={roundClass(attempt, i)}>
+                  {attempt?.type === 'guess' ? (
+                    <div className='cd__slot is-filled'>
+                      <HistoryCard
+                        film={attempt.film}
+                        suspense={suspenseSlot ? lastGuessResult : null}
+                        overlayVisible={suspenseSlot && lastGuessResult === 'correct' ? victoryRevealed : undefined}
+                        onResult={suspenseSlot ? onResult(i) : undefined}
+                      />
+                    </div>
+                  ) : (
+                    <div className={attempt?.type === 'skip' ? 'cd__slot is-skip' : 'cd__slot'}>
+                      {attempt?.type === 'skip' && <SkipIcon />}
+                    </div>
+                  )}
+                  <div className='cd__round-bar' />
+                </li>
+              )
+            })}
+          </ol>
+          <p className='cd__attempts' aria-live='polite'>
+            {loading ? '—/6 attempts' : `${attemptsUsed}/${maxAttempts} attempts`}
+          </p>
+        </div>
+
+        <div className='cd__body'>
+          <div className='cd__card-area' ref={card}>
+            <MysteryCard holo={victoryRevealed}>
+              {basePosterLevel === 5 && mysteryFilm?.posterUrl && <img className='cd__poster' src={mysteryFilm.posterUrl} alt={answer ?? ''} width='500' height='750' />}
+              {basePosterLevel < 5 && pixels[basePosterLevel] && <PixelGrid pixels={pixels[basePosterLevel]} className='cd__poster' />}
+              {transition && <PixelSplit key={`${basePosterLevel}`} coarse={transition.coarse} fine={transition.fine} onComplete={transitionDone} className='cd__pixel-split' />}
+            </MysteryCard>
           </div>
 
-          {konami && !victoryRevealed && phase !== 'lost' && (
-            <div className='cd__konami-badge'>
-              <span>+1 clue level</span>
-              <svg viewBox='0 0 24 24' width='14' height='14' aria-hidden='true'><path d='M7 11l5 -5l5 5M7 17l5 -5l5 5' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' /></svg>
-            </div>
-          )}
+          <div className='cd__panel'>
+            <h4 className='cd__film-title'>
+              <PixelatedText text={titleText} revealed={!loading && titleRevealed && !!answer} resolution={1} fontSize={48} fontWeight={800} fontFamily="'Poppins', sans-serif" color='rgba(255, 255, 255, 0.95)'>
+                <span>{answer}</span>
+              </PixelatedText>
+            </h4>
 
-          {(loading || phase === 'playing' || (won && !victoryRevealed)) && (
-            <div className='cd__dock-action'>
-              <div className='cd__input-area'>
-                {open && results.length > 0 && (
-                  <div id='cd-autocomplete' className='cd__autocomplete' role='listbox' aria-label='Film suggestions'>
-                    {results.map((film, i) => (
-                      <div
-                        key={film.id}
-                        id={`cd-option-${i}`}
-                        role='option'
-                        aria-selected={i === active}
-                        className={i === active ? 'cd__option is-active' : 'cd__option'}
-                        onPointerDown={(event) => event.preventDefault()}
-                        onClick={() => select(film.id, film.title)}
-                        onPointerEnter={() => setActive(i)}
-                      >
-                        <span className='cd__option-title'>{film.title}</span>
-                        {twins.get(normalize(film.title)) > 1 && <span className='cd__option-year'>{film.subtitle}</span>}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <input
-                  type='text'
-                  className='cd__input'
-                  placeholder={loading ? 'Loading...' : 'Guess the film...'}
-                  value={loading ? '' : query}
-                  onChange={(event) => { setQuery(event.target.value); setStaged(null) }}
-                  onKeyDown={keyDown}
-                  onFocus={() => results.length > 0 && staged === null && setOpen(true)}
-                  onBlur={() => setOpen(false)}
-                  disabled={loading || submitting || phase !== 'playing'}
-                  role='combobox'
-                  aria-expanded={open && results.length > 0}
-                  aria-controls='cd-autocomplete'
-                  aria-activedescendant={active >= 0 ? `cd-option-${active}` : undefined}
-                  aria-autocomplete='list'
-                  aria-label='Search for a film'
-                />
-              </div>
-              {staged !== null
-                ? <button type='button' className='cd__button' onClick={() => guess(staged)} disabled={submitting || phase !== 'playing'}>Send</button>
-                : <button type='button' className='cd__button' onClick={skip} disabled={loading || submitting || phase !== 'playing'}>Skip</button>}
-            </div>
-          )}
+            {mystery && (
+              <>
+                <p className='cd__meta'>
+                  <span>{mystery.year}</span>
+                  <PixelatedText text={`  ${mystery.genres.map((g) => g.name).join(', ')}  ·  ${runtimeOf(mystery.runtime)}`} revealed={revealTier >= 1 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
+                    <span className='cd__meta-rest'>
+                      <i aria-hidden='true' />
+                      <span>{mystery.genres.map((g) => g.name).join(', ')}</span>
+                      <i aria-hidden='true' />
+                      <span>{runtimeOf(mystery.runtime)}</span>
+                    </span>
+                  </PixelatedText>
+                </p>
 
-          {resultMode && (
-            <div className='cd__result'>
-              <div className='cd__result-hero'>
-                <h5 className='cd__result-title'><i>{won ? 'Won!' : 'Lost...'}</i></h5>
-                <p className='cd__result-subtitle'>{won ? `${attempts.length}/${maxAttempts} attempts` : `${maxAttempts}/${maxAttempts} attempts used`}</p>
-              </div>
-              <div className='cd__result-bars'>
-                {Array.from({ length: maxAttempts }, (_, i) => {
-                  const attempt = attempts[i]
-                  const kind = !attempt ? '' : attempt.type === 'skip' ? ' is-skip' : won && i === attempts.length - 1 ? ' is-correct' : ' is-guess'
-                  return <div key={i} className={`cd__result-bar${kind}`} />
-                })}
-              </div>
-              <button type='button' className='cd__button cd__share' onClick={share}>Share</button>
-            </div>
-          )}
-        </div>
-      </div>
+                <p className='cd__director'>
+                  <PixelatedText text={`a film by ${mystery.director}`} revealed={revealTier >= 2 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
+                    <span><span className='cd__director-prefix'>a film by </span><b>{mystery.director}</b></span>
+                  </PixelatedText>
+                </p>
 
-      {toast && (
-        <div key={toast.at} className={`cd__toast is-${toast.type}`} role='status' aria-live='polite'>
-          <span className='cd__toast-icon' aria-hidden='true'>
-            <svg viewBox='0 0 24 24'><path d={toast.type === 'success' ? 'M5 12l5 5l10 -10' : 'M18 6l-12 12M6 6l12 12'} fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' /></svg>
-          </span>
-          <p>{toast.message}</p>
-          <button type='button' className='cd__toast-close' aria-label='Close the notification' onClick={() => setToast(null)}>
-            <svg viewBox='0 0 24 24' width='14' height='14' aria-hidden='true'><path d='M18 6l-12 12M6 6l12 12' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' /></svg>
-          </button>
-          <span className='cd__toast-progress' aria-hidden='true' />
-        </div>
-      )}
+                <div className='cd__synopsis'>
+                  <PixelatedText text={mystery.overview} revealed={revealTier >= 5 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.6)' block>
+                    <Synopsis text={mystery.overview} />
+                  </PixelatedText>
+                </div>
 
-      {!onboarded && (
-        <div className={onboardingLeaving ? 'cd__onboarding is-leaving' : 'cd__onboarding'}>
-          <div className='cd__onboarding-content'>
-            <p className='cd__hero-title'><i>Guess<br />the Film of the Day</i></p>
-            <p className='cd__hero-subtitle'>
-              Can you recognise today’s film simply<br />from its tropes, its atmosphere and its ratings?
-              <br /><br />
-              You have 6 attempts to find it: with each miss,<br />another clue is revealed.
-            </p>
-            <button type='button' className='cd__button cd__play' onClick={play}>Play</button>
+                <div className='cd__signature'>
+                  <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} />
+                  <Atmosphere emotions={mystery.emotions} />
+                  <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} />
+                </div>
+
+                <div className='cd__accordion'>
+                  <Section id='casting' label='Casting' open={openSection === 'casting'} onToggle={toggle}>
+                    <ul className='cd__people'>
+                      {mystery.castDetailed.slice(0, CAST_LIMIT).map((person) => (
+                        <Person key={person.personId} name={person.name} role={person.character} imageUrl={person.imageUrl} revealed={castRevealed} hideRole={!victoryRevealed && mayBeTitle(person.character, mystery.titleMask)} />
+                      ))}
+                    </ul>
+                  </Section>
+                  <Section id='equipe' label='Crew' open={openSection === 'equipe'} onToggle={toggle}>
+                    <ul className='cd__people'>
+                      {mystery.crewDetailed.filter((person) => CREW_JOBS.includes(person.job)).map((person) => (
+                        <Person key={`${person.personId}-${person.job}`} name={person.name} role={person.job} imageUrl={person.imageUrl} revealed={crewRevealed} />
+                      ))}
+                    </ul>
+                  </Section>
+                  <Section id='similar' label='Similar' open={openSection === 'similar'} onToggle={toggle}>
+                    <ul className='cd__similar'>
+                      {mystery.similarFilms.map((film, i) => (
+                        <li key={film.id}>
+                          <span className='cd__similar-poster'>
+                            {similarPhase !== 'hidden' && <img src={film.posterUrlSmall} alt={similarPhase === 'done' ? `${film.title} (${film.year})` : ''} width='92' height='138' loading='lazy' />}
+                            {similarPhase === 'hidden' && similarPixels[i] && <img className='is-pixelated' src={similarPixels[i].dataUrl} alt='' width='4' height='6' />}
+                            {similarPhase === 'animating' && similarPixels[i] && <PixelSplit coarse={similarPixels[i].pixels} fine={null} onComplete={similarDone} className='cd__pixel-split' />}
+                          </span>
+                          <PixelatedText text={film.title} revealed={similarPhase !== 'hidden'} resolution={2} fontSize={12} fontWeight={500} color='rgba(255, 255, 255, 0.85)'>
+                            <b>{film.title}</b>
+                          </PixelatedText>
+                          <PixelatedText text={String(film.year)} revealed={similarPhase !== 'hidden'} resolution={2} fontSize={11} color='rgba(255, 255, 255, 0.4)'>
+                            <small>{film.year}</small>
+                          </PixelatedText>
+                        </li>
+                      ))}
+                    </ul>
+                  </Section>
+                </div>
+              </>
+            )}
           </div>
         </div>
-      )}
-    </article>
+
+        <div className='cd__dock'>
+          <KonamiOverlay progress={konamiProgress} activated={konami} />
+          <div className={resultMode ? 'cd__glass is-result' : 'cd__glass'}>
+            <div className='cd__dock-header'>
+              <img src={LOGO} alt='cinetropes' width='275' height='40' />
+              <span className='cd__dock-daily'>#{loading ? '—' : gameDay}</span>
+            </div>
+
+            {konami && !victoryRevealed && phase !== 'lost' && (
+              <div className='cd__konami-badge'>
+                <span>+1 clue level</span>
+                <svg viewBox='0 0 24 24' width='14' height='14' aria-hidden='true'><path d='M7 11l5 -5l5 5M7 17l5 -5l5 5' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' /></svg>
+              </div>
+            )}
+
+            {(loading || phase === 'playing' || (won && !victoryRevealed)) && (
+              <div className='cd__dock-action'>
+                <div className='cd__input-area'>
+                  {open && results.length > 0 && (
+                    <div id='cd-autocomplete' className='cd__autocomplete' role='listbox' aria-label='Film suggestions'>
+                      {results.map((film, i) => (
+                        <div
+                          key={film.id}
+                          id={`cd-option-${i}`}
+                          role='option'
+                          aria-selected={i === active}
+                          className={i === active ? 'cd__option is-active' : 'cd__option'}
+                          onPointerDown={(event) => event.preventDefault()}
+                          onClick={() => select(film.id, film.title)}
+                          onPointerEnter={() => setActive(i)}
+                        >
+                          <span className='cd__option-title'>{film.title}</span>
+                          {twins.get(normalize(film.title)) > 1 && <span className='cd__option-year'>{film.subtitle}</span>}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <input
+                    type='text'
+                    className='cd__input'
+                    placeholder={loading ? 'Loading...' : 'Guess the film...'}
+                    value={loading ? '' : query}
+                    onChange={(event) => { setQuery(event.target.value); setStaged(null) }}
+                    onKeyDown={keyDown}
+                    onFocus={() => results.length > 0 && staged === null && setOpen(true)}
+                    onBlur={() => setOpen(false)}
+                    disabled={loading || submitting || phase !== 'playing'}
+                    role='combobox'
+                    aria-expanded={open && results.length > 0}
+                    aria-controls='cd-autocomplete'
+                    aria-activedescendant={active >= 0 ? `cd-option-${active}` : undefined}
+                    aria-autocomplete='list'
+                    aria-label='Search for a film'
+                  />
+                </div>
+                {staged !== null
+                  ? <button type='button' className='cd__button' onClick={() => guess(staged)} disabled={submitting || phase !== 'playing'}>Send</button>
+                  : <button type='button' className='cd__button' onClick={skip} disabled={loading || submitting || phase !== 'playing'}>Skip</button>}
+              </div>
+            )}
+
+            {resultMode && (
+              <div className='cd__result'>
+                <div className='cd__result-hero'>
+                  <h5 className='cd__result-title'><i>{won ? 'Won!' : 'Lost...'}</i></h5>
+                  <p className='cd__result-subtitle'>{won ? `${attempts.length}/${maxAttempts} attempts` : `${maxAttempts}/${maxAttempts} attempts used`}</p>
+                </div>
+                <div className='cd__result-bars'>
+                  {Array.from({ length: maxAttempts }, (_, i) => {
+                    const attempt = attempts[i]
+                    const kind = !attempt ? '' : attempt.type === 'skip' ? ' is-skip' : won && i === attempts.length - 1 ? ' is-correct' : ' is-guess'
+                    return <div key={i} className={`cd__result-bar${kind}`} />
+                  })}
+                </div>
+                <button type='button' className='cd__button cd__share' onClick={share}>Share</button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {toast && (
+          <div key={toast.at} className={`cd__toast is-${toast.type}`} role='status' aria-live='polite'>
+            <span className='cd__toast-icon' aria-hidden='true'>
+              <svg viewBox='0 0 24 24'><path d={toast.type === 'success' ? 'M5 12l5 5l10 -10' : 'M18 6l-12 12M6 6l12 12'} fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' /></svg>
+            </span>
+            <p>{toast.message}</p>
+            <button type='button' className='cd__toast-close' aria-label='Close the notification' onClick={() => setToast(null)}>
+              <svg viewBox='0 0 24 24' width='14' height='14' aria-hidden='true'><path d='M18 6l-12 12M6 6l12 12' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' /></svg>
+            </button>
+            <span className='cd__toast-progress' aria-hidden='true' />
+          </div>
+        )}
+
+        {!onboarded && (
+          <div className={onboardingLeaving ? 'cd__onboarding is-leaving' : 'cd__onboarding'}>
+            <div className='cd__onboarding-content'>
+              <p className='cd__hero-title'><i>Guess<br />the Film of the Day</i></p>
+              <p className='cd__hero-subtitle'>
+                Can you recognise today’s film simply<br />from its tropes, its atmosphere and its ratings?
+                <br /><br />
+                You have 6 attempts to find it: with each miss,<br />another clue is revealed.
+              </p>
+              <button type='button' className='cd__button cd__play' onClick={play}>Play</button>
+            </div>
+          </div>
+        )}
+      </article>
+    </div>
   )
 }

@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { ASSETS } from './cinetropes-game/assets'
 import { CINEMAS } from './cinetropes-game/cinemas'
 import { createHall, curtainFrame, npcFrame, pickupsOf, stepHall, stillNpc } from './cinetropes-game/hall'
-import { Choices, Tags, usePrefersReducedMotion } from './shared'
+import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import './cinetropes-game.css'
 
 const SIZE = 192
 const SWAP_MS = 700
 const SWAP_CELL = 6
-const SLIDE_MS = 2600
 
 // The demo is the game itself, served by the beta and embedded with the cinema's facade
 const GAME_URL = process.env.CINETROPES_URL || 'https://beta.cinetropes.com'
@@ -320,15 +319,13 @@ export const CinetropesGame = () => {
   const savedCinema = CINEMAS.find((other) => other.scene === saved)
   const hasGame = saved === cinema.scene
 
-  // At rest the rooms go by on their own, unless the reader asked for stillness
-  useEffect(() => {
-    if (playing || reduced || !visible) {
-      return
+  // At rest the scroll walks through the four rooms, until the reader picks one
+  const [scrub, hold] = useScrub((progress) => {
+    if (!playing) {
+      const room = ROOMS[stepOf(progress, ROOMS.length)].id
+      setSlide(SLIDES.findIndex((other) => other.room === room))
     }
-
-    const timer = setInterval(() => setSlide((current) => (current + 1) % SLIDES.length), SLIDE_MS)
-    return () => clearInterval(timer)
-  }, [playing, reduced, visible, index])
+  })
 
   // Out of view, the game unloads; it continues from its own save when started again
   useEffect(() => {
@@ -350,6 +347,7 @@ export const CinetropesGame = () => {
 
   const choose = (id) => {
     const next = CINEMAS.findIndex((other) => other.id === id)
+    hold()
 
     // Another cinema while a game is under way: say so before the game is given up
     if (saved && CINEMAS[next].scene !== saved) {
@@ -369,6 +367,10 @@ export const CinetropesGame = () => {
       return
     }
 
+    if (pressed) {
+      hold()
+    }
+
     if (pressed && (key === 'ArrowRight' || key === 'ArrowDown')) {
       setSlide((current) => (current + 1) % SLIDES.length)
     } else if (pressed && (key === 'ArrowLeft' || key === 'ArrowUp')) {
@@ -380,98 +382,100 @@ export const CinetropesGame = () => {
   const action = playing ? 'Restart' : hasGame ? 'Continue' : 'Start the game'
 
   return (
-    <article ref={root} id='cinetropes-meta-game' className='band cg' aria-labelledby='cinetropes-meta-game-title'>
-      <div className='cg__street' aria-hidden='true'>
-        {['facade', 'lobby'].map((kind) => (
-          <ul key={kind} className={`cg__track cg__track--${kind}`}>
-            {[0, 1].map((copy) => CINEMAS.map((other) => (
-              <li key={`${copy}-${other.id}`}>
-                {near && <img src={ASSETS[`${other.id}-${kind}`]} width='192' height='192' alt='' loading='lazy' />}
-              </li>
-            )))}
-          </ul>
-        ))}
-      </div>
-      <div className='cg__layout'>
-        <Console
-          color={cinema.console}
-          playing={playing}
-          onPad={pad}
-          onTap={(key) => {
-            pad(key, true)
-            pad(key, false)
-          }}
-          onStart={playing ? () => frame.current?.focus() : start}
-        >
-          {playing ? (
-            <iframe
-              ref={frame}
-              className='cg__game'
-              title={`cinetropes meta-game demo, ${cinema.name}`}
-              src={`${GAME_URL}/play?embed&facade=${cinema.scene}`}
-              allow='autoplay'
-              onLoad={() => frame.current?.focus()}
+    <div ref={scrub} id='cinetropes-meta-game' className='scrub' style={{ '--steps': ROOMS.length }}>
+      <article ref={root} className='band cg' aria-labelledby='cinetropes-meta-game-title'>
+        <div className='cg__street' aria-hidden='true'>
+          {['facade', 'lobby'].map((kind) => (
+            <ul key={kind} className={`cg__track cg__track--${kind}`}>
+              {[0, 1].map((copy) => CINEMAS.map((other) => (
+                <li key={`${copy}-${other.id}`}>
+                  {near && <img src={ASSETS[`${other.id}-${kind}`]} width='192' height='192' alt='' loading='lazy' />}
+                </li>
+              )))}
+            </ul>
+          ))}
+        </div>
+        <div className='cg__layout'>
+          <Console
+            color={cinema.console}
+            playing={playing}
+            onPad={pad}
+            onTap={(key) => {
+              pad(key, true)
+              pad(key, false)
+            }}
+            onStart={playing ? () => frame.current?.focus() : start}
+          >
+            {playing ? (
+              <iframe
+                ref={frame}
+                className='cg__game'
+                title={`cinetropes meta-game demo, ${cinema.name}`}
+                src={`${GAME_URL}/play?embed&facade=${cinema.scene}`}
+                allow='autoplay'
+                onLoad={() => frame.current?.focus()}
+              />
+            ) : (
+              <>
+                {near && <Slides cinema={cinema.id} slide={slide} running={visible} reduced={reduced} label={`${cinema.name}, ${SLIDES[slide].label}`} />}
+                <button type='button' className='cg__press' onClick={start}>
+                  <span>{hasGame ? 'Press A to continue' : 'Press A'}</span>
+                </button>
+              </>
+            )}
+          </Console>
+          <section className='cg__box cg__panel'>
+            <h3 id='cinetropes-meta-game-title' className='cg__title'>
+              <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
+              <span>meta-game</span>
+            </h3>
+            <Choices
+              label='Cinema'
+              className='cg__cinemas'
+              value={cinema.id}
+              onChange={choose}
+              options={CINEMAS.map((other) => ({
+                id: other.id,
+                label: near ? <img src={ASSETS[`${other.id}-facade`]} width='56' height='56' alt={other.name} /> : other.name,
+              }))}
             />
-          ) : (
-            <>
-              {near && <Slides cinema={cinema.id} slide={slide} running={visible} reduced={reduced} label={`${cinema.name}, ${SLIDES[slide].label}`} />}
-              <button type='button' className='cg__press' onClick={start}>
-                <span>{hasGame ? 'Press A to continue' : 'Press A'}</span>
-              </button>
-            </>
-          )}
-        </Console>
-        <section className='cg__box cg__panel'>
-          <h3 id='cinetropes-meta-game-title' className='cg__title'>
-            <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
-            <span>meta-game</span>
-          </h3>
-          <Choices
-            label='Cinema'
-            className='cg__cinemas'
-            value={cinema.id}
-            onChange={choose}
-            options={CINEMAS.map((other) => ({
-              id: other.id,
-              label: near ? <img src={ASSETS[`${other.id}-facade`]} width='56' height='56' alt={other.name} /> : other.name,
-            }))}
-          />
-          <div className='cg__cinema' aria-live='polite'>
-            <h4 className='cg__heading'>{cinema.name}</h4>
-            <p className='cg__text cg__dim'>{cinema.theme}</p>
-            <p className='cg__text cg__gold'>“{cinema.line}”</p>
-          </div>
-          {confirm !== null && savedCinema ? (
-            <div className='cg__confirm' role='group' aria-label='Change cinema'>
-              <p className='cg__text'>Your game is at {savedCinema.name}. Start over here?</p>
-              <div className='cg__actions'>
-                <button type='button' className='cg__button' onClick={start}>Start over</button>
-                <button type='button' className='cg__button' onClick={() => choose(savedCinema.id)}>Back to {savedCinema.name}</button>
-              </div>
+            <div className='cg__cinema' aria-live='polite'>
+              <h4 className='cg__heading'>{cinema.name}</h4>
+              <p className='cg__text cg__dim'>{cinema.theme}</p>
+              <p className='cg__text cg__gold'>“{cinema.line}”</p>
             </div>
-          ) : (
-            <>
-              {!playing && (
-                <Choices
-                  label='Rooms'
-                  className='choices cg__rooms'
-                  value={slideRoom}
-                  onChange={(id) => setSlide(SLIDES.findIndex((other) => other.room === id))}
-                  options={ROOMS}
-                />
-              )}
-              <p className='cg__text'>
-                A demo of the game: restore an abandoned cinema, welcome its audience, upgrade its rooms and gear, and program five films every two hours. It plays on real time, and saves in your browser.
-              </p>
-              <p className='cg__text cg__dim'>The game is in French.</p>
-              <div className='cg__actions'>
-                <button type='button' className='cg__button' onClick={playing ? restart : start}>{action}</button>
+            {confirm !== null && savedCinema ? (
+              <div className='cg__confirm' role='group' aria-label='Change cinema'>
+                <p className='cg__text'>Your game is at {savedCinema.name}. Start over here?</p>
+                <div className='cg__actions'>
+                  <button type='button' className='cg__button' onClick={start}>Start over</button>
+                  <button type='button' className='cg__button' onClick={() => choose(savedCinema.id)}>Back to {savedCinema.name}</button>
+                </div>
               </div>
-            </>
-          )}
-          <Tags items={['TypeScript', 'Phaser', 'React', 'Hono', 'Pixel art']} />
-        </section>
-      </div>
-    </article>
+            ) : (
+              <>
+                {!playing && (
+                  <Choices
+                    label='Rooms'
+                    className='choices cg__rooms'
+                    value={slideRoom}
+                    onChange={(id) => { hold(); setSlide(SLIDES.findIndex((other) => other.room === id)) }}
+                    options={ROOMS}
+                  />
+                )}
+                <p className='cg__text'>
+                  A demo of the game: restore an abandoned cinema, welcome its audience, upgrade its rooms and gear, and program five films every two hours. It plays on real time, and saves in your browser.
+                </p>
+                <p className='cg__text cg__dim'>The game is in French.</p>
+                <div className='cg__actions'>
+                  <button type='button' className='cg__button' onClick={playing ? restart : start}>{action}</button>
+                </div>
+              </>
+            )}
+            <Tags items={['TypeScript', 'Phaser', 'React', 'Hono', 'Pixel art']} />
+          </section>
+        </div>
+      </article>
+    </div>
   )
 }
