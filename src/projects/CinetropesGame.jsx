@@ -8,30 +8,39 @@ import './cinetropes-game.css'
 const SIZE = 192
 const SWAP_MS = 700
 const SWAP_CELL = 6
-const MAX_PICKS = 2
-const REEL_SPEED = 0.034
-const REEL_IDLE_MS = 2500
+const SLIDE_MS = 2600
 
-// The rooms the game lets you walk through, each with the tiers its assets draw
-const ROOMS = [
-  { id: 'exterior', label: 'Outside', tiers: ['Boarded up', 'Lit'] },
-  { id: 'hall', label: 'Lobby', tiers: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'] },
-  { id: 'salle', label: 'Screen', tiers: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'] },
-  { id: 'cabine', label: 'Booth', tiers: ['T1', 'T2', 'T3', 'T4', 'T5'] },
-  { id: 'backoffice', label: 'Backoffice', tiers: ['T1'] },
+// The demo is the game itself, served by the beta and embedded with the cinema's facade
+const GAME_URL = process.env.CINETROPES_URL || 'https://beta.cinetropes.com'
+const GAME_ORIGIN = new URL(GAME_URL).origin
+const SAVE_KEY = 'cinetropes-meta-game'
+
+// What the screen shows before a game: the cinema from boarded up to restored, room by room
+const SLIDES = [
+  { room: 'exterior', tier: 0, level: 0, label: 'Outside, boarded up' },
+  { room: 'exterior', tier: 1, level: 1, label: 'Outside, lit' },
+  { room: 'hall', tier: 1, level: 0, label: 'Lobby, abandoned' },
+  { room: 'hall', tier: 3, level: 1, label: 'Lobby, repaired' },
+  { room: 'hall', tier: 6, level: 2, label: 'Lobby, restored' },
+  { room: 'salle', tier: 1, level: 0, label: 'Screen, torn' },
+  { room: 'salle', tier: 3, level: 1, label: 'Screen, repaired' },
+  { room: 'salle', tier: 6, level: 2, label: 'Screen, restored' },
+  { room: 'cabine', tier: 1, level: 0, label: 'Booth, abandoned' },
+  { room: 'cabine', tier: 3, level: 1, label: 'Booth, repaired' },
+  { room: 'cabine', tier: 5, level: 2, label: 'Booth, restored' },
 ]
 
-// Where each room stands with no film, one film or two programmed: from abandoned to restored
-const LEVELS = {
-  exterior: [0, 1, 1],
-  hall: [1, 3, 6],
-  salle: [1, 3, 6],
-  cabine: [1, 3, 5],
-  backoffice: [1, 1, 1],
-}
-const DENSITY = [0, 2, 3]
+const ROOMS = [
+  { id: 'exterior', label: 'Outside' },
+  { id: 'hall', label: 'Lobby' },
+  { id: 'salle', label: 'Screen' },
+  { id: 'cabine', label: 'Booth' },
+]
 
-// The game's crowd profiles: none while abandoned, then those of screen-room tiers 4 and 6
+// The tier the lobby stands at for each level, and the crowd it draws: from the game's
+// screen-room tiers 4 and 6
+const HALL_LEVELS = [1, 3, 6]
+const DENSITY = [0, 2, 3]
 const CROWDS = [
   { cap: 0, spawnDelay: [0, 0], queueing: false },
   { cap: 8, spawnDelay: [1200, 2500], queueing: true },
@@ -40,13 +49,13 @@ const CROWDS = [
 
 // Desk and projector shown with each booth tier, the post-Awakening equipment first
 const EQUIPMENT = { 2: 1, 3: 2, 4: 3, 5: 5 }
-const WALL_SLOTS = [1, 3]
 
-// What the staff says when the lobby reaches that tier, from the game
-const QUOTES = [
-  '',
-  'The floor is fixed. We can finally walk without fear of falling!',
-  'A golden chandelier to top it all. This lobby is perfect!',
+// The console's buttons, and the key each one plays in the game
+const PAD = [
+  { id: 'up', key: 'ArrowUp', label: 'Up' },
+  { id: 'left', key: 'ArrowLeft', label: 'Left' },
+  { id: 'right', key: 'ArrowRight', label: 'Right' },
+  { id: 'down', key: 'ArrowDown', label: 'Down' },
 ]
 
 const images = new Map()
@@ -63,23 +72,46 @@ const image = (key) => {
   return img.complete && img.naturalWidth ? img : null
 }
 
-const useNear = (ref) => {
-  const [near, setNear] = useState(false)
+const readSave = () => {
+  try {
+    return JSON.parse(localStorage.getItem(SAVE_KEY))?.scene ?? null
+  } catch {
+    return null
+  }
+}
+
+const writeSave = (scene) => {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ scene }))
+  } catch {
+    // Without storage the game still plays, it just won't offer to continue
+  }
+}
+
+// Visible: drawn and playing; near: its images may load
+const useViewport = (ref) => {
+  const [state, setState] = useState({ near: false, visible: false })
 
   useEffect(() => {
     const element = ref.current
 
     if (!element || typeof IntersectionObserver === 'undefined') {
-      setNear(true)
+      setState({ near: true, visible: true })
       return
     }
 
-    const observer = new IntersectionObserver(([entry]) => entry.isIntersecting && setNear(true), { rootMargin: '600px 0px' })
-    observer.observe(element)
-    return () => observer.disconnect()
+    const near = new IntersectionObserver(([entry]) => entry.isIntersecting && setState((s) => ({ ...s, near: true })), { rootMargin: '600px 0px' })
+    const visible = new IntersectionObserver(([entry]) => setState((s) => ({ ...s, visible: entry.isIntersecting })))
+    near.observe(element)
+    visible.observe(element)
+
+    return () => {
+      near.disconnect()
+      visible.disconnect()
+    }
   }, [ref])
 
-  return near
+  return state
 }
 
 const shuffle = (length) => {
@@ -93,7 +125,7 @@ const shuffle = (length) => {
   return cells
 }
 
-const crowdShown = (world) => world.room === 'hall' && world.level > 0 && world.tier === LEVELS.hall[world.level]
+const crowdShown = (world) => world.room === 'hall' && world.level > 0
 
 const drawRoom = (ctx, world, now) => {
   const blit = (key) => {
@@ -118,16 +150,12 @@ const drawRoom = (ctx, world, now) => {
       blit(`desk-${EQUIPMENT[tier]}`)
       blit(`projector-${EQUIPMENT[tier]}`)
     }
-  } else if (world.room === 'backoffice') {
-    blit('backoffice')
   } else {
     blit(`${c}-hall-${tier}`)
 
     // An abandoned lobby has nothing left standing, as in the game
     if (tier > 1) {
       blit('posters')
-      const walls = image(`${c}-walls`)
-      world.picks.forEach((film, i) => walls && ctx.drawImage(walls, film * 20, 0, 20, 30, 45 + WALL_SLOTS[i] * 22, 51, 14, 22))
       blit('cashier')
 
       if (tier === 6) {
@@ -184,23 +212,47 @@ const drawRoom = (ctx, world, now) => {
   }
 }
 
-const Scene = ({ world, swapRef, label }) => {
+// The rooms, drawn as the game draws them; a change of slide breaks the old one into pixels
+const Slides = ({ cinema, slide, running, reduced, label }) => {
   const canvas = useRef(null)
+  const world = useRef(null)
+  const shown = useRef(null)
+  const { room, tier, level } = SLIDES[slide]
+
+  world.current ??= { hall: createHall(), swap: null }
+  Object.assign(world.current, {
+    cinema,
+    room,
+    tier,
+    level,
+    reduced,
+    picks: [],
+    crowd: CROWDS[level],
+    cashier: [2000, 3000],
+    popcornShare: 0.17,
+  })
 
   useEffect(() => {
     const ctx = canvas.current.getContext('2d')
     ctx.imageSmoothingEnabled = false
-    let frame = 0
+    const key = `${cinema}-${slide}`
 
-    // Keeps the room as it is now, so the next draw can break it away cell by cell
-    swapRef.current = () => {
-      drawRoom(ctx, world.current, performance.now())
+    // Keeps the room as it was, so the next draw can break it away cell by cell
+    if (shown.current && shown.current !== key && !reduced) {
       const copy = document.createElement('canvas')
       copy.width = SIZE
       copy.height = SIZE
       copy.getContext('2d').drawImage(canvas.current, 0, 0)
       world.current.swap = { canvas: copy, start: performance.now(), cells: shuffle((SIZE / SWAP_CELL) ** 2) }
     }
+
+    shown.current = key
+  }, [cinema, slide, reduced])
+
+  useEffect(() => {
+    const ctx = canvas.current.getContext('2d')
+    ctx.imageSmoothingEnabled = false
+    let frame = 0
 
     const loop = (now) => {
       const state = world.current
@@ -213,336 +265,228 @@ const Scene = ({ world, swapRef, label }) => {
       frame = requestAnimationFrame(loop)
     }
 
-    frame = requestAnimationFrame(loop)
+    if (running) {
+      frame = requestAnimationFrame(loop)
+    } else {
+      drawRoom(ctx, world.current, performance.now())
+    }
+
     return () => cancelAnimationFrame(frame)
-  }, [world, swapRef])
+  }, [running])
 
   return <canvas ref={canvas} className='cg__canvas' width={SIZE} height={SIZE} role='img' aria-label={label} />
 }
 
-const Poster = ({ cinema, index }) => (
-  <span
-    className='cg__poster'
-    style={{ backgroundImage: `url(${ASSETS[`${cinema}-cards`]})`, backgroundPosition: `${(index / 3) * 100}% 0` }}
-  />
-)
-
-const Visit = ({ cinema, reduced, onLeave }) => {
-  const [picks, setPicks] = useState([])
-  const [room, setRoom] = useState('hall')
-  const [viewed, setViewed] = useState(null)
-  const [focus, setFocus] = useState(null)
-  const world = useRef(null)
-  const swap = useRef(null)
-  const heading = useRef(null)
-  const touch = useRef(null)
-  const level = picks.length
-  const current = LEVELS[room][level]
-  const tier = viewed ?? current
-  const rooms = ROOMS.find((other) => other.id === room)
-
-  world.current ??= { hall: createHall(), swap: null }
-  Object.assign(world.current, {
-    cinema: cinema.id,
-    room,
-    tier,
-    level,
-    picks,
-    reduced,
-    crowd: CROWDS[level],
-    cashier: [2000, 3000],
-    popcornShare: 0.17,
-  })
-
-  useEffect(() => heading.current?.focus({ preventScroll: true }), [])
-
-  const change = (update) => {
-    swap.current?.()
-    update()
-  }
-
-  const toggle = (index) => {
-    const next = picks.includes(index) ? picks.filter((pick) => pick !== index) : [...picks, index]
-
-    if (next.length <= MAX_PICKS) {
-      change(() => {
-        setPicks(next)
-        setViewed(null)
-      })
-    }
-  }
-
-  const tierOptions = rooms.tiers.map((label, index) => {
-    const value = room === 'exterior' ? index : index + 1
-
-    return {
-      id: String(value),
-      label: <>{label}{value === current && <span className='cg__now' aria-label=', current' />}</>,
-    }
-  })
-
-  return (
-    <div
-      className='cg__visit'
-      role='dialog'
-      aria-modal='true'
-      aria-labelledby='cg-visit'
-      onKeyDown={(event) => event.key === 'Escape' && onLeave()}
-      // The cinemas still show around the visit: a click on them goes back to the street
-      onClick={(event) => event.target === event.currentTarget && onLeave()}
-    >
-      <div
-        className='cg__stage'
-        onTouchStart={(event) => { touch.current = event.touches[0] }}
-        onTouchEnd={(event) => {
-          const start = touch.current
-          const end = event.changedTouches[0]
-          touch.current = null
-
-          if (start && end.clientY - start.clientY > 80 && Math.abs(end.clientX - start.clientX) < 60) {
-            onLeave()
-          }
-        }}
-      >
-        <Scene world={world} swapRef={swap} label={`${cinema.name}, ${rooms.label.toLowerCase()}, ${rooms.tiers[room === 'exterior' ? tier : tier - 1]}`} />
-        {tierOptions.length > 1 && (
-          <Choices
-            label='Condition'
-            className='choices cg__hud cg__hud--top'
-            value={String(tier)}
-            onChange={(id) => change(() => setViewed(Number(id) === current ? null : Number(id)))}
-            options={tierOptions}
+// A Game Boy Color: the cross is held like a key, A, B and the pills are tapped
+const Console = ({ children, playing, onPad, onTap, onStart }) => (
+  <div className='cg__console'>
+    <div className='cg__bezel'>
+      <span className='cg__led' data-on={playing || undefined} aria-hidden='true' />
+      <div className='cg__screen'>{children}</div>
+    </div>
+    <p className='cg__brand' aria-hidden='true'>
+      cinetropes <span>COLOR</span>
+    </p>
+    <div className='cg__controls'>
+      <div className='cg__pad' role='group' aria-label='Direction pad'>
+        {PAD.map((button) => (
+          <button
+            key={button.id}
+            type='button'
+            className={`cg__key cg__key--${button.id}`}
+            aria-label={button.label}
+            onPointerDown={() => onPad(button.key, true)}
+            onPointerUp={() => onPad(button.key, false)}
+            onPointerLeave={(event) => event.buttons && onPad(button.key, false)}
+            onKeyDown={(event) => (event.key === 'Enter' || event.key === ' ') && !event.repeat && onPad(button.key, true)}
+            onKeyUp={(event) => (event.key === 'Enter' || event.key === ' ') && onPad(button.key, false)}
           />
-        )}
-        <Choices
-          label='Rooms'
-          className='choices cg__hud cg__hud--bottom'
-          value={room}
-          onChange={(id) => change(() => {
-            setRoom(id)
-            setViewed(null)
-          })}
-          options={ROOMS}
-        />
+        ))}
+        <span className='cg__key cg__key--center' aria-hidden='true' />
       </div>
-      <section className='cg__box cg__panel'>
-        <h4 id='cg-visit' ref={heading} tabIndex={-1} className='cg__heading'>{cinema.name}</h4>
-        <p className='cg__text cg__dim'>{cinema.theme}</p>
-        <p className='cg__text cg__gold'>“{cinema.line}”</p>
-        <p className='cg__text'>Tonight: <mark>{cinema.mission}</mark>. Pick one or two films.</p>
-        <ul className='cg__films'>
-          {cinema.films.map((film, index) => {
-            const picked = picks.includes(index)
-            const blocked = !picked && picks.length >= MAX_PICKS
-
-            return (
-              <li key={film.title}>
-                <button
-                  type='button'
-                  className='cg__film'
-                  aria-pressed={picked}
-                  aria-disabled={blocked}
-                  aria-label={`${film.title}, ${film.year}`}
-                  onClick={() => !blocked && toggle(index)}
-                  onFocus={() => setFocus(index)}
-                  onMouseEnter={() => setFocus(index)}
-                >
-                  <Poster cinema={cinema.id} index={index} />
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-        <p className='cg__text cg__caption'>
-          {focus === null ? ' ' : <>{cinema.films[focus].title} <span className='cg__dim'>{cinema.films[focus].year}</span></>}
-        </p>
-        <p className='cg__text cg__quote' aria-live='polite'>{QUOTES[level]}</p>
-        <div className='cg__actions'>
-          <button type='button' className='cg__button' onClick={onLeave}>Back to the street</button>
-        </div>
-      </section>
+      <div className='cg__ab'>
+        <button type='button' className='cg__round cg__round--b' aria-label='B: back' onClick={() => onTap('Escape')} disabled={!playing}>
+          <span>B</span>
+        </button>
+        <button type='button' className='cg__round cg__round--a' aria-label={playing ? 'A: confirm' : 'A: start the game'} onClick={playing ? () => onTap('Enter') : onStart}>
+          <span>A</span>
+        </button>
+      </div>
     </div>
-  )
-}
-
-// A row of cinemas that drifts on its own, and that the hand can take over: drag, horizontal
-// wheel or Shift+wheel, arrow keys. Vertical wheel is left to the page.
-const Row = ({ kind, direction, near, paused, reduced, onVisit }) => {
-  const row = useRef(null)
-  const track = useRef(null)
-  const reel = useRef({ offset: 0, idleUntil: 0, drag: null, moved: false, hover: false, focus: false })
-
-  useEffect(() => {
-    const element = row.current
-    const state = reel.current
-    let last = performance.now()
-    let frame = 0
-
-    const loop = (now) => {
-      const half = track.current.scrollWidth / 2
-      const auto = !reduced && !paused && !state.drag && !state.hover && !state.focus && now > state.idleUntil
-
-      if (auto) {
-        state.offset += direction * (now - last) * REEL_SPEED
-      }
-
-      if (half) {
-        state.offset = ((state.offset % half) + half) % half
-        track.current.style.transform = `translateX(${-state.offset}px)`
-      }
-
-      last = now
-      frame = requestAnimationFrame(loop)
-    }
-
-    const onWheel = (event) => {
-      const dx = event.shiftKey ? event.deltaX || event.deltaY : event.deltaX
-
-      if (!event.shiftKey && Math.abs(event.deltaX) <= Math.abs(event.deltaY)) {
-        return
-      }
-
-      event.preventDefault()
-      state.offset += dx
-      state.idleUntil = performance.now() + REEL_IDLE_MS
-    }
-
-    frame = requestAnimationFrame(loop)
-    element.addEventListener('wheel', onWheel, { passive: false })
-
-    return () => {
-      cancelAnimationFrame(frame)
-      element.removeEventListener('wheel', onWheel)
-    }
-  }, [direction, paused, reduced])
-
-  const state = reel.current
-
-  const onPointerDown = (event) => {
-    if (event.button === 0) {
-      state.drag = { x: event.clientX, offset: state.offset, id: event.pointerId }
-      state.moved = false
-    }
-  }
-
-  const onPointerMove = (event) => {
-    if (!state.drag || state.drag.id !== event.pointerId) {
-      return
-    }
-
-    const dx = event.clientX - state.drag.x
-
-    if (!state.moved && Math.abs(dx) > 6) {
-      state.moved = true
-      row.current.setPointerCapture(event.pointerId)
-    }
-
-    if (state.moved) {
-      state.offset = state.drag.offset - dx
-    }
-  }
-
-  const onPointerUp = () => {
-    state.drag = null
-    state.idleUntil = performance.now() + REEL_IDLE_MS
-  }
-
-  const onKeyDown = (event, index) => {
-    const step = { ArrowLeft: -1, ArrowRight: 1 }[event.key]
-
-    if (!step) {
-      return
-    }
-
-    event.preventDefault()
-    const tiles = track.current.querySelectorAll('[data-copy="0"]')
-    const next = tiles[(index + step + tiles.length) % tiles.length]
-    next.focus({ preventScroll: true })
-    state.offset = next.offsetLeft - (row.current.clientWidth - next.offsetWidth) / 2
-    state.idleUntil = performance.now() + REEL_IDLE_MS
-  }
-
-  return (
-    <div
-      ref={row}
-      className={`cg__row cg__row--${kind}`}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
-      onPointerEnter={(event) => { state.hover = event.pointerType === 'mouse' }}
-      onPointerLeave={() => { state.hover = false }}
-      // Only keyboard focus holds the row; a tile pressed by the pointer keeps focus but not the row
-      onFocus={(event) => { state.focus = event.target.matches(':focus-visible') }}
-      onBlur={() => { state.focus = false }}
-      onClickCapture={(event) => {
-        if (state.moved) {
-          event.preventDefault()
-          event.stopPropagation()
-          state.moved = false
-        }
-      }}
-    >
-      <ul ref={track} className='cg__track'>
-        {[0, 1].map((copy) => CINEMAS.map((cinema, index) => (
-          <li key={`${copy}-${cinema.id}`} aria-hidden={copy ? 'true' : undefined}>
-            <button
-              type='button'
-              className='cg__tile'
-              data-copy={copy}
-              tabIndex={copy || kind === 'lobby' ? -1 : undefined}
-              onClick={(event) => onVisit(index, event.currentTarget)}
-              onKeyDown={(event) => onKeyDown(event, index)}
-              aria-label={`Visit ${cinema.name}`}
-              draggable={false}
-            >
-              {near && <img src={ASSETS[`${cinema.id}-${kind}`]} width='192' height='192' alt='' loading='lazy' draggable={false} />}
-            </button>
-          </li>
-        )))}
-      </ul>
+    <div className='cg__menu'>
+      <button type='button' className='cg__pill' aria-label='Select: next room' onClick={() => onTap('ArrowRight')} disabled={playing}>
+        <span>Select</span>
+      </button>
+      <button type='button' className='cg__pill' aria-label={playing ? 'Start: back to the game' : 'Start the game'} onClick={onStart}>
+        <span>Start</span>
+      </button>
     </div>
-  )
-}
+  </div>
+)
 
 export const CinetropesGame = () => {
   const reduced = usePrefersReducedMotion()
   const root = useRef(null)
-  const near = useNear(root)
-  const [visit, setVisit] = useState(null)
-  const from = useRef(null)
+  const frame = useRef(null)
+  const { near, visible } = useViewport(root)
+  const [saved, setSaved] = useState(readSave)
+  const [index, setIndex] = useState(() => Math.max(0, CINEMAS.findIndex((cinema) => cinema.scene === readSave())))
+  const [slide, setSlide] = useState(0)
+  const [playing, setPlaying] = useState(false)
+  const [confirm, setConfirm] = useState(null)
+  const cinema = CINEMAS[index]
+  const savedCinema = CINEMAS.find((other) => other.scene === saved)
+  const hasGame = saved === cinema.scene
 
-  const enter = (index, tile) => {
-    from.current = tile
-    setVisit(index)
+  // At rest the rooms go by on their own, unless the reader asked for stillness
+  useEffect(() => {
+    if (playing || reduced || !visible) {
+      return
+    }
+
+    const timer = setInterval(() => setSlide((current) => (current + 1) % SLIDES.length), SLIDE_MS)
+    return () => clearInterval(timer)
+  }, [playing, reduced, visible, index])
+
+  // Out of view, the game unloads; it continues from its own save when started again
+  useEffect(() => {
+    if (!visible) {
+      setPlaying(false)
+    }
+  }, [visible])
+
+  const send = (message) => frame.current?.contentWindow?.postMessage(message, GAME_ORIGIN)
+
+  const start = () => {
+    writeSave(cinema.scene)
+    setSaved(cinema.scene)
+    setConfirm(null)
+    setPlaying(true)
   }
 
-  // Back to the street, focus on the cinema the visit started from
-  const leave = () => {
-    setVisit(null)
-    requestAnimationFrame(() => from.current?.focus({ preventScroll: true }))
+  const restart = () => send({ type: 'cinetropes:reset' })
+
+  const choose = (id) => {
+    const next = CINEMAS.findIndex((other) => other.id === id)
+
+    // Another cinema while a game is under way: say so before the game is given up
+    if (saved && CINEMAS[next].scene !== saved) {
+      setConfirm(next)
+    } else {
+      setConfirm(null)
+    }
+
+    setPlaying(false)
+    setIndex(next)
+    setSlide(0)
   }
 
-  const visiting = visit !== null
+  const pad = (key, pressed) => {
+    if (playing) {
+      send({ type: 'cinetropes:key', key, pressed })
+      return
+    }
+
+    if (pressed && (key === 'ArrowRight' || key === 'ArrowDown')) {
+      setSlide((current) => (current + 1) % SLIDES.length)
+    } else if (pressed && (key === 'ArrowLeft' || key === 'ArrowUp')) {
+      setSlide((current) => (current - 1 + SLIDES.length) % SLIDES.length)
+    }
+  }
+
+  const slideRoom = SLIDES[slide].room
+  const action = playing ? 'Restart' : hasGame ? 'Continue' : 'Start the game'
 
   return (
-    <article ref={root} className={visiting ? 'band cg is-visiting' : 'band cg'} aria-labelledby='cinetropes-game'>
-      <div className='cg__reel' inert={visiting ? '' : undefined}>
-        <Row kind='facade' direction={1} near={near} paused={visiting} reduced={reduced} onVisit={enter} />
-        <Row kind='lobby' direction={-1} near={near} paused={visiting} reduced={reduced} onVisit={enter} />
+    <article ref={root} className='band cg' aria-labelledby='cinetropes-game'>
+      <div className='cg__street' aria-hidden='true'>
+        <ul className='cg__track'>
+          {[0, 1].map((copy) => CINEMAS.map((other) => (
+            <li key={`${copy}-${other.id}`}>
+              {near && <img src={ASSETS[`${other.id}-facade`]} width='192' height='192' alt='' loading='lazy' />}
+            </li>
+          )))}
+        </ul>
       </div>
-      <div className='cg__box cg__intro' inert={visiting ? '' : undefined}>
-        <h3 id='cinetropes-game' className='cg__title'>
-          <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
-          <span>meta-game</span>
-        </h3>
-        <p className='cg__text'>
-          An incremental pixel-art management game: you restore an abandoned cinema that changes with the films you log on cinetropes. Eighty cinemas, each with its own facade and lobby.
-        </p>
-        <p className='cg__text cg__gold'>Pick one and program its night.</p>
-        <Tags items={['TypeScript', 'Phaser', 'React', 'Hono', 'Pixel art']} />
+      <div className='cg__layout'>
+        <Console
+          playing={playing}
+          onPad={pad}
+          onTap={(key) => {
+            pad(key, true)
+            pad(key, false)
+          }}
+          onStart={playing ? () => frame.current?.focus() : start}
+        >
+          {playing ? (
+            <iframe
+              ref={frame}
+              className='cg__game'
+              title={`cinetropes meta-game demo, ${cinema.name}`}
+              src={`${GAME_URL}/play?embed&facade=${cinema.scene}`}
+              allow='autoplay'
+              onLoad={() => frame.current?.focus()}
+            />
+          ) : (
+            <>
+              {near && <Slides cinema={cinema.id} slide={slide} running={visible} reduced={reduced} label={`${cinema.name}, ${SLIDES[slide].label}`} />}
+              <button type='button' className='cg__press' onClick={start}>
+                <span>{hasGame ? 'Press start to continue' : 'Press start'}</span>
+              </button>
+            </>
+          )}
+        </Console>
+        <section className='cg__box cg__panel'>
+          <h3 id='cinetropes-game' className='cg__title'>
+            <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
+            <span>meta-game</span>
+          </h3>
+          <Choices
+            label='Cinema'
+            className='cg__cinemas'
+            value={cinema.id}
+            onChange={choose}
+            options={CINEMAS.map((other) => ({
+              id: other.id,
+              label: near ? <img src={ASSETS[`${other.id}-facade`]} width='56' height='56' alt={other.name} /> : other.name,
+            }))}
+          />
+          <div className='cg__cinema' aria-live='polite'>
+            <h4 className='cg__heading'>{cinema.name}</h4>
+            <p className='cg__text cg__dim'>{cinema.theme}</p>
+            <p className='cg__text cg__gold'>“{cinema.line}”</p>
+          </div>
+          {confirm !== null && savedCinema ? (
+            <div className='cg__confirm' role='group' aria-label='Change cinema'>
+              <p className='cg__text'>Your game is at {savedCinema.name}. Start over here?</p>
+              <div className='cg__actions'>
+                <button type='button' className='cg__button' onClick={start}>Start over</button>
+                <button type='button' className='cg__button' onClick={() => choose(savedCinema.id)}>Back to {savedCinema.name}</button>
+              </div>
+            </div>
+          ) : (
+            <>
+              {!playing && (
+                <Choices
+                  label='Rooms'
+                  className='choices cg__rooms'
+                  value={slideRoom}
+                  onChange={(id) => setSlide(SLIDES.findIndex((other) => other.room === id))}
+                  options={ROOMS}
+                />
+              )}
+              <p className='cg__text'>
+                A demo of the game: restore an abandoned cinema, welcome its audience, upgrade its rooms and gear, and program five films every two hours. It plays on real time, and saves in your browser.
+              </p>
+              <p className='cg__text cg__dim'>The game is in French.</p>
+              <div className='cg__actions'>
+                <button type='button' className='cg__button' onClick={playing ? restart : start}>{action}</button>
+              </div>
+            </>
+          )}
+          <Tags items={['TypeScript', 'Phaser', 'React', 'Hono', 'Pixel art']} />
+        </section>
       </div>
-      {visiting && near && <Visit key={visit} cinema={CINEMAS[visit]} reduced={reduced} onLeave={leave} />}
     </article>
   )
 }

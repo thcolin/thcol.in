@@ -1,29 +1,16 @@
-// Twelve of the game's eighty cinemas: each facade has its own name, its own themed lobby,
-// a line from the Projectionist translated from the game's French, and the films the beta drew
-// for one of its programs: the night's theme and four films of its pool that fit it
+// One cinema per family of the game's eighty: its name, its family, and the line the
+// Projectionist says about its facade, translated from the game's French. `scene` is
+// the facade's id in the game, the one the embedded demo opens.
 export const CINEMAS = [
-  { id: 'regent', name: 'Le Régent', theme: 'Art deco, European classic', line: 'Lovers always meet there too late.', mission: 'BURNT-OUT COP',
-    films: [{ title: 'Man of the House', year: 2005 }, { title: 'Skyscraper', year: 2018 }, { title: 'Kill Bill: Vol. 1', year: 2003 }, { title: 'The Dark Knight', year: 2008 }] },
-  { id: 'tyrell', name: 'The Tyrell', theme: 'Neon 80s, Blade Runner sci-fi', line: 'The rain never stops, in the film or in the street.', mission: 'DARK MAGIC',
-    films: [{ title: 'Seventh Son', year: 2014 }, { title: 'Fantastic Beasts: The Crimes of Grindelwald', year: 2018 }, { title: "Pirates of the Caribbean: Dead Man's Chest", year: 2006 }, { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 }] },
-  { id: 'adriano', name: 'Teatro Adriano', theme: 'Neon 80s, Italo disco', line: 'Lines are sung more than they are spoken.', mission: 'EPIC FANTASY',
-    films: [{ title: 'Gods of Egypt', year: 2016 }, { title: 'Dragon Blade', year: 2015 }, { title: 'Avatar', year: 2009 }, { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 }] },
-  { id: 'starlite', name: 'Starlite Drive-In', theme: 'Multiplex, American drive-in', line: 'Car horns stand in for applause at the end.', mission: 'EPIC',
-    films: [{ title: 'The Last Airbender', year: 2010 }, { title: 'Indiana Jones and the Kingdom of the Crystal Skull', year: 2008 }, { title: 'Pirates of the Caribbean: The Curse of the Black Pearl', year: 2003 }, { title: 'The Lion King', year: 1994 }] },
-  { id: 'mk2', name: 'MK2', theme: 'Multiplex, Paris mainstream', line: 'The left line is for the original version. The right one, for the dub.', mission: '3D ANIMATION',
-    films: [{ title: 'Garfield: A Tail of Two Kitties', year: 2006 }, { title: 'Over the Hedge', year: 2006 }, { title: 'Coco', year: 2017 }, { title: 'WALL·E', year: 2008 }] },
-  { id: 'empire', name: 'Empire Leicester Square', theme: 'Noir, London fog', line: 'The English seats creak just like in the films.', mission: 'CRIMINAL INVESTIGATION',
-    films: [{ title: 'Passengers', year: 2008 }, { title: 'Sooryavanshi', year: 2021 }, { title: 'Shutter Island', year: 2010 }, { title: 'The Dark Knight', year: 2008 }] },
-  { id: 'almeria', name: 'Cinema Almería', theme: 'Western, spaghetti desert', line: "Morricone's harmonica still rings in the room after the film ends.", mission: 'TRENCHES',
-    films: [{ title: 'The 15:17 to Paris', year: 2018 }, { title: 'Enigma', year: 2001 }, { title: 'Braveheart', year: 1995 }, { title: 'The Lord of the Rings: The Return of the King', year: 2003 }] },
-  { id: 'bagdad', name: 'Bagdad Cinema', theme: 'Historic, caravanserai', line: 'The battles on screen raise as much dust as the caravans.', mission: 'DOUBLE AGENT',
-    films: [{ title: 'The Man', year: 2005 }, { title: 'Hypnotic', year: 2023 }, { title: 'V for Vendetta', year: 2006 }, { title: 'Inception', year: 2010 }] },
-  { id: 'eden', name: "L'Eden", theme: 'Animation, Amélie village', line: "The village cat sleeps on the back-row seat.", mission: 'CYNICAL COMEDY',
-    films: [{ title: 'Bad Santa 2', year: 2016 }, { title: 'Eddington', year: 2025 }, { title: 'The Wolf of Wall Street', year: 2013 }, { title: 'The Dark Knight', year: 2008 }] },
-  { id: 'bois-dormant', name: 'Le Bois Dormant', theme: 'Animation, cottage of the dwarves', line: 'Nobody dares wake the neighbour who dozes off, like a princess.', mission: 'DOCUFICTION',
-    films: [{ title: 'The Gallows', year: 2015 }, { title: 'Cannibal Holocaust', year: 1980 }, { title: 'The Big Short', year: 2015 }, { title: "Schindler's List", year: 1993 }] },
-  { id: 'lunar', name: 'The Lunar', theme: 'Space, orbital station', line: 'Earth shows through the window while you wait for the film.', mission: 'PSYCHOLOGICAL THRILLER',
-    films: [{ title: 'I Still Know What You Did Last Summer', year: 1998 }, { title: 'War Machine', year: 2026 }, { title: 'Shutter Island', year: 2010 }, { title: 'Fight Club', year: 1999 }] },
-  { id: 'haddonfield', name: 'The Haddonfield', theme: 'Neon 80s, slasher', line: 'Teenagers die on screen in the order of their sins.', mission: 'TIME TRAVEL',
-    films: [{ title: 'The Rage: Carrie 2', year: 1999 }, { title: 'Hot Tub Time Machine', year: 2010 }, { title: 'Iron Man', year: 2008 }, { title: 'Inception', year: 2010 }] },
+  { id: 'regent', scene: 'scene_artdeco_european_urban_classic', name: 'Le Régent', theme: 'Art deco, European classic', line: 'Lovers always meet there too late.' },
+  { id: 'empire', scene: 'scene_noir_european_urban_london_fog', name: 'Empire Leicester Square', theme: 'Noir, London fog', line: 'The English seats creak just like in the films.' },
+  { id: 'haddonfield', scene: 'scene_neon80s_american_urban_horror_slasher', name: 'The Haddonfield', theme: 'Neon 80s, slasher', line: 'Teenagers die on screen in the order of their sins.' },
+  { id: 'shinjuku', scene: 'scene_cyberpunk_asian_urban_neo_tokyo', name: 'Shinjuku Cinema', theme: 'Cyberpunk, Neo-Tokyo', line: 'The neighbourhood keeps rebuilding itself. The cinema never does.' },
+  { id: 'starlite', scene: 'scene_multiplex_american_suburban_drive_in', name: 'Starlite Drive-In', theme: 'Multiplex, American drive-in', line: 'Car horns stand in for applause at the end.' },
+  { id: 'argento', scene: 'scene_brutalist_european_urban_giallo', name: 'Cinema Argento', theme: 'Brutalist, giallo', line: 'With every murder, the red spills onto the pavement.' },
+  { id: 'almeria', scene: 'scene_western_american_desert_spaghetti', name: 'Cinema Almería', theme: 'Western, spaghetti desert', line: "Morricone's harmonica still rings in the room after the film ends." },
+  { id: 'champo', scene: 'scene_arthouse_european_urban_paris_left_bank', name: 'Le Champo', theme: 'Arthouse, Paris Left Bank', line: 'The programme is chalked on the blackboard every Wednesday.' },
+  { id: 'bagdad', scene: 'scene_historic_middle_eastern_urban_caravanserai', name: 'Bagdad Cinema', theme: 'Historic, caravanserai', line: 'The battles on screen raise as much dust as the caravans.' },
+  { id: 'eden', scene: 'scene_animation_european_rural_amelie_jeunet', name: "L'Eden", theme: 'Animation, Amélie village', line: 'The village cat sleeps on the back-row seat.' },
+  { id: 'lunar', scene: 'scene_space_station_orbital_scifi', name: 'The Lunar', theme: 'Space, orbital station', line: 'Earth shows through the window while you wait for the film.' },
 ]
