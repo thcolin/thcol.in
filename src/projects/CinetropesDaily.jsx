@@ -695,7 +695,7 @@ export const CinetropesDaily = () => {
     const pinned = getComputedStyle(root.current).position === 'sticky'
 
     if (pinned && steps < stepsBefore.current && top < 0 && top >= -(stepsBefore.current - 1) * innerHeight) {
-      scrollBy(0, top)
+      scrollBy({ top, behavior: 'instant' })
     }
 
     stepsBefore.current = steps
