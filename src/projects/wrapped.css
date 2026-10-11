@@ -197,7 +197,7 @@
 .wrapped__look {
   position: absolute;
   overflow: hidden;
-  border-radius: 13% / 6.2%;
+  border-radius: 12.4% / 5.8%;
   /* The look's sheet sets its own ground and type here, as on the page body of apps/wrapped */
   isolation: isolate;
 }

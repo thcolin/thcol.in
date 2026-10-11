@@ -29,10 +29,10 @@ const stories = [...sheets, { kind: 'summary', label: t('wrapped.title', { name:
 const STORY = { width: 396, height: 704 }
 const BAR = 64
 
-// The phone is a photographed iPhone, 1773 × 3579, its screen a hole at these fractions of it. The Dynamic Island
-// covers the top of the screen: the segments start under it
+// The phone is a photographed iPhone, 1773 × 3579, its screen a hole at these fractions of it, widened to slip under
+// the frame's edge. The Dynamic Island covers the top of the screen: the segments start under it
 const PHONE = { width: 440, ratio: 3579 / 1773 }
-const SCREEN = { left: 0.04963, top: 0.02487, width: 0.90073, height: 0.95027, island: 0.065 }
+const SCREEN = { left: 0.04432, top: 0.01408, width: 0.91364, height: 0.96734, island: 0.0751 }
 
 // The phone shrinks with the column, never with the story it shows. On desktop the band is one screen high, and the
 // phone fits the height left under it, its badge included
