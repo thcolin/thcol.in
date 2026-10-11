@@ -190,6 +190,18 @@ main#projects ::selection {
   }
 }
 
+/* A band with steps stays on screen while the scroll walks through them, one step every 40svh */
+@media (min-width: 900px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .scrub {
+    height: calc(100svh + (var(--steps) - 1) * 40svh);
+  }
+
+  .scrub > .band {
+    position: sticky;
+    top: 0;
+  }
+}
+
 /* Shared controls, drawn in each band's ink */
 
 .tags {

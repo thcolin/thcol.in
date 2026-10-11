@@ -200,11 +200,11 @@ export const Oleoo = () => {
   const [ref, shown] = useReveal()
 
   return (
-    <article className='band oleoo' aria-labelledby='oleoo'>
+    <article id='oleoo' className='band oleoo' aria-labelledby='oleoo-title'>
       <div aria-hidden='true' className='oleoo__edge'>{EDGE}</div>
       <div ref={ref} className='band__column band__split oleoo__split'>
         <div className='band__text'>
-          <h3 id='oleoo' className='visually-hidden'>oleoo</h3>
+          <h3 id='oleoo-title' className='visually-hidden'>oleoo</h3>
           <pre aria-hidden='true' className='oleoo__logo'>
             {LOGO.map((line, index) => (
               <span key={index} style={{ transitionDelay: `${index * 70}ms` }} className={shown ? 'is-shown' : undefined}>{line}</span>

@@ -677,14 +677,14 @@ export const CinetropesDaily = () => {
   }
 
   return (
-    <article ref={root} className={resultMode ? 'band cd is-over' : 'band cd'} aria-labelledby='cinetropes-daily'>
+    <article ref={root} className={resultMode ? 'band cd is-over' : 'band cd'} id='cinetropes-daily' aria-labelledby='cinetropes-daily-title'>
       <div className='cd__backdrop' aria-hidden='true'>
         {pixels[4] && <PixelGrid pixels={pixels[4]} className='cd__backdrop-image' />}
       </div>
       <canvas ref={confettiCanvas} className='cd__confetti' aria-hidden='true' />
 
       <header className='cd__nav'>
-        <h3 id='cinetropes-daily' className='cd__nav-title'>
+        <h3 id='cinetropes-daily-title' className='cd__nav-title'>
           <img src={LOGO} alt='cinetropes' width='275' height='40' />
           <span>daily</span>
         </h3>

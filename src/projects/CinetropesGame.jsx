@@ -380,7 +380,7 @@ export const CinetropesGame = () => {
   const action = playing ? 'Restart' : hasGame ? 'Continue' : 'Start the game'
 
   return (
-    <article ref={root} className='band cg' aria-labelledby='cinetropes-game'>
+    <article ref={root} id='cinetropes-meta-game' className='band cg' aria-labelledby='cinetropes-meta-game-title'>
       <div className='cg__street' aria-hidden='true'>
         {['facade', 'lobby'].map((kind) => (
           <ul key={kind} className={`cg__track cg__track--${kind}`}>
@@ -422,7 +422,7 @@ export const CinetropesGame = () => {
           )}
         </Console>
         <section className='cg__box cg__panel'>
-          <h3 id='cinetropes-game' className='cg__title'>
+          <h3 id='cinetropes-meta-game-title' className='cg__title'>
             <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
             <span>meta-game</span>
           </h3>

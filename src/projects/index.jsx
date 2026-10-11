@@ -23,16 +23,16 @@ const Projects = () => (
       <Oleoo />
       <Grid />
     </Group>
-    <Group id='soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes', 'cinetropes meta-game', 'cinetropes daily']}>
+    <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes', 'cinetropes meta-game', 'cinetropes daily']}>
       <Cinetropes />
       <CinetropesGame />
       <CinetropesDaily />
     </Group>
-    <Group id='nfr' title='not for release' phrase='Built for me. No repo, no download.' projects={['teevy', 'workflow & obsidian']}>
+    <Group id='not-for-release' title='not for release' phrase='Built for me. No repo, no download.' projects={['teevy', 'workflow & obsidian']}>
       <Teevy />
       <Workflow />
     </Group>
-    <Group id='printing' title='3d printing' phrase='Parts I designed and printed.' projects={['top-fan', 'nas']}>
+    <Group id='3d-printing' title='3d printing' phrase='Parts I designed and printed.' projects={['top-fan', 'nas']}>
       <Printing />
     </Group>
     <Group id='archived' title='archived' phrase='Old projects, no longer maintained.' projects={['nipper', 'boaty', 'chrome-download-quicklook-extension', 'scene-release-parser-php', 'senscritique-api']}>

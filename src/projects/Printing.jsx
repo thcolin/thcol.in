@@ -476,11 +476,11 @@ const Piece = ({ piece }) => {
   ]
 
   return (
-    <article className='printing__piece' aria-labelledby={`printing-${piece.id}`}>
+    <article id={piece.id} className='printing__piece' aria-labelledby={`${piece.id}-title`}>
       <Stage piece={piece} view={view} />
       <div className='printing__overlay'>
         <Choices label={`${piece.title} view`} options={views} value={view} onChange={setView} className='choices choices--bracket' />
-        <h3 id={`printing-${piece.id}`} className='printing__title'>{piece.title}</h3>
+        <h3 id={`${piece.id}-title`} className='printing__title'>{piece.title}</h3>
         <p className='band__body'>{piece.text}</p>
         <Tags items={piece.tags} />
       </div>

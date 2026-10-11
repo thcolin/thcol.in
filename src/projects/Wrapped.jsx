@@ -211,10 +211,10 @@ export const Wrapped = () => {
   }
 
   return (
-    <article className='band wrapped' data-look={theme} aria-labelledby='wrapped'>
+    <article id='sensorr-wrapped' className='band wrapped' data-look={theme} aria-labelledby='sensorr-wrapped-title'>
       <div className='band__column band__split band__split--reverse'>
         <div className='band__text'>
-          <h3 id='wrapped' className='wrapped__title'>
+          <h3 id='sensorr-wrapped-title' className='wrapped__title'>
             <span className='wrapped__logo'><span aria-hidden='true'>🍿📼</span>sensorr</span>
             <span className='wrapped__name'>Wrapped</span>
           </h3>

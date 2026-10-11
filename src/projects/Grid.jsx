@@ -36,10 +36,10 @@ export const Grid = () => {
   useEffect(() => () => cancelAnimationFrame(raf.current), [])
 
   return (
-    <article className='band grid' aria-labelledby='grid'>
+    <article id='react-responsive-virtual-grid' className='band grid' aria-labelledby='react-responsive-virtual-grid-title'>
       <div ref={ref} className='band__column band__split band__split--reverse'>
         <div className='band__text'>
-          <h3 id='grid' className='grid__title'>
+          <h3 id='react-responsive-virtual-grid-title' className='grid__title'>
             <span aria-hidden='true'>💀🚟</span>
             <span>react-<wbr />responsive-<wbr />virtual-<wbr />grid</span>
           </h3>

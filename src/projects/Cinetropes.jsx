@@ -655,14 +655,14 @@ export const Cinetropes = () => {
   }
 
   return (
-    <article className='band cinetropes' aria-labelledby='cinetropes'>
+    <article id='cinetropes' className='band cinetropes' aria-labelledby='cinetropes-title'>
       <div className='cinetropes__backdrop' aria-hidden='true'>
         {films.map((item, index) => (
           <div key={item.id} className={index === front ? 'is-shown' : undefined} style={{ backgroundImage: `url(${POSTERS[item.id]})` }} />
         ))}
       </div>
       <div className='cinetropes__nav'>
-        <h3 id='cinetropes' className='cinetropes__logo'>
+        <h3 id='cinetropes-title' className='cinetropes__logo'>
           <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
         </h3>
         <p className='cinetropes__tagline'>Explore, discover, find</p>

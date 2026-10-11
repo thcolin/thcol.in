@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 // Shown once scrolled into view; reduced motion shows it at once through the styles
 export const useReveal = () => {
@@ -91,11 +91,11 @@ export const Group = ({ id, title, phrase, projects, children }) => {
   }, [reduced])
 
   return (
-    <section className='group' aria-labelledby={`group-${id}`}>
+    <section id={id} className='group' aria-labelledby={`${id}-title`}>
       <div ref={screen} className='group__screen'>
         <div className='group__stick'>
           <div className='group__stack'>
-            <h2 id={`group-${id}`} className='group__title'>
+            <h2 id={`${id}-title`} className='group__title'>
               {title.split(' ').map((word) => <span key={word}>{word}</span>)}
             </h2>
             <div className='group__meta'>
@@ -110,6 +110,76 @@ export const Group = ({ id, title, phrase, projects, children }) => {
       {children}
     </section>
   )
+}
+
+// Same query as the pinning in projects.css: a band is one screen from there
+const PINNED = '(min-width: 900px) and (min-height: 640px)'
+
+export const stepOf = (progress, steps) => Math.min(steps - 1, Math.floor(progress * steps))
+
+// The scroll walks a band through its steps: pinned on a wide screen, across its passage otherwise.
+// `hold` hands the band to the visitor until it leaves the screen
+export const useScrub = (onProgress) => {
+  const ref = useRef(null)
+  const held = useRef(false)
+  const callback = useRef(onProgress)
+  const reduced = usePrefersReducedMotion()
+  callback.current = onProgress
+
+  useEffect(() => {
+    const element = ref.current
+
+    if (reduced || !element) {
+      return
+    }
+
+    const pinned = matchMedia(PINNED)
+    let frame = 0
+    let last = { y: scrollY, at: performance.now() }
+
+    const render = () => {
+      frame = 0
+      const rect = element.getBoundingClientRect()
+      const now = { y: scrollY, at: performance.now() }
+      const velocity = Math.abs(now.y - last.y) / Math.max(1, now.at - last.at)
+      last = now
+
+      if (rect.bottom <= 0 || rect.top >= innerHeight) {
+        held.current = false
+        return
+      }
+
+      if (held.current) {
+        return
+      }
+
+      const progress = pinned.matches
+        ? -rect.top / Math.max(1, rect.height - innerHeight)
+        : (innerHeight * 0.6 - rect.top) / rect.height
+
+      callback.current(Math.min(1, Math.max(0, progress)), velocity)
+    }
+
+    const schedule = () => {
+      frame ||= requestAnimationFrame(render)
+    }
+
+    render()
+    addEventListener('scroll', schedule, { passive: true })
+    addEventListener('resize', schedule)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      removeEventListener('scroll', schedule)
+      removeEventListener('resize', schedule)
+    }
+  }, [reduced])
+
+  const hold = useCallback(() => {
+    held.current = true
+  }, [])
+
+  return [ref, hold]
 }
 
 export const Tags = ({ items }) => (

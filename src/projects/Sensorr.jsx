@@ -36,8 +36,9 @@ export const Sensorr = () => {
 
   return (
     <article
+      id='sensorr'
       className='band sensorr'
-      aria-labelledby='sensorr'
+      aria-labelledby='sensorr-title'
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -45,7 +46,7 @@ export const Sensorr = () => {
     >
       <div className='band__column band__split'>
         <div className='band__text'>
-          <h3 id='sensorr' className='sensorr__title'>
+          <h3 id='sensorr-title' className='sensorr__title'>
             <span aria-hidden='true'>🍿📼 </span>sensorr
           </h3>
           <p className='sensorr__tagline'>Your Friendly Digital Video Recorder. Think VCR, but in modern times.</p>

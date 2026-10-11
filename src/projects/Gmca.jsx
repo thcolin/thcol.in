@@ -62,8 +62,9 @@ export const Gmca = () => {
 
   return (
     <article
+      id='gmca'
       className='band gmca'
-      aria-labelledby='gmca'
+      aria-labelledby='gmca-title'
       style={current.style}
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => setPaused(false)}
@@ -80,7 +81,7 @@ export const Gmca = () => {
               )))}
             </p>
             <div className='gmca__current'>
-              <h3 id='gmca' className='gmca__brand'>
+              <h3 id='gmca-title' className='gmca__brand'>
                 <img src={new URL('../assets/gmca/gmca-logo.webp', import.meta.url)} alt='' width='64' height='64' />
                 <span>GMCA</span>
                 <small>Gamepad Media Center Aggregator</small>

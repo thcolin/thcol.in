@@ -93,13 +93,14 @@ const Band = ({ id, title, years, text, tags, Demo, sample, index }) => {
 
   return (
     <article
+      id={id}
       className={`band archived archived--${id} ${index % 2 ? 'archived--right' : 'archived--left'}`}
       data-awake={awake}
-      aria-labelledby={`archived-${id}`}
+      aria-labelledby={`${id}-title`}
       {...handlers}
     >
       <div className='archived__panel'>
-        <h3 id={`archived-${id}`} className='archived__title'>{breakable(title)}</h3>
+        <h3 id={`${id}-title`} className='archived__title'>{breakable(title)}</h3>
         <p className='band__body'>{text}</p>
         <p className='archived__years'>{years}</p>
         <Tags items={tags} />

@@ -311,8 +311,9 @@ export const Tv = () => {
   return (
     <article
       ref={band}
+      id='teevy'
       className='band teevy'
-      aria-labelledby='teevy'
+      aria-labelledby='teevy-title'
       tabIndex={0}
       onKeyDown={keys}
       onPointerDown={down}
@@ -340,7 +341,7 @@ export const Tv = () => {
         </div>
       </div>
       <div className='teevy-osd'>
-        <h3 id='teevy' className='teevy-osd__band'>
+        <h3 id='teevy-title' className='teevy-osd__band'>
           <span className='teevy-osd__key'>teevy</span>
           <span className='teevy-osd__value'>Channel guide</span>
         </h3>

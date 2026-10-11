@@ -667,10 +667,10 @@ export const Workflow = () => {
   }
 
   return (
-    <article className='band workflow' aria-labelledby='workflow'>
+    <article id='workflow-obsidian' className='band workflow' aria-labelledby='workflow-obsidian-title'>
       <div ref={ref} className='workflow__layout'>
         <div className='band__text'>
-          <h3 id='workflow' className='workflow__title'>Workflow & Obsidian</h3>
+          <h3 id='workflow-obsidian-title' className='workflow__title'>Workflow & Obsidian</h3>
           <p className='band__body'>
             An Obsidian vault as a second brain, kept by Claude Code commands. The Dashboard is never written by hand: it is computed from the notes and the sessions.
           </p>
