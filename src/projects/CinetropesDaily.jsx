@@ -686,7 +686,7 @@ export const CinetropesDaily = () => {
   }
 
   return (
-    <div ref={scrub} id='cinetropes-daily' className='scrub' style={{ '--steps': onboarded ? SECTIONS.length : 1 }}>
+    <div ref={scrub} id='cinetropes-daily' className='scrub' style={{ '--steps': onboarded ? SECTIONS.length : 2 }}>
       <article ref={root} className={resultMode ? 'band cd is-over' : 'band cd'} aria-labelledby='cinetropes-daily-title'>
         <div className='cd__backdrop' aria-hidden='true'>
           {pixels[4] && <PixelGrid pixels={pixels[4]} className='cd__backdrop-image' />}
