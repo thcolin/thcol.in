@@ -279,7 +279,7 @@ const Slides = ({ cinema, slide, running, reduced, label }) => {
 // A Game Boy Color, each cinema in its own colour: the game shows in its screen, and
 // its buttons are live. The cross is held like a key; A, B and the pills are tapped.
 const Console = ({ color, children, playing, onPad, onTap, onStart }) => (
-  <div className='cg__console'>
+  <div className='cg__console' data-scrub-demo>
     <img className='cg__shell' src={ASSETS[`gbc-${color}`]} width='1000' height='1675' alt='' draggable={false} />
     <span className='cg__led' data-on={playing || undefined} aria-hidden='true' />
     <div className='cg__screen'>{children}</div>

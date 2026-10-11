@@ -61,7 +61,7 @@ export const Grid = () => {
               ['Example', 'https://thcolin.github.io/react-responsive-virtual-grid/'],
             ]} />
           </div>
-          <div className={shown ? 'band__demo grid__stage is-shown' : 'band__demo grid__stage'}>
+          <div className={shown ? 'band__demo grid__stage is-shown' : 'band__demo grid__stage'} data-scrub-demo>
             <div
               ref={setFrame}
               onWheel={hold}

@@ -686,7 +686,7 @@ export const Cinetropes = () => {
           <Tags items={['TypeScript', 'React', 'Hono', 'Drizzle', 'PostgreSQL + pgvector', 'Python', 'Gemini']} />
         </div>
         <div className='cinetropes__page'>
-          <div className='cinetropes__deck' role='group' aria-roledescription='carousel' aria-label='Films' onKeyDown={keyDown}>
+          <div className='cinetropes__deck' data-scrub-demo role='group' aria-roledescription='carousel' aria-label='Films' onKeyDown={keyDown}>
             <button type='button' className='cinetropes__arrow' aria-label='Previous film' onClick={() => deal(-1)}>
               <Chevron d='M15 6l-6 6l6 6' />
             </button>

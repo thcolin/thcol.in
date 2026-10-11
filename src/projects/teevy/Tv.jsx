@@ -311,7 +311,7 @@ export const Tv = () => {
         data-kind={current.kind}
       >
         <Prints active={photo} />
-        <div className='teevy__stage'>
+        <div className='teevy__stage' data-scrub-demo>
           <div className='teevy__screen'>
             <div className='teevy__channel' data-channel={current.id}>
               {current.kind === 'film' && <Film still={current.still} />}

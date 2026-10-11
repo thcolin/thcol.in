@@ -38,7 +38,7 @@ export const Sensorr = () => {
             <Tags items={['TypeScript', 'React', 'Node.js', 'Nx', 'Docker']} />
             <Links links={[['Demo', 'https://thcolin.github.io/sensorr/'], ['GitHub', 'https://github.com/thcolin/sensorr']]} />
           </div>
-          <div className='band__demo sensorr__stage'>
+          <div className='band__demo sensorr__stage' data-scrub-demo>
             {FEATURES.filter(({ id }) => seen.includes(id)).map(({ id, label, src }) => (
               <img
                 key={id}

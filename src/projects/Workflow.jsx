@@ -737,7 +737,7 @@ export const Workflow = () => {
             <span className='workflow-obsidian__sample'>Sample data</span>
           </div>
 
-          <figure className='workflow__figure'>
+          <figure className='workflow__figure' data-scrub-demo>
             <div
               ref={scroller}
               tabIndex={0}

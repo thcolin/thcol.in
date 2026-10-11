@@ -234,7 +234,7 @@ export const Oleoo = () => {
               ['GitHub', 'https://github.com/thcolin/oleoo'],
             ]} />
           </div>
-          <div className='band__demo oleoo__parse'>
+          <div className='band__demo oleoo__parse' data-scrub-demo>
             <label htmlFor='oleoo-release' className='oleoo__label'>Release name, parsed as you type</label>
             <Release value={value} detected={detected} onChange={(next) => { hold(); setDetected(1); setValue(next) }} />
           </div>

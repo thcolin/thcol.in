@@ -433,7 +433,7 @@ const Stage = ({ piece, view, viewer }) => {
   }[status]
 
   return (
-    <div className={`printing__stage is-${status}${photo ? ' is-photo' : ''}`}>
+    <div className={`printing__stage is-${status}${photo ? ' is-photo' : ''}`} data-scrub-demo>
       <div
         ref={host}
         className='printing__viewer'

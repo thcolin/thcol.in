@@ -787,7 +787,7 @@ export const CinetropesDaily = () => {
                   <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} />
                 </div>
 
-                <div className='cd__accordion'>
+                <div className='cd__accordion' data-scrub-demo>
                   <Section id='casting' label='Casting' open={openSection === 'casting'} onToggle={toggle}>
                     <ul className='cd__people'>
                       {mystery.castDetailed.slice(0, CAST_LIMIT).map((person) => (

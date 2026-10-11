@@ -80,7 +80,7 @@ export const Gmca = () => {
               ['GitHub', 'https://github.com/thcolin/gamepad-media-center-aggregator'],
             ]} />
           </div>
-          <div className='band__demo gmca__stage'>
+          <div className='band__demo gmca__stage' data-scrub-demo>
             <img
               key={`${device}-${server}`}
               src={HEROES[`${device}-${server}`]}

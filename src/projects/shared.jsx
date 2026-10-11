@@ -115,10 +115,11 @@ export const Group = ({ id, title, phrase, projects, children }) => {
 // Same query as the pinning in projects.css: a band is one screen from there
 const PINNED = '(min-width: 900px) and (min-height: 640px)'
 
-export const stepOf = (progress, steps) => Math.min(steps - 1, Math.floor(progress * steps))
+// One screen a step: the first also has the band's entry, the last its exit
+export const stepOf = (progress, steps) => Math.round(progress * (steps - 1))
 
-// The scroll walks a band through its steps: pinned on a wide screen, across its passage otherwise.
-// `hold` hands the band to the visitor until it leaves the screen
+// The scroll walks a band through its steps: pinned on a wide screen, otherwise while its demo, marked
+// `data-scrub-demo`, crosses the middle of the screen. `hold` hands the band to the visitor until it leaves the screen
 export const useScrub = (onProgress) => {
   const ref = useRef(null)
   const held = useRef(false)
@@ -153,9 +154,10 @@ export const useScrub = (onProgress) => {
         return
       }
 
+      const demo = (element.querySelector('[data-scrub-demo]') || element).getBoundingClientRect()
       const progress = pinned.matches
         ? -rect.top / Math.max(1, rect.height - innerHeight)
-        : (innerHeight * 0.6 - rect.top) / rect.height
+        : (innerHeight * 0.75 - (demo.top + demo.height / 2)) / (innerHeight * 0.5)
 
       callback.current(Math.min(1, Math.max(0, progress)), velocity)
     }

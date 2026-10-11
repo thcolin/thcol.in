@@ -232,7 +232,7 @@ export const Wrapped = () => {
             <Tags items={['React', 'TypeScript', 'framer-motion', 'WebGL', 'i18next']} />
             <Links links={[['Demo', DEMO], ['GitHub', 'https://github.com/thcolin/sensorr/tree/main/apps/wrapped']]} />
           </div>
-          <div ref={demo} className='band__demo wrapped__demo'>
+          <div ref={demo} className='band__demo wrapped__demo' data-scrub-demo>
             <div className='wrapped__phone' style={{ width: `${phone}px`, height: `${phone * PHONE.ratio}px` }}>
               <div
                 className='wrapped__look'
