@@ -18,7 +18,7 @@ import './projects.css'
 const Projects = () => {
   // The bands only exist once rendered, so a link to one lands after the first render
   useEffect(() => {
-    document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({ behavior: 'instant' })
+    document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' })
   }, [])
 
   return (
