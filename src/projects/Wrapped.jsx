@@ -25,19 +25,23 @@ const art = (item, kind = 'thumb', width = 640) => item[kind] ? `https://image.t
 const { sheets, colophon, closed } = sheetsOf(share)
 const stories = [...sheets, { kind: 'summary', label: t('wrapped.title', { name: share.name, year: share.year }) }]
 
-// The size every story is composed at, as in apps/wrapped, and the segments above it and the bar under it
+// The size every story is composed at, as in apps/wrapped, and the bar under it
 const STORY = { width: 396, height: 704 }
-const CHROME = { top: 24, bottom: 64 }
-// The phone's bezel, on each side
-const BEZEL = 10
+const BAR = 64
+
+// The phone is a photographed iPhone, 1773 × 3579, its screen a hole at these fractions of it. The Dynamic Island
+// covers the top of the screen: the segments start under it
+const PHONE = { width: 440, ratio: 3579 / 1773 }
+const SCREEN = { left: 0.04963, top: 0.02487, width: 0.90073, height: 0.95027, island: 0.065 }
 
 // The phone shrinks with the column, never with the story it shows. On desktop the band is one screen high, and the
 // phone fits the height left under it, its badge included
 const DESKTOP = '(min-width: 901px)'
+const IPHONE = new URL('../assets/wrapped/iphone.webp', import.meta.url)
 const BADGE = 40
 
 const useScale = (ref) => {
-  const [scale, setScale] = useState(1)
+  const [size, setSize] = useState({ phone: PHONE.width, scale: 1 })
 
   useEffect(() => {
     const element = ref.current
@@ -48,14 +52,17 @@ const useScale = (ref) => {
 
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect
-      const tall = matchMedia(DESKTOP).matches ? (height - BADGE - CHROME.top - CHROME.bottom - BEZEL * 2) / STORY.height : 1
-      setScale(Math.max(0.1, Math.min(1, (width - BEZEL * 2) / STORY.width, tall)))
+      const tall = matchMedia(DESKTOP).matches ? (height - BADGE) / PHONE.ratio : PHONE.width
+      const phone = Math.max(120, Math.min(PHONE.width, width, tall))
+      const screen = { width: phone * SCREEN.width, height: phone * PHONE.ratio * SCREEN.height }
+      const room = screen.height * (1 - SCREEN.island) - BAR
+      setSize({ phone, scale: Math.max(0.1, Math.min(1, screen.width / STORY.width, room / STORY.height)) })
     })
     observer.observe(element)
     return () => observer.disconnect()
   }, [])
 
-  return scale
+  return size
 }
 
 // The first look loads a screen before the band shows
@@ -185,7 +192,7 @@ const Stories = ({ index, onIndex, label, scale, bar, children }) => {
 export const Wrapped = () => {
   const demo = useRef(null)
   const near = useNear(demo)
-  const scale = useScale(demo)
+  const { phone, scale } = useScale(demo)
   const [theme, setTheme] = useState(share.look.theme)
   const [index, setIndex] = useState(0)
   const Story = STORIES[theme]
@@ -222,14 +229,18 @@ export const Wrapped = () => {
           <Links links={[['Demo', DEMO], ['GitHub', 'https://github.com/thcolin/sensorr/tree/main/apps/wrapped']]} />
         </div>
         <div ref={demo} className='band__demo wrapped__demo'>
-          <div
-            className='wrapped__phone'
-            style={{
-              width: `${STORY.width * scale + BEZEL * 2}px`,
-              height: `${STORY.height * scale + CHROME.top + CHROME.bottom + BEZEL * 2}px`,
-            }}
-          >
-            <div className='wrapped__look' data-theme={theme}>
+          <div className='wrapped__phone' style={{ width: `${phone}px`, height: `${phone * PHONE.ratio}px` }}>
+            <div
+              className='wrapped__look'
+              data-theme={theme}
+              style={{
+                left: `${SCREEN.left * 100}%`,
+                top: `${SCREEN.top * 100}%`,
+                width: `${SCREEN.width * 100}%`,
+                height: `${SCREEN.height * 100}%`,
+                '--island': `${phone * PHONE.ratio * SCREEN.height * SCREEN.island}px`,
+              }}
+            >
               <Stories index={index} onIndex={setIndex} label={story.label} scale={scale} bar={<Switch theme={theme} onChoose={choose} />}>
                 {near && (
                   <Suspense fallback={null}>
@@ -238,6 +249,7 @@ export const Wrapped = () => {
                 )}
               </Stories>
             </div>
+            <img className='wrapped__frame' src={IPHONE} width='880' height='1776' alt='' draggable={false} />
           </div>
           <p className='wrapped__badge' aria-hidden='true'>Sample data</p>
         </div>

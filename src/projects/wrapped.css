@@ -181,21 +181,23 @@
 
 .wrapped__phone {
   position: relative;
-  padding: 10px;
-  border-radius: 52px;
-  background: #0b0b0c;
-  box-shadow:
-    inset 0 0 0 1px rgb(255 255 255 / 0.12),
-    0 2px 4px rgb(0 0 0 / 0.25),
-    0 32px 64px -24px rgb(0 0 0 / 0.6);
+  flex: none;
+  filter: drop-shadow(0 32px 32px rgb(0 0 0 / 0.45));
+}
+
+/* The photographed frame lies over the screen: only its hole shows the story */
+.wrapped__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .wrapped__look {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
   overflow: hidden;
-  border-radius: 42px;
+  border-radius: 13% / 6.2%;
   /* The look's sheet sets its own ground and type here, as on the page body of apps/wrapped */
   isolation: isolate;
 }
@@ -295,7 +297,7 @@
   place-items: center;
   width: 100%;
   height: 100%;
-  padding: 24px 0 64px;
+  padding: var(--island, 24px) 0 64px;
   overflow: hidden;
   background: var(--switch-bg, #111);
   touch-action: pan-y;
