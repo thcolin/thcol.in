@@ -23,23 +23,23 @@ test('the cross and the rooms browse the cinema, from outside to the booth', asy
 })
 
 test('Start embeds the demo of the chosen cinema', async ({ page }) => {
-  await band(page).getByRole('radio', { name: 'Shinjuku Cinema' }).click()
-  await expect(band(page).getByRole('heading', { name: 'Shinjuku Cinema' })).toBeVisible()
+  await band(page).getByRole('radio', { name: 'Berghain Kino' }).click()
+  await expect(band(page).getByRole('heading', { name: 'Berghain Kino' })).toBeVisible()
   await band(page).getByRole('button', { name: 'Start the game' }).first().click()
 
   const game = band(page).locator('iframe.cg__game')
-  await expect(game).toHaveAttribute('src', /\/play\?embed&facade=scene_cyberpunk_asian_urban_neo_tokyo$/)
+  await expect(game).toHaveAttribute('src', /\/play\?embed&facade=scene_cyberpunk_european_urban_berlin_techno$/)
   await expect(band(page).getByRole('button', { name: 'Restart' })).toBeVisible()
 })
 
 test('another cinema while a game is under way asks before starting over', async ({ page }) => {
-  await band(page).getByRole('radio', { name: 'Le Champo' }).click()
+  await band(page).getByRole('radio', { name: 'Nitehawk Cinema' }).click()
   await band(page).getByRole('button', { name: 'Start the game' }).first().click()
   await band(page).getByRole('radio', { name: 'The Lunar' }).click()
 
-  await expect(band(page).getByText('Your game is at Le Champo. Start over here?')).toBeVisible()
-  await band(page).getByRole('button', { name: 'Back to Le Champo' }).click()
-  await expect(band(page).getByRole('heading', { name: 'Le Champo' })).toBeVisible()
+  await expect(band(page).getByText('Your game is at Nitehawk Cinema. Start over here?')).toBeVisible()
+  await band(page).getByRole('button', { name: 'Back to Nitehawk Cinema' }).click()
+  await expect(band(page).getByRole('heading', { name: 'Nitehawk Cinema' })).toBeVisible()
   await expect(band(page).locator('.cg__panel').getByRole('button', { name: 'Continue' })).toBeVisible()
 })
 
