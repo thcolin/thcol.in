@@ -3,6 +3,7 @@ import ResponsiveVirtualGrid from 'react-responsive-virtual-grid'
 import { Links, Tags, useReveal, useScrub } from './shared'
 
 const CELLS = 10000
+const GLIDE = 1600
 const SHADES = ['#e3e3e3', '#ccc', '#e6e6e6', '#b0b0b0', '#e3e3e3', '#f2f2f2', '#ccc']
 
 const SNIPPET = `import VirtualGrid
@@ -35,9 +36,9 @@ export const Grid = () => {
 
   useEffect(() => () => cancelAnimationFrame(raf.current), [])
 
-  // The page's scroll runs through the whole grid, until the visitor scrolls it themselves
+  // The page's scroll runs a few screens down the grid, until the visitor scrolls it themselves
   const [scrub, hold] = useScrub((progress) => {
-    frame && (frame.scrollTop = progress * (frame.scrollHeight - frame.clientHeight))
+    frame && (frame.scrollTop = progress * GLIDE)
   })
 
   return (
