@@ -153,7 +153,8 @@ export const PixelSplit = ({ coarse, fine, onComplete, className }) => {
 const BACKGROUND = { r: 14, g: 13, b: 14 }
 
 // PixelatedText. One change from the app: the hidden text is never in the page, only its mosaic,
-// so the answer cannot be read before the end. Its box is measured from the text instead of laid out by it
+// so the answer cannot be read before the end. Its box is measured from the text instead of laid out by it,
+// until the reveal, where the text is in the page and lays the box out, as in the app
 export const PixelatedText = ({ text, revealed, resolution = 3, fontSize = 16, fontWeight = 400, fontFamily = "'Hanken Grotesk', sans-serif", color = 'rgba(255, 255, 255, 0.85)', block = false, className, children }) => {
   const wrapper = useRef(null)
   const canvas = useRef(null)
@@ -263,7 +264,7 @@ export const PixelatedText = ({ text, revealed, resolution = 3, fontSize = 16, f
   }
 
   return (
-    <span ref={wrapper} className={`cd__pixelated ${className ?? ''}`} style={{ width: coarse?.width, height: coarse?.height, display: block ? 'block' : 'inline-block' }}>
+    <span ref={wrapper} className={`cd__pixelated ${className ?? ''}`} style={animating ? { display: block ? 'block' : 'inline-flex' } : { width: coarse?.width, height: coarse?.height, display: block ? 'block' : 'inline-block' }}>
       {animating && (children ?? <span style={{ fontSize, fontWeight, fontFamily, color }}>{text}</span>)}
       <canvas ref={canvas} aria-hidden='true' />
     </span>
