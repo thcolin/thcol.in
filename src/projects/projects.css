@@ -190,10 +190,10 @@ main#projects ::selection {
   }
 }
 
-/* A band with steps stays on screen while the scroll walks through them, one step every 40svh */
+/* A band with steps stays on screen while the scroll walks through them, one step every screen */
 @media (min-width: 900px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
   .scrub {
-    height: calc(100svh + (var(--steps) - 1) * 40svh);
+    height: calc(var(--steps) * 100svh);
   }
 
   .scrub > .band {
