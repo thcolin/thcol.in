@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import ResponsiveVirtualGrid from 'react-responsive-virtual-grid'
-import { Links, Tags, useReveal } from './shared'
+import { Links, Tags, useReveal, useScrub } from './shared'
 
 const CELLS = 10000
 const SHADES = ['#e3e3e3', '#ccc', '#e6e6e6', '#b0b0b0', '#e3e3e3', '#f2f2f2', '#ccc']
@@ -35,52 +35,62 @@ export const Grid = () => {
 
   useEffect(() => () => cancelAnimationFrame(raf.current), [])
 
+  // The page's scroll runs through the whole grid, until the visitor scrolls it themselves
+  const [scrub, hold] = useScrub((progress) => {
+    frame && (frame.scrollTop = progress * (frame.scrollHeight - frame.clientHeight))
+  })
+
   return (
-    <article id='react-responsive-virtual-grid' className='band grid' aria-labelledby='react-responsive-virtual-grid-title'>
-      <div ref={ref} className='band__column band__split band__split--reverse'>
-        <div className='band__text'>
-          <h3 id='react-responsive-virtual-grid-title' className='grid__title'>
-            <span aria-hidden='true'>💀🚟</span>
-            <span>react-<wbr />responsive-<wbr />virtual-<wbr />grid</span>
-          </h3>
-          <p className='band__body'>
-            Dead-simple react virtual grid library that act like a normal <code>{'<div>'}</code>.
-          </p>
-          <pre className='grid__snippet'><code>{SNIPPET}</code></pre>
-          <Tags items={['React', 'JavaScript']} />
-          <Links links={[
-            ['npm', 'https://www.npmjs.com/package/react-responsive-virtual-grid'],
-            ['GitHub', 'https://github.com/thcolin/react-responsive-virtual-grid'],
-            ['Example', 'https://thcolin.github.io/react-responsive-virtual-grid/'],
-          ]} />
-        </div>
-        <div className={shown ? 'band__demo grid__stage is-shown' : 'band__demo grid__stage'}>
-          <div
-            ref={setFrame}
-            tabIndex={0}
-            role='region'
-            aria-label={`Virtual grid of ${CELLS} cells, scroll it`}
-            className='grid__frame'
-          >
-            <div className='grid__track'>
-              {frame && (
-                <ResponsiveVirtualGrid
-                  total={CELLS}
-                  cell={{ height: 64, width: 64 }}
-                  child={Cell}
-                  onRender={onRender}
-                  scrollContainer={frame}
-                  scrollDirection='vertical'
-                />
-              )}
-            </div>
+    <div ref={scrub} id='react-responsive-virtual-grid' className='scrub' style={{ '--steps': 2 }}>
+      <article className='band grid' aria-labelledby='react-responsive-virtual-grid-title'>
+        <div ref={ref} className='band__column band__split band__split--reverse'>
+          <div className='band__text'>
+            <h3 id='react-responsive-virtual-grid-title' className='grid__title'>
+              <span aria-hidden='true'>💀🚟</span>
+              <span>react-<wbr />responsive-<wbr />virtual-<wbr />grid</span>
+            </h3>
+            <p className='band__body'>
+              Dead-simple react virtual grid library that act like a normal <code>{'<div>'}</code>.
+            </p>
+            <pre className='grid__snippet'><code>{SNIPPET}</code></pre>
+            <Tags items={['React', 'JavaScript']} />
+            <Links links={[
+              ['npm', 'https://www.npmjs.com/package/react-responsive-virtual-grid'],
+              ['GitHub', 'https://github.com/thcolin/react-responsive-virtual-grid'],
+              ['Example', 'https://thcolin.github.io/react-responsive-virtual-grid/'],
+            ]} />
           </div>
-          <p aria-live='polite' className='grid__counter'>
-            <span className='grid__count'>{rendered}</span>
-            <span>rendered of 10&nbsp;000 cells</span>
-          </p>
+          <div className={shown ? 'band__demo grid__stage is-shown' : 'band__demo grid__stage'}>
+            <div
+              ref={setFrame}
+              onWheel={hold}
+              onTouchStart={hold}
+              onKeyDown={hold}
+              tabIndex={0}
+              role='region'
+              aria-label={`Virtual grid of ${CELLS} cells, scroll it`}
+              className='grid__frame'
+            >
+              <div className='grid__track'>
+                {frame && (
+                  <ResponsiveVirtualGrid
+                    total={CELLS}
+                    cell={{ height: 64, width: 64 }}
+                    child={Cell}
+                    onRender={onRender}
+                    scrollContainer={frame}
+                    scrollDirection='vertical'
+                  />
+                )}
+              </div>
+            </div>
+            <p aria-live='polite' className='grid__counter'>
+              <span className='grid__count'>{rendered}</span>
+              <span>rendered of 10&nbsp;000 cells</span>
+            </p>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </div>
   )
 }

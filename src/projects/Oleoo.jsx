@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import oleoo from 'oleoo'
-import { Links, Tags, useReveal } from './shared'
+import { Links, Tags, useReveal, useScrub } from './shared'
 
 const EXAMPLE = 'Arrival.2016.MULTi.2160p.WEB-DL.x265.EAC3-VCR'
 
@@ -198,41 +198,45 @@ const Release = ({ value, onChange }) => {
 export const Oleoo = () => {
   const [value, setValue] = useState(EXAMPLE)
   const [ref, shown] = useReveal()
+  // The scroll types the example, done a little before the band moves on
+  const [scrub, hold] = useScrub((progress) => setValue(EXAMPLE.slice(0, Math.round(Math.min(1, progress / 0.8) * EXAMPLE.length))))
 
   return (
-    <article id='oleoo' className='band oleoo' aria-labelledby='oleoo-title'>
-      <div aria-hidden='true' className='oleoo__edge'>{EDGE}</div>
-      <div ref={ref} className='band__column band__split oleoo__split'>
-        <div className='band__text'>
-          <h3 id='oleoo-title' className='visually-hidden'>oleoo</h3>
-          <pre aria-hidden='true' className='oleoo__logo'>
-            {LOGO.map((line, index) => (
-              <span key={index} style={{ transitionDelay: `${index * 70}ms` }} className={shown ? 'is-shown' : undefined}>{line}</span>
-            ))}
-          </pre>
-          <p className='oleoo__subtitle'>Scene/P2P/Warez release name parser</p>
-          <p className='oleoo__forum'>Named after an old French warez forum closed in 2008.</p>
-          <dl className='oleoo__facts'>
-            {FACTS.map(([fact, detail]) => (
-              <div key={fact}>
-                <dt>{fact}</dt>
-                <dd>{detail}</dd>
-              </div>
-            ))}
-          </dl>
-          <Tags items={['JavaScript', 'Go', 'Rust', 'rules.json + SPEC.md']} />
-          <Links links={[
-            ['npm', 'https://www.npmjs.com/package/oleoo'],
-            ['crates.io', 'https://crates.io/crates/oleoo'],
-            ['pkg.go.dev', 'https://pkg.go.dev/github.com/thcolin/oleoo/packages/go/v3'],
-            ['GitHub', 'https://github.com/thcolin/oleoo'],
-          ]} />
+    <div ref={scrub} id='oleoo' className='scrub' style={{ '--steps': 2 }}>
+      <article className='band oleoo' aria-labelledby='oleoo-title'>
+        <div aria-hidden='true' className='oleoo__edge'>{EDGE}</div>
+        <div ref={ref} className='band__column band__split oleoo__split'>
+          <div className='band__text'>
+            <h3 id='oleoo-title' className='visually-hidden'>oleoo</h3>
+            <pre aria-hidden='true' className='oleoo__logo'>
+              {LOGO.map((line, index) => (
+                <span key={index} style={{ transitionDelay: `${index * 70}ms` }} className={shown ? 'is-shown' : undefined}>{line}</span>
+              ))}
+            </pre>
+            <p className='oleoo__subtitle'>Scene/P2P/Warez release name parser</p>
+            <p className='oleoo__forum'>Named after an old French warez forum closed in 2008.</p>
+            <dl className='oleoo__facts'>
+              {FACTS.map(([fact, detail]) => (
+                <div key={fact}>
+                  <dt>{fact}</dt>
+                  <dd>{detail}</dd>
+                </div>
+              ))}
+            </dl>
+            <Tags items={['JavaScript', 'Go', 'Rust', 'rules.json + SPEC.md']} />
+            <Links links={[
+              ['npm', 'https://www.npmjs.com/package/oleoo'],
+              ['crates.io', 'https://crates.io/crates/oleoo'],
+              ['pkg.go.dev', 'https://pkg.go.dev/github.com/thcolin/oleoo/packages/go/v3'],
+              ['GitHub', 'https://github.com/thcolin/oleoo'],
+            ]} />
+          </div>
+          <div className='band__demo oleoo__parse'>
+            <label htmlFor='oleoo-release' className='oleoo__label'>Release name, parsed as you type</label>
+            <Release value={value} onChange={(next) => { hold(); setValue(next) }} />
+          </div>
         </div>
-        <div className='band__demo oleoo__parse'>
-          <label htmlFor='oleoo-release' className='oleoo__label'>Release name, parsed as you type</label>
-          <Release value={value} onChange={setValue} />
-        </div>
-      </div>
-    </article>
+      </article>
+    </div>
   )
 }
