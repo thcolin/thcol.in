@@ -23,6 +23,7 @@ const SIZES = { 320: 'w342', 640: 'w780', 1280: 'w1280' }
 const art = (item, kind = 'thumb', width = 640) => item[kind] ? `https://image.tmdb.org/t/p/${SIZES[width]}${item[kind]}` : undefined
 
 const { sheets, colophon, closed } = sheetsOf(share)
+const TOUR = 4
 const stories = [...sheets, { kind: 'summary', label: t('wrapped.title', { name: share.name, year: share.year }) }]
 
 // The size every story is composed at, as in apps/wrapped, and the bar under it
@@ -197,8 +198,8 @@ export const Wrapped = () => {
   const [index, setIndex] = useState(0)
   const Story = STORIES[theme]
   const story = stories[index]
-  // The scroll turns to the second story, no further
-  const [scrub, hold] = useScrub((progress) => setIndex(stepOf(progress, 2)))
+  // The scroll turns the first stories, not all of them
+  const [scrub, hold] = useScrub((progress) => setIndex(stepOf(progress, TOUR)))
 
   // Loaded first, so the phone never shows the new look's colours without its story
   const choose = async (next) => {
@@ -213,7 +214,7 @@ export const Wrapped = () => {
   }
 
   return (
-    <div ref={scrub} id='sensorr-wrapped' className='scrub' style={{ '--steps': 2 }}>
+    <div ref={scrub} id='sensorr-wrapped' className='scrub' style={{ '--steps': TOUR }}>
       <article className='band wrapped' data-look={theme} aria-labelledby='sensorr-wrapped-title'>
         <div className='band__column band__split band__split--reverse'>
           <div className='band__text'>
