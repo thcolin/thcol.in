@@ -1498,7 +1498,6 @@
   /* At the end the sections fold up so the page fits; one opened scrolls in its own box, never under the dock */
   .band.cd.is-over .cd__panel {
     overflow-y: auto;
-    overscroll-behavior: contain;
     scrollbar-width: thin;
   }
 
