@@ -627,9 +627,9 @@ export const Cinetropes = () => {
     }
   }
 
-  // The scroll moves on to the second film, one card move at a time, until the visitor deals the cards
+  // The scroll deals every film, one card move at a time, until the visitor deals them
   const [wanted, setWanted] = useState(null)
-  const [scrub, hold] = useScrub((progress) => setWanted(stepOf(progress, 2)))
+  const [scrub, hold] = useScrub((progress) => setWanted(stepOf(progress, films.length)))
 
   useEffect(() => {
     if (wanted !== null && wanted !== front) {
@@ -671,7 +671,7 @@ export const Cinetropes = () => {
   }
 
   return (
-    <div ref={scrub} id='cinetropes' className='scrub' style={{ '--steps': 2 }}>
+    <div ref={scrub} id='cinetropes' className='scrub' style={{ '--steps': films.length }}>
       <article className='band cinetropes' aria-labelledby='cinetropes-title'>
         <div className='cinetropes__backdrop' aria-hidden='true'>
           {films.map((item, index) => (
