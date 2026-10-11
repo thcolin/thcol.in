@@ -686,7 +686,7 @@ export const CinetropesDaily = () => {
       <header className='cd__nav'>
         <h3 id='cinetropes-daily' className='cd__nav-title'>
           <img src={LOGO} alt='cinetropes' width='275' height='40' />
-          <span>Film of the day</span>
+          <span>daily</span>
         </h3>
         <div className='cd__nav-side'>
           <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />
