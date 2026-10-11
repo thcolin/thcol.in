@@ -64,8 +64,7 @@ export const Grid = () => {
           <div className={shown ? 'band__demo grid__stage is-shown' : 'band__demo grid__stage'} data-scrub-demo>
             <div
               ref={setFrame}
-              onWheel={hold}
-              onTouchStart={hold}
+                onTouchStart={hold}
               onKeyDown={hold}
               tabIndex={0}
               role='region'

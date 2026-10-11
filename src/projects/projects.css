@@ -200,6 +200,11 @@ main#projects ::selection {
     position: sticky;
     top: 0;
   }
+
+  /* The page's scroll runs the grid there, so the wheel over it keeps scrolling the page */
+  .scrub .grid__frame {
+    overflow-y: hidden;
+  }
 }
 
 /* Shared controls, drawn in each band's ink */
