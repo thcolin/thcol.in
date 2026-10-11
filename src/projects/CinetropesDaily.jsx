@@ -686,9 +686,9 @@ export const CinetropesDaily = () => {
     resultMode && setOpenSection('')
   }, [resultMode])
 
-  // Once the game is over the scroll has nothing left to walk: the band is one screen, and a visitor pinned on it
-  // stays at its top instead of being pushed out by the steps it loses
-  const steps = resultMode ? 1 : onboarded ? SECTIONS.length : 2
+  // Once the game is over the scroll has nothing left to walk: the band stays pinned a screen over the verdict, and a
+  // visitor pinned on it stays at its top instead of being pushed out by the steps it loses
+  const steps = resultMode ? 2 : onboarded ? SECTIONS.length : 2
   const stepsBefore = useRef(steps)
   useLayoutEffect(() => {
     const top = scrub.current.getBoundingClientRect().top
