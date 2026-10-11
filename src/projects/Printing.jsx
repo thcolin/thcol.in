@@ -321,6 +321,7 @@ const createViewer = async ({ host, url, direction, explode, reduced, insets, on
 
   return {
     setExploded,
+    settling: () => (transition ? Math.max(0, 1100 + parts.length * 45 - (performance.now() - transition.start)) : 0),
     setActive: (next) => {
       active = next
       run()
@@ -352,9 +353,8 @@ const hasWebGL = () => {
   }
 }
 
-const Stage = ({ piece, view }) => {
+const Stage = ({ piece, view, viewer }) => {
   const host = useRef(null)
-  const viewer = useRef(null)
   const reduced = usePrefersReducedMotion()
   const [status, setStatus] = useState('idle')
   const [progress, setProgress] = useState(0)
@@ -469,14 +469,17 @@ const Stage = ({ piece, view }) => {
 
 const Piece = ({ piece, step, hold }) => {
   const [view, setView] = useState('assembled')
+  const viewer = useRef(null)
   const views = [
     { id: 'assembled', label: 'Assembled' },
     { id: 'exploded', label: 'Exploded' },
     piece.photo,
   ]
 
+  // The scroll leaves the exploded view only once its parts have landed
   useEffect(() => {
-    setView(views[step].id)
+    const timer = setTimeout(() => setView(views[step].id), view === 'exploded' ? viewer.current?.settling() ?? 0 : 0)
+    return () => clearTimeout(timer)
   }, [step])
 
   const pick = (id) => {
@@ -486,7 +489,7 @@ const Piece = ({ piece, step, hold }) => {
 
   return (
     <article id={piece.id} className='printing__piece' aria-labelledby={`${piece.id}-title`}>
-      <Stage piece={piece} view={view} />
+      <Stage piece={piece} view={view} viewer={viewer} />
       <div className='printing__overlay'>
         <Choices label={`${piece.title} view`} options={views} value={view} onChange={pick} className='choices choices--bracket' />
         <h3 id={`${piece.id}-title`} className='printing__title'>{piece.title}</h3>
