@@ -1,9 +1,9 @@
 /* Sensorr Wrapped: the band wears the look the phone shows, its ground, its ink and its lettering */
 
 .band.wrapped {
-  --band-bg: #b5ab95;
+  --band-bg: #958b76;
   --band-ink: #16140f;
-  --band-dim: #4a453b;
+  --band-dim: #2a2416;
   --band-line: rgb(22 20 15 / 0.2);
   --accent: #e2081c;
   --wrapped-display: italic 900 1em/0.95 'Barlow Condensed', 'Arial Narrow', sans-serif;
