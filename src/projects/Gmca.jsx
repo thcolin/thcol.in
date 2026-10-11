@@ -29,7 +29,6 @@ const HEROES = {
   'tv-stremio': new URL('../assets/gmca/tv-stremio.webp', import.meta.url),
 }
 
-// The scroll changes device and server together, three times
 const TOUR = [['switch', 'plex'], ['vita', 'jellyfin'], ['tv', 'emby']]
 
 export const Gmca = () => {

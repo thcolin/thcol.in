@@ -10,7 +10,6 @@ const FEATURES = [
   { id: 'friends', label: 'Friends', src: new URL('../assets/sensorr/friends.webp', import.meta.url) },
 ]
 
-// The scroll tours the first three
 const TOUR = FEATURES.slice(0, 3)
 
 export const Sensorr = () => {
