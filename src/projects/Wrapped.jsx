@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { Links, Tags } from './shared'
+import { Links, Tags, stepOf, useScrub } from './shared'
 import { sheetsOf, t } from './wrapped/sheets'
 import share from './wrapped/share.json'
 import './wrapped.css'
@@ -197,6 +197,8 @@ export const Wrapped = () => {
   const [index, setIndex] = useState(0)
   const Story = STORIES[theme]
   const story = stories[index]
+  // The scroll turns to the second story, no further
+  const [scrub, hold] = useScrub((progress) => setIndex(stepOf(progress, 2)))
 
   // Loaded first, so the phone never shows the new look's colours without its story
   const choose = async (next) => {
@@ -211,49 +213,51 @@ export const Wrapped = () => {
   }
 
   return (
-    <article id='sensorr-wrapped' className='band wrapped' data-look={theme} aria-labelledby='sensorr-wrapped-title'>
-      <div className='band__column band__split band__split--reverse'>
-        <div className='band__text'>
-          <h3 id='sensorr-wrapped-title' className='wrapped__title'>
-            <span className='wrapped__logo'><span aria-hidden='true'>🍿📼</span>sensorr</span>
-            <span className='wrapped__name'>Wrapped</span>
-          </h3>
-          <p className='wrapped__tagline'>A wrapped for every friend, every year.</p>
-          <p className='band__body'>
-            Friends link their Plex account to sensorr. Each year, Tautulli’s watch history gives them a wrapped of their year on your server, in five looks, in English and French.
-          </p>
-          <p className='wrapped__sample'>
-            Sample data: Alex’s {share.year}, from sensorr’s public demo. Tap or swipe the story, or focus it and use the arrow keys.
-          </p>
-          <Tags items={['React', 'TypeScript', 'framer-motion', 'WebGL', 'i18next']} />
-          <Links links={[['Demo', DEMO], ['GitHub', 'https://github.com/thcolin/sensorr/tree/main/apps/wrapped']]} />
-        </div>
-        <div ref={demo} className='band__demo wrapped__demo'>
-          <div className='wrapped__phone' style={{ width: `${phone}px`, height: `${phone * PHONE.ratio}px` }}>
-            <div
-              className='wrapped__look'
-              data-theme={theme}
-              style={{
-                left: `${SCREEN.left * 100}%`,
-                top: `${SCREEN.top * 100}%`,
-                width: `${SCREEN.width * 100}%`,
-                height: `${SCREEN.height * 100}%`,
-                '--island': `${phone * PHONE.ratio * SCREEN.height * SCREEN.island}px`,
-              }}
-            >
-              <Stories index={index} onIndex={setIndex} label={story.label} scale={scale} bar={<Switch theme={theme} onChoose={choose} />}>
-                {near && (
-                  <Suspense fallback={null}>
-                    <Story key={`${theme}-${index}`} story={story} index={index} share={share} sheets={sheets} colophon={colophon} closed={closed} art={art} />
-                  </Suspense>
-                )}
-              </Stories>
-            </div>
-            <img className='wrapped__frame' src={IPHONE} width='880' height='1776' alt='' draggable={false} />
+    <div ref={scrub} id='sensorr-wrapped' className='scrub' style={{ '--steps': 2 }}>
+      <article className='band wrapped' data-look={theme} aria-labelledby='sensorr-wrapped-title'>
+        <div className='band__column band__split band__split--reverse'>
+          <div className='band__text'>
+            <h3 id='sensorr-wrapped-title' className='wrapped__title'>
+              <span className='wrapped__logo'><span aria-hidden='true'>🍿📼</span>sensorr</span>
+              <span className='wrapped__name'>Wrapped</span>
+            </h3>
+            <p className='wrapped__tagline'>A wrapped for every friend, every year.</p>
+            <p className='band__body'>
+              Friends link their Plex account to sensorr. Each year, Tautulli’s watch history gives them a wrapped of their year on your server, in five looks, in English and French.
+            </p>
+            <p className='wrapped__sample'>
+              Sample data: Alex’s {share.year}, from sensorr’s public demo. Tap or swipe the story, or focus it and use the arrow keys.
+            </p>
+            <Tags items={['React', 'TypeScript', 'framer-motion', 'WebGL', 'i18next']} />
+            <Links links={[['Demo', DEMO], ['GitHub', 'https://github.com/thcolin/sensorr/tree/main/apps/wrapped']]} />
           </div>
-          <p className='wrapped__badge' aria-hidden='true'>Sample data</p>
+          <div ref={demo} className='band__demo wrapped__demo'>
+            <div className='wrapped__phone' style={{ width: `${phone}px`, height: `${phone * PHONE.ratio}px` }}>
+              <div
+                className='wrapped__look'
+                data-theme={theme}
+                style={{
+                  left: `${SCREEN.left * 100}%`,
+                  top: `${SCREEN.top * 100}%`,
+                  width: `${SCREEN.width * 100}%`,
+                  height: `${SCREEN.height * 100}%`,
+                  '--island': `${phone * PHONE.ratio * SCREEN.height * SCREEN.island}px`,
+                }}
+              >
+                <Stories index={index} onIndex={(next) => { hold(); setIndex(next) }} label={story.label} scale={scale} bar={<Switch theme={theme} onChoose={choose} />}>
+                  {near && (
+                    <Suspense fallback={null}>
+                      <Story key={`${theme}-${index}`} story={story} index={index} share={share} sheets={sheets} colophon={colophon} closed={closed} art={art} />
+                    </Suspense>
+                  )}
+                </Stories>
+              </div>
+              <img className='wrapped__frame' src={IPHONE} width='880' height='1776' alt='' draggable={false} />
+            </div>
+            <p className='wrapped__badge' aria-hidden='true'>Sample data</p>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </div>
   )
 }

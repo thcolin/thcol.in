@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Choices, Links, Tags, usePrefersReducedMotion } from './shared'
+import { useState } from 'react'
+import { Choices, Links, Tags, stepOf, useScrub } from './shared'
 
 const DEVICES = [
   { id: 'switch', label: 'Switch', name: 'Nintendo Switch' },
@@ -29,94 +29,71 @@ const HEROES = {
   'tv-stremio': new URL('../assets/gmca/tv-stremio.webp', import.meta.url),
 }
 
-const ROTATION = 3200
+// The scroll changes device and server together, three times
+const TOUR = [['switch', 'plex'], ['vita', 'jellyfin'], ['tv', 'emby']]
 
 export const Gmca = () => {
   const [device, setDevice] = useState('switch')
   const [server, setServer] = useState('plex')
-  // Rotates through the servers until the visitor takes the controls
-  const [auto, setAuto] = useState(true)
-  const [paused, setPaused] = useState(false)
-  const reduced = usePrefersReducedMotion()
-
-  useEffect(() => {
-    if (!auto || paused || reduced) {
-      return
-    }
-
-    const timer = setTimeout(() => {
-      const index = SERVERS.findIndex(({ id }) => id === server)
-      const next = (index + 1) % SERVERS.length
-      setServer(SERVERS[next].id)
-
-      if (next === 0) {
-        setDevice(DEVICES[(DEVICES.findIndex(({ id }) => id === device) + 1) % DEVICES.length].id)
-      }
-    }, ROTATION)
-
-    return () => clearTimeout(timer)
-  }, [auto, paused, reduced, server, device])
+  const [scrub, hold] = useScrub((progress) => {
+    const [nextDevice, nextServer] = TOUR[stepOf(progress, TOUR.length)]
+    setDevice(nextDevice)
+    setServer(nextServer)
+  })
 
   const current = SERVERS.find(({ id }) => id === server)
   const name = DEVICES.find(({ id }) => id === device).name
 
   return (
-    <article
-      id='gmca'
-      className='band gmca'
-      aria-labelledby='gmca-title'
-      style={current.style}
-      onPointerEnter={() => setPaused(true)}
-      onPointerLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-    >
-      <div className='band__column band__split band__split--reverse'>
-        <div className='band__text'>
-          {/* Every server and device stacked in one cell sets the height; the current one sits at its bottom, on the description, so rotating never moves the band */}
-          <div className='gmca__head'>
-            <p aria-hidden='true' className='gmca__headline gmca__sizer'>
-              {DEVICES.flatMap((d) => SERVERS.map((s) => (
-                <span key={`${d.id}-${s.id}`}>Runs <em>{s.label}</em> on your {d.name}</span>
-              )))}
-            </p>
-            <div className='gmca__current'>
-              <h3 id='gmca-title' className='gmca__brand'>
-                <img src={new URL('../assets/gmca/gmca-logo.webp', import.meta.url)} alt='' width='64' height='64' />
-                <span>GMCA</span>
-                <small>Gamepad Media Center Aggregator</small>
-              </h3>
-              <p className='gmca__headline'>
-                Runs <em>{current.label}</em> on your {name}
+    <div ref={scrub} id='gmca' className='scrub' style={{ '--steps': TOUR.length }}>
+      <article className='band gmca' aria-labelledby='gmca-title' style={current.style}>
+        <div className='band__column band__split band__split--reverse'>
+          <div className='band__text'>
+            {/* Every server and device stacked in one cell sets the height; the current one sits at its bottom, on the description, so rotating never moves the band */}
+            <div className='gmca__head'>
+              <p aria-hidden='true' className='gmca__headline gmca__sizer'>
+                {DEVICES.flatMap((d) => SERVERS.map((s) => (
+                  <span key={`${d.id}-${s.id}`}>Runs <em>{s.label}</em> on your {d.name}</span>
+                )))}
               </p>
+              <div className='gmca__current'>
+                <h3 id='gmca-title' className='gmca__brand'>
+                  <img src={new URL('../assets/gmca/gmca-logo.webp', import.meta.url)} alt='' width='64' height='64' />
+                  <span>GMCA</span>
+                  <small>Gamepad Media Center Aggregator</small>
+                </h3>
+                <p className='gmca__headline'>
+                  Runs <em>{current.label}</em> on your {name}
+                </p>
+              </div>
             </div>
+            <p className='band__body'>
+              One native, controller-first client. Point it at any media center and run it on any device you left in a drawer. The interface never changes; only the accent and the tabs follow your server.
+            </p>
+            <div className='gmca__controls'>
+              <Choices label='Device' options={DEVICES} value={device} onChange={(id) => { hold(); setDevice(id) }} className='choices choices--mc' />
+              <Choices label='Server' options={SERVERS} value={server} onChange={(id) => { hold(); setServer(id) }} className='choices choices--mc' />
+            </div>
+            <Tags items={['C++17', 'borealis', 'mpv', 'CMake', 'devkitPro']} />
+            <Links links={[
+              ['Website', 'https://thcolin.github.io/gamepad-media-center-aggregator/'],
+              ['Download v1.3.0', 'https://github.com/thcolin/gamepad-media-center-aggregator/releases/latest'],
+              ['GitHub', 'https://github.com/thcolin/gamepad-media-center-aggregator'],
+            ]} />
           </div>
-          <p className='band__body'>
-            One native, controller-first client. Point it at any media center and run it on any device you left in a drawer. The interface never changes; only the accent and the tabs follow your server.
-          </p>
-          <div className='gmca__controls'>
-            <Choices label='Device' options={DEVICES} value={device} onChange={(id) => { setAuto(false); setDevice(id) }} className='choices choices--mc' />
-            <Choices label='Server' options={SERVERS} value={server} onChange={(id) => { setAuto(false); setServer(id) }} className='choices choices--mc' />
+          <div className='band__demo gmca__stage'>
+            <img
+              key={`${device}-${server}`}
+              src={HEROES[`${device}-${server}`]}
+              alt={`GMCA on ${name}, browsing ${current.label}`}
+              loading='lazy'
+              decoding='async'
+              width='1280'
+              height='640'
+            />
           </div>
-          <Tags items={['C++17', 'borealis', 'mpv', 'CMake', 'devkitPro']} />
-          <Links links={[
-            ['Website', 'https://thcolin.github.io/gamepad-media-center-aggregator/'],
-            ['Download v1.3.0', 'https://github.com/thcolin/gamepad-media-center-aggregator/releases/latest'],
-            ['GitHub', 'https://github.com/thcolin/gamepad-media-center-aggregator'],
-          ]} />
         </div>
-        <div className='band__demo gmca__stage'>
-          <img
-            key={`${device}-${server}`}
-            src={HEROES[`${device}-${server}`]}
-            alt={`GMCA on ${name}, browsing ${current.label}`}
-            loading='lazy'
-            decoding='async'
-            width='1280'
-            height='640'
-          />
-        </div>
-      </div>
-    </article>
+      </article>
+    </div>
   )
 }
