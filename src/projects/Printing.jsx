@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Choices, Tags, usePrefersReducedMotion } from './shared'
+import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import './printing.css'
 
 // Exploded offsets in mm, Y up, taken from each project's exploded() module
@@ -467,7 +467,7 @@ const Stage = ({ piece, view }) => {
   )
 }
 
-const Piece = ({ piece }) => {
+const Piece = ({ piece, step, hold }) => {
   const [view, setView] = useState('assembled')
   const views = [
     { id: 'assembled', label: 'Assembled' },
@@ -475,11 +475,20 @@ const Piece = ({ piece }) => {
     piece.photo,
   ]
 
+  useEffect(() => {
+    setView(views[step].id)
+  }, [step])
+
+  const pick = (id) => {
+    hold()
+    setView(id)
+  }
+
   return (
     <article id={piece.id} className='printing__piece' aria-labelledby={`${piece.id}-title`}>
       <Stage piece={piece} view={view} />
       <div className='printing__overlay'>
-        <Choices label={`${piece.title} view`} options={views} value={view} onChange={setView} className='choices choices--bracket' />
+        <Choices label={`${piece.title} view`} options={views} value={view} onChange={pick} className='choices choices--bracket' />
         <h3 id={`${piece.id}-title`} className='printing__title'>{piece.title}</h3>
         <p className='band__body'>{piece.text}</p>
         <Tags items={piece.tags} />
@@ -488,9 +497,17 @@ const Piece = ({ piece }) => {
   )
 }
 
-export const Printing = () => (
-  <div className='band printing'>
-    {PIECES.map((piece) => <Piece key={piece.id} piece={piece} />)}
-    <p className='printing__more'>Parametric, modular parts around one rack, sharing geometry, print profile and slicing tools.</p>
-  </div>
-)
+// Both pieces go through their views together: assembled, exploded, then the print
+export const Printing = () => {
+  const [step, setStep] = useState(0)
+  const [scrub, hold] = useScrub((progress) => setStep(stepOf(progress, 3)))
+
+  return (
+    <div ref={scrub} className='scrub' style={{ '--steps': 3 }}>
+      <div className='band printing'>
+        {PIECES.map((piece) => <Piece key={piece.id} piece={piece} step={step} hold={hold} />)}
+        <p className='printing__more'>Parametric, modular parts around one rack, sharing geometry, print profile and slicing tools.</p>
+      </div>
+    </div>
+  )
+}

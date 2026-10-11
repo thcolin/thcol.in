@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Choices, Tags, usePrefersReducedMotion, useReveal } from './shared'
+import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import './workflow.css'
 
 // The sample vault of the kit, Monday 21/09: what each command writes, in the order it writes it
@@ -555,10 +555,9 @@ const Line = ({ line }) => {
 
 export const Workflow = () => {
   const reduced = usePrefersReducedMotion()
-  const [ref, shown] = useReveal()
   const [play, setPlay] = useState(() => ({ index: 0, typed: reduced ? 99 : 0, sent: reduced, lines: reduced ? 99 : 0, running: false, snap: true }))
   const timers = useRef([])
-  const touched = useRef(false)
+  const step = useRef(-1)
   const scroller = useRef(null)
   const panels = useRef({})
 
@@ -582,7 +581,7 @@ export const Workflow = () => {
     timers.current = []
   }
 
-  const start = (index, chain) => {
+  const start = (index) => {
     const { typed, lines } = COMMANDS[index]
     const at = (delay, update) => timers.current.push(setTimeout(() => setPlay((state) => ({ ...state, ...update(state) })), delay))
     clear()
@@ -618,26 +617,25 @@ export const Workflow = () => {
       at(time, () => ({ lines: rank + 1 }))
     })
     at(time += 900, () => ({ running: false }))
-
-    if (chain && index < COMMANDS.length - 1) {
-      timers.current.push(setTimeout(() => start(index + 1, true), time + 2200))
-    }
   }
 
-  // Once in view, the day plays through its three commands, unless someone has already picked one
-  useEffect(() => {
-    if (shown && !reduced && !touched.current) {
-      touched.current = true
-      start(0, true)
+  // The scroll plays the day one command at a time, until someone picks one
+  const [scrub, hold] = useScrub((progress) => {
+    const index = stepOf(progress, COMMANDS.length)
+
+    if (index !== step.current) {
+      step.current = index
+      start(index)
     }
-  }, [shown, reduced])
+  })
 
   useEffect(() => clear, [])
 
   const choose = (id) => {
-    touched.current = true
+    hold()
     setDraft(null)
-    start(COMMANDS.findIndex((item) => item.id === id), false)
+    step.current = COMMANDS.findIndex((item) => item.id === id)
+    start(step.current)
   }
 
   // The prompt takes a command as Claude Code does: / lists them, arrows pick, Tab completes, Enter runs
@@ -667,105 +665,107 @@ export const Workflow = () => {
   }
 
   return (
-    <article id='workflow-obsidian' className='band workflow' aria-labelledby='workflow-obsidian-title'>
-      <div ref={ref} className='workflow__layout'>
-        <div className='band__text'>
-          <h3 id='workflow-obsidian-title' className='workflow__title'>Workflow & Obsidian</h3>
-          <p className='band__body'>
-            An Obsidian vault as a second brain, kept by Claude Code commands. The Dashboard is never written by hand: it is computed from the notes and the sessions.
-          </p>
-          <Choices label='Command' options={COMMANDS} value={command.id} onChange={choose} className='choices choices--bracket' />
-          <Tags items={['Claude Code', 'Obsidian Bases', 'Python', 'Orca worktrees']} />
-        </div>
+    <div ref={scrub} id='workflow-obsidian' className='scrub' style={{ '--steps': COMMANDS.length }}>
+      <article className='band workflow' aria-labelledby='workflow-obsidian-title'>
+        <div className='workflow__layout'>
+          <div className='band__text'>
+            <h3 id='workflow-obsidian-title' className='workflow__title'>Workflow & Obsidian</h3>
+            <p className='band__body'>
+              An Obsidian vault as a second brain, kept by Claude Code commands. The Dashboard is never written by hand: it is computed from the notes and the sessions.
+            </p>
+            <Choices label='Command' options={COMMANDS} value={command.id} onChange={choose} className='choices choices--bracket' />
+            <Tags items={['Claude Code', 'Obsidian Bases', 'Python', 'Orca worktrees']} />
+          </div>
 
-        <div className='workflow-term'>
-          <div className='workflow-term__bar'>
+          <div className='workflow-term'>
+            <div className='workflow-term__bar'>
+              <span className='workflow-lights' aria-hidden='true'><i /><i /><i /></span>
+              <span className='workflow-term__name'>claude</span>
+            </div>
+            <div className='workflow-term__screen'>
+              <div ref={log} className='workflow-term__log' aria-live='polite'>
+                <p className='workflow-term__welcome'><span className='workflow-term__claude'>✻</span> <b>Claude Code</b> <span className='workflow-term__dim'>~/work</span></p>
+                {play.sent && <p className='workflow-term__line is-prompt'><span className='workflow-term__dot'>&gt;</span><span>{command.typed}</span></p>}
+                {command.lines.slice(0, play.lines).map((line, rank) => <Line key={`${command.id}-${rank}`} line={line} />)}
+              </div>
+              <p className='workflow-term__spinner' aria-hidden='true'>{play.running && <><span className='workflow-term__spin' /> Working… <span className='workflow-term__dim'>(esc to interrupt)</span></>}</p>
+              <label className='workflow-term__input'>
+                <span className='workflow-term__dim' aria-hidden='true'>&gt;</span>
+                <input
+                  type='text'
+                  role='combobox'
+                  aria-label='Claude Code prompt'
+                  aria-expanded={matches.length > 0}
+                  aria-controls='workflow-commands'
+                  aria-activedescendant={matches.length ? `workflow-command-${matches[pick % matches.length].id}` : undefined}
+                  aria-autocomplete='list'
+                  autoComplete='off'
+                  spellCheck='false'
+                  placeholder={draft === null && !play.typed ? 'Try "/morning"' : undefined}
+                  value={draft ?? (play.sent ? '' : command.typed.slice(0, play.typed))}
+                  onFocus={() => setDraft((value) => value ?? '')}
+                  onBlur={() => setDraft((value) => (value ? value : null))}
+                  onChange={(event) => { setDraft(event.target.value); setPick(0) }}
+                  onKeyDown={key}
+                />
+              </label>
+              {matches.length > 0 ? (
+                <ul id='workflow-commands' role='listbox' aria-label='Commands' className='workflow-term__menu'>
+                  {matches.map((item, rank) => (
+                    <li
+                      key={item.id}
+                      id={`workflow-command-${item.id}`}
+                      role='option'
+                      aria-selected={rank === pick % matches.length}
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => run(item)}
+                    >
+                      <span>{item.typed}</span>
+                      <span className='workflow-term__dim'>{item.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className='workflow-term__hint' aria-hidden='true'>/ for commands</p>
+              )}
+            </div>
+          </div>
+
+          <div className='workflow-obsidian__bar'>
             <span className='workflow-lights' aria-hidden='true'><i /><i /><i /></span>
-            <span className='workflow-term__name'>claude</span>
+            <span className='workflow-obsidian__tab'>Dashboard</span>
+            <span className='workflow-obsidian__sample'>Sample data</span>
           </div>
-          <div className='workflow-term__screen'>
-            <div ref={log} className='workflow-term__log' aria-live='polite'>
-              <p className='workflow-term__welcome'><span className='workflow-term__claude'>✻</span> <b>Claude Code</b> <span className='workflow-term__dim'>~/work</span></p>
-              {play.sent && <p className='workflow-term__line is-prompt'><span className='workflow-term__dot'>&gt;</span><span>{command.typed}</span></p>}
-              {command.lines.slice(0, play.lines).map((line, rank) => <Line key={`${command.id}-${rank}`} line={line} />)}
-            </div>
-            <p className='workflow-term__spinner' aria-hidden='true'>{play.running && <><span className='workflow-term__spin' /> Working… <span className='workflow-term__dim'>(esc to interrupt)</span></>}</p>
-            <label className='workflow-term__input'>
-              <span className='workflow-term__dim' aria-hidden='true'>&gt;</span>
-              <input
-                type='text'
-                role='combobox'
-                aria-label='Claude Code prompt'
-                aria-expanded={matches.length > 0}
-                aria-controls='workflow-commands'
-                aria-activedescendant={matches.length ? `workflow-command-${matches[pick % matches.length].id}` : undefined}
-                aria-autocomplete='list'
-                autoComplete='off'
-                spellCheck='false'
-                placeholder={draft === null && !play.typed ? 'Try "/morning"' : undefined}
-                value={draft ?? (play.sent ? '' : command.typed.slice(0, play.typed))}
-                onFocus={() => setDraft((value) => value ?? '')}
-                onBlur={() => setDraft((value) => (value ? value : null))}
-                onChange={(event) => { setDraft(event.target.value); setPick(0) }}
-                onKeyDown={key}
-              />
-            </label>
-            {matches.length > 0 ? (
-              <ul id='workflow-commands' role='listbox' aria-label='Commands' className='workflow-term__menu'>
-                {matches.map((item, rank) => (
-                  <li
-                    key={item.id}
-                    id={`workflow-command-${item.id}`}
-                    role='option'
-                    aria-selected={rank === pick % matches.length}
-                    onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => run(item)}
-                  >
-                    <span>{item.typed}</span>
-                    <span className='workflow-term__dim'>{item.text}</span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className='workflow-term__hint' aria-hidden='true'>/ for commands</p>
-            )}
-          </div>
-        </div>
 
-        <div className='workflow-obsidian__bar'>
-          <span className='workflow-lights' aria-hidden='true'><i /><i /><i /></span>
-          <span className='workflow-obsidian__tab'>Dashboard</span>
-          <span className='workflow-obsidian__sample'>Sample data</span>
-        </div>
-
-        <figure className='workflow__figure'>
-          <div
-            ref={scroller}
-            tabIndex={0}
-            role='region'
-            aria-label='The Obsidian Dashboard, sample data'
-            className={instant ? 'workflow-obsidian__note is-instant' : 'workflow-obsidian__note'}
-          >
-            <div ref={glide} className='workflow-dash'>
-              <div ref={(element) => { panels.current.calendar = element }} className='workflow-dash__wide'>
-                <Calendar fx={fx} instant={instant} />
-              </div>
-              <div ref={(element) => { panels.current.board = element }} className='workflow-dash__wide'>
-                <Board fx={fx} />
-              </div>
-              <div ref={(element) => { panels.current.time = element }} className='workflow-dash__half'>
-                <Week fx={fx} instant={instant} />
-              </div>
-              <div className='workflow-dash__half'>
-                <Graph fx={fx} instant={instant} />
-              </div>
-              <div className='workflow-dash__wide'>
-                <Squares fx={fx} instant={instant} />
+          <figure className='workflow__figure'>
+            <div
+              ref={scroller}
+              tabIndex={0}
+              role='region'
+              aria-label='The Obsidian Dashboard, sample data'
+              className={instant ? 'workflow-obsidian__note is-instant' : 'workflow-obsidian__note'}
+            >
+              <div ref={glide} className='workflow-dash'>
+                <div ref={(element) => { panels.current.calendar = element }} className='workflow-dash__wide'>
+                  <Calendar fx={fx} instant={instant} />
+                </div>
+                <div ref={(element) => { panels.current.board = element }} className='workflow-dash__wide'>
+                  <Board fx={fx} />
+                </div>
+                <div ref={(element) => { panels.current.time = element }} className='workflow-dash__half'>
+                  <Week fx={fx} instant={instant} />
+                </div>
+                <div className='workflow-dash__half'>
+                  <Graph fx={fx} instant={instant} />
+                </div>
+                <div className='workflow-dash__wide'>
+                  <Squares fx={fx} instant={instant} />
+                </div>
               </div>
             </div>
-          </div>
-        </figure>
-      </div>
-    </article>
+          </figure>
+        </div>
+      </article>
+    </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Choices, Tags, usePrefersReducedMotion } from '../shared'
+import { Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from '../shared'
 import { GuideLabel, Hud, Legend, clock, useInView } from './osd'
 import { Bars, Film, Radio, STREAM, Spotify, TRACK, Weather } from './channels'
 import { PetChannel } from './Pet'
@@ -27,17 +27,14 @@ const CHANNELS = [
   { n: 21, id: 'moonlight', label: 'Moonlight', kind: 'game', render: 'SVG' },
 ]
 
-// The demo loop only visits a few flagship channels
-const FLAGSHIPS = ['teevy', 'cine', 'spotify', 'snes', 'kanshi', 'gamecube']
+// The scroll only visits a few flagship channels
+const FLAGSHIPS = ['teevy', 'plex', 'spotify', 'gamecube', 'kanshi']
 const VIEWS = ['cover', 'aurora']
 const HUD_MS = 4000
 const SNOW_MS = 320
-const AUTO_MS = 10000
-const GAME_MAX_MS = 19000
 const HOLD_MS = 1400
 const ENTRY_MS = 1500
 const SWIPE_PX = 40
-const IDLE_MS = 15000
 
 const pad = (n) => String(n).padStart(2, '0')
 
@@ -64,7 +61,6 @@ export const Tv = () => {
   const [channel, setChannel] = useState(0)
   const [hud, setHud] = useState(true)
   const [snow, setSnow] = useState(false)
-  const [auto, setAuto] = useState(true)
   const [elapsed, setElapsed] = useState(0)
   const [listened, setListened] = useState(0)
   const [view, setView] = useState('cover')
@@ -91,27 +87,29 @@ export const Tv = () => {
     setRun((count) => count + 1)
   }
 
+  // The scroll zaps through the flagships, faster through a boot screen the quicker it goes, until someone takes the remote
+  const step = useRef(0)
+  const scroll = useRef({ velocity: 0, at: 0 })
+  const [scrub, handOver] = useScrub((progress, velocity) => {
+    const index = stepOf(progress, FLAGSHIPS.length)
+    scroll.current = { velocity, at: performance.now() }
+
+    if (index !== step.current) {
+      step.current = index
+      tune(CHANNELS.findIndex((item) => item.id === FLAGSHIPS[index]))
+    }
+  })
+
+  const speed = useCallback(() => {
+    const { velocity, at } = scroll.current
+    const fade = Math.max(0, 1 - (performance.now() - at) / 400)
+    return 1 + Math.min(3, velocity * 1.5) * fade
+  }, [])
+
   const take = (index) => {
-    setAuto(false)
+    handOver()
     tune(index)
   }
-
-  const tuneTo = (id) => tune(CHANNELS.findIndex((item) => item.id === id))
-
-  const nextFlagship = () => {
-    const at = FLAGSHIPS.indexOf(current.id)
-    tuneTo(FLAGSHIPS[(at + 1) % FLAGSHIPS.length])
-  }
-
-  // Like a TV in demo mode: zapping resumes on its own once nobody touches it
-  useEffect(() => {
-    if (auto || sound) {
-      return
-    }
-
-    const timer = setTimeout(() => setAuto(true), IDLE_MS)
-    return () => clearTimeout(timer)
-  })
 
   useEffect(() => {
     setHud(true)
@@ -145,15 +143,6 @@ export const Tv = () => {
     clearTimeout(hold.current)
     drainRenderers()
   }, [])
-
-  useEffect(() => {
-    if (!auto || !inView || reduced || sound) {
-      return
-    }
-
-    const timer = setTimeout(nextFlagship, current.kind === 'game' ? GAME_MAX_MS : AUTO_MS)
-    return () => clearTimeout(timer)
-  })
 
   // Two digits compose a channel number, as on teevy; one alone tunes once the wait runs out
   useEffect(() => {
@@ -236,7 +225,7 @@ export const Tv = () => {
       return
     }
 
-    hold.current = setTimeout(() => (auto ? nextFlagship() : setRun((count) => count + 1)), HOLD_MS)
+    hold.current = setTimeout(() => setRun((count) => count + 1), HOLD_MS)
   }
 
   const keys = (event) => {
@@ -252,15 +241,15 @@ export const Tv = () => {
       take(channel + zap)
     } else if (side && current.kind === 'spotify') {
       event.preventDefault()
-      setAuto(false)
+      handOver()
       setView((value) => VIEWS[(VIEWS.indexOf(value) + side + VIEWS.length) % VIEWS.length])
     } else if (event.key === ' ' && (current.kind === 'radio' || current.kind === 'spotify')) {
       event.preventDefault()
-      setAuto(false)
+      handOver()
       setSound(!sound)
     } else if ((event.key === 'p' || event.key === 'P' || event.key === ' ') && current.kind === 'pet') {
       event.preventDefault()
-      setAuto(false)
+      handOver()
       pet.current?.press()
     } else if (event.key === 'Enter' && current.kind === 'game') {
       take(channel)
@@ -309,55 +298,56 @@ export const Tv = () => {
   if (current.kind === 'game') legend.push(['Replay', ['OK']])
 
   return (
-    <article
-      ref={band}
-      id='teevy'
-      className='band teevy'
-      aria-labelledby='teevy-title'
-      tabIndex={0}
-      onKeyDown={keys}
-      onPointerDown={down}
-      onPointerUp={up}
-      onPointerCancel={() => { swipe.current = null }}
-      data-kind={current.kind}
-    >
-      <Prints active={photo} />
-      <div className='teevy__stage'>
-        <div className='teevy__screen'>
-          <div className='teevy__channel' data-channel={current.id}>
-            {current.kind === 'film' && <Film still={current.still} />}
-            {current.kind === 'spotify' && <Spotify view={view} running={inView} reduced={reduced} sound={sound} onTime={setPlayback} position={position} />}
-            {current.kind === 'weather' && <Weather active={inView} />}
-            {current.kind === 'av' && <Bars />}
-            {current.kind === 'radio' && <Radio sound={sound} onToggle={() => { setAuto(false); setSound(!sound) }} running={inView} reduced={reduced} level={level} />}
-            {current.kind === 'pet' && <PetChannel ref={pet} active={inView} reduced={reduced} />}
-            {current.kind === 'game' && <IntroChannel id={current.id} run={run} playing={inView && (!reduced || run > 1)} onDone={introDone} />}
-            {current.kind === 'kanshi' && <KanshiChannel active={inView} reduced={reduced} />}
+    <div ref={scrub} id='teevy' className='scrub' style={{ '--steps': FLAGSHIPS.length }}>
+      <article
+        ref={band}
+        className='band teevy'
+        aria-labelledby='teevy-title'
+        tabIndex={0}
+        onKeyDown={keys}
+        onPointerDown={down}
+        onPointerUp={up}
+        onPointerCancel={() => { swipe.current = null }}
+        data-kind={current.kind}
+      >
+        <Prints active={photo} />
+        <div className='teevy__stage'>
+          <div className='teevy__screen'>
+            <div className='teevy__channel' data-channel={current.id}>
+              {current.kind === 'film' && <Film still={current.still} />}
+              {current.kind === 'spotify' && <Spotify view={view} running={inView} reduced={reduced} sound={sound} onTime={setPlayback} position={position} />}
+              {current.kind === 'weather' && <Weather active={inView} />}
+              {current.kind === 'av' && <Bars />}
+              {current.kind === 'radio' && <Radio sound={sound} onToggle={() => { handOver(); setSound(!sound) }} running={inView} reduced={reduced} level={level} />}
+              {current.kind === 'pet' && <PetChannel ref={pet} active={inView} reduced={reduced} />}
+              {current.kind === 'game' && <IntroChannel id={current.id} run={run} playing={inView && (!reduced || run > 1)} speed={speed} onDone={introDone} />}
+              {current.kind === 'kanshi' && <KanshiChannel active={inView} reduced={reduced} />}
+            </div>
+            <audio ref={audio} preload='none' crossOrigin='anonymous' />
+            <div className={snow ? 'teevy-snow is-on' : 'teevy-snow'} aria-hidden='true' />
+            <Hud visible={hud} number={pad(current.n)} name={current.label} title={info.title} byline={info.byline} progress={info.progress} />
+            {entry && <p className='teevy-entry' aria-hidden='true'>{entry.padEnd(2, '-')}</p>}
           </div>
-          <audio ref={audio} preload='none' crossOrigin='anonymous' />
-          <div className={snow ? 'teevy-snow is-on' : 'teevy-snow'} aria-hidden='true' />
-          <Hud visible={hud} number={pad(current.n)} name={current.label} title={info.title} byline={info.byline} progress={info.progress} />
-          {entry && <p className='teevy-entry' aria-hidden='true'>{entry.padEnd(2, '-')}</p>}
         </div>
-      </div>
-      <div className='teevy-osd'>
-        <h3 id='teevy-title' className='teevy-osd__band'>
-          <span className='teevy-osd__key'>teevy</span>
-          <span className='teevy-osd__value'>Channel guide</span>
-        </h3>
-        <p className='teevy-osd__text'>
-          A Mac drives a real CRT as a television, through HDMI to RCA. Every source becomes a channel: films, Spotify, the radio, the weather, the consoles booting like they did, the homelab's monitor, and a tamagotchi on channel zero. All of it zapped from the keyboard, in a 90s on-screen display.
-        </p>
-        <Choices
-          label='Channels'
-          className='teevy-guide'
-          value={current.id}
-          onChange={(id) => take(CHANNELS.findIndex((item) => item.id === id))}
-          options={CHANNELS.map(({ n, id, label }) => ({ id, label: <GuideLabel index={n - 1} label={label} /> }))}
-        />
-        <Tags items={['TypeScript', 'Electron', 'React', 'three.js', 'Firefox extension', 'PWA']} />
-        <Legend items={legend} />
-      </div>
-    </article>
+        <div className='teevy-osd'>
+          <h3 id='teevy-title' className='teevy-osd__band'>
+            <span className='teevy-osd__key'>teevy</span>
+            <span className='teevy-osd__value'>Channel guide</span>
+          </h3>
+          <p className='teevy-osd__text'>
+            A Mac drives a real CRT as a television, through HDMI to RCA. Every source becomes a channel: films, Spotify, the radio, the weather, the consoles booting like they did, the homelab's monitor, and a tamagotchi on channel zero. All of it zapped from the keyboard, in a 90s on-screen display.
+          </p>
+          <Choices
+            label='Channels'
+            className='teevy-guide'
+            value={current.id}
+            onChange={(id) => take(CHANNELS.findIndex((item) => item.id === id))}
+            options={CHANNELS.map(({ n, id, label }) => ({ id, label: <GuideLabel index={n - 1} label={label} /> }))}
+          />
+          <Tags items={['TypeScript', 'Electron', 'React', 'three.js', 'Firefox extension', 'PWA']} />
+          <Legend items={legend} />
+        </div>
+      </article>
+    </div>
   )
 }

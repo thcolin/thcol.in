@@ -40,7 +40,7 @@ class Fallback extends Component {
   }
 }
 
-export const IntroChannel = ({ id, run, playing, onDone }) => {
+export const IntroChannel = ({ id, run, playing, speed, onDone }) => {
   const Intro = INTROS[id]
 
   return (
@@ -50,7 +50,7 @@ export const IntroChannel = ({ id, run, playing, onDone }) => {
         ? (
           <Fallback key={`${id}-${run}`} id={id}>
             <Suspense fallback={<Poster id={id} />}>
-              <Intro onDone={onDone} />
+              <Intro speed={speed} onDone={onDone} />
             </Suspense>
           </Fallback>
           )

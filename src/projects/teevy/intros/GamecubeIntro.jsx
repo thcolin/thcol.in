@@ -17,10 +17,12 @@ const NINTENDO_BACK_COLOR = new THREE.Vector3(102 / 255, 102 / 255, 102 / 255);
 const TRAIL_COUNT = 15;
 const GAMECUBE_COUNT = 5;
 const NINTENDO_COUNT = 8;
-function GamecubeIntro({ onDone }) {
+function GamecubeIntro({ speed, onDone }) {
   const hostRef = useRef(null);
   const onDoneRef = useRef(onDone);
   onDoneRef.current = onDone;
+  const speedRef = useRef(speed);
+  speedRef.current = speed;
   useEffect(() => {
     const host = hostRef.current;
     if (!host) return;
@@ -209,7 +211,7 @@ function GamecubeIntro({ onDone }) {
       });
       const tick = () => {
         const now = performance.now();
-        const delta = (now - previousNow) / 1e3;
+        const delta = (now - previousNow) / 1e3 * (speedRef.current?.() ?? 1);
         previousNow = now;
         mixer?.update(delta);
         for (const binding of opacityBindings) {
