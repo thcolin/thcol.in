@@ -23,7 +23,7 @@ const SIZES = { 320: 'w342', 640: 'w780', 1280: 'w1280' }
 const art = (item, kind = 'thumb', width = 640) => item[kind] ? `https://image.tmdb.org/t/p/${SIZES[width]}${item[kind]}` : undefined
 
 const { sheets, colophon, closed } = sheetsOf(share)
-const TOUR = 4
+const TOUR = 6
 const stories = [...sheets, { kind: 'summary', label: t('wrapped.title', { name: share.name, year: share.year }) }]
 
 // The size every story is composed at, as in apps/wrapped, and the bar under it
