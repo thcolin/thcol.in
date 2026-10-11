@@ -166,8 +166,10 @@ main#projects ::selection {
   color: inherit;
 }
 
+/* At the group title's size an underline turns into a bar */
 .group__title > .anchor {
   display: block;
+  text-decoration: none;
 }
 
 @media (max-width: 900px) {
