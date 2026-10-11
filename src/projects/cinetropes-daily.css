@@ -1411,6 +1411,20 @@
   animation: cd-fade 300ms ease-out both;
 }
 
+/* The overlay covers the whole band on a phone: its content stays in view while the band scrolls */
+@media (max-width: 899px) {
+  .cd__onboarding {
+    padding-top: 0;
+  }
+
+  .cd__onboarding-content {
+    position: sticky;
+    top: 0;
+    justify-content: center;
+    height: 100svh;
+  }
+}
+
 .cd__onboarding.is-leaving {
   animation: cd-fade-out 400ms ease-in forwards;
   pointer-events: none;
