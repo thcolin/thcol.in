@@ -25,6 +25,7 @@ const Cell = ({ style, index }) => (
 export const Grid = () => {
   const [frame, setFrame] = useState(null)
   const [rendered, setRendered] = useState(0)
+  const [manual, setManual] = useState(false)
   const [ref, shown] = useReveal()
   const raf = useRef(0)
 
@@ -64,12 +65,12 @@ export const Grid = () => {
           <div className={shown ? 'band__demo grid__stage is-shown' : 'band__demo grid__stage'} data-scrub-demo>
             <div
               ref={setFrame}
-                onTouchStart={hold}
-              onKeyDown={hold}
+              onTouchStart={hold}
+              onFocus={() => { hold(); setManual(true) }}
               tabIndex={0}
               role='region'
               aria-label={`Virtual grid of ${CELLS} cells, scroll it`}
-              className='grid__frame'
+              className={manual ? 'grid__frame is-manual' : 'grid__frame'}
             >
               <div className='grid__track'>
                 {frame && (

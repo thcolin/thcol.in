@@ -201,8 +201,8 @@ main#projects ::selection {
     top: 0;
   }
 
-  /* The page's scroll runs the grid there, so the wheel over it keeps scrolling the page */
-  .scrub .grid__frame {
+  /* The page's scroll runs the grid there, so the wheel over it keeps scrolling the page until the grid takes focus */
+  .scrub .grid__frame:not(.is-manual) {
     overflow-y: hidden;
   }
 }
