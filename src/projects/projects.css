@@ -179,11 +179,6 @@ main#projects ::selection {
 
 /* One band, one screen */
 @media (min-width: 900px) {
-  .band__column {
-    /* From the column's edge to the screen's, for a demo that runs off it */
-    --bleed: calc(var(--gutter) + max(0px, (100vw - 72em) / 2));
-  }
-
   .band {
     display: flex;
     flex-direction: column;
@@ -390,19 +385,20 @@ main#projects ::selection {
   text-wrap: balance;
 }
 
+/* The text keeps its width, the capture takes the rest of a wider column */
+@media (min-width: 900px) {
+  .sensorr > .band__column {
+    max-width: 96em;
+    grid-template-columns: min(26em, 40%) minmax(0, 1fr);
+  }
+}
+
 .sensorr__stage {
   position: relative;
   aspect-ratio: 2000 / 1124;
   border-radius: 10px;
   overflow: clip;
   box-shadow: 0 24px 64px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.1);
-}
-
-@media (min-width: 900px) {
-  .sensorr__stage {
-    margin-right: calc(-1 * var(--bleed));
-    border-radius: 10px 0 0 10px;
-  }
 }
 
 .sensorr__stage img {
@@ -511,14 +507,17 @@ main#projects ::selection {
   gap: 10px;
 }
 
-.gmca__stage {
-  aspect-ratio: 2 / 1;
+/* The consoles' webp carry their own transparent margin, which stands for the gap */
+@media (min-width: 900px) {
+  .gmca > .band__column {
+    max-width: 96em;
+    grid-template-columns: minmax(0, 1fr) min(26em, 40%);
+    gap: 0;
+  }
 }
 
-@media (min-width: 900px) {
-  .gmca__stage {
-    margin-left: calc(-1 * var(--bleed));
-  }
+.gmca__stage {
+  aspect-ratio: 2 / 1;
 }
 
 .gmca__stage img {
