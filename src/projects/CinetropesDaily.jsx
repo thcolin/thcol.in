@@ -341,10 +341,17 @@ export const CinetropesDaily = () => {
   }, [phase, mysteryFilm])
 
   // The scroll brings the rules in as the sections' own screens do, then once past them opens the drawers
-  // one by one, until the visitor opens one
+  // one by one, until the visitor opens one or the game ends; a guess's own drawer stays until the next step
+  const drawer = useRef(-1)
   const [scrub, hold] = useScrub((progress) => {
     if (onboarded) {
-      setOpenSection(SECTIONS[stepOf(progress, SECTIONS.length)])
+      const index = stepOf(progress, SECTIONS.length)
+
+      if (index !== drawer.current && !resultMode) {
+        drawer.current = index
+        setOpenSection(SECTIONS[index])
+      }
+
       return
     }
 
