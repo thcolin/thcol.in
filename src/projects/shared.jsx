@@ -211,9 +211,9 @@ export const Tags = ({ items }) => (
 
 export const Links = ({ links }) => (
   <ul className='links'>
-    {links.map(([label, href]) => (
+    {links.map(([label, href, event]) => (
       <li key={href}>
-        <a href={href} target='_blank' rel='noreferrer'>{label}</a>
+        <a href={href} target='_blank' rel='noopener' data-umami-event={event}>{label}</a>
       </li>
     ))}
   </ul>
