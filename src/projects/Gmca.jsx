@@ -81,7 +81,7 @@ export const Gmca = () => {
             <Tags items={['C++17', 'borealis', 'mpv', 'CMake', 'devkitPro']} />
             <Links links={[
               ['Website', 'https://thcolin.github.io/gamepad-media-center-aggregator/'],
-              ['Download v1.3.0', 'https://github.com/thcolin/gamepad-media-center-aggregator/releases/latest'],
+              ['Download v1.3.0', 'https://github.com/thcolin/gamepad-media-center-aggregator/releases/latest', 'gmca-download'],
               ['GitHub', 'https://github.com/thcolin/gamepad-media-center-aggregator'],
             ]} />
           </div>
