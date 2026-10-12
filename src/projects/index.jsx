@@ -21,6 +21,39 @@ const Projects = () => {
     document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' })
   }, [])
 
+  // Umami: the bands a visitor reaches, and the links they leave by
+  useEffect(() => {
+    const track = (name) => window.umami?.track(name)
+
+    const seen = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          seen.unobserve(entry.target)
+          track(`project: ${entry.target.hash.slice(1)}`)
+        }
+      }
+    })
+    document.querySelectorAll('#projects a.anchor').forEach((anchor) => {
+      if (!anchor.closest('.group__screen')) {
+        seen.observe(anchor)
+      }
+    })
+
+    const click = (event) => {
+      const link = event.target.closest('a[target=_blank]')
+
+      if (link && !link.dataset.umamiEvent) {
+        track(`link: ${link.closest('[id]')?.id ?? 'header'} · ${link.textContent.trim() || link.hostname}`)
+      }
+    }
+    addEventListener('click', click)
+
+    return () => {
+      seen.disconnect()
+      removeEventListener('click', click)
+    }
+  }, [])
+
   return (
     <>
       <Group id='released' title='released' phrase='Public, open source, try them below.' projects={['sensorr', 'sensorr wrapped', 'gmca', 'oleoo', 'react-responsive-virtual-grid']}>
