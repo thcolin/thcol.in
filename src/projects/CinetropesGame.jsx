@@ -318,7 +318,9 @@ export const CinetropesGame = () => {
   const [playing, setPlaying] = useState(false)
   const [confirm, setConfirm] = useState(null)
   const [ready, setReady] = useState(false)
+  const [drawn, setDrawn] = useState(false)
   const readyTimeout = useRef(0)
+  const loading = playing && !(ready && (drawn || reduced))
   const cinema = CINEMAS[index]
   const savedCinema = CINEMAS.find((other) => other.scene === saved)
   const hasGame = saved === cinema.scene
@@ -357,10 +359,18 @@ export const CinetropesGame = () => {
     }
   }, [playing])
 
+  // The keys go to the game once it shows, not to a game still hidden behind the logo
+  useEffect(() => {
+    if (playing && !loading) {
+      frame.current?.focus()
+    }
+  }, [playing, loading])
+
   const send = (message) => frame.current?.contentWindow?.postMessage(message, GAME_ORIGIN)
 
-  const loaded = () => {
-    frame.current?.focus()
+  const waitForGame = () => {
+    setReady(false)
+    setDrawn(false)
     clearTimeout(readyTimeout.current)
     readyTimeout.current = setTimeout(() => setReady(true), READY_TIMEOUT_MS)
   }
@@ -369,12 +379,12 @@ export const CinetropesGame = () => {
     writeSave(cinema.scene)
     setSaved(cinema.scene)
     setConfirm(null)
-    setReady(false)
+    waitForGame()
     setPlaying(true)
   }
 
   const restart = () => {
-    setReady(false)
+    waitForGame()
     send({ type: 'cinetropes:reset' })
   }
 
@@ -447,11 +457,10 @@ export const CinetropesGame = () => {
                   title={`cinetropes meta-game demo, ${cinema.name}`}
                   src={`${GAME_URL}/play?embed&facade=${cinema.scene}`}
                   allow='autoplay'
-                  onLoad={loaded}
                 />
-                {!ready && (
+                {loading && (
                   <div className='cg__loading' role='status'>
-                    <img className='cg__logo' src={ASSETS.logo} width='160' height='23' alt='cinetropes' />
+                    <img className='cg__logo' src={ASSETS.logo} width='160' height='23' alt='cinetropes' onAnimationEnd={() => setDrawn(true)} />
                     <span>Loading</span>
                   </div>
                 )}

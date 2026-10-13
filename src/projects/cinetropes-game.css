@@ -185,7 +185,7 @@
 }
 
 /* Until the game draws its first picture: the logo, at the game's pixel size, is drawn
-   row by row, and the word blinks */
+   row by row once, and the word blinks */
 .cg__loading {
   position: absolute;
   inset: 0;
@@ -204,7 +204,7 @@
   width: calc(100cqh * 160 / 192);
   height: auto;
   image-rendering: pixelated;
-  animation: cg-scan 1.8s infinite;
+  animation: cg-scan 1s steps(23, end) both;
 }
 
 .cg__loading span {
@@ -212,13 +212,11 @@
 }
 
 @keyframes cg-scan {
-  0% {
+  from {
     clip-path: inset(0 0 100% 0);
-    animation-timing-function: steps(23, end);
   }
 
-  65%,
-  100% {
+  to {
     clip-path: inset(0);
   }
 }
