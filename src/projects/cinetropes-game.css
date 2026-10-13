@@ -123,6 +123,7 @@
   display: flex;
   justify-content: center;
   background-color: rgb(31 32 34);
+  container-type: size;
 }
 
 .cg__canvas,
@@ -180,6 +181,45 @@
 @keyframes cg-blink {
   50% {
     opacity: 0;
+  }
+}
+
+/* Until the game draws its first picture: the logo, at the game's pixel size, is drawn
+   row by row, and the word blinks */
+.cg__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(100cqh * 16 / 192);
+  background-color: rgb(31 32 34);
+  color: var(--cg-active);
+  font-size: clamp(14px, calc(var(--console-height) * 0.024), 22px);
+  text-transform: uppercase;
+}
+
+.cg__logo {
+  width: calc(100cqh * 160 / 192);
+  height: auto;
+  image-rendering: pixelated;
+  animation: cg-scan 1.8s infinite;
+}
+
+.cg__loading span {
+  animation: cg-blink 1.2s steps(1) infinite;
+}
+
+@keyframes cg-scan {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    animation-timing-function: steps(23, end);
+  }
+
+  65%,
+  100% {
+    clip-path: inset(0);
   }
 }
 
@@ -501,7 +541,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .cg__track,
-  .cg__press span {
+  .cg__press span,
+  .cg__loading span,
+  .cg__logo {
     animation: none;
   }
 

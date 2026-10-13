@@ -32,6 +32,22 @@ test('Start embeds the demo of the chosen cinema', async ({ page }) => {
   await expect(band(page).getByRole('button', { name: 'Restart' })).toBeVisible()
 })
 
+test('the screen shows the game loading until the game says it is drawn', async ({ page }) => {
+  // A stand-in for the beta's game, which says it is drawn when told to
+  await page.route('https://beta.cinetropes.com/play?**', (route) => route.fulfill({
+    contentType: 'text/html',
+    body: "<script>addEventListener('message', (e) => e.data === 'draw' && parent.postMessage({ type: 'cinetropes:ready' }, '*'))</script>",
+  }))
+  await band(page).getByRole('button', { name: 'Start the game' }).first().click()
+
+  const loading = band(page).getByRole('status')
+  await expect(loading).toContainText('Loading')
+  await expect(loading.getByRole('img', { name: 'cinetropes' })).toBeVisible()
+
+  await band(page).locator('iframe.cg__game').evaluate((frame) => frame.contentWindow.postMessage('draw', '*'))
+  await expect(loading).toBeHidden()
+})
+
 test('another cinema while a game is under way asks before starting over', async ({ page }) => {
   await band(page).getByRole('radio', { name: 'Nitehawk Cinema' }).click()
   await band(page).getByRole('button', { name: 'Start the game' }).first().click()

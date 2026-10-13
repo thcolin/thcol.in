@@ -5,6 +5,7 @@ export const ASSETS = {
   'gbc-lime': new URL('../../assets/cinetropes-game/gbc-lime.webp', import.meta.url),
   'gbc-purple': new URL('../../assets/cinetropes-game/gbc-purple.webp', import.meta.url),
   'gbc-yellow': new URL('../../assets/cinetropes-game/gbc-yellow.webp', import.meta.url),
+  'logo': new URL('../../assets/cinetropes-game/logo.webp', import.meta.url),
   'cabin-map': new URL('../../assets/cinetropes-game/cabin-map.webp', import.meta.url),
   'cashier': new URL('../../assets/cinetropes-game/cashier.webp', import.meta.url),
   'combo-5': new URL('../../assets/cinetropes-game/combo-5.webp', import.meta.url),

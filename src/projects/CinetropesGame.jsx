@@ -13,6 +13,8 @@ const SWAP_CELL = 6
 const GAME_URL = process.env.CINETROPES_URL || 'https://beta.cinetropes.com'
 const GAME_ORIGIN = new URL(GAME_URL).origin
 const SAVE_KEY = 'cinetropes-meta-game'
+// The game says when its first picture is drawn; a game that never says so is shown anyway
+const READY_TIMEOUT_MS = 10000
 
 // What the screen shows before a game: the cinema from boarded up to restored, room by room
 const SLIDES = [
@@ -315,6 +317,8 @@ export const CinetropesGame = () => {
   const [slide, setSlide] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [confirm, setConfirm] = useState(null)
+  const [ready, setReady] = useState(false)
+  const readyTimeout = useRef(0)
   const cinema = CINEMAS[index]
   const savedCinema = CINEMAS.find((other) => other.scene === saved)
   const hasGame = saved === cinema.scene
@@ -334,16 +338,45 @@ export const CinetropesGame = () => {
     }
   }, [visible])
 
+  useEffect(() => {
+    if (!playing) {
+      return
+    }
+
+    const onMessage = (event) => {
+      if (event.origin === GAME_ORIGIN && event.source === frame.current?.contentWindow && event.data?.type === 'cinetropes:ready') {
+        setReady(true)
+      }
+    }
+
+    window.addEventListener('message', onMessage)
+
+    return () => {
+      window.removeEventListener('message', onMessage)
+      clearTimeout(readyTimeout.current)
+    }
+  }, [playing])
+
   const send = (message) => frame.current?.contentWindow?.postMessage(message, GAME_ORIGIN)
+
+  const loaded = () => {
+    frame.current?.focus()
+    clearTimeout(readyTimeout.current)
+    readyTimeout.current = setTimeout(() => setReady(true), READY_TIMEOUT_MS)
+  }
 
   const start = () => {
     writeSave(cinema.scene)
     setSaved(cinema.scene)
     setConfirm(null)
+    setReady(false)
     setPlaying(true)
   }
 
-  const restart = () => send({ type: 'cinetropes:reset' })
+  const restart = () => {
+    setReady(false)
+    send({ type: 'cinetropes:reset' })
+  }
 
   const choose = (id) => {
     const next = CINEMAS.findIndex((other) => other.id === id)
@@ -407,14 +440,22 @@ export const CinetropesGame = () => {
             onStart={playing ? () => frame.current?.focus() : start}
           >
             {playing ? (
-              <iframe
-                ref={frame}
-                className='cg__game'
-                title={`cinetropes meta-game demo, ${cinema.name}`}
-                src={`${GAME_URL}/play?embed&facade=${cinema.scene}`}
-                allow='autoplay'
-                onLoad={() => frame.current?.focus()}
-              />
+              <>
+                <iframe
+                  ref={frame}
+                  className='cg__game'
+                  title={`cinetropes meta-game demo, ${cinema.name}`}
+                  src={`${GAME_URL}/play?embed&facade=${cinema.scene}`}
+                  allow='autoplay'
+                  onLoad={loaded}
+                />
+                {!ready && (
+                  <div className='cg__loading' role='status'>
+                    <img className='cg__logo' src={ASSETS.logo} width='160' height='23' alt='cinetropes' />
+                    <span>Loading</span>
+                  </div>
+                )}
+              </>
             ) : (
               <>
                 {near && <Slides cinema={cinema.id} slide={slide} running={visible} reduced={reduced} label={`${cinema.name}, ${SLIDES[slide].label}`} />}
