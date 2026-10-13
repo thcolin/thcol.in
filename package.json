@@ -8,7 +8,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel -p 8080 --public-url='http://localhost:8080/'",
-    "build": "parcel build --no-source-maps --public-url='https://thcol.in/'",
+    "build": "parcel build --no-source-maps --no-cache --public-url='https://thcol.in/'",
     "deploy": "yarn build && echo 'thcol.in' > ./dist/CNAME && gh-pages -d dist",
     "test": "playwright test"
   },

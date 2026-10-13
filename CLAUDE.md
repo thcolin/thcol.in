@@ -45,3 +45,4 @@ Conventional Commits, la portée du chantier en scope, en anglais.
 
 - React reste en 18 : `react-responsive-virtual-grid` 0.0.26 pose `defaultProps` sur un composant fonction, que React 19 ignore.
 - `.shots/` est ignoré par git : captures de recette, jamais commitées.
+- `yarn build` tourne en `--no-cache` : le 13/10, un `.parcel-cache` périmé a sorti un `index.html` dont l'importmap n'avait pas le nouveau `logo.webp`, et `yarn deploy` a mis en ligne un site sans section projets (`Failed to resolve module specifier`).
