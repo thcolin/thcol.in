@@ -204,7 +204,7 @@
   width: calc(100cqh * 160 / 192);
   height: auto;
   image-rendering: pixelated;
-  animation: cg-scan 1s steps(23, end) both;
+  animation: cg-scan 1.6s both;
 }
 
 .cg__loading span {
@@ -212,11 +212,13 @@
 }
 
 @keyframes cg-scan {
-  from {
+  0% {
     clip-path: inset(0 0 100% 0);
+    animation-timing-function: steps(23, end);
   }
 
-  to {
+  80%,
+  100% {
     clip-path: inset(0);
   }
 }
