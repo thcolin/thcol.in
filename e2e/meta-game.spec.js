@@ -44,7 +44,13 @@ test('the screen shows the game loading until the game says it is drawn', async 
   await expect(loading).toContainText('Loading')
   await expect(loading.getByRole('img', { name: 'cinetropes' })).toBeVisible()
 
-  await band(page).locator('iframe.cg__game').evaluate((frame) => frame.contentWindow.postMessage('draw', '*'))
+  const draw = () => band(page).locator('iframe.cg__game').evaluate((frame) => frame.contentWindow.postMessage('draw', '*'))
+  await draw()
+  await expect(loading).toBeHidden()
+
+  await band(page).getByRole('button', { name: 'Restart' }).click()
+  await expect(loading).toBeVisible()
+  await draw()
   await expect(loading).toBeHidden()
 })
 
