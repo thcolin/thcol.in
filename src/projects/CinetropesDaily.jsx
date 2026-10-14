@@ -925,16 +925,17 @@ export const CinetropesDaily = () => {
         </div>
         <canvas ref={confettiCanvas} className='cd__confetti' aria-hidden='true' />
 
+        <div className='cd__language'>
+          <Choices label={t.language} options={LANGUAGES} value={lang} onChange={switchLanguage} className='choices cd__languages' />
+        </div>
+
         <header className='cd__nav'>
-          <div className='cd__nav-head'>
-            <h3 id='cinetropes-daily-title' className='cd__nav-title'>
-              <Anchor id='cinetropes-daily'>
-                <img src={LOGO} alt='cinetropes' width='275' height='40' />
-                <span>daily</span>
-              </Anchor>
-            </h3>
-            <Choices label={t.language} options={LANGUAGES} value={lang} onChange={switchLanguage} className='choices cd__languages' />
-          </div>
+          <h3 id='cinetropes-daily-title' className='cd__nav-title'>
+            <Anchor id='cinetropes-daily'>
+              <img src={LOGO} alt='cinetropes' width='275' height='40' />
+              <span>daily</span>
+            </Anchor>
+          </h3>
           <div className='cd__nav-side'>
             <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />
             {puzzle?.sample && (

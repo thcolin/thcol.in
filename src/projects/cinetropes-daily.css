@@ -100,13 +100,17 @@
   vertical-align: calc(152px * -22.5 / 550);
 }
 
-.cd__nav-head {
+/* EN | FR, a pill like the sample's badge, at the far right of the title's line */
+.cd__language {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  z-index: 47;
   display: flex;
   align-items: center;
-  gap: 16px;
+  height: 27px;
 }
 
-/* EN | FR, a pill like the sample's badge */
 .cd__languages {
   flex-wrap: nowrap;
   border: 1px solid rgb(255 255 255 / 0.16);
@@ -1799,6 +1803,11 @@
 
 /* The band's own title and stack sit beside the attempts, where the app has its menu */
 @media (min-width: 900px) {
+  .cd__language {
+    top: 20px;
+    right: 48px;
+  }
+
   .cd__nav {
     position: absolute;
     top: 20px;
