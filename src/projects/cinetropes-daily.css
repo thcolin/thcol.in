@@ -1417,6 +1417,7 @@
   .cd__panel {
     max-width: none;
     max-height: var(--body-h);
+    overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: thin;
   }
