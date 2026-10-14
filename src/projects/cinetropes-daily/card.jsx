@@ -137,8 +137,9 @@ const FOCUSABLE = 'button, [href], [tabindex]:not([tabindex="-1"])'
 // The app's SwipeCard as the film page opens it: the card flies to the middle of the screen at 70% of it, spinning a
 // turn and a half to land on its back, the film's sheet. A click on the card or the turn button turns it over;
 // Escape, the cross or the backdrop puts it back, the app's timings throughout
-export const MysteryZoom = ({ from, poster, title, rarity, onClose, children }) => {
+export const MysteryZoom = ({ from, poster, title, rarity, holo, onClose, children }) => {
   const dialog = useRef(null)
+  const card = useRef(null)
   const busy = useRef(true)
   const timers = useRef([])
   const reduced = usePrefersReducedMotion()
@@ -147,6 +148,7 @@ export const MysteryZoom = ({ from, poster, title, rarity, onClose, children }) 
   const [leaving, setLeaving] = useState(false)
   const [rotation, setRotation] = useState(0)
   const [revealed, setRevealed] = useState(false)
+  const [settled, setSettled] = useState(false)
   const scale = Math.min((innerWidth * 0.7) / from.width, (innerHeight * 0.7) / from.height)
   const size = { width: from.width * scale, height: from.height * scale }
   const box = { left: (innerWidth - size.width) / 2, top: (innerHeight - size.height) / 2 }
@@ -183,16 +185,41 @@ export const MysteryZoom = ({ from, poster, title, rarity, onClose, children }) 
     }
   }, [])
 
+  // On the poster side, the card tilts and catches the light as in the band, the app's tilt divided by its scale
+  const tilt = (event) => {
+    if (!holo || busy.current || leaving || onBack || event.pointerType !== 'mouse') {
+      return
+    }
+
+    const rect = card.current.getBoundingClientRect()
+    const x = (event.clientX - rect.left) / rect.width
+    const y = (event.clientY - rect.top) / rect.height
+    card.current.style.setProperty('--pointer-x', `${x * 100}%`)
+    card.current.style.setProperty('--pointer-y', `${y * 100}%`)
+    card.current.style.setProperty('--tilt-x', `${((x - 0.5) * 100) / (4 * scale)}deg`)
+    card.current.style.setProperty('--tilt-y', `${((0.5 - y) * 100) / (4 * scale)}deg`)
+    card.current.classList.add('is-interacting')
+  }
+
+  const rest = () => {
+    card.current.classList.remove('is-interacting')
+    card.current.style.setProperty('--tilt-x', '0deg')
+    card.current.style.setProperty('--tilt-y', '0deg')
+  }
+
   const turn = () => {
     if (busy.current || leaving) {
       return
     }
 
+    rest()
     busy.current = true
+    setSettled(false)
     setRotation((r) => onBack ? r + 180 : r - 180)
     onBack && setRevealed(false)
     later(() => {
       !onBack && setRevealed(true)
+      setSettled(true)
       busy.current = false
     }, 800)
   }
@@ -204,7 +231,9 @@ export const MysteryZoom = ({ from, poster, title, rarity, onClose, children }) 
 
     timers.current.forEach(clearTimeout)
     timers.current = []
+    rest()
     busy.current = true
+    setSettled(false)
     setRevealed(false)
     setLeaving(true)
     onBack && setRotation((r) => r + 180)
@@ -228,10 +257,19 @@ export const MysteryZoom = ({ from, poster, title, rarity, onClose, children }) 
   return createPortal(
     <div ref={dialog} className={`cinetropes__zoom cd__zoom${shown ? ' is-open' : ''}`} role='dialog' aria-modal='true' aria-label={title} tabIndex={-1} onKeyDown={keyDown}>
       <div className='cinetropes__zoom-backdrop' onClick={leave} />
-      <div className='cd__zoom-card' style={{ ...size, ...box, transform: shown ? 'none' : away, '--zoom-scale': scale, '--glow': GLOW[rarity] }} onClick={turn}>
-        <div className='cd__zoom-rotator' style={{ transform: `rotateY(${rotation}deg)` }}>
+      <div
+        ref={card}
+        className={`cd__zoom-card${settled && !onBack ? ' is-poster' : ''}`}
+        style={{ ...size, ...box, transform: shown ? 'none' : away, '--zoom-scale': scale, '--glow': GLOW[rarity], '--turn': `${rotation}deg` }}
+        onClick={turn}
+        onPointerMove={tilt}
+        onPointerLeave={rest}
+      >
+        <div className='cd__zoom-rotator'>
           <div className='cd__zoom-front'>
             <img src={poster} alt='' width='500' height='750' />
+            {holo && <div className='cd__card-shine' />}
+            {holo && <div className='cd__card-glare' />}
           </div>
           <div className='cd__zoom-back'>
             <img src={BACK} alt='' width='1696' height='2528' />

@@ -535,13 +535,38 @@
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.cd__zoom-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+}
+
 .cd__zoom-rotator {
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: calc(0.5em * min(var(--zoom-scale), 1.5));
+  transform: rotateY(calc(var(--turn) + var(--tilt-x))) rotateX(var(--tilt-y));
   transform-style: preserve-3d;
   transition: transform 1.6s cubic-bezier(0.24, 1, 0.36, 1);
+}
+
+/* On the poster side the tilt follows the pointer, and settles back in half a second, as in the app */
+.cd__zoom-card.is-poster .cd__zoom-rotator {
+  transition: transform 0.5s ease-out;
+}
+
+.cd__zoom-card.is-poster.is-interacting .cd__zoom-rotator {
+  transition: transform 0.05s ease-out;
+}
+
+.cd__zoom-card.is-interacting .cd__card-shine {
+  opacity: 0.35;
+}
+
+.cd__zoom-card.is-interacting .cd__card-glare {
+  opacity: 0.6;
 }
 
 .cd__zoom.is-open .cd__zoom-rotator {

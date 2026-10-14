@@ -872,7 +872,7 @@ export const CinetropesDaily = () => {
               {transition && <PixelSplit key={`${basePosterLevel}`} coarse={transition.coarse} fine={transition.fine} onComplete={transitionDone} className='cd__pixel-split' />}
             </MysteryCard>
             {zoom && (
-              <MysteryZoom from={zoom} poster={mysteryFilm.posterUrl} title={answer} rarity={rarityOf(mystery.scores)} onClose={() => setZoom(null)}>
+              <MysteryZoom from={zoom} poster={mysteryFilm.posterUrl} title={answer} rarity={rarityOf(mystery.scores)} holo={victoryRevealed} onClose={() => setZoom(null)}>
                 <Sheet film={mysteryFilm} mystery={mystery} tropes={tropes} gameDay={gameDay} />
               </MysteryZoom>
             )}
