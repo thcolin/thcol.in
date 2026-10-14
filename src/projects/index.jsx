@@ -21,6 +21,33 @@ const Projects = () => {
     document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' })
   }, [])
 
+  // The address follows the scroll: the hash of the last band or group whose top has passed the upper third
+  useEffect(() => {
+    let frame = 0
+
+    // Read at each frame: the lower bands mount later
+    const render = () => {
+      frame = 0
+      const targets = [...document.querySelectorAll('#projects a.anchor')].map((anchor) => document.getElementById(anchor.hash.slice(1))).filter(Boolean)
+      const current = targets.filter((target) => target.getBoundingClientRect().top <= innerHeight / 3)
+        .sort((a, b) => b.getBoundingClientRect().top - a.getBoundingClientRect().top)[0]
+      const hash = current ? `#${current.id}` : ''
+
+      if (hash !== location.hash) {
+        history.replaceState(null, '', hash || location.pathname + location.search)
+      }
+    }
+    const schedule = () => {
+      frame ||= requestAnimationFrame(render)
+    }
+
+    addEventListener('scroll', schedule, { passive: true })
+    return () => {
+      cancelAnimationFrame(frame)
+      removeEventListener('scroll', schedule)
+    }
+  }, [])
+
   // Umami: the bands a visitor reaches, and the links they leave by
   useEffect(() => {
     const track = (name) => window.umami?.track(name)
