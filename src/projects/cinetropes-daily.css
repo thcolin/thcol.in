@@ -509,6 +509,195 @@
   opacity: 0.6;
 }
 
+/* The poster card zoomed, the app's SwipeCard opened on the film page: it flies in 0.65 s, spins in 1.6 s */
+.cd__card[role='button'] {
+  cursor: pointer;
+}
+
+.cd__card[role='button']:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.9);
+  outline-offset: 4px;
+  border-radius: 0.5em;
+}
+
+.cd__zoom-card {
+  position: fixed;
+  perspective: 2000px;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cd__zoom-rotator {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5em;
+  transform-style: preserve-3d;
+  transition: transform 1.6s cubic-bezier(0.24, 1, 0.36, 1);
+}
+
+.cd__zoom.is-open .cd__zoom-rotator {
+  box-shadow: 0 0 20px 4px rgb(120 220 220 / 0.12), 0 0 60px 15px rgb(120 220 220 / 0.08), 0px 10px 20px -5px black;
+}
+
+.cd__zoom-front,
+.cd__zoom-back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  background-color: #0a0a0c;
+}
+
+.cd__zoom-back {
+  transform: rotateY(180deg);
+}
+
+.cd__zoom-front img,
+.cd__zoom-back img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The sheet on the back, inside the pattern's border, as the app insets it */
+.cd__zoom-sheet {
+  position: absolute;
+  inset: 4.5% 9%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  border-radius: 2px;
+  background-color: #0e0e10;
+  cursor: default;
+  animation: cd-sheet-in 0.2s ease-out both;
+}
+
+.cd__zoom-sheet > * {
+  flex: 0 0 auto;
+  animation: cd-sheet-item-in 0.3s ease-out both;
+}
+
+.cd__zoom-sheet > :nth-child(1) { animation-delay: 0.1s; }
+.cd__zoom-sheet > :nth-child(2) { animation-delay: 0.2s; }
+.cd__zoom-sheet > :nth-child(3) { animation-delay: 0.35s; }
+.cd__zoom-sheet > :nth-child(4) { animation-delay: 0.4s; }
+.cd__zoom-sheet > :nth-child(5) { animation-delay: 0.5s; }
+.cd__zoom-sheet > :nth-child(6) { animation-delay: 0.6s; }
+.cd__zoom-sheet > :nth-child(7) { animation-delay: 0.7s; }
+
+@keyframes cd-sheet-in {
+  from { opacity: 0; }
+}
+
+@keyframes cd-sheet-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.cd__sheet-info {
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+  text-align: center;
+}
+
+.cd__sheet-info h3 {
+  margin: 0 0 0.75rem;
+  color: rgb(255 255 255 / 0.95);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cd__sheet-info p {
+  margin: 0;
+  color: rgb(255 255 255 / 0.5);
+  font-size: 0.75rem;
+}
+
+.cd__sheet-info p + p {
+  margin-top: 0.125rem;
+  color: rgb(255 255 255 / 0.6);
+  font-weight: 500;
+}
+
+.cd__sheet-synopsis {
+  display: -webkit-box;
+  margin: 0 0 1rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  color: rgb(255 255 255 / 0.7);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.cd__sheet-cast {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.cd__sheet-cast li + li {
+  margin-left: -10px;
+}
+
+.cd__sheet-cast img,
+.cd__sheet-cast span {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #0e0e10;
+  border-radius: 50%;
+  background-color: #222;
+  object-fit: cover;
+  color: rgb(255 255 255 / 0.6);
+  font-size: 0.75rem;
+}
+
+.cd__sheet-section {
+  margin-bottom: 1.25rem;
+}
+
+.cd__sheet-section h4 {
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  color: rgb(255 255 255 / 0.35);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cd__sheet-palette {
+  position: relative;
+  width: 160px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.cd__zoom-turn {
+  width: 40px;
+  height: 40px;
+  translate: -50% 0;
+}
+
+.cinetropes__zoom.is-open .cd__zoom-turn {
+  transition-delay: 600ms, 0ms, 0ms, 0ms, 0ms;
+}
+
 /* Right panel, the film page's head */
 .cd__panel {
   display: flex;
@@ -1608,8 +1797,15 @@
   .cd__mini.is-entering .cd__mini-translater,
   .cd__mini.is-revealing .cd__mini-rotator,
   .cd__card-rotator,
+  .cd__zoom-card,
+  .cd__zoom-rotator,
   .cd__section-body {
     transition: none;
+  }
+
+  .cd__zoom-sheet,
+  .cd__zoom-sheet > * {
+    animation: none;
   }
 
   .cd__verdict {

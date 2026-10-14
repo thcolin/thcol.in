@@ -80,7 +80,7 @@ const Tip = ({ id, anchor, wide, onKeyDown, onBlur, children }) => {
   )
 }
 
-export const Signature = ({ label, name, tip, wide, children }) => {
+export const Signature = ({ label, name, tip, wide, legend, children }) => {
   const [open, setOpen] = useState(false)
   const [hover, setHover] = useState(false)
   const [axis, setAxis] = useState(null)
@@ -169,6 +169,19 @@ export const Signature = ({ label, name, tip, wide, children }) => {
     }
   }
 
+  // As a legend, the glyph keeps its badges and its tooltip's content stands beside it
+  if (legend) {
+    return (
+      <figure className='cinetropes__legend'>
+        <figcaption>{label}</figcaption>
+        <div ref={anchor} className='cinetropes__glyph' role='img' aria-label={name} onPointerEnter={(event) => event.pointerType === 'mouse' && setHover(true)} onPointerLeave={() => setHover(false)}>
+          {children({ open: false, hover, axis, setAxis })}
+        </div>
+        <div className='cinetropes__legend-body'>{tip({ axis, setAxis })}</div>
+      </figure>
+    )
+  }
+
   return (
     <figure>
       <figcaption>{label}</figcaption>
@@ -221,12 +234,12 @@ const Badge = ({ at, angle, color, small, children }) => {
       return
     }
 
-    // Measured unscaled, its entry animation scales it from its center
-    const rect = badge.getBoundingClientRect()
-    const left = rect.left + rect.width / 2 - badge.offsetWidth / 2
+    // Measured at rest: its entry animation scales it on top of its translation
+    badge.style.animation = 'none'
+    const { left, right } = badge.getBoundingClientRect()
+    badge.style.animation = ''
     const bounds = box.getBoundingClientRect()
-    const dx = Math.max(0, bounds.left - left) + Math.min(0, bounds.right - (left + badge.offsetWidth))
-    badge.style.setProperty('--dx', `${dx}px`)
+    badge.style.setProperty('--dx', `${Math.max(0, bounds.left - left) + Math.min(0, bounds.right - right)}px`)
   }, [children])
 
   return (
@@ -315,7 +328,7 @@ const triforceGlow = (scores) => {
 
 const ORDER = ['critic', 'public', 'nerd']
 
-export const Reception = ({ scores }) => {
+export const Reception = ({ scores, legend }) => {
   const id = useGradientId('reception')
   const max = D * 0.38
   const vertices = AXES.map((axis) => polar((scores[axis] / 5) * max, TRIFORCE[axis].angle))
@@ -347,7 +360,7 @@ export const Reception = ({ scores }) => {
   )
 
   return (
-    <Signature label='Reception' name={`Reception: ${ORDER.map((axis) => `${TRIFORCE[axis].label.toLowerCase()} ${scores[axis].toFixed(1)}`).join(', ')} out of 5`} tip={tip}>
+    <Signature label='Reception' legend={legend} name={`Reception: ${ORDER.map((axis) => `${TRIFORCE[axis].label.toLowerCase()} ${scores[axis].toFixed(1)}`).join(', ')} out of 5`} tip={tip}>
       {({ open, hover, axis }) => (
         <>
           {glow && (
@@ -427,7 +440,7 @@ const atmosphereGradient = (emotions) => {
     conic-gradient(at ${cx}% ${cy}%, ${Array.from({ length: 9 }, (_, i) => stop(i)).join(', ')})`
 }
 
-export const Atmosphere = ({ emotions, archetype }) => {
+export const Atmosphere = ({ emotions, archetype, legend }) => {
   const id = useGradientId('atmosphere')
   const max = D * 0.4
   const vertices = EMOTIONS.map(([key], i) => polar((emotions[key] / 5) * max, i * 45))
@@ -449,7 +462,7 @@ export const Atmosphere = ({ emotions, archetype }) => {
   )
 
   return (
-    <Signature label='Atmosphere' name={`Atmosphere: ${archetype ? `${archetype}. ` : ''}${EMOTIONS.map(([key, label]) => `${label.toLowerCase()} ${emotions[key].toFixed(1)}`).join(', ')} out of 5`} tip={tip}>
+    <Signature label='Atmosphere' legend={legend} name={`Atmosphere: ${archetype ? `${archetype}. ` : ''}${EMOTIONS.map(([key, label]) => `${label.toLowerCase()} ${emotions[key].toFixed(1)}`).join(', ')} out of 5`} tip={tip}>
       {({ axis, setAxis }) => (
         <>
           <svg viewBox={`0 0 ${D} ${D}`} aria-hidden='true'>
@@ -539,7 +552,7 @@ const TropesTip = ({ tropes, themes, total, onAxis }) => {
   )
 }
 
-export const Tropes = ({ tropes, themes = [], total, filmId }) => {
+export const Tropes = ({ tropes, themes = [], total, filmId, legend }) => {
   const id = useGradientId('tropes')
   const max = D * 0.4
   const step = 360 / tropes.length
@@ -550,6 +563,7 @@ export const Tropes = ({ tropes, themes = [], total, filmId }) => {
   return (
     <Signature
       label='Tropes'
+      legend={legend}
       name={`Tropes: ${tropes.map(({ name, value }) => `${name} ${value.toFixed(1)}`).join(', ')}`}
       wide
       tip={({ setAxis }) => <TropesTip key={filmId} tropes={tropes} themes={themes} total={total} onAxis={setAxis} />}

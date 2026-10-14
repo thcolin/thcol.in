@@ -2,9 +2,10 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { Anchor, Tags, easeOut, range, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
-import { HistoryCard, MysteryCard } from './cinetropes-daily/card'
+import { HistoryCard, MysteryCard, MysteryZoom } from './cinetropes-daily/card'
 import { confettiOn } from './cinetropes-daily/confetti'
 import { Atmosphere, Reception, Tropes } from './cinetropes-radars'
+import { Gooey } from './Cinetropes'
 import './cinetropes-daily.css'
 
 // The beta's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
@@ -240,6 +241,57 @@ const Section = ({ id, label, open, onToggle, children }) => (
     </div>
   </div>
 )
+
+// The back of the zoomed card, the app's SwipeCard sheet: the film, its cast, then its signatures and its palette
+const Sheet = ({ film, mystery, tropes, gameDay }) => {
+  const director = mystery.crewDetailed.find(({ job }) => job === 'Director')
+  const people = [
+    ...(director ? [{ personId: director.personId, name: director.name, imageUrl: director.imageUrl }] : []),
+    ...mystery.castDetailed,
+  ].slice(0, 5)
+
+  return (
+    <>
+      <div className='cd__sheet-info'>
+        <h3>{film.title}</h3>
+        <p>{[mystery.year, mystery.runtime && runtimeOf(mystery.runtime), mystery.genres.map(({ name }) => name).join(', ')].filter(Boolean).join(' · ')}</p>
+        {mystery.director && <p>{mystery.director}</p>}
+      </div>
+      {mystery.overview && <p className='cd__sheet-synopsis'>{mystery.overview}</p>}
+      {people.length > 0 && (
+        <ul className='cd__sheet-cast'>
+          {people.map((person) => (
+            <li key={person.personId} title={person.name}>
+              {person.imageUrl ? <img src={person.imageUrl} alt={person.name} width='40' height='40' /> : <span aria-label={person.name}>{person.name.slice(0, 1)}</span>}
+            </li>
+          ))}
+        </ul>
+      )}
+      <section className='cd__sheet-section'>
+        <h4>Reception</h4>
+        <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} legend />
+      </section>
+      <section className='cd__sheet-section'>
+        <h4>Atmosphere</h4>
+        <Atmosphere emotions={mystery.emotions} legend />
+      </section>
+      {tropes.length >= 3 && (
+        <section className='cd__sheet-section'>
+          <h4>Tropes</h4>
+          <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} legend />
+        </section>
+      )}
+      {mystery.posterPalette?.length > 0 && (
+        <section className='cd__sheet-section'>
+          <h4>Palette</h4>
+          <div className='cd__sheet-palette'>
+            <Gooey colors={mystery.posterPalette} />
+          </div>
+        </section>
+      )}
+    </>
+  )
+}
 
 export const CinetropesDaily = () => {
   const root = useRef(null)
@@ -711,6 +763,8 @@ export const CinetropesDaily = () => {
   const crewRevealed = revealTier >= 2 || victoryRevealed
   const won = phase === 'won'
   const answer = mysteryFilm?.title
+  const [zoom, setZoom] = useState(null)
+  const zoomable = basePosterLevel === 5 && !!mysteryFilm?.posterUrl && !transition
   const titleRevealed = revealTier >= 7 || victoryRevealed
   const titleText = titleRevealed && answer ? answer : mystery?.titleMask ?? 'Xxxxxx'
   const twins = new Map()
@@ -812,11 +866,16 @@ export const CinetropesDaily = () => {
 
         <div className='cd__body'>
           <div className='cd__card-area' ref={card}>
-            <MysteryCard holo={victoryRevealed}>
+            <MysteryCard holo={victoryRevealed} label={answer && `${answer}, turn the card over`} hidden={!!zoom} onZoom={zoomable ? setZoom : undefined}>
               {basePosterLevel === 5 && mysteryFilm?.posterUrl && <img className='cd__poster' src={mysteryFilm.posterUrl} alt={answer ?? ''} width='500' height='750' />}
               {basePosterLevel < 5 && pixels[basePosterLevel] && <PixelGrid pixels={pixels[basePosterLevel]} className='cd__poster' />}
               {transition && <PixelSplit key={`${basePosterLevel}`} coarse={transition.coarse} fine={transition.fine} onComplete={transitionDone} className='cd__pixel-split' />}
             </MysteryCard>
+            {zoom && (
+              <MysteryZoom from={zoom} poster={mysteryFilm.posterUrl} title={answer} onClose={() => setZoom(null)}>
+                <Sheet film={mysteryFilm} mystery={mystery} tropes={tropes} gameDay={gameDay} />
+              </MysteryZoom>
+            )}
           </div>
 
           <div className='cd__panel'>

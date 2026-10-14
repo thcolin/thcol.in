@@ -1137,6 +1137,36 @@
   filter: saturate(1.5);
 }
 
+/* A signature as a legend, the app's legend="side": the glyph, its tooltip's rows beside it */
+
+.cinetropes__legend {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  margin: 0;
+  color: #fff;
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.cinetropes__legend figcaption {
+  display: none;
+}
+
+.cinetropes__legend .cinetropes__glyph {
+  cursor: default;
+}
+
+.cinetropes__legend .cinetropes__glyph:active {
+  scale: none;
+}
+
+.cinetropes__legend-body {
+  min-width: 0;
+}
+
 /* The app's popover: a dark veil, the card in the middle of the screen */
 
 .cinetropes__zoom {

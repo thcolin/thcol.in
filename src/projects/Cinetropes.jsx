@@ -45,7 +45,7 @@ const describe = (colors) => {
   return `${temperature} • ${tone}`
 }
 
-const Gooey = ({ colors, still }) => {
+export const Gooey = ({ colors, still }) => {
   const id = useGradientId('palette')
   const seed = colors.reduce((acc, hex, i) => acc + parseInt(hex.slice(1, 3), 16) * (i + 1), 0)
   const blobs = colors.slice(0, 6).map((color, i) => {
