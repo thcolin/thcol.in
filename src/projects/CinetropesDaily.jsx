@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Anchor, Tags, easeOut, range, stepOf, useScrub } from './shared'
+import { Anchor, Tags, easeOut, range, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
 import { HistoryCard, MysteryCard } from './cinetropes-daily/card'
@@ -341,26 +341,54 @@ export const CinetropesDaily = () => {
     }
   }, [phase, mysteryFilm])
 
-  // The scroll brings the rules in as the sections' own screens do, then once past them opens the drawers
-  // one by one, until the visitor opens one or the game ends; a guess's own drawer stays until the next step
+  // Once past the rules, the scroll opens the drawers one by one, until the visitor opens one or the game ends;
+  // a guess's own drawer stays until the next step
   const drawer = useRef(-1)
   const [scrub, hold] = useScrub((progress) => {
-    if (onboarded) {
-      const index = stepOf(progress, SECTIONS.length)
-
-      if (index !== drawer.current && !resultMode) {
-        drawer.current = index
-        setOpenSection(SECTIONS[index])
-      }
-
+    if (!onboarded) {
       return
     }
 
-    const style = root.current.style
-    style.setProperty('--cd-guess', easeOut(range(progress, 0, 0.4)))
-    style.setProperty('--cd-film', easeOut(range(progress, 0.1, 0.5)))
-    style.setProperty('--cd-rules', range(progress, 0.45, 0.75))
+    const index = stepOf(progress, SECTIONS.length)
+
+    if (index !== drawer.current && !resultMode) {
+      drawer.current = index
+      setOpenSection(SECTIONS[index])
+    }
   })
+
+  // The rules come in while the band rises into the screen, whole once it reaches the top, as its anchor lands it
+  const reduced = usePrefersReducedMotion()
+
+  useEffect(() => {
+    const style = root.current?.style
+
+    if (onboarded || reduced || !style) {
+      return
+    }
+
+    let frame = 0
+    const render = () => {
+      frame = 0
+      const rise = Math.min(1, Math.max(0, 1 - scrub.current.getBoundingClientRect().top / innerHeight))
+      style.setProperty('--cd-guess', easeOut(range(rise, 0.2, 0.7)))
+      style.setProperty('--cd-film', easeOut(range(rise, 0.3, 0.8)))
+      style.setProperty('--cd-rules', range(rise, 0.6, 1))
+    }
+    const schedule = () => {
+      frame ||= requestAnimationFrame(render)
+    }
+
+    render()
+    addEventListener('scroll', schedule, { passive: true })
+    addEventListener('resize', schedule)
+    return () => {
+      cancelAnimationFrame(frame)
+      removeEventListener('scroll', schedule)
+      removeEventListener('resize', schedule)
+      ;['--cd-guess', '--cd-film', '--cd-rules'].forEach((name) => style.removeProperty(name))
+    }
+  }, [onboarded, reduced])
 
   const toggle = (id) => {
     hold()
