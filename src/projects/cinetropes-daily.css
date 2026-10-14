@@ -520,6 +520,14 @@
   border-radius: 0.5em;
 }
 
+.cd__zoom {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.cd__zoom:focus {
+  outline: none;
+}
+
 .cd__zoom-card {
   position: fixed;
   perspective: 2000px;
@@ -572,7 +580,7 @@
   overscroll-behavior: contain;
   scrollbar-width: none;
   border-radius: 2px;
-  background-color: #0e0e10;
+  background-color: #0f0f0f;
   cursor: default;
   animation: cd-sheet-in 0.2s ease-out both;
 }
@@ -656,7 +664,7 @@
   place-items: center;
   width: 40px;
   height: 40px;
-  border: 2px solid #0e0e10;
+  border: 2px solid #0f0f0f;
   border-radius: 50%;
   background-color: #222;
   object-fit: cover;
