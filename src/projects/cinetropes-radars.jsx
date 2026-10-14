@@ -203,11 +203,34 @@ const Bar = ({ value, color }) => (
   </span>
 )
 
-// A label pinned outside the radar, pushed away from the center along its axis
+// A label pinned outside the radar, pushed away from the center along its axis, and back inside the box that
+// clips it, the daily's scrolling panel
 const Badge = ({ at, angle, color, small, children }) => {
   const rad = (angle * Math.PI) / 180
+  const ref = useRef(null)
+
+  useLayoutEffect(() => {
+    const badge = ref.current
+    let box = badge.parentElement
+
+    while (box && getComputedStyle(box).overflowX === 'visible') {
+      box = box.parentElement
+    }
+
+    if (!box) {
+      return
+    }
+
+    // Measured unscaled, its entry animation scales it from its center
+    const rect = badge.getBoundingClientRect()
+    const left = rect.left + rect.width / 2 - badge.offsetWidth / 2
+    const bounds = box.getBoundingClientRect()
+    const dx = Math.max(0, bounds.left - left) + Math.min(0, bounds.right - (left + badge.offsetWidth))
+    badge.style.setProperty('--dx', `${dx}px`)
+  }, [children])
+
   return (
-    <span className='cinetropes__badge' style={{ left: `${(at.x / D) * 100}%`, top: `${(at.y / D) * 100}%`, '--tx': `${-50 + 50 * Math.sin(rad)}%`, '--ty': `${-50 - 50 * Math.cos(rad)}%`, color }}>
+    <span ref={ref} className='cinetropes__badge' style={{ left: `${(at.x / D) * 100}%`, top: `${(at.y / D) * 100}%`, '--tx': `${-50 + 50 * Math.sin(rad)}%`, '--ty': `${-50 - 50 * Math.cos(rad)}%`, color }}>
       {small && <small>{small}</small>}
       <b style={{ backgroundColor: `color-mix(in srgb, ${color}, black 75%)` }}>{children}</b>
     </span>

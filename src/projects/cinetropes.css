@@ -538,7 +538,7 @@
   line-height: 1.3;
   white-space: nowrap;
   pointer-events: none;
-  transform: translate(var(--tx), var(--ty));
+  transform: translate(calc(var(--tx) + var(--dx, 0px)), var(--ty));
   animation: cinetropes-badge 200ms ease-out both;
 }
 
