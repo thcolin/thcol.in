@@ -5,7 +5,7 @@ import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages 
 import { HistoryCard, MysteryCard, MysteryZoom } from './cinetropes-daily/card'
 import { confettiOn } from './cinetropes-daily/confetti'
 import { Atmosphere, Reception, Tropes } from './cinetropes-radars'
-import { Gooey } from './Cinetropes'
+import { Gooey, rarityOf } from './Cinetropes'
 import './cinetropes-daily.css'
 
 // The beta's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
@@ -872,7 +872,7 @@ export const CinetropesDaily = () => {
               {transition && <PixelSplit key={`${basePosterLevel}`} coarse={transition.coarse} fine={transition.fine} onComplete={transitionDone} className='cd__pixel-split' />}
             </MysteryCard>
             {zoom && (
-              <MysteryZoom from={zoom} poster={mysteryFilm.posterUrl} title={answer} onClose={() => setZoom(null)}>
+              <MysteryZoom from={zoom} poster={mysteryFilm.posterUrl} title={answer} rarity={rarityOf(mystery.scores)} onClose={() => setZoom(null)}>
                 <Sheet film={mysteryFilm} mystery={mystery} tropes={tropes} gameDay={gameDay} />
               </MysteryZoom>
             )}

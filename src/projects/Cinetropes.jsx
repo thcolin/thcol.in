@@ -351,7 +351,7 @@ const clamp = (value, min = 0, max = 100) => Math.min(max, Math.max(min, value))
 const round = (value) => Math.round(value * 100) / 100
 const adjust = (value, toMin, toMax) => round(toMin + (value / 100) * (toMax - toMin))
 
-const rarityOf = ({ critic, public: audience, nerd }) => {
+export const rarityOf = ({ critic, public: audience, nerd }) => {
   const average = (critic + audience + nerd) / 3
   if (average >= 4.2) return 'secret'
   if (average >= 3.5) return 'ultra'

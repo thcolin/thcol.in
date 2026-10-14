@@ -129,12 +129,15 @@ const Icon = ({ d }) => (
   </svg>
 )
 
+// The app's SwipeCard glow, by the rarity its scores give the card
+const GLOW = { common: '#252728', holo: '#4b595e', rare: '#75908e', ultra: '#97bfc2', secret: '#abae97' }
+
 const FOCUSABLE = 'button, [href], [tabindex]:not([tabindex="-1"])'
 
 // The app's SwipeCard as the film page opens it: the card flies to the middle of the screen at 70% of it, spinning a
 // turn and a half to land on its back, the film's sheet. A click on the card or the turn button turns it over;
 // Escape, the cross or the backdrop puts it back, the app's timings throughout
-export const MysteryZoom = ({ from, poster, title, onClose, children }) => {
+export const MysteryZoom = ({ from, poster, title, rarity, onClose, children }) => {
   const dialog = useRef(null)
   const busy = useRef(true)
   const timers = useRef([])
@@ -225,7 +228,7 @@ export const MysteryZoom = ({ from, poster, title, onClose, children }) => {
   return createPortal(
     <div ref={dialog} className={`cinetropes__zoom cd__zoom${shown ? ' is-open' : ''}`} role='dialog' aria-modal='true' aria-label={title} tabIndex={-1} onKeyDown={keyDown}>
       <div className='cinetropes__zoom-backdrop' onClick={leave} />
-      <div className='cd__zoom-card' style={{ ...size, ...box, transform: shown ? 'none' : away }} onClick={turn}>
+      <div className='cd__zoom-card' style={{ ...size, ...box, transform: shown ? 'none' : away, '--zoom-scale': scale, '--glow': GLOW[rarity] }} onClick={turn}>
         <div className='cd__zoom-rotator' style={{ transform: `rotateY(${rotation}deg)` }}>
           <div className='cd__zoom-front'>
             <img src={poster} alt='' width='500' height='750' />
