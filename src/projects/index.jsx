@@ -83,17 +83,17 @@ const Projects = () => {
 
   return (
     <>
+      <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes', 'cinetropes meta-game', 'cinetropes daily']}>
+        <Cinetropes />
+        <CinetropesGame />
+        <CinetropesDaily />
+      </Group>
       <Group id='released' title='released' phrase='Public, open source, try them below.' projects={['sensorr', 'sensorr wrapped', 'gmca', 'oleoo', 'react-responsive-virtual-grid']}>
         <Sensorr />
         <Wrapped />
         <Gmca />
         <Oleoo />
         <Grid />
-      </Group>
-      <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes', 'cinetropes meta-game', 'cinetropes daily']}>
-        <Cinetropes />
-        <CinetropesGame />
-        <CinetropesDaily />
       </Group>
       <Group id='not-for-release' title='not for release' phrase='Built for me. No repo, no download.' projects={['teevy', 'workflow & obsidian']}>
         <Teevy />
