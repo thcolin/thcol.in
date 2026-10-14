@@ -272,6 +272,7 @@ export const CinetropesDaily = () => {
   const attemptsCount = useRef(0)
   const restored = useRef(false)
   const card = useRef(null)
+  const inputArea = useRef(null)
   const confettiCanvas = useRef(null)
   const confetti = useRef(null)
   const timers = useRef([])
@@ -445,6 +446,13 @@ export const CinetropesDaily = () => {
     }).catch(() => live && setResults([])), 300)
     return () => { live = false; clearTimeout(timer) }
   }, [query, staged, guessedIds])
+
+  // Closed on a press outside, as on the beta, and not on blur: WebKit blurs the input under a tapped suggestion, before its click
+  useEffect(() => {
+    const press = (event) => !inputArea.current?.contains(event.target) && setOpen(false)
+    document.addEventListener('pointerdown', press)
+    return () => document.removeEventListener('pointerdown', press)
+  }, [])
 
   const select = (id, title) => {
     setStaged(id)
@@ -879,7 +887,7 @@ export const CinetropesDaily = () => {
 
             {(loading || phase === 'playing' || (won && !victoryRevealed)) && (
               <div className='cd__dock-action'>
-                <div className='cd__input-area'>
+                <div ref={inputArea} className='cd__input-area'>
                   {open && results.length > 0 && (
                     <div id='cd-autocomplete' className='cd__autocomplete' role='listbox' aria-label='Film suggestions'>
                       {results.map((film, i) => (
@@ -907,7 +915,6 @@ export const CinetropesDaily = () => {
                     onChange={(event) => { setQuery(event.target.value); setStaged(null) }}
                     onKeyDown={keyDown}
                     onFocus={() => results.length > 0 && staged === null && setOpen(true)}
-                    onBlur={() => setOpen(false)}
                     disabled={loading || submitting || phase !== 'playing'}
                     role='combobox'
                     aria-expanded={open && results.length > 0}
