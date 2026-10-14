@@ -993,7 +993,7 @@ export const CinetropesDaily = () => {
         {!onboarded && (
           <div className={onboardingLeaving ? 'cd__onboarding is-leaving' : 'cd__onboarding'}>
             <div className='cd__onboarding-content'>
-              <p className='cd__hero-title'><i><span>Guess</span><span>the Film of the Day</span></i></p>
+              <p className='cd__hero-title'><i><span>Guess</span><span>the Movie of the Day</span></i></p>
               <p className='cd__hero-subtitle'>
                 Can you recognise today’s film simply<br />from its tropes, its atmosphere and its ratings?
                 <br /><br />
