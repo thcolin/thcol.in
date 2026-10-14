@@ -137,7 +137,7 @@ const FOCUSABLE = 'button, [href], [tabindex]:not([tabindex="-1"])'
 // The app's SwipeCard as the film page opens it: the card flies to the middle of the screen at 70% of it, spinning a
 // turn and a half to land on its back, the film's sheet. A click on the card or the turn button turns it over;
 // Escape, the cross or the backdrop puts it back, the app's timings throughout
-export const MysteryZoom = ({ from, poster, title, rarity, holo, onClose, children }) => {
+export const MysteryZoom = ({ from, poster, title, rarity, holo, words, onClose, children }) => {
   const dialog = useRef(null)
   const card = useRef(null)
   const busy = useRef(true)
@@ -277,10 +277,10 @@ export const MysteryZoom = ({ from, poster, title, rarity, holo, onClose, childr
         </div>
         {revealed && <div className='cd__zoom-sheet' onClick={(event) => event.stopPropagation()}>{children}</div>}
       </div>
-      <button type='button' className='cinetropes__close' style={{ top: box.top - 32, left: box.left + size.width + 32 }} aria-label='Close' onClick={leave}>
+      <button type='button' className='cinetropes__close' style={{ top: box.top - 32, left: box.left + size.width + 32 }} aria-label={words.close} onClick={leave}>
         <Icon d={['M18 6l-12 12', 'M6 6l12 12']} />
       </button>
-      <button type='button' className='cinetropes__close cd__zoom-turn' style={{ top: box.top + size.height + 32, left: box.left + size.width / 2 }} aria-label={onBack ? 'Show the poster' : 'Show the back'} onClick={turn}>
+      <button type='button' className='cinetropes__close cd__zoom-turn' style={{ top: box.top + size.height + 32, left: box.left + size.width / 2 }} aria-label={onBack ? words.poster : words.back} onClick={turn}>
         <Icon d={['M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747', 'M20 4v5h-5']} />
       </button>
     </div>,

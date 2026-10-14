@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Anchor, Tags, easeOut, range, stepOf, usePrefersReducedMotion, useScrub } from './shared'
-import { getPosterPixels, getPuzzle, revealMysteryFilm, search, submitGuess } from './cinetropes-daily/source'
+import { Anchor, Choices, Tags, easeOut, range, stepOf, usePrefersReducedMotion, useScrub } from './shared'
+import { getPosterPixels, getPuzzle, revealMysteryFilm, search, setLanguage, submitGuess } from './cinetropes-daily/source'
 import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages } from './cinetropes-daily/pixels'
 import { HistoryCard, MysteryCard, MysteryZoom } from './cinetropes-daily/card'
 import { confettiOn } from './cinetropes-daily/confetti'
@@ -20,6 +20,85 @@ const SIMILAR_GRID = { w: 4, h: 6 }
 const KONAMI = 'daily-konami-'
 const KONAMI_SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
 const KONAMI_LABELS = ['▲', '▲', '▼', '▼', '◀', '▶', '◀', '▶', 'B', 'A']
+
+// The band's words in English and in French; the French is the beta's /daily page where it has them
+const LANGUAGE = 'daily-language'
+const TEXT = {
+  en: {
+    language: 'Language',
+    sample: ['Sample data', 'Daily #190 from the beta, 8 October 2026', 'The beta’s API did not answer: this is daily #190, taken from the beta on 8 October 2026.'],
+    hero: ['Guess', 'the Movie of the Day'],
+    rules: [['Can you recognise today’s film simply', 'from its tropes, its atmosphere and its ratings?'], ['You have 6 attempts to find it: with each miss,', 'another clue is revealed.']],
+    play: 'Play',
+    attempts: 'Attempts',
+    tries: (used, max) => `${used}/${max} attempts`,
+    exhausted: (max) => `${max}/${max} attempts used`,
+    turn: (title) => `${title}, turn the card over`,
+    by: 'a film by ',
+    sections: { casting: 'Casting', equipe: 'Crew', similar: 'Similar' },
+    more: ['More', 'Less'],
+    jobs: { Director: ['Director'], 'Co-Director': ['Co-Director'], Writer: ['Writer'], Screenplay: ['Screenplay'] },
+    clue: '+1 clue level',
+    loading: 'Loading...',
+    guess: 'Guess the film...',
+    search: 'Search for a film',
+    suggestions: 'Film suggestions',
+    send: 'Send',
+    skip: 'Skip',
+    won: 'Won!',
+    lost: 'Lost...',
+    share: 'Share',
+    copied: 'Copied!',
+    uncopied: 'Unable to copy',
+    error: 'Something went wrong',
+    dismiss: 'Close the notification',
+    zoom: { close: 'Close', poster: 'Show the poster', back: 'Show the back' },
+    signatures: ['Reception', 'Atmosphere', 'Tropes'],
+    palette: 'Palette',
+    genres: {},
+  },
+  fr: {
+    language: 'Langue',
+    sample: ['Données d’exemple', 'Daily #190 de la beta, 8 octobre 2026', 'L’API de la beta n’a pas répondu : voici le daily #190, pris sur la beta le 8 octobre 2026.'],
+    hero: ['Devinez', 'le film du jour'],
+    rules: [['Saurez-vous reconnaître le film du jour simplement', 'avec ses tropes, son atmosphère et sa notation ?'], ['Vous avez 6 tentatives pour le trouver — à chaque erreur,', 'un indice supplémentaire se dévoile.']],
+    play: 'Jouer',
+    attempts: 'Tentatives',
+    tries: (used, max) => `${used}/${max} tentatives`,
+    exhausted: (max) => `${max}/${max} tentatives épuisées`,
+    turn: (title) => `${title}, retourner la carte`,
+    by: 'un film de ',
+    sections: { casting: 'Casting', equipe: 'Équipe', similar: 'Similaires' },
+    more: ['Plus', 'Moins'],
+    jobs: { Director: ['Réalisateur', 'Réalisatrice'], 'Co-Director': ['Coréalisateur', 'Coréalisatrice'], Writer: ['Scénariste'], Screenplay: ['Scénario'] },
+    clue: '+1 Niveau d’indice',
+    loading: 'Chargement...',
+    guess: 'Devinez le film...',
+    search: 'Rechercher un film',
+    suggestions: 'Suggestions de films',
+    send: 'Envoyer',
+    skip: 'Passer',
+    won: 'Gagné !',
+    lost: 'Perdu...',
+    share: 'Partager',
+    copied: 'Copié !',
+    uncopied: 'Impossible de copier',
+    error: 'Erreur',
+    dismiss: 'Fermer la notification',
+    zoom: { close: 'Fermer', poster: 'Voir l’affiche', back: 'Voir le dos' },
+    signatures: ['Notation', 'Atmosphère', 'Tropes'],
+    palette: 'Palette',
+    // The beta's genres.ts, with its accents
+    genres: { Adventure: 'Aventure', Comedy: 'Comédie', Documentary: 'Documentaire', Drama: 'Drame', Family: 'Famille', Fantasy: 'Fantaisie', History: 'Histoire', Horror: 'Horreur', Music: 'Musique', Mystery: 'Mystère', 'Science Fiction': 'Science-fiction', 'TV Movie': 'Téléfilm', War: 'Guerre' },
+  },
+}
+
+const LANGUAGES = [{ id: 'en', label: 'EN' }, { id: 'fr', label: 'FR' }]
+const genresOf = (t, genres) => genres.map(({ name }) => t.genres[name] ?? name).join(', ')
+const jobOf = (t, { job, gender }) => {
+  const forms = t.jobs[job] ?? [job]
+  return (gender === 1 && forms[1]) || forms[0]
+}
 
 const runtimeOf = (minutes) => `${Math.floor(minutes / 60)}h${String(minutes % 60).padStart(2, '0')}`
 const normalize = (text) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '')
@@ -202,7 +281,7 @@ const KonamiOverlay = ({ progress, activated }) => {
 }
 
 // The app's Synopsis: clamped to its lines, a More button when the text runs longer
-const Synopsis = ({ text }) => {
+const Synopsis = ({ text, t }) => {
   const [expanded, setExpanded] = useState(false)
   const [overflows, setOverflows] = useState(false)
   const ref = useRef(null)
@@ -221,7 +300,7 @@ const Synopsis = ({ text }) => {
       <p ref={ref} className={expanded ? 'is-expanded' : undefined}>{text}</p>
       {(overflows || expanded) && (
         <button type='button' className='cd__synopsis-toggle' aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>
-          {expanded ? 'Less' : 'More'}
+          {expanded ? t.more[1] : t.more[0]}
         </button>
       )}
     </>
@@ -243,7 +322,7 @@ const Section = ({ id, label, open, onToggle, children }) => (
 )
 
 // The back of the zoomed card, the app's SwipeCard sheet: the film, its cast, then its signatures and its palette
-const Sheet = ({ film, mystery, tropes, gameDay }) => {
+const Sheet = ({ film, mystery, tropes, gameDay, t, lang }) => {
   const director = mystery.crewDetailed.find(({ job }) => job === 'Director')
   const people = [
     ...(director ? [{ personId: director.personId, name: director.name, imageUrl: director.imageUrl }] : []),
@@ -254,7 +333,7 @@ const Sheet = ({ film, mystery, tropes, gameDay }) => {
     <>
       <div className='cd__sheet-info'>
         <h3>{film.title}</h3>
-        <p>{[mystery.year, mystery.runtime && runtimeOf(mystery.runtime), mystery.genres.map(({ name }) => name).join(', ')].filter(Boolean).join(' · ')}</p>
+        <p>{[mystery.year, mystery.runtime && runtimeOf(mystery.runtime), genresOf(t, mystery.genres)].filter(Boolean).join(' · ')}</p>
         {mystery.director && <p>{mystery.director}</p>}
       </div>
       {mystery.overview && <p className='cd__sheet-synopsis'>{mystery.overview}</p>}
@@ -268,22 +347,22 @@ const Sheet = ({ film, mystery, tropes, gameDay }) => {
         </ul>
       )}
       <section className='cd__sheet-section'>
-        <h4>Reception</h4>
-        <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} legend />
+        <h4>{t.signatures[0]}</h4>
+        <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} legend lang={lang} />
       </section>
       <section className='cd__sheet-section'>
-        <h4>Atmosphere</h4>
-        <Atmosphere emotions={mystery.emotions} legend />
+        <h4>{t.signatures[1]}</h4>
+        <Atmosphere emotions={mystery.emotions} legend lang={lang} />
       </section>
       {tropes.length >= 3 && (
         <section className='cd__sheet-section'>
-          <h4>Tropes</h4>
-          <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} legend />
+          <h4>{t.signatures[2]}</h4>
+          <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} legend lang={lang} />
         </section>
       )}
       {mystery.posterPalette?.length > 0 && (
         <section className='cd__sheet-section'>
-          <h4>Palette</h4>
+          <h4>{t.palette}</h4>
           <div className='cd__sheet-palette'>
             <Gooey colors={mystery.posterPalette} />
           </div>
@@ -295,6 +374,8 @@ const Sheet = ({ film, mystery, tropes, gameDay }) => {
 
 export const CinetropesDaily = () => {
   const root = useRef(null)
+  const [lang, setLang] = useState(() => read(LANGUAGE) ?? (navigator.language?.toLowerCase().startsWith('fr') ? 'fr' : 'en'))
+  const t = TEXT[lang]
   const [puzzle, setPuzzle] = useState(null)
   const [state, setState] = useState({ phase: 'loading', gameDay: 0, mystery: null, attempts: [], maxAttempts: 6, mysteryFilm: null })
   const [onboarded, setOnboarded] = useState(() => read(ONBOARDING) === true)
@@ -344,16 +425,44 @@ export const CinetropesDaily = () => {
   const attemptsUsed = attempts.length
   const loading = phase === 'loading'
 
-  // GET /daily, then the saved game of that day if it is the same film
+  // GET /daily in the chosen language, then the saved game of that day if it is the same film: on a change of
+  // language the game goes on, its film in the new language, the guesses in the one they were made in
+  const pixelsLoaded = useRef(false)
+
   useEffect(() => {
+    let live = true
+    setLanguage(lang)
     getPuzzle().then((data) => {
+      if (!live) {
+        return
+      }
+
       setPuzzle(data)
-      const saved = read(`${STORAGE}${data.gameDay}`)
-      const same = saved?.mystery && saved.mystery.year === data.mystery.year && saved.mystery.runtime === data.mystery.runtime && saved.mystery.director === data.mystery.director
-      setState(same ? saved : { phase: 'playing', gameDay: data.gameDay, mystery: data.mystery, attempts: [], maxAttempts: data.maxGuesses, mysteryFilm: null })
-      Promise.all(POSTER_GRIDS.map((_, level) => getPosterPixels(level))).then(setPixels)
+      setState((current) => {
+        const saved = current.phase === 'loading' ? read(`${STORAGE}${data.gameDay}`) : current
+        const same = saved?.mystery && saved.mystery.year === data.mystery.year && saved.mystery.runtime === data.mystery.runtime && saved.mystery.director === data.mystery.director
+        return same ? { ...saved, mystery: data.mystery } : { phase: 'playing', gameDay: data.gameDay, mystery: data.mystery, attempts: [], maxAttempts: data.maxGuesses, mysteryFilm: null }
+      })
+
+      if (!pixelsLoaded.current) {
+        pixelsLoaded.current = true
+        Promise.all(POSTER_GRIDS.map((_, level) => getPosterPixels(level))).then(setPixels)
+      }
     })
-  }, [])
+    return () => { live = false }
+  }, [lang])
+
+  // The found film's title follows the language too
+  useEffect(() => {
+    if (state.mysteryFilm && state.mysteryFilm.language !== lang) {
+      revealMysteryFilm().then((film) => setState((s) => s.mysteryFilm ? { ...s, mysteryFilm: { ...s.mysteryFilm, ...film, language: lang } } : s))
+    }
+  }, [lang, state.mysteryFilm])
+
+  const switchLanguage = (next) => {
+    write(LANGUAGE, next)
+    setLang(next)
+  }
 
   useEffect(() => {
     if (!loading && gameDay > 0) {
@@ -559,7 +668,7 @@ export const CinetropesDaily = () => {
       setLastGuessIndex(attemptsUsed)
       setLastGuessResult(res.correct ? 'correct' : attemptsUsed + 1 >= maxAttempts ? 'lost' : 'wrong')
     } catch {
-      setToast({ type: 'error', message: 'Something went wrong', at: Date.now() })
+      setToast({ type: 'error', message: t.error, at: Date.now() })
     } finally {
       setSubmitting(false)
     }
@@ -599,9 +708,9 @@ export const CinetropesDaily = () => {
   const share = async () => {
     try {
       await navigator.clipboard.writeText(shareText(gameDay, attempts, phase === 'won', konamiRef.current))
-      setToast({ type: 'success', message: 'Copied!', at: Date.now() })
+      setToast({ type: 'success', message: t.copied, at: Date.now() })
     } catch {
-      setToast({ type: 'error', message: 'Unable to copy', at: Date.now() })
+      setToast({ type: 'error', message: t.uncopied, at: Date.now() })
     }
   }
 
@@ -817,24 +926,27 @@ export const CinetropesDaily = () => {
         <canvas ref={confettiCanvas} className='cd__confetti' aria-hidden='true' />
 
         <header className='cd__nav'>
-          <h3 id='cinetropes-daily-title' className='cd__nav-title'>
-            <Anchor id='cinetropes-daily'>
-              <img src={LOGO} alt='cinetropes' width='275' height='40' />
-              <span>daily</span>
-            </Anchor>
-          </h3>
+          <div className='cd__nav-head'>
+            <h3 id='cinetropes-daily-title' className='cd__nav-title'>
+              <Anchor id='cinetropes-daily'>
+                <img src={LOGO} alt='cinetropes' width='275' height='40' />
+                <span>daily</span>
+              </Anchor>
+            </h3>
+            <Choices label={t.language} options={LANGUAGES} value={lang} onChange={switchLanguage} className='choices cd__languages' />
+          </div>
           <div className='cd__nav-side'>
             <Tags items={['TypeScript', 'React', 'Canvas', 'Hono', 'Drizzle', 'sharp']} />
             {puzzle?.sample && (
-              <p className='cd__sample' title='The beta’s API did not answer: this is daily #190, taken from the beta on 8 October 2026.'>
-                <span>Sample data</span> <span className='cd__sample-text'>Daily #190 from the beta, 8 October 2026</span>
+              <p className='cd__sample' title={t.sample[2]}>
+                <span>{t.sample[0]}</span> <span className='cd__sample-text'>{t.sample[1]}</span>
               </p>
             )}
           </div>
         </header>
 
         <div className='cd__banner'>
-          <ol className='cd__rounds' aria-label='Attempts'>
+          <ol className='cd__rounds' aria-label={t.attempts}>
             {Array.from({ length: maxAttempts }, (_, i) => {
               const attempt = attempts[i]
               const suspenseSlot = lastGuessIndex === i
@@ -860,20 +972,20 @@ export const CinetropesDaily = () => {
             })}
           </ol>
           <p className='cd__attempts' aria-live='polite'>
-            {loading ? '—/6 attempts' : `${attemptsUsed}/${maxAttempts} attempts`}
+            {loading ? t.tries('—', 6) : t.tries(attemptsUsed, maxAttempts)}
           </p>
         </div>
 
         <div className='cd__body'>
           <div className='cd__card-area' ref={card}>
-            <MysteryCard holo={victoryRevealed} label={answer && `${answer}, turn the card over`} hidden={!!zoom} onZoom={zoomable ? setZoom : undefined}>
+            <MysteryCard holo={victoryRevealed} label={answer && t.turn(answer)} hidden={!!zoom} onZoom={zoomable ? setZoom : undefined}>
               {basePosterLevel === 5 && mysteryFilm?.posterUrl && <img className='cd__poster' src={mysteryFilm.posterUrl} alt={answer ?? ''} width='500' height='750' />}
               {basePosterLevel < 5 && pixels[basePosterLevel] && <PixelGrid pixels={pixels[basePosterLevel]} className='cd__poster' />}
               {transition && <PixelSplit key={`${basePosterLevel}`} coarse={transition.coarse} fine={transition.fine} onComplete={transitionDone} className='cd__pixel-split' />}
             </MysteryCard>
             {zoom && (
-              <MysteryZoom from={zoom} poster={mysteryFilm.posterUrl} title={answer} rarity={rarityOf(mystery.scores)} holo={victoryRevealed} onClose={() => setZoom(null)}>
-                <Sheet film={mysteryFilm} mystery={mystery} tropes={tropes} gameDay={gameDay} />
+              <MysteryZoom from={zoom} poster={mysteryFilm.posterUrl} title={answer} rarity={rarityOf(mystery.scores)} holo={victoryRevealed} words={t.zoom} onClose={() => setZoom(null)}>
+                <Sheet film={mysteryFilm} mystery={mystery} tropes={tropes} gameDay={gameDay} t={t} lang={lang} />
               </MysteryZoom>
             )}
           </div>
@@ -889,10 +1001,10 @@ export const CinetropesDaily = () => {
               <>
                 <p className='cd__meta'>
                   <span>{mystery.year}</span>
-                  <PixelatedText text={`  ${mystery.genres.map((g) => g.name).join(', ')}  ·  ${runtimeOf(mystery.runtime)}`} revealed={revealTier >= 1 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
+                  <PixelatedText text={`  ${genresOf(t, mystery.genres)}  ·  ${runtimeOf(mystery.runtime)}`} revealed={revealTier >= 1 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
                     <span className='cd__meta-rest'>
                       <i aria-hidden='true' />
-                      <span>{mystery.genres.map((g) => g.name).join(', ')}</span>
+                      <span>{genresOf(t, mystery.genres)}</span>
                       <i aria-hidden='true' />
                       <span>{runtimeOf(mystery.runtime)}</span>
                     </span>
@@ -900,39 +1012,39 @@ export const CinetropesDaily = () => {
                 </p>
 
                 <p className='cd__director'>
-                  <PixelatedText text={`a film by ${mystery.director}`} revealed={revealTier >= 2 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
-                    <span><span className='cd__director-prefix'>a film by </span><b>{mystery.director}</b></span>
+                  <PixelatedText text={`${t.by}${mystery.director}`} revealed={revealTier >= 2 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.5)'>
+                    <span><span className='cd__director-prefix'>{t.by}</span><b>{mystery.director}</b></span>
                   </PixelatedText>
                 </p>
 
                 <div className='cd__synopsis'>
                   <PixelatedText text={mystery.overview} revealed={revealTier >= 5 || victoryRevealed} resolution={2} fontSize={13} color='rgba(255, 255, 255, 0.6)' block>
-                    <Synopsis text={mystery.overview} />
+                    <Synopsis text={mystery.overview} t={t} />
                   </PixelatedText>
                 </div>
 
                 <div className='cd__signature'>
-                  <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} />
-                  <Atmosphere emotions={mystery.emotions} />
-                  <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} />
+                  <Reception scores={{ ...mystery.scores, notoriety: mystery.scores.notorietyScore, votes: mystery.scores.voteCount }} lang={lang} />
+                  <Atmosphere emotions={mystery.emotions} lang={lang} />
+                  <Tropes tropes={tropes} total={mystery.tropes.length} filmId={gameDay} lang={lang} />
                 </div>
 
                 <div className='cd__accordion' data-scrub-demo>
-                  <Section id='casting' label='Casting' open={openSection === 'casting'} onToggle={toggle}>
+                  <Section id='casting' label={t.sections.casting} open={openSection === 'casting'} onToggle={toggle}>
                     <ul className='cd__people'>
                       {mystery.castDetailed.slice(0, CAST_LIMIT).map((person) => (
                         <Person key={person.personId} name={person.name} role={person.character} imageUrl={person.imageUrl} revealed={castRevealed} hideRole={!victoryRevealed && mayBeTitle(person.character, mystery.titleMask)} />
                       ))}
                     </ul>
                   </Section>
-                  <Section id='equipe' label='Crew' open={openSection === 'equipe'} onToggle={toggle}>
+                  <Section id='equipe' label={t.sections.equipe} open={openSection === 'equipe'} onToggle={toggle}>
                     <ul className='cd__people'>
                       {mystery.crewDetailed.filter((person) => CREW_JOBS.includes(person.job)).map((person) => (
-                        <Person key={`${person.personId}-${person.job}`} name={person.name} role={person.job} imageUrl={person.imageUrl} revealed={crewRevealed} />
+                        <Person key={`${person.personId}-${person.job}`} name={person.name} role={jobOf(t, person)} imageUrl={person.imageUrl} revealed={crewRevealed} />
                       ))}
                     </ul>
                   </Section>
-                  <Section id='similar' label='Similar' open={openSection === 'similar'} onToggle={toggle}>
+                  <Section id='similar' label={t.sections.similar} open={openSection === 'similar'} onToggle={toggle}>
                     <ul className='cd__similar'>
                       {mystery.similarFilms.map((film, i) => (
                         <li key={film.id}>
@@ -967,7 +1079,7 @@ export const CinetropesDaily = () => {
 
             {konami && !victoryRevealed && phase !== 'lost' && (
               <div className='cd__konami-badge'>
-                <span>+1 clue level</span>
+                <span>{t.clue}</span>
                 <svg viewBox='0 0 24 24' width='14' height='14' aria-hidden='true'><path d='M7 11l5 -5l5 5M7 17l5 -5l5 5' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' /></svg>
               </div>
             )}
@@ -976,7 +1088,7 @@ export const CinetropesDaily = () => {
               <div className='cd__dock-action'>
                 <div ref={inputArea} className='cd__input-area'>
                   {open && results.length > 0 && (
-                    <div id='cd-autocomplete' className='cd__autocomplete' role='listbox' aria-label='Film suggestions'>
+                    <div id='cd-autocomplete' className='cd__autocomplete' role='listbox' aria-label={t.suggestions}>
                       {results.map((film, i) => (
                         <div
                           key={film.id}
@@ -997,7 +1109,7 @@ export const CinetropesDaily = () => {
                   <input
                     type='text'
                     className='cd__input'
-                    placeholder={loading ? 'Loading...' : 'Guess the film...'}
+                    placeholder={loading ? t.loading : t.guess}
                     value={loading ? '' : query}
                     onChange={(event) => { setQuery(event.target.value); setStaged(null) }}
                     onKeyDown={keyDown}
@@ -1008,20 +1120,20 @@ export const CinetropesDaily = () => {
                     aria-controls='cd-autocomplete'
                     aria-activedescendant={active >= 0 ? `cd-option-${active}` : undefined}
                     aria-autocomplete='list'
-                    aria-label='Search for a film'
+                    aria-label={t.search}
                   />
                 </div>
                 {staged !== null
-                  ? <button type='button' className='cd__button' onClick={() => guess(staged)} disabled={submitting || phase !== 'playing'}>Send</button>
-                  : <button type='button' className='cd__button' onClick={skip} disabled={loading || submitting || phase !== 'playing'}>Skip</button>}
+                  ? <button type='button' className='cd__button' onClick={() => guess(staged)} disabled={submitting || phase !== 'playing'}>{t.send}</button>
+                  : <button type='button' className='cd__button' onClick={skip} disabled={loading || submitting || phase !== 'playing'}>{t.skip}</button>}
               </div>
             )}
 
             {resultMode && (
               <div className='cd__result'>
                 <div className='cd__result-hero'>
-                  <h5 className='cd__result-title'><i>{won ? 'Won!' : 'Lost...'}</i></h5>
-                  <p className='cd__result-subtitle'>{won ? `${attempts.length}/${maxAttempts} attempts` : `${maxAttempts}/${maxAttempts} attempts used`}</p>
+                  <h5 className='cd__result-title'><i>{won ? t.won : t.lost}</i></h5>
+                  <p className='cd__result-subtitle'>{won ? t.tries(attempts.length, maxAttempts) : t.exhausted(maxAttempts)}</p>
                 </div>
                 <div className='cd__result-bars'>
                   {Array.from({ length: maxAttempts }, (_, i) => {
@@ -1030,7 +1142,7 @@ export const CinetropesDaily = () => {
                     return <div key={i} className={`cd__result-bar${kind}`} />
                   })}
                 </div>
-                <button type='button' className='cd__button cd__share' onClick={share}>Share</button>
+                <button type='button' className='cd__button cd__share' onClick={share}>{t.share}</button>
               </div>
             )}
           </div>
@@ -1042,7 +1154,7 @@ export const CinetropesDaily = () => {
               <svg viewBox='0 0 24 24'><path d={toast.type === 'success' ? 'M5 12l5 5l10 -10' : 'M18 6l-12 12M6 6l12 12'} fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' /></svg>
             </span>
             <p>{toast.message}</p>
-            <button type='button' className='cd__toast-close' aria-label='Close the notification' onClick={() => setToast(null)}>
+            <button type='button' className='cd__toast-close' aria-label={t.dismiss} onClick={() => setToast(null)}>
               <svg viewBox='0 0 24 24' width='14' height='14' aria-hidden='true'><path d='M18 6l-12 12M6 6l12 12' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' /></svg>
             </button>
             <span className='cd__toast-progress' aria-hidden='true' />
@@ -1052,13 +1164,13 @@ export const CinetropesDaily = () => {
         {!onboarded && (
           <div className={onboardingLeaving ? 'cd__onboarding is-leaving' : 'cd__onboarding'}>
             <div className='cd__onboarding-content'>
-              <p className='cd__hero-title'><i><span>Guess</span><span>the Movie of the Day</span></i></p>
+              <p className='cd__hero-title'><i><span>{t.hero[0]}</span><span>{t.hero[1]}</span></i></p>
               <p className='cd__hero-subtitle'>
-                Can you recognise today’s film simply<br />from its tropes, its atmosphere and its ratings?
+                {t.rules[0][0]}<br />{t.rules[0][1]}
                 <br /><br />
-                You have 6 attempts to find it: with each miss,<br />another clue is revealed.
+                {t.rules[1][0]}<br />{t.rules[1][1]}
               </p>
-              <button type='button' className='cd__button cd__play' onClick={play}>Play</button>
+              <button type='button' className='cd__button cd__play' onClick={play}>{t.play}</button>
             </div>
           </div>
         )}

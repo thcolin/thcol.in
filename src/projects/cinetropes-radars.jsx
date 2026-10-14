@@ -261,17 +261,76 @@ const HitAreas = ({ vertices, keys, onAxis }) => (
 
 // Réception: the Tri-Force, critics on top, audience bottom left, nerds bottom right
 
+// The radars' words. The French is the beta's own: notation-constants.ts, atmosphere-constants.ts, notoriety.ts in
+// @cinetropes/shared, TropesTooltip.tsx and tropes-helpers.ts; the English is this site's
+const WORDS = {
+  en: {
+    reception: 'Reception',
+    atmosphere: 'Atmosphere',
+    tropes: 'Tropes',
+    outOf: 'out of 5',
+    triforce: {
+      critic: ['Critic', ['Snubbed', 'Respected', 'Acclaimed']],
+      nerd: ['Nerd', ['Overlooked', 'Recognised', 'Cult']],
+      public: ['Public', ['Ignored', 'Liked', 'Popular']],
+    },
+    tiers: ['Unknown', 'Minor', 'Niche', 'Mainstream', 'Famous', 'Essential', 'Classic'],
+    emotions: {
+      joy: ['Tone', ['Grim', 'Sad', 'Melancholic', 'Neutral', 'Upbeat', 'Uplifting', 'Radiant']],
+      anticipation: ['Pace', ['Still', 'Contemplative', 'Measured', 'Gripping', 'Rousing', 'Intense', 'Breathless']],
+      anger: ['Spirit', ['Warm', 'Harmonious', 'Kind', 'Outrageous', 'Indignant', 'Hard-hitting', 'Furious']],
+      disgust: ['Style', ['Sublimated', 'Pared-back', 'Smooth', 'Disturbing', 'Visceral', 'Macabre', 'Repulsive']],
+      sadness: ['Sensitivity', ['Jovial', 'Light', 'Diverting', 'Touching', 'Moving', 'Poignant', 'Heartbreaking']],
+      fear: ['Tension', ['Peaceful', 'Calm', 'Relaxed', 'Unsettling', 'Tense', 'Frightening', 'Terrifying']],
+      trust: ['Ambience', ['Oppressive', 'Disquieting', 'Suspicious', 'Intriguing', 'Safe', 'Reassuring', 'Comforting']],
+      surprise: ['Intrigue', ['Linear', 'Expected', 'Predictable', 'Unexpected', 'Surprising', 'Disorienting', 'Stunning']],
+    },
+    quote: (word) => `“${word}”`,
+    detected: 'tropes detected',
+    prominence: { central: 'Central', supporting: 'Supporting', background: 'Background' },
+    subverted: 'Subverted',
+    spoiler: ['Major spoiler', 'Minor spoiler'],
+  },
+  fr: {
+    reception: 'Notation',
+    atmosphere: 'Atmosphère',
+    tropes: 'Tropes',
+    outOf: 'sur 5',
+    triforce: {
+      critic: ['Critique', ['Boudé', 'Estimé', 'Acclamé']],
+      nerd: ['Nerd', ['Méconnu', 'Reconnu', 'Culte']],
+      public: ['Public', ['Ignoré', 'Apprécié', 'Populaire']],
+    },
+    tiers: ['Inconnu', 'Mineur', 'Niche', 'Mainstream', 'Célèbre', 'Incontournable', 'Classique'],
+    emotions: {
+      joy: ['Ton', ['Sinistre', 'Triste', 'Mélancolique', 'Neutre', 'Positif', 'Enthousiasmant', 'Solaire']],
+      anticipation: ['Rythme', ['Immobile', 'Contemplatif', 'Cadencé', 'Captivant', 'Entraînant', 'Intense', 'Haletant']],
+      anger: ['Esprit', ['Chaleureux', 'Harmonieux', 'Bienveillant', 'Révoltant', 'Indigné', 'Percutant', 'Rageur']],
+      disgust: ['Style', ['Sublimé', 'Épuré', 'Lisse', 'Dérangeant', 'Viscéral', 'Macabre', 'Répugnant']],
+      sadness: ['Sensibilité', ['Jovial', 'Léger', 'Distrayant', 'Touchant', 'Émouvant', 'Poignant', 'Déchirant']],
+      fear: ['Tension', ['Paisible', 'Calme', 'Détendu', 'Angoissant', 'Tendu', 'Effrayant', 'Terrifiant']],
+      trust: ['Ambiance', ['Oppressant', 'Inquiétant', 'Suspect', 'Intrigant', 'Sûr', 'Rassurant', 'Réconfortant']],
+      surprise: ['Intrigue', ['Linéaire', 'Attendu', 'Prévisible', 'Inattendu', 'Surprenant', 'Déroutant', 'Sidérant']],
+    },
+    quote: (word) => `«\u00a0${word}\u00a0»`,
+    detected: 'tropes détectés',
+    prominence: { central: 'Central', supporting: 'Secondaire', background: 'Arrière-plan' },
+    subverted: 'Subverti',
+    spoiler: ['Spoiler majeur', 'Spoiler léger'],
+  },
+}
+
 const TRIFORCE = {
-  critic: { label: 'Critic', color: '#F5C518', rgb: '245, 197, 24', angle: 0, impact: ['Snubbed', 'Respected', 'Acclaimed'] },
-  nerd: { label: 'Nerd', color: '#00E054', rgb: '0, 224, 84', angle: 120, impact: ['Overlooked', 'Recognised', 'Cult'] },
-  public: { label: 'Public', color: '#FA320A', rgb: '250, 50, 10', angle: 240, impact: ['Ignored', 'Liked', 'Popular'] },
+  critic: { color: '#F5C518', rgb: '245, 197, 24', angle: 0 },
+  nerd: { color: '#00E054', rgb: '0, 224, 84', angle: 120 },
+  public: { color: '#FA320A', rgb: '250, 50, 10', angle: 240 },
 }
 
 const AXES = ['critic', 'nerd', 'public']
 
-const impactOf = (axis, score) => TRIFORCE[axis].impact[score <= 1.5 ? 0 : score <= 3.5 ? 1 : 2]
+const impactOf = (words, axis, score) => words.triforce[axis][1][score <= 1.5 ? 0 : score <= 3.5 ? 1 : 2]
 
-const TIERS = [[50, 'Unknown'], [1_000, 'Minor'], [30_000, 'Niche'], [100_000, 'Mainstream'], [300_000, 'Famous'], [750_000, 'Essential'], [Infinity, 'Classic']]
+const TIERS = [50, 1_000, 30_000, 100_000, 300_000, 750_000, Infinity]
 
 const votesOf = (count) => {
   if (count < 10) return `${count}`
@@ -329,7 +388,8 @@ const triforceGlow = (scores) => {
 
 const ORDER = ['critic', 'public', 'nerd']
 
-export const Reception = ({ scores, legend }) => {
+export const Reception = ({ scores, legend, lang = 'en' }) => {
+  const words = WORDS[lang]
   const id = useGradientId('reception')
   const max = D * 0.38
   const vertices = AXES.map((axis) => polar((scores[axis] / 5) * max, TRIFORCE[axis].angle))
@@ -345,13 +405,13 @@ export const Reception = ({ scores, legend }) => {
   const tip = ({ setAxis }) => (
     <>
       <p className='cinetropes__tip-title'>
-        {TIERS.find(([limit]) => scores.notoriety <= limit)[1]} <span>· {votesOf(scores.votes)} ★</span>
+        {words.tiers[TIERS.findIndex((limit) => scores.notoriety <= limit)]} <span>· {votesOf(scores.votes)} ★</span>
       </p>
       <ul className='cinetropes__tip-rows'>
         {ORDER.map((axis) => (
           <li key={axis} style={{ '--row': TRIFORCE[axis].color }} onPointerEnter={() => setAxis(axis)} onPointerLeave={() => setAxis(null)}>
             <i style={{ backgroundColor: TRIFORCE[axis].color }} />
-            <span>{TRIFORCE[axis].label}<small>{impactOf(axis, scores[axis])}</small></span>
+            <span>{words.triforce[axis][0]}<small>{impactOf(words, axis, scores[axis])}</small></span>
             <Bar value={scores[axis]} color={TRIFORCE[axis].color} />
             <data value={scores[axis]}>{scores[axis].toFixed(1)}</data>
           </li>
@@ -361,7 +421,7 @@ export const Reception = ({ scores, legend }) => {
   )
 
   return (
-    <Signature label='Reception' legend={legend} name={`Reception: ${ORDER.map((axis) => `${TRIFORCE[axis].label.toLowerCase()} ${scores[axis].toFixed(1)}`).join(', ')} out of 5`} tip={tip}>
+    <Signature label={words.reception} legend={legend} name={`${words.reception}: ${ORDER.map((axis) => `${words.triforce[axis][0].toLowerCase()} ${scores[axis].toFixed(1)}`).join(', ')} ${words.outOf}`} tip={tip}>
       {({ open, hover, axis }) => (
         <>
           {glow && (
@@ -394,7 +454,7 @@ export const Reception = ({ scores, legend }) => {
           )}
           {(open || hover) && AXES.map((key, i) => (
             <span key={key} className='cinetropes__badge cinetropes__badge--center' style={{ left: `${(polar(max + D * 0.12, TRIFORCE[key].angle).x / D) * 100}%`, top: `${(polar(max + D * 0.12, TRIFORCE[key].angle).y / D) * 100}%`, color: TRIFORCE[key].color, animationDelay: `${i * 80}ms` }}>
-              <b style={{ backgroundColor: `color-mix(in srgb, ${TRIFORCE[key].color}, black 75%)`, opacity: Math.max(0.8, scores[key] / 5) }}>{impactOf(key, scores[key])}</b>
+              <b style={{ backgroundColor: `color-mix(in srgb, ${TRIFORCE[key].color}, black 75%)`, opacity: Math.max(0.8, scores[key] / 5) }}>{impactOf(words, key, scores[key])}</b>
             </span>
           ))}
         </>
@@ -406,14 +466,14 @@ export const Reception = ({ scores, legend }) => {
 // Atmosphère: Plutchik's eight emotions, each read as an axis of the film's mood
 
 const EMOTIONS = [
-  ['joy', 'Tone', '#FFD700', '255, 215, 0', ['Grim', 'Sad', 'Melancholic', 'Neutral', 'Upbeat', 'Uplifting', 'Radiant']],
-  ['anticipation', 'Pace', '#FF9100', '255, 145, 0', ['Still', 'Contemplative', 'Measured', 'Gripping', 'Rousing', 'Intense', 'Breathless']],
-  ['anger', 'Spirit', '#FF1744', '255, 23, 68', ['Warm', 'Harmonious', 'Kind', 'Outrageous', 'Indignant', 'Hard-hitting', 'Furious']],
-  ['disgust', 'Style', '#D500F9', '213, 0, 249', ['Sublimated', 'Pared-back', 'Smooth', 'Disturbing', 'Visceral', 'Macabre', 'Repulsive']],
-  ['sadness', 'Sensitivity', '#2979FF', '41, 121, 255', ['Jovial', 'Light', 'Diverting', 'Touching', 'Moving', 'Poignant', 'Heartbreaking']],
-  ['fear', 'Tension', '#00C853', '0, 200, 83', ['Peaceful', 'Calm', 'Relaxed', 'Unsettling', 'Tense', 'Frightening', 'Terrifying']],
-  ['trust', 'Ambience', '#00E676', '0, 230, 118', ['Oppressive', 'Disquieting', 'Suspicious', 'Intriguing', 'Safe', 'Reassuring', 'Comforting']],
-  ['surprise', 'Intrigue', '#00E5FF', '0, 229, 255', ['Linear', 'Expected', 'Predictable', 'Unexpected', 'Surprising', 'Disorienting', 'Stunning']],
+  ['joy', '#FFD700', '255, 215, 0'],
+  ['anticipation', '#FF9100', '255, 145, 0'],
+  ['anger', '#FF1744', '255, 23, 68'],
+  ['disgust', '#D500F9', '213, 0, 249'],
+  ['sadness', '#2979FF', '41, 121, 255'],
+  ['fear', '#00C853', '0, 200, 83'],
+  ['trust', '#00E676', '0, 230, 118'],
+  ['surprise', '#00E5FF', '0, 229, 255'],
 ]
 
 // Seven words per axis, from -3 to +3 around the middle of the scale
@@ -434,14 +494,15 @@ const atmosphereGradient = (emotions) => {
   const cx = 50 + (weighted.x - 50) * blend
   const cy = 50 + (weighted.y - 50) * blend
   const sum = values.reduce((acc, v) => acc + v, 0)
-  const rgb = [0, 1, 2].map((channel) => Math.round(EMOTIONS.reduce((acc, [key, , , color]) => acc + color.split(', ')[channel] * emotions[key], 0) / sum)).join(', ')
-  const stop = (i) => `rgba(${EMOTIONS[i % 8][3]}, ${0.5 + (values[i % 8] / 5) * 0.25}) ${i * 45}deg`
+  const rgb = [0, 1, 2].map((channel) => Math.round(EMOTIONS.reduce((acc, [key, , color]) => acc + color.split(', ')[channel] * emotions[key], 0) / sum)).join(', ')
+  const stop = (i) => `rgba(${EMOTIONS[i % 8][2]}, ${0.5 + (values[i % 8] / 5) * 0.25}) ${i * 45}deg`
 
   return `radial-gradient(circle at ${cx}% ${cy}%, rgba(${rgb}, 0.5) 0%, rgba(${rgb}, 0.25) 6%, transparent 12%),
     conic-gradient(at ${cx}% ${cy}%, ${Array.from({ length: 9 }, (_, i) => stop(i)).join(', ')})`
 }
 
-export const Atmosphere = ({ emotions, archetype, legend }) => {
+export const Atmosphere = ({ emotions, archetype, legend, lang = 'en' }) => {
+  const words = WORDS[lang]
   const id = useGradientId('atmosphere')
   const max = D * 0.4
   const vertices = EMOTIONS.map(([key], i) => polar((emotions[key] / 5) * max, i * 45))
@@ -450,10 +511,10 @@ export const Atmosphere = ({ emotions, archetype, legend }) => {
     <>
       {archetype && <p className='cinetropes__tip-title'>{archetype}</p>}
       <ul className='cinetropes__tip-rows'>
-        {EMOTIONS.map(([key, label, color, , moods]) => (
+        {EMOTIONS.map(([key, color]) => (
           <li key={key} className='is-stacked' style={{ '--row': color }} onPointerEnter={() => setAxis(key)} onPointerLeave={() => setAxis(null)}>
             <i style={{ backgroundColor: color }} />
-            <span>{label}<small>“{moodOf(moods, emotions[key])}”</small></span>
+            <span>{words.emotions[key][0]}<small>{words.quote(moodOf(words.emotions[key][1], emotions[key]))}</small></span>
             <Bar value={emotions[key]} color={color} />
             <data value={emotions[key]}>{emotions[key].toFixed(1)}</data>
           </li>
@@ -463,7 +524,7 @@ export const Atmosphere = ({ emotions, archetype, legend }) => {
   )
 
   return (
-    <Signature label='Atmosphere' legend={legend} name={`Atmosphere: ${archetype ? `${archetype}. ` : ''}${EMOTIONS.map(([key, label]) => `${label.toLowerCase()} ${emotions[key].toFixed(1)}`).join(', ')} out of 5`} tip={tip}>
+    <Signature label={words.atmosphere} legend={legend} name={`${words.atmosphere}: ${archetype ? `${archetype}. ` : ''}${EMOTIONS.map(([key]) => `${words.emotions[key][0].toLowerCase()} ${emotions[key].toFixed(1)}`).join(', ')} ${words.outOf}`} tip={tip}>
       {({ axis, setAxis }) => (
         <>
           <svg viewBox={`0 0 ${D} ${D}`} aria-hidden='true'>
@@ -473,8 +534,8 @@ export const Atmosphere = ({ emotions, archetype, legend }) => {
             {ring(8, max * 1.1).map((end, i) => (
               <path key={i} d={line(polar(0, 0), end)} stroke='white' opacity={i % 2 ? 0.1 : 0.2} vectorEffect='non-scaling-stroke' />
             ))}
-            {EMOTIONS.map(([key, , color], i) => {
-              const [next, , nextColor] = EMOTIONS[(i + 1) % 8]
+            {EMOTIONS.map(([key, color], i) => {
+              const [next, nextColor] = EMOTIONS[(i + 1) % 8]
               const a = vertices[i]
               const b = vertices[(i + 1) % 8]
               return (
@@ -492,8 +553,8 @@ export const Atmosphere = ({ emotions, archetype, legend }) => {
             <HitAreas vertices={vertices} keys={EMOTIONS.map(([key]) => key)} onAxis={setAxis} />
           </svg>
           <div className='cinetropes__fill' style={{ clipPath: clip(vertices), background: atmosphereGradient(emotions) }} />
-          {EMOTIONS.map(([key, label, color, , moods], i) => key === axis && (
-            <Badge key={key} at={polar(max + D * 0.14, i * 45)} angle={i * 45} color={color} small={label}>{moodOf(moods, emotions[key])}</Badge>
+          {EMOTIONS.map(([key, color], i) => key === axis && (
+            <Badge key={key} at={polar(max + D * 0.14, i * 45)} angle={i * 45} color={color} small={words.emotions[key][0]}>{moodOf(words.emotions[key][1], emotions[key])}</Badge>
           ))}
         </>
       )}
@@ -513,15 +574,14 @@ const hashOf = (text) => {
   return Math.abs(hash)
 }
 
-const PROMINENCE = { central: 'Central', supporting: 'Supporting', background: 'Background' }
 
-const TropesTip = ({ tropes, themes, total, onAxis }) => {
+const TropesTip = ({ tropes, themes, total, onAxis, words }) => {
   const detailed = (trope) => !!(trope.description || trope.evidence || trope.prominence || trope.spoilerLevel || trope.subversion)
   const [expanded, setExpanded] = useState(() => tropes.find(detailed)?.id ?? null)
 
   return (
     <>
-      <p className='cinetropes__tip-title'>{themes.length > 0 ? themes.join(' · ') : `${total ?? tropes.length} tropes detected`}</p>
+      <p className='cinetropes__tip-title'>{themes.length > 0 ? themes.join(' · ') : `${total ?? tropes.length} ${words.detected}`}</p>
       <ul className='cinetropes__tropes'>
         {tropes.map((trope, i) => {
           const open = expanded === trope.id
@@ -537,9 +597,9 @@ const TropesTip = ({ tropes, themes, total, onAxis }) => {
                   <div>
                     {trope.description && <p>{trope.description}</p>}
                     <p className='cinetropes__trope-badges'>
-                      {trope.prominence && <span className={`is-${trope.prominence}`}>{PROMINENCE[trope.prominence]}</span>}
-                      {trope.subversion && !['none', 'played_straight'].includes(trope.subversion) && <span className='is-subverted'>Subverted</span>}
-                      {trope.spoilerLevel && trope.spoilerLevel !== 'none' && <span className={`is-spoiler-${trope.spoilerLevel}`}>{trope.spoilerLevel === 'heavy' ? 'Major spoiler' : 'Minor spoiler'}</span>}
+                      {trope.prominence && <span className={`is-${trope.prominence}`}>{words.prominence[trope.prominence]}</span>}
+                      {trope.subversion && !['none', 'played_straight'].includes(trope.subversion) && <span className='is-subverted'>{words.subverted}</span>}
+                      {trope.spoilerLevel && trope.spoilerLevel !== 'none' && <span className={`is-spoiler-${trope.spoilerLevel}`}>{trope.spoilerLevel === 'heavy' ? words.spoiler[0] : words.spoiler[1]}</span>}
                     </p>
                     {trope.evidence && <blockquote>{trope.evidence}</blockquote>}
                   </div>
@@ -553,7 +613,8 @@ const TropesTip = ({ tropes, themes, total, onAxis }) => {
   )
 }
 
-export const Tropes = ({ tropes, themes = [], total, filmId, legend }) => {
+export const Tropes = ({ tropes, themes = [], total, filmId, legend, lang = 'en' }) => {
+  const words = WORDS[lang]
   const id = useGradientId('tropes')
   const max = D * 0.4
   const step = 360 / tropes.length
@@ -563,11 +624,11 @@ export const Tropes = ({ tropes, themes = [], total, filmId, legend }) => {
 
   return (
     <Signature
-      label='Tropes'
+      label={words.tropes}
       legend={legend}
       name={`Tropes: ${tropes.map(({ name, value }) => `${name} ${value.toFixed(1)}`).join(', ')}`}
       wide
-      tip={({ setAxis }) => <TropesTip key={filmId} tropes={tropes} themes={themes} total={total} onAxis={setAxis} />}
+      tip={({ setAxis }) => <TropesTip key={filmId} tropes={tropes} themes={themes} total={total} onAxis={setAxis} words={words} />}
     >
       {({ axis, setAxis }) => (
         <>

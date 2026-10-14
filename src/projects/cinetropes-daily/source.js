@@ -6,7 +6,12 @@ import frozen from '../../assets/cinetropes-daily/daily.json'
 
 const API = 'https://beta.cinetropes.com/api'
 const FROZEN_POSTER = new URL('../../assets/cinetropes-daily/poster.webp', import.meta.url).href
-const HEADERS = { 'Accept-Language': 'en' }
+let language = 'en'
+
+// The API answers in English or in French; the sample is in English only
+export const setLanguage = (next) => {
+  language = next
+}
 
 let live = null
 
@@ -22,7 +27,7 @@ const answer = () => import('../../assets/cinetropes-daily/answer.json').then((m
 const tmdb = (path, size) => path ? `https://image.tmdb.org/t/p/${size}${path}` : null
 
 const request = async (path, options) => {
-  const response = await fetch(`${API}${path}`, { ...options, headers: { ...HEADERS, ...options?.headers } })
+  const response = await fetch(`${API}${path}`, { ...options, headers: { 'Accept-Language': language, ...options?.headers } })
 
   if (!response.ok) {
     throw new Error(`${path}: ${response.status}`)
