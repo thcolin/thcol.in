@@ -48,7 +48,7 @@ const write = (key, value) => {
 const shareText = (gameDay, attempts, won, konami) => {
   const grid = attempts.map((attempt, i) => attempt.type === 'skip' ? '⬛' : won && i === attempts.length - 1 ? '🟩' : '\u{1F7E5}')
   while (grid.length < 6) grid.push('⬛')
-  return `CineTropes #${gameDay}\n\n${grid.join('')} ${won ? attempts.length : 'X'}/6 ${konami ? '🔮' : '🎬'}\n\nhttps://cinetropes.com`
+  return `CineTropes #${gameDay}\n\n${grid.join('')} ${won ? attempts.length : 'X'}/6 ${konami ? '🔮' : '🎬'}\n\n${location.origin}${location.pathname}#cinetropes-daily`
 }
 
 // Confetti in the poster's own colours: the most saturated cells of its 4×6 grid, brought to 60% lightness
