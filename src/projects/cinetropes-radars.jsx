@@ -235,6 +235,7 @@ const Badge = ({ at, angle, color, small, children }) => {
     }
 
     // Measured at rest: its entry animation scales it on top of its translation
+    badge.style.removeProperty('--dx')
     badge.style.animation = 'none'
     const { left, right } = badge.getBoundingClientRect()
     badge.style.animation = ''

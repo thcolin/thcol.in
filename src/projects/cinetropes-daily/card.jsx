@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { usePrefersReducedMotion } from '../shared'
 
 // The SwipeCard, as the daily uses it: a mini card per attempt with its in-slot suspense,
 // and the big poster card, holographic once the film is found
@@ -136,6 +137,9 @@ const FOCUSABLE = 'button, [href], [tabindex]:not([tabindex="-1"])'
 export const MysteryZoom = ({ from, poster, title, onClose, children }) => {
   const dialog = useRef(null)
   const busy = useRef(true)
+  const timers = useRef([])
+  const reduced = usePrefersReducedMotion()
+  const [, setViewport] = useState(0)
   const [open, setOpen] = useState(false)
   const [leaving, setLeaving] = useState(false)
   const [rotation, setRotation] = useState(0)
@@ -146,36 +150,45 @@ export const MysteryZoom = ({ from, poster, title, onClose, children }) => {
   const away = `translate(${from.x - innerWidth / 2}px, ${from.y - innerHeight / 2}px) scale(${1 / scale})`
   const shown = open && !leaving
   const onBack = rotation % 360 !== 0
+  const later = (callback, delay) => timers.current.push(setTimeout(callback, reduced ? 0 : delay))
 
+  // The page behind is inert while the card is open, and the focus goes back where it was
   useEffect(() => {
+    const opener = document.activeElement
     const overflow = document.documentElement.style.overflow
+    const page = [...document.body.children].filter((element) => element !== dialog.current && !element.inert)
     document.documentElement.style.overflow = 'hidden'
-    dialog.current.querySelector('.cinetropes__close').focus({ preventScroll: true })
-    let timer
+    page.forEach((element) => { element.inert = true })
+    dialog.current.focus({ preventScroll: true })
+    const resize = () => setViewport((n) => n + 1)
+    addEventListener('resize', resize)
     const frame = requestAnimationFrame(() => requestAnimationFrame(() => {
       setOpen(true)
       setRotation(-540)
-      timer = setTimeout(() => {
+      later(() => {
         setRevealed(true)
         busy.current = false
       }, 1000)
     }))
     return () => {
       cancelAnimationFrame(frame)
-      clearTimeout(timer)
+      timers.current.forEach(clearTimeout)
+      removeEventListener('resize', resize)
+      page.forEach((element) => { element.inert = false })
       document.documentElement.style.overflow = overflow
+      requestAnimationFrame(() => opener?.focus?.({ preventScroll: true }))
     }
   }, [])
 
   const turn = () => {
-    if (busy.current) {
+    if (busy.current || leaving) {
       return
     }
 
     busy.current = true
     setRotation((r) => onBack ? r + 180 : r - 180)
     onBack && setRevealed(false)
-    setTimeout(() => {
+    later(() => {
       !onBack && setRevealed(true)
       busy.current = false
     }, 800)
@@ -186,26 +199,23 @@ export const MysteryZoom = ({ from, poster, title, onClose, children }) => {
       return
     }
 
+    timers.current.forEach(clearTimeout)
+    timers.current = []
     busy.current = true
     setRevealed(false)
     setLeaving(true)
     onBack && setRotation((r) => r + 180)
-    setTimeout(onClose, onBack ? 1550 : 800)
+    later(onClose, onBack ? 1550 : 800)
   }
 
-  // Escape from anywhere: a click on the card leaves the focus on the page
-  useEffect(() => {
-    const escape = (event) => event.key === 'Escape' && leave()
-    document.addEventListener('keydown', escape)
-    return () => document.removeEventListener('keydown', escape)
-  })
-
   const keyDown = (event) => {
-    if (event.key === 'Tab') {
+    if (event.key === 'Escape') {
+      leave()
+    } else if (event.key === 'Tab') {
       const items = [...dialog.current.querySelectorAll(FOCUSABLE)]
       const edge = event.shiftKey ? items[0] : items[items.length - 1]
 
-      if (document.activeElement === edge) {
+      if (document.activeElement === edge || document.activeElement === dialog.current) {
         event.preventDefault()
         ;(event.shiftKey ? items[items.length - 1] : items[0]).focus()
       }
@@ -213,7 +223,7 @@ export const MysteryZoom = ({ from, poster, title, onClose, children }) => {
   }
 
   return createPortal(
-    <div ref={dialog} className={`cinetropes__zoom cd__zoom${shown ? ' is-open' : ''}`} role='dialog' aria-modal='true' aria-label={title} onKeyDown={keyDown}>
+    <div ref={dialog} className={`cinetropes__zoom cd__zoom${shown ? ' is-open' : ''}`} role='dialog' aria-modal='true' aria-label={title} tabIndex={-1} onKeyDown={keyDown}>
       <div className='cinetropes__zoom-backdrop' onClick={leave} />
       <div className='cd__zoom-card' style={{ ...size, ...box, transform: shown ? 'none' : away }} onClick={turn}>
         <div className='cd__zoom-rotator' style={{ transform: `rotateY(${rotation}deg)` }}>

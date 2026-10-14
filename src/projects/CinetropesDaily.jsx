@@ -247,7 +247,7 @@ const Sheet = ({ film, mystery, tropes, gameDay }) => {
   const director = mystery.crewDetailed.find(({ job }) => job === 'Director')
   const people = [
     ...(director ? [{ personId: director.personId, name: director.name, imageUrl: director.imageUrl }] : []),
-    ...mystery.castDetailed,
+    ...mystery.castDetailed.filter(({ personId }) => personId !== director?.personId),
   ].slice(0, 5)
 
   return (
