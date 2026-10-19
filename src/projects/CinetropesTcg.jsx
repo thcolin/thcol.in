@@ -105,7 +105,7 @@ const Pack = ({ opening, onHit, packRef }) => {
 }
 
 const Card = ({ card, index, flipped, stowing, still, cardRef, onTap }) => {
-  const { ref, interact, rest } = useHolo(card.rarity, flipped && !stowing && !still)
+  const { ref, interact, rest } = useHolo(card.rarity, flipped && !stowing)
 
   useEffect(() => {
     if (!flipped || still || !SWEEP_MS[card.rarity]) {
@@ -279,14 +279,14 @@ export const CinetropesTcg = () => {
           </div>
 
           <p className='tcg__hint' aria-live='polite'>
-            {phase === 'revealing' && flipped && <span className={`tcg__rarity tcg__rarity--${card.rarity}`}>{RARITIES[card.rarity]} </span>}
+            {phase === 'revealing' && flipped && <><span className={`tcg__rarity tcg__rarity--${card.rarity}`}>{RARITIES[card.rarity]} </span>{card.title}. </>}
             {hint}
           </p>
         </div>
 
         <ul ref={strip} className='tcg__cases' aria-label='Cases'>
           {cards.map((item, i) => (
-            <li key={item.id} className='tcg__case'>
+            <li key={item.id} className={i < stowed ? 'tcg__case is-filled' : 'tcg__case'}>
               <p className={`tcg__rarity tcg__rarity--${item.rarity}`}>{RARITIES[item.rarity]}</p>
               <div className='tcg__glass'>
                 <div ref={(node) => { slots.current[i] = node }} className='tcg__slot'>

@@ -45,7 +45,7 @@
 
 .tcg__lead {
   align-self: flex-start;
-  margin: 0 0 8px;
+  margin: 0;
   font-family: 'Spectral', serif;
   font-style: italic;
   font-weight: 700;
@@ -60,11 +60,14 @@
   position: relative;
   width: var(--pack-w);
   aspect-ratio: 2 / 3;
+  /* The sachet overflows the stage by 4 % of its height above and below */
+  margin-block: calc(var(--pack-w) * 0.06);
 }
 
 .tcg__hint {
   min-height: 1.5em;
-  margin: 8px 0 0;
+  margin: 0;
+  text-wrap: balance;
   color: var(--band-dim);
   font-size: 0.9375rem;
   text-align: center;
@@ -108,7 +111,7 @@
   height: 100%;
   border-radius: var(--card-radius);
   object-fit: cover;
-  box-shadow: 0 10px 24px rgb(0 0 0 / 0.6);
+  box-shadow: 0 0 0 1px oklch(1 0 0 / 0.12), 0 10px 24px rgb(0 0 0 / 0.6);
 }
 
 .tcg__deck {
@@ -133,9 +136,14 @@
 }
 
 .tcg__card:focus-visible {
+  outline: none;
+}
+
+/* The ring follows the face that shows, tilt included */
+.tcg__card:focus-visible:not(.is-flipped) .tcg__flip > .tcg__back,
+.tcg__card:focus-visible .cinetropes__rotator {
   outline: 2px solid var(--band-ink);
-  outline-offset: 6px;
-  border-radius: var(--card-radius);
+  outline-offset: 4px;
 }
 
 .tcg__flip {
@@ -197,6 +205,10 @@
   align-items: center;
   gap: 10px;
   min-width: 0;
+}
+
+.tcg__case:not(.is-filled) > .tcg__rarity {
+  opacity: 0.5;
 }
 
 .tcg__case:nth-child(4) {
@@ -472,7 +484,7 @@
 
 @media (min-width: 900px) and (min-height: 640px) {
   .band.tcg {
-    --pack-w: clamp(160px, calc((100svh - 400px) * 0.62), 280px);
+    --pack-w: clamp(160px, calc((100svh - 400px) * 0.62), 260px);
   }
 }
 
@@ -493,6 +505,7 @@
   .tcg__cases {
     display: flex;
     gap: 16px;
+    width: auto;
     max-width: none;
     margin: 0 calc(-1 * var(--gutter));
     padding: 8px var(--gutter);
