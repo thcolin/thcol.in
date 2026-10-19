@@ -26,7 +26,7 @@ const LANGUAGE = 'daily-language'
 const TEXT = {
   en: {
     language: 'Language',
-    sample: ['Sample data', 'Daily #190 from the beta, 8 October 2026', 'The beta’s API did not answer: this is daily #190, taken from the beta on 8 October 2026.'],
+    sample: ['Sample data', 'Daily #1, 19 October 2026', 'cinetropes’ API did not answer: this is daily #1, taken on 19 October 2026.'],
     hero: ['Guess', 'the Movie of the Day'],
     rules: [['Can you recognise today’s film simply', 'from its tropes, its atmosphere and its ratings?'], ['You have 6 attempts to find it: with each miss,', 'another clue is revealed.']],
     play: 'Play',
@@ -59,7 +59,7 @@ const TEXT = {
   },
   fr: {
     language: 'Langue',
-    sample: ['Données d’exemple', 'Daily #190 de la beta, 8 octobre 2026', 'L’API de la beta n’a pas répondu : voici le daily #190, pris sur la beta le 8 octobre 2026.'],
+    sample: ['Données d’exemple', 'Daily #1, 19 octobre 2026', 'L’API de cinetropes n’a pas répondu : voici le daily #1, pris le 19 octobre 2026.'],
     hero: ['Devinez', 'le film du jour'],
     rules: [['Saurez-vous reconnaître le film du jour simplement', 'avec ses tropes, son atmosphère et sa notation ?'], ['Vous avez 6 tentatives pour le trouver — à chaque erreur,', 'un indice supplémentaire se dévoile.']],
     play: 'Jouer',

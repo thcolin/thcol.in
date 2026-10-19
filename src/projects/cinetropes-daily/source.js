@@ -1,6 +1,6 @@
 // The daily's data, from the prod's API, on daily.cinetropes.com: GET /daily, POST /daily/guess, GET /daily/reveal, GET /daily/poster/:level.
-// Its CORS answers https://thcol.in only. Anywhere else, or when it fails, the band falls back to daily #190,
-// frozen on 8 October 2026 and marked as sample data. Search is GET /search with the live daily, local with the sample
+// Its CORS answers https://thcol.in only. Anywhere else, or when it fails, the band falls back to daily #1,
+// frozen on 19 October 2026 and marked as sample data. Search is GET /search with the live daily, local with the sample
 
 import frozen from '../../assets/cinetropes-daily/daily.json'
 
@@ -36,7 +36,7 @@ const request = async (path, options) => {
   return response
 }
 
-// GET /daily, or the frozen #190 with `sample` set
+// GET /daily, or the frozen #1 with `sample` set
 export const getPuzzle = async () => {
   try {
     const puzzle = await (await request('/daily')).json()
@@ -80,8 +80,8 @@ export const getPosterPixels = async (level) => {
 // The original poster, level 5, shown once the game is over
 const posterOf = (film) => live !== null ? `${API}/daily/poster/5?d=${live}` : film.posterUrl ?? FROZEN_POSTER
 
-// GET /search, films only, five at most. The sample's search stays within 2,327 of the app's best-known films,
-// the ones its guesses can be checked against
+// GET /search, films only, five at most. The sample's search stays within 2,327 of the app's best-known films
+// and the sample's answer, the ones its guesses can be checked against
 export const search = async (query, excludeIds = []) => {
   if (live !== null) {
     const params = new URLSearchParams({ q: query })
