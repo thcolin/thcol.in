@@ -1,4 +1,4 @@
-/* cinetropes daily: the beta's /daily page and its DailyPage.css, SwipeCard.css, Accordion.css and Toast,
+/* cinetropes daily: the app's /daily page and its DailyPage.css, SwipeCard.css, Accordion.css and Toast,
    with their tokens: OLED black, Poppins, Spectral italic, Hanken Grotesk, the liquid glass, the Tri-Force red and green */
 
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@600&family=Poppins:wght@800&family=Spectral:ital,wght@1,700&display=swap');
@@ -1755,7 +1755,7 @@
     padding: clamp(0.375rem, calc(1.6svh - 0.4rem), 0.5rem) 0;
   }
 
-  /* The dock floats at the bottom centre, as on the beta, in a space of its own: nothing runs under it */
+  /* The dock floats at the bottom centre, as in the app, in a space of its own: nothing runs under it */
   .cd__dock {
     position: absolute;
     bottom: 0;

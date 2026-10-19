@@ -8,7 +8,7 @@ import { Atmosphere, Reception, Tropes } from './cinetropes-radars'
 import { Gooey, rarityOf } from './Cinetropes'
 import './cinetropes-daily.css'
 
-// The beta's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
+// The app's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
 
 const LOGO = new URL('../assets/cinetropes/logo.svg', import.meta.url)
 const STORAGE = 'daily-state-v1-'
@@ -21,12 +21,12 @@ const KONAMI = 'daily-konami-'
 const KONAMI_SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
 const KONAMI_LABELS = ['▲', '▲', '▼', '▼', '◀', '▶', '◀', '▶', 'B', 'A']
 
-// The band's words in English and in French; the French is the beta's /daily page where it has them
+// The band's words in English and in French; the French is the app's /daily page where it has them
 const LANGUAGE = 'daily-language'
 const TEXT = {
   en: {
     language: 'Language',
-    sample: ['Sample data', 'Daily #190 from the beta, 8 October 2026', 'The beta’s API did not answer: this is daily #190, taken from the beta on 8 October 2026.'],
+    sample: ['Sample data', 'Daily #1, 19 October 2026', 'cinetropes’ API did not answer: this is daily #1, taken on 19 October 2026.'],
     hero: ['Guess', 'the Movie of the Day'],
     rules: [['Can you recognise today’s film simply', 'from its tropes, its atmosphere and its ratings?'], ['You have 6 attempts to find it: with each miss,', 'another clue is revealed.']],
     play: 'Play',
@@ -59,7 +59,7 @@ const TEXT = {
   },
   fr: {
     language: 'Langue',
-    sample: ['Données d’exemple', 'Daily #190 de la beta, 8 octobre 2026', 'L’API de la beta n’a pas répondu : voici le daily #190, pris sur la beta le 8 octobre 2026.'],
+    sample: ['Données d’exemple', 'Daily #1, 19 octobre 2026', 'L’API de cinetropes n’a pas répondu : voici le daily #1, pris le 19 octobre 2026.'],
     hero: ['Devinez', 'le film du jour'],
     rules: [['Saurez-vous reconnaître le film du jour simplement', 'avec ses tropes, son atmosphère et sa notation ?'], ['Vous avez 6 tentatives pour le trouver — à chaque erreur,', 'un indice supplémentaire se dévoile.']],
     play: 'Jouer',
@@ -88,7 +88,7 @@ const TEXT = {
     zoom: { close: 'Fermer', poster: 'Voir l’affiche', back: 'Voir le dos' },
     signatures: ['Notation', 'Atmosphère', 'Tropes'],
     palette: 'Palette',
-    // The beta's genres.ts, with its accents
+    // The app's genres.ts, with its accents
     genres: { Adventure: 'Aventure', Comedy: 'Comédie', Documentary: 'Documentaire', Drama: 'Drame', Family: 'Famille', Fantasy: 'Fantaisie', History: 'Histoire', Horror: 'Horreur', Music: 'Musique', Mystery: 'Mystère', 'Science Fiction': 'Science-fiction', 'TV Movie': 'Téléfilm', War: 'Guerre' },
   },
 }
@@ -636,7 +636,7 @@ export const CinetropesDaily = () => {
     return () => { live = false; clearTimeout(timer) }
   }, [query, staged, guessedIds])
 
-  // Closed on a press outside, as on the beta, and not on blur: WebKit blurs the input under a tapped suggestion, before its click
+  // Closed on a press outside, as in the app, and not on blur: WebKit blurs the input under a tapped suggestion, before its click
   useEffect(() => {
     const press = (event) => !inputArea.current?.contains(event.target) && setOpen(false)
     document.addEventListener('pointerdown', press)

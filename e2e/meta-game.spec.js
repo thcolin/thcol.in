@@ -33,8 +33,8 @@ test('Start embeds the demo of the chosen cinema', async ({ page }) => {
 })
 
 test('the screen shows the game loading until the game says it is drawn', async ({ page }) => {
-  // A stand-in for the beta's game, which says it is drawn when told to
-  await page.route('https://beta.cinetropes.com/play?**', (route) => route.fulfill({
+  // A stand-in for the prod's game, which says it is drawn when told to
+  await page.route('https://daily.cinetropes.com/play?**', (route) => route.fulfill({
     contentType: 'text/html',
     body: "<script>addEventListener('message', (e) => e.data === 'draw' && parent.postMessage({ type: 'cinetropes:ready' }, '*'))</script>",
   }))

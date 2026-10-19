@@ -1,6 +1,6 @@
 import { devices, expect, test } from '@playwright/test'
 
-// The cinetropes daily band, on a phone: off thcol.in the beta's API refuses the
+// The cinetropes daily band, on a phone: off thcol.in the prod's API refuses the
 // page, and the band plays the sample daily
 
 test.use({ ...devices['iPhone 13'] })
