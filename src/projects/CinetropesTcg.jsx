@@ -260,7 +260,7 @@ export const CinetropesTcg = () => {
     : phase === 'opening' ? 'Opening…' : touched ? 'Again…' : 'Tap the booster until it gives way'
 
   return (
-    <article className='band tcg' aria-labelledby='cinetropes-tcg-title'>
+    <article id='cinetropes-tcg' className='band tcg' aria-labelledby='cinetropes-tcg-title'>
       <div className='tcg__table'>
         <div className='tcg__side'>
           <h3 id='cinetropes-tcg-title' className='tcg__title'>

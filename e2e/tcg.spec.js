@@ -32,6 +32,11 @@ test('the booster opens, and its five cards fill the five cases from Common to L
   await expect(band(page).getByRole('button', { name: /Open the booster/ })).toBeFocused()
 })
 
+test('a link to the band lands on it', async ({ page }) => {
+  await page.goto('/#cinetropes-tcg')
+  await expect(band(page)).toBeInViewport()
+})
+
 test('the card flies into its case over the glass, not under it', async ({ page }) => {
   await page.goto('/#projects')
   await band(page).scrollIntoViewIfNeeded()
