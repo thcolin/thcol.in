@@ -23,6 +23,8 @@ const RARITIES = { common: 'Common', holo: 'Rare', rare: 'Epic', ultra: 'Mythic'
 const OPENING_MS = 750
 const FLIP_MS = 600
 const STOW_MS = 450
+// Under reduced motion the card fades out where it is instead of flying
+const STOW_FADE_MS = 200
 
 // Once the card has turned, the two highest tiers sweep under a virtual finger as long as their sound plays in the app
 const CELEBRATION_PAUSE_MS = 250
@@ -108,7 +110,7 @@ const Card = ({ card, index, flipped, stowing, still, cardRef, onTap }) => {
   const { ref, interact, rest } = useHolo(card.rarity, flipped && !stowing)
 
   useEffect(() => {
-    if (!flipped || still || !SWEEP_MS[card.rarity]) {
+    if (!flipped || stowing || still || !SWEEP_MS[card.rarity]) {
       return
     }
 
@@ -131,7 +133,7 @@ const Card = ({ card, index, flipped, stowing, still, cardRef, onTap }) => {
       clearTimeout(timer)
       cancelAnimationFrame(frame)
     }
-  }, [flipped, still, card.rarity])
+  }, [flipped, stowing, still, card.rarity])
 
   const keyDown = (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -186,8 +188,8 @@ export const CinetropesTcg = () => {
     }
   }, [phase, index, pack])
 
-  const later = (ms, then) => {
-    timer.current = setTimeout(then, reduced ? 0 : ms)
+  const later = (ms, then, reducedMs = 0) => {
+    timer.current = setTimeout(then, reduced ? reducedMs : ms)
   }
 
   const hit = () => {
@@ -209,12 +211,12 @@ export const CinetropesTcg = () => {
   }
 
   // On a phone the cases scroll sideways: the one that will take the card comes into view while it turns
-  const reach = (at) => {
+  const reach = (at, instant) => {
     const list = strip.current
     const item = slots.current[at]?.closest('li')
 
     if (list && item && list.scrollWidth > list.clientWidth) {
-      list.scrollTo({ left: item.offsetLeft - (list.clientWidth - item.offsetWidth) / 2, behavior: reduced ? 'instant' : 'smooth' })
+      list.scrollTo({ left: item.offsetLeft - (list.clientWidth - item.offsetWidth) / 2, behavior: reduced || instant ? 'instant' : 'smooth' })
     }
   }
 
@@ -229,6 +231,8 @@ export const CinetropesTcg = () => {
       return
     }
 
+    // The strip may still be scrolling toward the case: it lands first, so the flight aims where the case stays
+    reach(index, true)
     const from = cardRef.current.getBoundingClientRect()
     const to = slots.current[index].getBoundingClientRect()
     setStowing({ x: to.left - from.left, y: to.top - from.top, scale: to.width / from.width })
@@ -247,7 +251,7 @@ export const CinetropesTcg = () => {
       setTouched(false)
       setPack((count) => count + 1)
       setPhase('sealed')
-    })
+    }, STOW_FADE_MS)
   }
 
   const card = cards[index]
