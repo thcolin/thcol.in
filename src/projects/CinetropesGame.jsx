@@ -9,8 +9,8 @@ const SIZE = 192
 const SWAP_MS = 700
 const SWAP_CELL = 6
 
-// The demo is the game itself, served by the prod on its daily host and embedded with the cinema's facade
-const GAME_URL = process.env.CINETROPES_URL || 'https://daily.cinetropes.com'
+// The demo is the game itself, served by the prod on meta. and embedded with the cinema's facade
+const GAME_URL = process.env.CINETROPES_URL || 'https://meta.cinetropes.com'
 const GAME_ORIGIN = new URL(GAME_URL).origin
 const SAVE_KEY = 'cinetropes-meta-game'
 // The game says when its first picture is drawn; a game that never says so is shown anyway
