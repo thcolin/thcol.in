@@ -23,12 +23,13 @@ Present Thomas Colin and what he builds. The header says who he is and how to re
 
 ## Success
 
-A visitor leaves a project band toward that project: its site, demo, GitHub repository or package registry. Projects without a public release (NFR, Coming soon) carry no link. The header's mail address is the only contact.
+A visitor leaves a project band toward that project: its site, demo, GitHub repository or package registry. Projects without a public release (NFR, Coming soon) carry no link; the playable games link to their prod. The header's mail address is the only contact.
 
 ## Content and evidence
 
 - Released: sensorr, gmca (gamepad-media-center-aggregator), oleoo, react-responsive-virtual-grid.
 - Coming soon: cinetropes, no link.
+- Playable: cinetropes tcg, cinetropes daily and the cinetropes meta demo, in prod since 19 October 2026.
 - NFR (not for release): teevy, Workflow & Obsidian, no link.
 - 3D printing: top-fan, nas.
 - Archived: nipper, boaty, chrome-download-quicklook-extension, scene-release-parser-php, senscritique-api.

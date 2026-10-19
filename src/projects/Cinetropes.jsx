@@ -351,6 +351,14 @@ const clamp = (value, min = 0, max = 100) => Math.min(max, Math.max(min, value))
 const round = (value) => Math.round(value * 100) / 100
 const adjust = (value, toMin, toMax) => round(toMin + (value / 100) * (toMax - toMin))
 
+// The game's name beside the logo, as the app's UniverseMark draws it: « daily » stands over its six tries
+export const Mark = ({ of }) => (
+  <span className={`cinetropes-mark cinetropes-mark--${of}`}>
+    {of}
+    {of === 'daily' && <span className='cinetropes-mark__tries' aria-hidden='true'>{Array.from({ length: 6 }, (_, i) => <span key={i} />)}</span>}
+  </span>
+)
+
 export const rarityOf = ({ critic, public: audience, nerd }) => {
   const average = (critic + audience + nerd) / 3
   if (average >= 4.2) return 'secret'
@@ -364,10 +372,9 @@ const HOLO_OPACITY = { common: 0.3, holo: 0.4, rare: 0.25, ultra: 0.6, secret: 0
 
 const setVars = (element, values) => Object.entries(values).forEach(([name, value]) => element?.style.setProperty(`--${name}`, value))
 
-const useHolo = (film, enabled) => {
+export const useHolo = (rarity, enabled) => {
   const ref = useRef(null)
   const timer = useRef(null)
-  const rarity = rarityOf(film.scores)
   useEffect(() => () => clearTimeout(timer.current), [])
 
   const interact = (event) => {
@@ -405,14 +412,14 @@ const useHolo = (film, enabled) => {
     setVars(ref.current, { 'pointer-x': '50%', 'pointer-y': '50%', 'card-opacity': 0, 'tilt-x': '0deg', 'tilt-y': '0deg', 'background-x': '50%', 'background-y': '50%' })
   }
 
-  return { ref, rarity, interact, rest }
+  return { ref, interact, rest }
 }
 
-const Holo = ({ film }) => (
+export const Holo = ({ src }) => (
   <div className='cinetropes__perspective'>
     <div className='cinetropes__rotator'>
       <div className='cinetropes__front'>
-        <img src={POSTERS[film.id]} alt='' width='500' height='750' loading='lazy' decoding='async' draggable='false' />
+        <img src={src} alt='' width='500' height='750' loading='lazy' decoding='async' draggable='false' />
         <div className='cinetropes__foil' />
         <div className='cinetropes__shine' />
         <div className='cinetropes__glare' />
@@ -423,7 +430,8 @@ const Holo = ({ film }) => (
 
 // The front card of the stack: grabbed, it springs back, swiped past a third of its width it goes behind, clicked it zooms
 const Card = ({ film, hidden, still, onZoom, onSwipe, cardRef }) => {
-  const { ref, rarity, interact, rest } = useHolo(film, !still)
+  const rarity = rarityOf(film.scores)
+  const { ref, interact, rest } = useHolo(rarity, !still)
   const gesture = useRef({ down: false, dragged: false, x: 0, y: 0 })
   const [phase, setPhase] = useState(null)
   const returning = useRef(null)
@@ -514,7 +522,7 @@ const Card = ({ film, hidden, still, onZoom, onSwipe, cardRef }) => {
       onPointerLeave={() => !gesture.current.down && rest()}
       onKeyDown={keyDown}
     >
-      <Holo film={film} />
+      <Holo src={POSTERS[film.id]} />
     </div>
   )
 }
@@ -527,7 +535,8 @@ const Chevron = ({ d }) => (
 
 // The app's popover: the card flies to the middle of the screen at 70% of it, and back
 const Zoom = ({ film, from, still, onClose }) => {
-  const { ref, rarity, interact, rest } = useHolo(film, !still)
+  const rarity = rarityOf(film.scores)
+  const { ref, interact, rest } = useHolo(rarity, !still)
   const close = useRef(null)
   const [open, setOpen] = useState(still)
   const [leaving, setLeaving] = useState(false)
@@ -581,7 +590,7 @@ const Zoom = ({ film, from, still, onClose }) => {
         onPointerMove={(event) => shown && interact(event)}
         onPointerLeave={rest}
       >
-        <Holo film={film} />
+        <Holo src={POSTERS[film.id]} />
       </div>
       <button
         ref={close}
@@ -700,7 +709,7 @@ export const Cinetropes = () => {
                   <div key={item.id} className={`cinetropes__slot${moving}`} style={{ '--depth': depth, zIndex: films.length - depth }} aria-hidden={depth > 0}>
                     {depth === 0
                       ? <Card key={`${item.id}-front`} film={item} hidden={!!zoom} still={still} cardRef={card} onZoom={open} onSwipe={(direction) => deal(direction, true)} />
-                      : <div className='cinetropes__card' data-rarity={rarityOf(item.scores)}><Holo film={item} /></div>}
+                      : <div className='cinetropes__card' data-rarity={rarityOf(item.scores)}><Holo src={POSTERS[item.id]} /></div>}
                   </div>
                 )
               })}

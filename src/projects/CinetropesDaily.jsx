@@ -5,7 +5,7 @@ import { PixelGrid, PixelSplit, PixelatedText, POSTER_GRIDS, usePixelatedImages 
 import { HistoryCard, MysteryCard, MysteryZoom } from './cinetropes-daily/card'
 import { confettiOn } from './cinetropes-daily/confetti'
 import { Atmosphere, Reception, Tropes } from './cinetropes-radars'
-import { Gooey, rarityOf } from './Cinetropes'
+import { Gooey, Mark, rarityOf } from './Cinetropes'
 import './cinetropes-daily.css'
 
 // The app's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
@@ -933,7 +933,7 @@ export const CinetropesDaily = () => {
           <h3 id='cinetropes-daily-title' className='cd__nav-title'>
             <Anchor id='cinetropes-daily'>
               <img src={LOGO} alt='cinetropes' width='275' height='40' />
-              <span>daily</span>
+              <Mark of='daily' />
             </Anchor>
           </h3>
           <div className='cd__nav-side'>

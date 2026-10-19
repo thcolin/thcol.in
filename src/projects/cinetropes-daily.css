@@ -92,12 +92,9 @@
 }
 
 /* A fixed width, as in the cinetropes band: a shrink-to-fit heading resolves a percentage to nothing in Safari */
-/* The wordmark's baseline sits at 57.5 of the logo's 80 units: the word lines up on it */
 .cd__nav-title img {
   width: 152px;
   height: auto;
-  margin-right: 8px;
-  vertical-align: calc(152px * -22.5 / 550);
 }
 
 /* EN | FR, a pill like the sample's badge, at the far right of the title's line */

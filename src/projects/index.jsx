@@ -9,6 +9,7 @@ import { Grid } from './Grid'
 import { Cinetropes } from './Cinetropes'
 import { CinetropesGame } from './CinetropesGame'
 import { CinetropesDaily } from './CinetropesDaily'
+import { CinetropesTcg } from './CinetropesTcg'
 import { Teevy } from './Teevy'
 import { Workflow } from './Workflow'
 import { Printing } from './Printing'
@@ -83,10 +84,13 @@ const Projects = () => {
 
   return (
     <>
-      <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes', 'cinetropes meta-game', 'cinetropes daily']}>
+      <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes']}>
         <Cinetropes />
-        <CinetropesGame />
+      </Group>
+      <Group id='playable' title='playable' phrase='Live now, play them below.' projects={['cinetropes tcg', 'cinetropes daily', 'cinetropes meta']}>
+        <CinetropesTcg />
         <CinetropesDaily />
+        <CinetropesGame />
       </Group>
       <Group id='released' title='released' phrase='Public, open source, try them below.' projects={['sensorr', 'sensorr wrapped', 'gmca', 'oleoo', 'react-responsive-virtual-grid']}>
         <Sensorr />

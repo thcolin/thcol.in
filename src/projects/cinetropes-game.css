@@ -304,18 +304,10 @@
   line-height: 40px;
 }
 
-/* The wordmark's baseline sits at 57.5 of the logo's 80 units: the word lines up on it, as in the daily */
 .cg__title img {
   width: 152px;
   height: auto;
-  margin-right: 10px;
-  vertical-align: calc(152px * -22.5 / 550);
 }
-
-.cg__title span {
-  white-space: nowrap;
-}
-
 
 .cg__text {
   margin: 0;
