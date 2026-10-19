@@ -11,7 +11,6 @@
   font-family: 'Hanken Grotesk', sans-serif;
 }
 
-/* The sachet on the left with its text under it, the five cases on the right, three then two */
 .tcg__table {
   display: grid;
   grid-template-columns: 340px minmax(0, 1fr);
@@ -44,7 +43,6 @@
   height: auto;
 }
 
-/* The Boosters page's lead: Spectral italic, upper case */
 .tcg__lead {
   align-self: flex-start;
   margin: 0 0 8px;
@@ -85,7 +83,6 @@
   font-size: 0.9375rem;
 }
 
-/* The rarity's label and colour, as on the revealed card's sheet */
 .tcg__rarity {
   font-family: 'Poppins', sans-serif;
   font-size: 0.6875rem;
@@ -104,7 +101,6 @@
   margin-right: 6px;
 }
 
-/* A face-down card, the deck's or the sachet's */
 .tcg__back {
   position: absolute;
   inset: 0;
@@ -128,7 +124,6 @@
   filter: brightness(calc(1.1 - var(--depth) * 0.2));
 }
 
-/* The card on top of the deck, turned by a tap */
 .tcg__card {
   position: absolute;
   inset: 0;
@@ -168,7 +163,6 @@
   touch-action: manipulation;
 }
 
-/* The revealed card shrinks into the slot of its case */
 .tcg__card.is-stowing {
   z-index: 20;
   pointer-events: none;
@@ -183,8 +177,6 @@
 .tcg__card.is-stowing :is(.cinetropes__shine, .cinetropes__glare) {
   opacity: 0;
 }
-
-/* ── Cases ──────────────────────────── */
 
 .tcg__cases {
   grid-area: cases;
@@ -260,8 +252,6 @@
   white-space: nowrap;
   max-width: 100%;
 }
-
-/* ── Sachet: the app's BoosterPack ──────────────────────────── */
 
 .tcg-pack {
   --px: 50%;
@@ -436,7 +426,6 @@
   65% { translate: 0 1px; rotate: -0.6deg; }
 }
 
-/* The deck waits inside the sachet, and comes out when it opens */
 .tcg-pack__stack {
   position: absolute;
   inset: 0;
@@ -481,15 +470,11 @@
   100% { transform: translateY(70%); opacity: 0; }
 }
 
-/* ── Large screens: one screen, the sachet as large as the height allows ── */
-
 @media (min-width: 900px) and (min-height: 640px) {
   .band.tcg {
     --pack-w: clamp(160px, calc((100svh - 400px) * 0.62), 280px);
   }
 }
-
-/* ── Phones: the text, the sachet, then the cases in a strip that scrolls sideways ── */
 
 @media (max-width: 899px) {
   .tcg__table {

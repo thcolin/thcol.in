@@ -28,7 +28,6 @@ const STOW_MS = 450
 const CELEBRATION_PAUSE_MS = 250
 const SWEEP_MS = { ultra: 1270, secret: 1230 }
 
-// Rotation of the face-down cards under the top one
 const FAN = ['-5deg', '4deg', '-1.5deg', '3deg']
 
 const touchesNeeded = () => 3 + Math.floor(Math.random() * 5)
@@ -105,11 +104,9 @@ const Pack = ({ opening, onHit, packRef }) => {
   )
 }
 
-// The revealed card: a tap turns it, the next one puts it away in its case
 const Card = ({ card, index, flipped, stowing, still, cardRef, onTap }) => {
   const { ref, interact, rest } = useHolo(card.rarity, flipped && !stowing && !still)
 
-  // The celebration: the pointer sweeps the card from one corner to the other
   useEffect(() => {
     if (!flipped || still || !SWEEP_MS[card.rarity]) {
       return
@@ -183,7 +180,6 @@ export const CinetropesTcg = () => {
   const driven = useRef(false)
   useEffect(() => () => clearTimeout(timer.current), [])
 
-  // The keyboard follows the table: to the card once it is out, back to the next booster once the cards are away
   useEffect(() => {
     if (driven.current) {
       (phase === 'revealing' ? cardRef : packRef).current?.focus({ preventScroll: true })
