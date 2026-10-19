@@ -351,6 +351,14 @@ const clamp = (value, min = 0, max = 100) => Math.min(max, Math.max(min, value))
 const round = (value) => Math.round(value * 100) / 100
 const adjust = (value, toMin, toMax) => round(toMin + (value / 100) * (toMax - toMin))
 
+// The game's name beside the logo, as the app's UniverseMark draws it: « daily » stands over its six tries
+export const Mark = ({ of }) => (
+  <span className={`cinetropes-mark cinetropes-mark--${of}`}>
+    {of}
+    {of === 'daily' && <span className='cinetropes-mark__tries' aria-hidden='true'>{Array.from({ length: 6 }, (_, i) => <span key={i} />)}</span>}
+  </span>
+)
+
 export const rarityOf = ({ critic, public: audience, nerd }) => {
   const average = (critic + audience + nerd) / 3
   if (average >= 4.2) return 'secret'

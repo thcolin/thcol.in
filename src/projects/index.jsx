@@ -83,10 +83,12 @@ const Projects = () => {
 
   return (
     <>
-      <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes', 'cinetropes meta-game', 'cinetropes daily']}>
+      <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes']}>
         <Cinetropes />
-        <CinetropesGame />
+      </Group>
+      <Group id='playable' title='playable' phrase='Live now, play them below.' projects={['cinetropes daily', 'cinetropes meta']}>
         <CinetropesDaily />
+        <CinetropesGame />
       </Group>
       <Group id='released' title='released' phrase='Public, open source, try them below.' projects={['sensorr', 'sensorr wrapped', 'gmca', 'oleoo', 'react-responsive-virtual-grid']}>
         <Sensorr />

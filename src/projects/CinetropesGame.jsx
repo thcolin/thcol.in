@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ASSETS } from './cinetropes-game/assets'
 import { CINEMAS } from './cinetropes-game/cinemas'
 import { createHall, curtainFrame, npcFrame, pickupsOf, stepHall, stillNpc } from './cinetropes-game/hall'
+import { Mark } from './Cinetropes'
 import { Anchor, Choices, Tags, stepOf, usePrefersReducedMotion, useScrub } from './shared'
 import './cinetropes-game.css'
 
@@ -478,7 +479,7 @@ export const CinetropesGame = () => {
             <h3 id='cinetropes-meta-game-title' className='cg__title'>
               <Anchor id='cinetropes-meta-game'>
                 <img src={new URL('../assets/cinetropes/logo.svg', import.meta.url)} alt='cinetropes' width='275' height='40' />
-                <span>meta-game</span>
+                <Mark of='meta' />
               </Anchor>
             </h3>
             <Choices
