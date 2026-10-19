@@ -1,0 +1,42 @@
+[
+  {
+    "id": 335983,
+    "slug": "venom-2018",
+    "title": "Venom",
+    "year": 2018,
+    "rarity": "common",
+    "line": "The world has enough superheroes."
+  },
+  {
+    "id": 10195,
+    "slug": "thor",
+    "title": "Thor",
+    "year": 2011,
+    "rarity": "holo",
+    "line": "Courage is immortal."
+  },
+  {
+    "id": 744,
+    "slug": "top-gun",
+    "title": "Top Gun",
+    "year": 1986,
+    "rarity": "rare",
+    "line": "Up there with the best of the best."
+  },
+  {
+    "id": 530385,
+    "slug": "midsommar-directors-cut",
+    "title": "Midsommar",
+    "year": 2019,
+    "rarity": "ultra",
+    "line": "Let the festivities begin."
+  },
+  {
+    "id": 129,
+    "slug": "spirited-away",
+    "title": "Spirited Away",
+    "year": 2001,
+    "rarity": "secret",
+    "line": "Prepare to be spirited away."
+  }
+]

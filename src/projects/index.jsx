@@ -9,6 +9,7 @@ import { Grid } from './Grid'
 import { Cinetropes } from './Cinetropes'
 import { CinetropesGame } from './CinetropesGame'
 import { CinetropesDaily } from './CinetropesDaily'
+import { CinetropesTcg } from './CinetropesTcg'
 import { Teevy } from './Teevy'
 import { Workflow } from './Workflow'
 import { Printing } from './Printing'
@@ -86,7 +87,8 @@ const Projects = () => {
       <Group id='coming-soon' title='coming soon' phrase='In beta, opening soon.' projects={['cinetropes']}>
         <Cinetropes />
       </Group>
-      <Group id='playable' title='playable' phrase='Live now, play them below.' projects={['cinetropes daily', 'cinetropes meta']}>
+      <Group id='playable' title='playable' phrase='Live now, play them below.' projects={['cinetropes tcg', 'cinetropes daily', 'cinetropes meta']}>
+        <CinetropesTcg />
         <CinetropesDaily />
         <CinetropesGame />
       </Group>

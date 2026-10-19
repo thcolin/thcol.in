@@ -1,0 +1,548 @@
+/* cinetropes tcg, the app's TCG world: its black, the popcorn sachet of the Boosters page, the glass cases of the
+   Marché. The sachet is the app's BoosterPack, the cases its .card-case (TcgCard.css), ported as they are. */
+
+.band.tcg {
+  --band-bg: rgb(14 13 14);
+  --band-ink: oklch(0.98 0.01 285);
+  --band-dim: oklch(70.365% 0 0);
+  --card-radius: 0.5em;
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --pack-w: 240px;
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+/* The sachet on the left with its text under it, the five cases on the right, three then two */
+.tcg__table {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-areas: 'side cases' 'text cases';
+  column-gap: 64px;
+  row-gap: 24px;
+  align-items: center;
+  width: 100%;
+  max-width: 72em;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.tcg__side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.tcg__title {
+  align-self: flex-start;
+  margin: 0;
+}
+
+.tcg__title img {
+  width: 152px;
+  height: auto;
+}
+
+/* The Boosters page's lead: Spectral italic, upper case */
+.tcg__lead {
+  align-self: flex-start;
+  margin: 0 0 8px;
+  font-family: 'Spectral', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.tcg__stage {
+  position: relative;
+  width: var(--pack-w);
+  aspect-ratio: 2 / 3;
+}
+
+.tcg__hint {
+  min-height: 1.5em;
+  margin: 8px 0 0;
+  color: var(--band-dim);
+  font-size: 0.9375rem;
+  text-align: center;
+}
+
+.tcg__text {
+  grid-area: text;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.tcg__text .band__body {
+  font-size: 0.9375rem;
+}
+
+/* The rarity's label and colour, as on the revealed card's sheet */
+.tcg__rarity {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--band-dim);
+}
+
+.tcg__rarity--holo { color: #2979ff; }
+.tcg__rarity--rare { color: #d400f8; }
+.tcg__rarity--ultra { color: #ff1744; }
+.tcg__rarity--secret { color: #e9c91c; }
+
+.tcg__hint .tcg__rarity {
+  margin-right: 6px;
+}
+
+/* A face-down card, the deck's or the sachet's */
+.tcg__back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--card-radius);
+  object-fit: cover;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.6);
+}
+
+.tcg__deck {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+}
+
+.tcg__deck > .tcg__back,
+.tcg-pack__stack > .tcg__back {
+  z-index: calc(-1 * var(--depth));
+  transform: translateY(calc(var(--depth) * 4px)) rotate(var(--fan));
+  filter: brightness(calc(1.1 - var(--depth) * 0.2));
+}
+
+/* The card on top of the deck, turned by a tap */
+.tcg__card {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  perspective: 1200px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tcg__card:focus-visible {
+  outline: 2px solid var(--band-ink);
+  outline-offset: 6px;
+  border-radius: var(--card-radius);
+}
+
+.tcg__flip {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tcg__card.is-flipped .tcg__flip {
+  transform: rotateY(180deg);
+}
+
+.tcg__flip > .tcg__back,
+.tcg__face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.tcg__face {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* The revealed card shrinks into the slot of its case */
+.tcg__card.is-stowing {
+  z-index: 20;
+  pointer-events: none;
+  transform-origin: 0 0;
+  animation: tcg-card-stow 450ms cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+@keyframes tcg-card-stow {
+  to { transform: translate(var(--stow-x), var(--stow-y)) scale(var(--stow-scale)); }
+}
+
+.tcg__card.is-stowing :is(.cinetropes__shine, .cinetropes__glare) {
+  opacity: 0;
+}
+
+/* ── Cases ──────────────────────────── */
+
+.tcg__cases {
+  grid-area: cases;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px 28px;
+  width: 100%;
+  max-width: min(100%, calc((100svh - 236px) * 1.5 + 56px));
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.tcg__case {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.tcg__case:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.tcg__case:nth-child(5) {
+  grid-column: 4 / span 2;
+}
+
+/* A card under glass: the case on its base under a spot from above, the card laid in the cushion's slot.
+   Same box as the app's .card-case: the image overflows it by 18 % a side, 14 % above and 10 % below */
+.tcg__glass {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.tcg__glass::before {
+  content: '';
+  position: absolute;
+  inset: -14% -18% -10%;
+  background:
+    url('../assets/cinetropes-tcg/market-case.webp') 50% 58.333% / 73.53% 80.645% no-repeat,
+    radial-gradient(44% 48% at 50% 44%, oklch(1 0 0 / 0.2), transparent 72%),
+    radial-gradient(48% 9% at 50% 93%, oklch(1 0 0 / 0.16), transparent 75%);
+  pointer-events: none;
+}
+
+/* In the cushion's slot, from 31.5 % to 68.5 % of the case's width and 23.75 % to 74.75 % of its height */
+.tcg__slot {
+  position: absolute;
+  left: 34.25%;
+  top: 26.5%;
+  width: 31.5%;
+  aspect-ratio: 2 / 3;
+}
+
+.tcg__stowed {
+  cursor: default;
+  touch-action: auto;
+}
+
+.tcg__film {
+  min-height: 1.4em;
+  margin: 0;
+  overflow: hidden;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* ── Sachet: the app's BoosterPack ──────────────────────────── */
+
+.tcg-pack {
+  --px: 50%;
+  --py: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  --hover: 0;
+  --strip-h: 8.5%;
+  position: absolute;
+  inset: 0;
+  perspective: 900px;
+  animation: tcg-pack-in 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tcg-pack-in {
+  from { opacity: 0; translate: 0 24px; }
+}
+
+.tcg-pack__button {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: -4%;
+  height: 108%;
+  z-index: 2;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transform: rotateY(var(--rx)) rotateX(var(--ry));
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 22px 28px rgb(0 0 0 / 0.6));
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tcg-pack:hover .tcg-pack__button {
+  transition-duration: 120ms;
+}
+
+.tcg-pack__button:focus-visible {
+  outline: 2px solid var(--band-ink);
+  outline-offset: 6px;
+}
+
+.tcg-pack__button:disabled {
+  cursor: default;
+}
+
+.tcg-pack__layer {
+  position: absolute;
+  inset: 0;
+  -webkit-mask: url('../assets/cinetropes-tcg/booster-popcorn.webp') center / 100% 100% no-repeat;
+  mask: url('../assets/cinetropes-tcg/booster-popcorn.webp') center / 100% 100% no-repeat;
+}
+
+.tcg-pack__layer--strip {
+  clip-path: inset(0 0 calc(100% - var(--strip-h)) 0);
+}
+
+.tcg-pack__layer--body {
+  clip-path: inset(var(--strip-h) 0 0 0);
+}
+
+.tcg-pack__art {
+  position: absolute;
+  inset: 0;
+  background: url('../assets/cinetropes-tcg/booster-popcorn.webp') center / 100% 100% no-repeat;
+}
+
+/* A soft band of light slides over the glossy plastic with the pointer, no added colour */
+.tcg-pack__sheen {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg,
+      transparent calc(var(--px) - 30%),
+      rgb(255 255 255 / 0.18) calc(var(--px) - 8%),
+      rgb(255 255 255 / 0.55) var(--px),
+      rgb(255 255 255 / 0.18) calc(var(--px) + 8%),
+      transparent calc(var(--px) + 30%)),
+    radial-gradient(ellipse 60% 40% at var(--px) var(--py), rgb(255 255 255 / 0.25), transparent 70%);
+  mix-blend-mode: soft-light;
+  opacity: calc(0.35 + var(--hover) * 0.65);
+  transition: opacity 300ms ease-out;
+}
+
+/* The artwork's empty band and banner: band 90 % × 14.7 % centred at 50.6 %, banner 46 % wide centred at 75.5 % */
+.tcg-pack__band {
+  position: absolute;
+  left: 50%;
+  top: 50.6%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  width: 90%;
+  height: 14.7%;
+}
+
+.tcg-pack__band img {
+  width: 74%;
+  height: auto;
+}
+
+.tcg-pack__banner {
+  position: absolute;
+  left: 50%;
+  top: 75.5%;
+  translate: -50% -50%;
+  width: 46%;
+  color: #8b1a1a;
+  font-family: 'Spectral', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tcg-pack__crinkles {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  -webkit-mask: url('../assets/cinetropes-tcg/booster-popcorn.webp') center / 100% 100% no-repeat;
+  mask: url('../assets/cinetropes-tcg/booster-popcorn.webp') center / 100% 100% no-repeat;
+  pointer-events: none;
+  transition: opacity 200ms ease-out;
+}
+
+/* Folds in the foil where the touch landed: each crease is a highlight with its shadow */
+.tcg-pack__crinkle {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.tcg-pack__crease {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: var(--length);
+  height: 2px;
+  transform-origin: 0 50%;
+  rotate: var(--angle);
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0) 100%) top / 100% 1px no-repeat,
+    linear-gradient(90deg, rgb(0 0 0 / 0.55), rgb(0 0 0 / 0) 100%) bottom / 100% 1px no-repeat;
+  mix-blend-mode: overlay;
+  animation: tcg-pack-crinkle 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tcg-pack-crinkle {
+  from { scale: 0 1; opacity: 0; }
+}
+
+/* Each touch jolts the sachet; two identical keyframes, the class alternates to restart it */
+.tcg-pack__button.is-jolt-a {
+  animation: tcg-pack-jolt-a 260ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.tcg-pack__button.is-jolt-b {
+  animation: tcg-pack-jolt-b 260ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes tcg-pack-jolt-a {
+  30% { translate: 0 -3px; rotate: -1.2deg; }
+  65% { translate: 0 1px; rotate: 0.6deg; }
+}
+
+@keyframes tcg-pack-jolt-b {
+  30% { translate: 0 -3px; rotate: 1.2deg; }
+  65% { translate: 0 1px; rotate: -0.6deg; }
+}
+
+/* The deck waits inside the sachet, and comes out when it opens */
+.tcg-pack__stack {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  isolation: isolate;
+  opacity: 0;
+}
+
+.tcg-pack.is-opening .tcg-pack__button {
+  transform: none;
+}
+
+.tcg-pack.is-opening .tcg-pack__crinkles {
+  opacity: 0;
+}
+
+.tcg-pack.is-opening .tcg-pack__layer--strip {
+  animation: tcg-pack-strip-off 320ms cubic-bezier(0.3, 0.6, 0.4, 1) forwards;
+}
+
+@keyframes tcg-pack-strip-off {
+  to { transform: translate(72px, -96px) rotate(28deg); opacity: 0; }
+}
+
+.tcg-pack.is-opening .tcg-pack__stack {
+  opacity: 1;
+  animation: tcg-pack-stack-out 750ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes tcg-pack-stack-out {
+  0% { transform: translateY(14%); }
+  45% { transform: translateY(-34%); }
+  100% { transform: translateY(0); }
+}
+
+.tcg-pack.is-opening .tcg-pack__layer--body {
+  animation: tcg-pack-body-out 750ms ease-in forwards;
+}
+
+@keyframes tcg-pack-body-out {
+  0%, 45% { transform: none; opacity: 1; }
+  100% { transform: translateY(70%); opacity: 0; }
+}
+
+/* ── Large screens: one screen, the sachet as large as the height allows ── */
+
+@media (min-width: 900px) and (min-height: 640px) {
+  .band.tcg {
+    --pack-w: clamp(160px, calc((100svh - 400px) * 0.62), 280px);
+  }
+}
+
+/* ── Phones: the text, the sachet, then the cases in a strip that scrolls sideways ── */
+
+@media (max-width: 899px) {
+  .tcg__table {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'side' 'cases' 'text';
+  }
+
+  .band.tcg {
+    --pack-w: 200px;
+  }
+
+  .tcg__lead {
+    font-size: 1.5rem;
+  }
+
+  .tcg__cases {
+    display: flex;
+    gap: 16px;
+    max-width: none;
+    margin: 0 calc(-1 * var(--gutter));
+    padding: 8px var(--gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .tcg__cases::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tcg__case {
+    flex: none;
+    width: 150px;
+    scroll-snap-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tcg-pack,
+  .tcg-pack__crease,
+  .tcg-pack__button.is-jolt-a,
+  .tcg-pack__button.is-jolt-b,
+  .tcg-pack.is-opening .tcg-pack__layer--strip,
+  .tcg-pack.is-opening .tcg-pack__stack,
+  .tcg-pack.is-opening .tcg-pack__layer--body,
+  .tcg__card.is-stowing {
+    animation: none;
+  }
+
+  .tcg-pack__button,
+  .tcg-pack__sheen,
+  .tcg__flip {
+    transition: none;
+  }
+}
