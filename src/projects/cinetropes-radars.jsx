@@ -261,7 +261,7 @@ const HitAreas = ({ vertices, keys, onAxis }) => (
 
 // Réception: the Tri-Force, critics on top, audience bottom left, nerds bottom right
 
-// The radars' words. The French is the beta's own: notation-constants.ts, atmosphere-constants.ts, notoriety.ts in
+// The radars' words. The French is the app's own: notation-constants.ts, atmosphere-constants.ts, notoriety.ts in
 // @cinetropes/shared, TropesTooltip.tsx and tropes-helpers.ts; the English is this site's
 const WORDS = {
   en: {

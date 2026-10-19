@@ -8,7 +8,7 @@ import { Atmosphere, Reception, Tropes } from './cinetropes-radars'
 import { Gooey, rarityOf } from './Cinetropes'
 import './cinetropes-daily.css'
 
-// The beta's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
+// The app's /daily page, its DailyPage and useDailyState ported as they are, laid out on one screen
 
 const LOGO = new URL('../assets/cinetropes/logo.svg', import.meta.url)
 const STORAGE = 'daily-state-v1-'
@@ -21,7 +21,7 @@ const KONAMI = 'daily-konami-'
 const KONAMI_SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
 const KONAMI_LABELS = ['▲', '▲', '▼', '▼', '◀', '▶', '◀', '▶', 'B', 'A']
 
-// The band's words in English and in French; the French is the beta's /daily page where it has them
+// The band's words in English and in French; the French is the app's /daily page where it has them
 const LANGUAGE = 'daily-language'
 const TEXT = {
   en: {
@@ -88,7 +88,7 @@ const TEXT = {
     zoom: { close: 'Fermer', poster: 'Voir l’affiche', back: 'Voir le dos' },
     signatures: ['Notation', 'Atmosphère', 'Tropes'],
     palette: 'Palette',
-    // The beta's genres.ts, with its accents
+    // The app's genres.ts, with its accents
     genres: { Adventure: 'Aventure', Comedy: 'Comédie', Documentary: 'Documentaire', Drama: 'Drame', Family: 'Famille', Fantasy: 'Fantaisie', History: 'Histoire', Horror: 'Horreur', Music: 'Musique', Mystery: 'Mystère', 'Science Fiction': 'Science-fiction', 'TV Movie': 'Téléfilm', War: 'Guerre' },
   },
 }
@@ -636,7 +636,7 @@ export const CinetropesDaily = () => {
     return () => { live = false; clearTimeout(timer) }
   }, [query, staged, guessedIds])
 
-  // Closed on a press outside, as on the beta, and not on blur: WebKit blurs the input under a tapped suggestion, before its click
+  // Closed on a press outside, as in the app, and not on blur: WebKit blurs the input under a tapped suggestion, before its click
   useEffect(() => {
     const press = (event) => !inputArea.current?.contains(event.target) && setOpen(false)
     document.addEventListener('pointerdown', press)

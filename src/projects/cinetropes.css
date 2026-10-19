@@ -1,4 +1,4 @@
-/* cinetropes, its beta's own world: OLED black, Poppins and Spectral italic, the Tri-Force gold, red and green.
+/* cinetropes, the app's own world: OLED black, Poppins and Spectral italic, the Tri-Force gold, red and green.
    The cards are the app's SwipeCard, itself adapted from pokemon-cards-css.
 
    Holo card effect adapted from pokemon-cards-css by Simon Goellner,
@@ -1289,7 +1289,7 @@
   }
 }
 
-/* Mobile, as the beta lays it out: the card on top, then the meta, then the charts two by two */
+/* Mobile, as the app lays it out: the card on top, then the meta, then the charts two by two */
 @media (max-width: 900px) {
   .cinetropes__nav {
     flex-wrap: wrap;
