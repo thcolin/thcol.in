@@ -1,0 +1,1 @@
+(0,globalThis.parcelRequiredc51.register)("9Mwpu",function(i,e){i.exports=JSON.parse('{"id":2899,"title":"Asterix & Obelix: Mission Cleopatra","originalTitle":"Astérix & Obélix : Mission Cléopâtre","slug":"asterix-obelix-mission-cleopatra"}')});
